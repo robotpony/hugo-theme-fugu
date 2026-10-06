@@ -1,0 +1,66 @@
+{{/*
+  Principle chip (mockups/win-the-fridge.html) — renders when the given
+  page carries the win-the-fridge tag, nothing otherwise. One tag only;
+  not a general mechanism for arbitrary "principle" tags.
+
+  Takes a dict: page (required), compact (bool — abbreviates to "WTF",
+  for the recipe card's tight top row; full pages use the spelled-out
+  "Win the fridge").
+
+  Also carries the glossary popover (render-link.html's reference-essay
+  branch): the chip is wrapped in the same .glossary-term/.glossary-pop
+  markup as an inline [[win the fridge]] mention, pulling its definition
+  from the reference essay, so hovering/focusing the tag itself explains
+  the term without a trip to the tag page. The chip's own look (filled
+  pill, not dotted underline) is unchanged — .glossary-link is not
+  applied to the anchor, only the popover-reveal wrapper is reused. The
+  extra .glossary-term-chip class (custom.css) flips the popover to open
+  downward instead of the inline mechanism's default upward — the chip
+  always sits near the top of a card or a page's tags row, with no room
+  above it before colliding with the nav/hero.
+
+  Compact (card) form adds .glossary-term-chip-compact on top of that:
+  the popover's fixed 260px width is wider than a grid card, so left:0
+  let it bleed sideways into the next card. That variant drops its own
+  positioning context (position: static) so the popover's containing
+  block resolves up to .rcard-top instead (custom.css gives it
+  position: relative for exactly this), and spans left:0/right:0 there
+  — i.e. exactly the card's own width, however wide the grid happens to
+  make it, instead of a hardcoded pixel value that assumes prose-width
+  room. The full (tags-row) form keeps the original fixed-width popover
+  since that context has plenty of spare width either side.
+*/}}
+{{ $page := .page }}
+{{ $compact := .compact }}
+{{ $tagged := false }}
+{{ range $page.Params.tags }}
+  {{ if eq (lower .) "win-the-fridge" }}{{ $tagged = true }}{{ end }}
+{{ end }}
+{{ if $tagged }}
+  {{ $label := cond $compact "WTF" "Win the fridge" }}
+  {{ $icon := `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8a5 5 0 0 1 8.5-3.5M13 8a5 5 0 0 1-8.5 3.5"/><path d="M11 2v2.5H8.5M5 14v-2.5h2.5"/></svg>` }}
+  {{ $essay := site.GetPage "/essays/reference-essays/win-the-fridge" }}
+  {{ $def := "" }}
+  {{ with $essay }}
+    {{ $def = .Params.summary | default .Description }}
+    {{ if not $def }}
+      {{ $head := index (split .RawContent "\n## ") 0 | strings.TrimSpace }}
+      {{ if and $head (not (hasPrefix $head "#")) }}
+        {{ $def = index (split $head "\n\n") 0 }}
+      {{ end }}
+    {{ end }}
+    {{ $def = $def | markdownify | plainify | htmlUnescape | truncate 200 }}
+  {{ end }}
+  {{ $chip := "" }}
+  {{ with site.GetPage "/tags/win-the-fridge" }}
+    {{ $chip = printf `<a class="principle-chip" href="%s">%s%s</a>` .RelPermalink ($icon | safeHTML) $label }}
+  {{ else }}
+    {{ $chip = printf `<span class="principle-chip">%s%s</span>` ($icon | safeHTML) $label }}
+  {{ end }}
+  {{ if $def }}
+    {{ $termClass := cond $compact "glossary-term glossary-term-chip glossary-term-chip-compact" "glossary-term glossary-term-chip" }}
+    <span class="{{ $termClass }}" tabindex="0">{{ $chip | safeHTML }}<span class="glossary-pop"><span class="glossary-pop-term">Win the fridge</span>{{ $def }} {{ with $essay }}<a href="{{ .RelPermalink }}">Read the full essay →</a>{{ end }}</span></span>
+  {{ else }}
+    {{ $chip | safeHTML }}
+  {{ end }}
+{{ end }}

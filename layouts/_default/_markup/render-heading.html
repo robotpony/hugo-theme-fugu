@@ -1,0 +1,97 @@
+{{/*
+  Full override of themes/blowfish/layouts/_default/_markup/render-heading.html.
+
+  FORMAT.md's headings are freeform by design ("Ingredients", "What you
+  need", a component's own name like "Tadka" all precede an ingredient
+  list) — confirmed against the real 230-recipe corpus, which also uses
+  "Ingredients:", "Directions:", one-off component names, and non-recipe
+  h3s far messier than FORMAT.md's clean examples. Rather than trying to
+  positively recognize "this is an ingredients heading", this flags h2
+  sections NEGATIVELY: ingredient by default, unless the heading contains a
+  known non-ingredient word (checked per-word, not as a whole-phrase match —
+  see the comment further down). False positives (styling a stray
+  non-ingredient bullet list as checkable) are harmless; false negatives
+  would silently drop real ingredient styling.
+
+  Only recipes get this treatment — `.Page.Section` gated below — so a
+  random "##" heading in an essay doesn't get flagged as an ingredient
+  section.
+
+  This only marks headings (data-ing-heading / data-method-heading /
+  .ing-subhead classes); it doesn't touch the following <ul>/<li>/<p> markup
+  at all, because Hugo has no render hook for lists or paragraphs — Goldmark
+  renders those as plain <ul><li>/<p> same as ever. assets/js/ingredients.js
+  walks the DOM client-side from each marked heading to the next h2, and
+  turns the <ul> it finds into the real checkbox/qty component (under an
+  ingredients heading) or scans the prose for inline quantities/temperatures
+  (under a method heading). See PLAN.md 6.2b for why: a template-level
+  wrapping div can't be safely closed (heading hooks render one self-
+  contained tag at a time, with no "end of section" hook to close it), so
+  the div-wrapping approach that would otherwise be the more obvious fix
+  isn't used.
+*/}}
+{{ $anchor := anchorize .Anchor }}
+{{ $isRecipe := eq .Page.Section "recipes" }}
+
+{{/* Word-level, not full-phrase: "Timing examples", "Basic method", and
+     "General rules" all need to fall out of the ingredient default the same
+     way a bare "Timing" or "Method" does, without enumerating every prefix/
+     suffix combination a recipe might phrase a section with. Checked against
+     the real 230-recipe corpus (component/variant names like "Soup", "Base
+     stock", "Toppings", "Teriyaki chicken/fish/tofu") to confirm none of
+     these words collide with a real ingredient-bearing heading there — a
+     word this generic-sounding but actually used as a component name (e.g.
+     a future "## Combo A") would still misfire, so keep new additions to
+     words that read as meta/reference language, not food. */}}
+{{ $nonIngredientKeywords := slice "method" "directions" "steps" "notes" "serve" "variations" "timing" "example" "examples" "rules" "equipment" "hardware" "substitutions" "mechanic" "history" }}
+{{ $methodHeadings := slice "method" "directions" "steps" }}
+{{/* These optional top-level sections (Mechanic, To serve, Variations,
+     Equipment, Notes) get pulled out of the reading flow and into the
+     page's sidebar by assets/js/automagic-sidebar.js, which walks forward
+     from each marked heading to the next H2 the same way the
+     ingredient/method walks already do (see that file's
+     moveSidebarSections). Any page with a sidebar gets this, recipe or
+     reading (partials/sidebar/kind.html); the slot names live in
+     partials/sidebar/heading-slot.html. Gated on .Level 2 so a
+     multi-component recipe's own "### To serve" component (ingredients for
+     garnishes, nested under "## Ingredients") is never mistaken for the
+     top-level "## To serve" prose section — components are always one
+     level deeper. */}}
+{{ $normalized := .Text | plainify | strings.TrimSuffix ":" | strings.TrimSpace | lower }}
+{{ $hasNonIngredientWord := false }}
+{{ range split $normalized " " }}
+  {{ if in $nonIngredientKeywords . }}{{ $hasNonIngredientWord = true }}{{ end }}
+{{ end }}
+{{ $isIngredientHeading := and $isRecipe (eq .Level 2) (not $hasNonIngredientWord) }}
+{{ $isMethodHeading := and $isRecipe (eq .Level 2) (in $methodHeadings $normalized) }}
+{{ $sidebarHeading := "" }}
+{{ if and (partial "sidebar/kind.html" .Page) (eq .Level 2) }}
+  {{ $sidebarHeading = partial "sidebar/heading-slot.html" $normalized }}
+{{ end }}
+{{/* "History" is family-provenance text (same reason as the intro
+     blockquotes handled in assets/js/ingredients.js's hideFamilyHistory) —
+     not meant for anonymous visitors until sign-in exists, so it's hidden
+     client-side by the same "walk to the next H2" approach as the sidebar
+     sections above, rather than relocated anywhere visible. */}}
+{{ $isHistoryHeading := and $isRecipe (eq .Level 2) (eq $normalized "history") }}
+
+{{ if and $isRecipe (eq .Level 2) }}
+  {{ .Page.Scratch.Set "ingSection" $isIngredientHeading }}
+{{ end }}
+{{ $inIngredientSection := and $isRecipe (in (slice 3 4) .Level) (.Page.Scratch.Get "ingSection") }}
+
+<h{{ .Level }} class="relative group{{ if $inIngredientSection }} ing-subhead{{ end }}"
+  {{- if and $isRecipe (eq .Level 2) }} data-ing-heading="{{ $isIngredientHeading }}" data-method-heading="{{ $isMethodHeading }}"{{ if $isHistoryHeading }} data-hide-heading="true"{{ end }}{{ end -}}
+  {{- with $sidebarHeading }} data-sidebar-heading="{{ . }}"{{ end -}}
+>{{ .Text | safeHTML }}
+    <div id="{{ $anchor }}" class="anchor"></div>
+    {{ if .Page.Params.showHeadingAnchors | default (.Page.Site.Params.article.showHeadingAnchors | default true) }}
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        {{/* The "#" comes from CSS (.heading-anchor-link::before), not a text
+             node: Hugo builds .Summary from rendered HTML, so a literal "#"
+             leaked into every card summary as "Mechanic # 1 part lentils…". */}}
+        <a class="heading-anchor-link text-primary-300 dark:text-neutral-700 !no-underline" href="#{{ $anchor }}" aria-label="{{ i18n "article.anchor_label" }}"></a>
+    </span>
+    {{ end }}
+</h{{ .Level }}>

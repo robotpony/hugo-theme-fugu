@@ -1,0 +1,90 @@
+{{/*
+  Wiki link render hook.
+
+  migrate.py converts [[Recipe Name]] to [Recipe Name](Recipe Name) — a link
+  where the href is the recipe title (no scheme, no slash, no anchor).
+
+  This hook intercepts those links, looks up the target page by title, and
+  emits a proper Hugo URL. Standard http/https/relative links pass through.
+
+  Glossary popover (mockups/win-the-fridge.html, 2026-09-27): a [[Term]]
+  that resolves to a reference essay (content/essays/reference-essays/)
+  renders as a .glossary-link with a hover/focus popover instead of a plain
+  .wikilink — reference essays are themselves the "gets its own page" tier
+  of the glossary. A [[Term]] that resolves to no page at all falls back to
+  checking headings in content/reference/glossary.md, the "doesn't get its
+  own page" tier, before giving up as a .broken-link.
+*/}}
+
+{{ $destination := .Destination }}
+{{ $text := .Text | safeHTML }}
+{{ $isWikiLink := and
+  (not (strings.HasPrefix $destination "http"))
+  (not (strings.HasPrefix $destination "/"))
+  (not (strings.HasPrefix $destination "#"))
+  (not (strings.HasPrefix $destination "mailto"))
+  (not (strings.HasPrefix $destination "./"))
+  (not (strings.HasPrefix $destination "../"))
+}}
+
+{{ if $isWikiLink }}
+  {{/* Normalize both sides before matching: lowercase, and collapse any
+    run of non-alphanumeric characters (apostrophes, slashes, hyphens, ...)
+    to a single space. This makes matching case-insensitive and punctuation-
+    agnostic, so `[[rich veg mushroom stock]]` matches a title of
+    "Rich veg/mushroom stock", and curly vs. straight apostrophes
+    (content/recipes/chef-johns-hamburger-buns.md's title uses a curly ',
+    a wiki link to it might be typed with a straight ') no longer matter —
+    exact-match can't do either, so normalize by hand instead. */}}
+  {{ $normDest := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower $destination)) }}
+  {{ $matches := slice }}
+  {{ range site.RegularPages }}
+    {{ $normTitle := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower .Title)) }}
+    {{ if eq $normTitle $normDest }}
+      {{ $matches = $matches | append . }}
+    {{ end }}
+  {{ end }}
+  {{ if gt (len $matches) 0 }}
+    {{ $target := index $matches 0 }}
+    {{ $isRefEssay := and (eq $target.Section "essays") (eq (path.Base (strings.TrimSuffix "/" $target.File.Dir)) "reference-essays") }}
+    {{ if $isRefEssay }}
+      {{ $def := $target.Params.summary | default $target.Description }}
+      {{ if not $def }}
+        {{ $head := index (split $target.RawContent "\n## ") 0 | strings.TrimSpace }}
+        {{ if and $head (not (hasPrefix $head "#")) }}
+          {{ $def = index (split $head "\n\n") 0 }}
+        {{ end }}
+      {{ end }}
+      {{ $def = $def | markdownify | plainify | htmlUnescape | truncate 200 }}
+      <span class="glossary-term" tabindex="0"><a href="{{ $target.RelPermalink }}" class="glossary-link">{{ $text }}</a><span class="glossary-pop"><span class="glossary-pop-term">{{ $target.Title }}</span>{{ $def }} <a href="{{ $target.RelPermalink }}">Read the full essay →</a></span></span>
+    {{ else }}
+      <a href="{{ $target.RelPermalink }}" class="wikilink">{{ $text }}</a>
+    {{ end }}
+  {{ else }}
+    {{ $glossary := site.GetPage "/reference/glossary" }}
+    {{ $entry := "" }}
+    {{ with $glossary }}
+      {{ $chunks := split .RawContent "\n## " }}
+      {{ range after 1 $chunks }}
+        {{ $lines := split . "\n" }}
+        {{ $term := strings.TrimSpace (index $lines 0) }}
+        {{ $normTerm := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower $term)) }}
+        {{ if eq $normTerm $normDest }}
+          {{ $def := strings.TrimSpace (index (split . "\n\n") 1) }}
+          {{ $entry = dict "term" $term "def" ($def | markdownify | plainify | htmlUnescape | truncate 200) "slug" (anchorize $term) }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+    {{ if $entry }}
+      <span class="glossary-term" tabindex="0"><a href="{{ $glossary.RelPermalink }}#{{ $entry.slug }}" class="glossary-link">{{ $text }}</a><span class="glossary-pop"><span class="glossary-pop-term">{{ $entry.term }}</span>{{ $entry.def }} <a href="{{ $glossary.RelPermalink }}#{{ $entry.slug }}">Full entry in the glossary →</a></span></span>
+    {{ else }}
+      <span class="broken-link" title="Not found: {{ $destination }}">{{ $text }}</span>
+    {{ end }}
+  {{ end }}
+{{ else }}
+  {{ $isExternal := strings.HasPrefix $destination "http" }}
+  <a href="{{ $destination }}"
+    {{- with .Title }} title="{{ . }}"{{ end }}
+    {{- if $isExternal }} class="extlink" rel="noopener noreferrer" target="_blank"{{ end -}}
+  >{{ $text }}</a>
+{{ end }}

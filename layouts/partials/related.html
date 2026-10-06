@@ -1,0 +1,29 @@
+{{/*
+  Override of themes/blowfish/layouts/partials/related.html.
+
+  Wraps the heading + card grid in .related-section so custom.css can give
+  it its own divider (border-top + padding-top + margin-top, same language
+  as .article-pagination below it) — Blowfish's default h2 (bare mt-8/
+  mb-10) reads as just another heading inside the recipe's prose, not a
+  break from it into suggested links. Markup otherwise unchanged from the
+  theme original, except the heading also takes .block-title so it matches
+  the homepage section headings (the theme's weight/size classes are gone).
+  Every page type uses the shared recipe card (.rcard in .rgrid), same as
+  the recipes list; recipe-card.html adapts it for essays, reference
+  guides, and Food Log months. On those pages the grid sits inside
+  Blowfish's .prose column, so .not-prose keeps the typography plugin's
+  heading/paragraph/link styles off the cards.
+*/}}
+{{ if .Params.showRelatedContent | default (.Site.Params.article.showRelatedContent | default false) }}
+  {{ $related := .Site.RegularPages.Related . | first .Site.Params.article.relatedContentLimit }}
+  {{ with $related }}
+    <div class="related-section not-prose">
+      <h2 class="block-title related-heading">{{ i18n "article.related_articles" | emojify }}</h2>
+      <section class="rgrid">
+        {{ range . }}
+          {{ partial "recipe-card.html" . }}
+        {{ end }}
+      </section>
+    </div>
+  {{ end }}
+{{ end }}

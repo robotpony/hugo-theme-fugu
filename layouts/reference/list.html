@@ -1,0 +1,33 @@
+{{ define "main" }}
+{{/*
+  Reference list: same layout as the recipes and essays lists
+  (layouts/recipes/list.html, layouts/essays/list.html), listing header,
+  tagline (_index.md description), search box, and the shared card grid.
+  recipe-card.html drops the "reference" tag every guide carries and
+  uses reading time for the stat line.
+*/}}
+{{ .Scratch.Set "scope" "list" }}
+{{/* By title: every guide now has a `date`, and Hugo's default order
+  (newest first) would put the migration-day guides in one arbitrary
+  block. Alphabetical is how this list has always read. */}}
+{{/* Pinned guides (frontmatter `pinned: true`) float to the top, ahead
+  of the alphabetical order; everything else keeps sorting by title. See
+  DESIGN.md. */}}
+{{ $sorted := .Pages.ByTitle }}
+{{ $sorted = (where $sorted "Params.pinned" true) | append (where $sorted "Params.pinned" "!=" true) }}
+{{ $pager := .Paginate $sorted 16 }}
+<section class="listing">
+  <header class="listing-head">
+    <h1 class="ltitle">{{ .Title }}</h1>
+    <span class="listing-count">{{ len .Pages }} {{ cond (eq (len .Pages) 1) "guide" "guides" }}{{ if gt $pager.TotalPages 1 }} · page {{ $pager.PageNumber }} of {{ $pager.TotalPages }}{{ end }}</span>
+  </header>
+  {{ with .Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
+  <div class="listing-search">{{ partial "search-box.html" "Search recipes, essays, guides" }}</div>
+  <div class="rgrid">
+    {{ range $pager.Pages }}
+      {{ partial "recipe-card.html" . }}
+    {{ end }}
+  </div>
+  {{ partial "pagination.html" . }}
+</section>
+{{ end }}

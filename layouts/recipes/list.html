@@ -1,0 +1,29 @@
+{{ define "main" }}
+{{/*
+  Recipes list — replaces Blowfish's default list (article-link cards with
+  auto-generated summaries, which pulled in Mechanic text and ran long).
+  Uses the shared recipe card (partials/recipe-card.html) in the .rgrid,
+  per mockups/recipe-card-v2.html. Listing header is STYLE.md's
+  .ltitle / .listing-count.
+*/}}
+{{ .Scratch.Set "scope" "list" }}
+{{/* 16 = four rows of four, so pagination stays near the fold; overrides the site-wide pagerSize (12) for this page only. */}}
+{{/* Pinned recipes (frontmatter `pinned: true`) float to the top;
+  everything else keeps its existing relative order. See DESIGN.md. */}}
+{{ $sorted := (where .Pages "Params.pinned" true) | append (where .Pages "Params.pinned" "!=" true) }}
+{{ $pager := .Paginate $sorted 16 }}
+<section class="listing">
+  <header class="listing-head">
+    <h1 class="ltitle">{{ .Title }}</h1>
+    <span class="listing-count">{{ len .Pages }} recipes{{ if gt $pager.TotalPages 1 }} · page {{ $pager.PageNumber }} of {{ $pager.TotalPages }}{{ end }}</span>
+  </header>
+  {{ with .Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
+  <div class="listing-search">{{ partial "search-box.html" (len .Pages) }}</div>
+  <div class="rgrid">
+    {{ range $pager.Pages }}
+      {{ partial "recipe-card.html" . }}
+    {{ end }}
+  </div>
+  {{ partial "pagination.html" . }}
+</section>
+{{ end }}

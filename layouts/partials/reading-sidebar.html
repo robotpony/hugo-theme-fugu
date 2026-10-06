@@ -1,0 +1,224 @@
+{{/*
+  Reading sidebar (mockups/reading-sidebar.html) for essays, reference
+  guides, the Food Log, and About. Rendered by _default/single.html after
+  the main column, so it sits level with the top of the body on desktop
+  (the title block is above both columns) and falls below the article on
+  mobile. Search is on every page; the other modules are scoped to the
+  page type and only render when they have something to show. "Cook
+  tonight" tag pills used to close every page; removed 2026-09-25 to
+  match the recipe sidebar, which never had them.
+*/}}
+{{ $page := . }}
+{{ $section := .Section }}
+{{ $isAbout := and (eq .Section "") (eq .Kind "page") }}
+{{ $recipes := where site.RegularPages "Section" "recipes" }}
+{{/* Sections automagic-sidebar.js moves into the slots below (Notes,
+  Mechanic, ...) are dropped from "On this page": their anchors end up in
+  the sidebar itself, hidden, so a jump link would go nowhere. */}}
+{{ $headings := slice }}
+{{ range partial "reading-sidebar/headings.html" .Fragments.Headings }}
+  {{ $norm := .title | strings.TrimSuffix ":" | strings.TrimSpace | lower }}
+  {{ if not (and (eq .level 2) (partial "sidebar/heading-slot.html" $norm)) }}
+    {{ $headings = $headings | append . }}
+  {{ end }}
+{{ end }}
+
+<div class="reading-sidebar not-prose">
+  <div class="rs-section">
+    {{ partial "search-box.html" "Search recipes, essays, guides" }}
+  </div>
+
+  {{/* Date and Updated, in the recipe sidebar's meta rail style. */}}
+  {{ with partial "sidebar/date-rows.html" . }}
+    <div class="recipe-meta">
+      {{ range . }}
+        <div class="recipe-meta-row"><span class="recipe-meta-label">{{ .label }}</span><span class="recipe-meta-value">{{ .value }}</span></div>
+      {{ end }}
+    </div>
+  {{ end }}
+
+  {{/* Notes, relocated by automagic-sidebar.js like the slots below, but
+    placed above "On this page" so it isn't pushed under a long heading
+    list. Hidden until filled. */}}
+  {{/* Photos: the page's images, gathered here by automagic-sidebar.js
+    (initPhotos) as thumbnails that open a viewer. Desktop only; on
+    mobile they sit as a strip under the title instead. */}}
+  <div class="rs-section recipe-sidebar-section sidebar-photos" data-sidebar-slot="photos" hidden></div>
+
+  <div class="rs-section recipe-sidebar-section" data-sidebar-slot="notes" hidden></div>
+
+  {{/* On this page: desktop only. On mobile, Blowfish's collapsible TOC
+    already sits at the top of the article (see single.html). The Food Log
+    gets a flat list of days (its h2s) instead, or of entries (h3s) when
+    the page is undated. */}}
+  {{ if eq $section "the-food-log" }}
+    {{ $days := where $headings "level" 2 }}
+    {{ $undated := not $days }}
+    {{ if $undated }}{{ $days = where $headings "level" 3 }}{{ end }}
+    {{ if $days }}
+      <div class="rs-section hidden lg:block">
+        <h2 class="rs-label">{{ cond $undated "On this page" "This month" }}</h2>
+        <div class="browse-list">
+          {{ range $days }}<a href="#{{ .id }}">{{ .title }}</a>{{ end }}
+        </div>
+      </div>
+    {{ end }}
+  {{ else if and (not $isAbout) (gt (len $headings) 1) }}
+    {{/* Grouped: each h2 with the h3s under it (mockups/reading-sidebar.html,
+      "On this page" variant C). An h3 before any h2 stands alone as a
+      section. Long pages (over 12 headings) get a toggle per section,
+      which automagic-sidebar.js's initTocToggles collapses on load; short
+      ones, and pages without JS, show every subsection. */}}
+    {{ $groups := slice }}
+    {{ $cur := false }}
+    {{ $subs := slice }}
+    {{ range $headings }}
+      {{ if or (eq .level 2) (not $cur) }}
+        {{ with $cur }}{{ $groups = $groups | append (dict "h" . "subs" $subs) }}{{ end }}
+        {{ $cur = . }}
+        {{ $subs = slice }}
+      {{ else }}
+        {{ $subs = $subs | append . }}
+      {{ end }}
+    {{ end }}
+    {{ with $cur }}{{ $groups = $groups | append (dict "h" . "subs" $subs) }}{{ end }}
+    {{ $collapse := gt (len $headings) 12 }}
+    <div class="rs-section hidden lg:block">
+      <h2 class="rs-label">On this page</h2>
+      <div class="rs-toc">
+        {{ range $i, $g := $groups }}
+          <div class="rs-toc-top">
+            <a href="#{{ $g.h.id }}">{{ $g.h.title }}</a>
+            {{ if and $collapse $g.subs }}
+              <button type="button" class="rs-toc-toggle" aria-expanded="true" aria-controls="rs-toc-{{ $i }}" aria-label="{{ $g.h.title }}: {{ len $g.subs }} subsections" hidden>{{ len $g.subs }}</button>
+            {{ end }}
+          </div>
+          {{ with $g.subs }}
+            <div class="rs-toc-group" id="rs-toc-{{ $i }}">
+              {{ range . }}<a href="#{{ .id }}">{{ .title }}</a>{{ end }}
+            </div>
+          {{ end }}
+        {{ end }}
+      </div>
+    </div>
+  {{ end }}
+
+  {{/* Page sections relocated from the article body by
+    assets/js/automagic-sidebar.js, same slots as the recipe sidebar
+    (single.html). Hidden until filled; most pages fill none. rs-section
+    for the reading sidebar's spacing, recipe-sidebar-section for the
+    heading/Notes-list/Mechanic styling the two sidebars share. */}}
+  {{ range slice "mechanic" "to-serve" "variations" "equipment" }}
+    <div class="rs-section recipe-sidebar-section" data-sidebar-slot="{{ . }}" hidden></div>
+  {{ end }}
+
+  {{/* Recipes this page links to with [[wiki links]], matched to recipe
+    titles the same way render-link.html does (case and punctuation
+    ignored). First 8 shown, the rest behind a "N more" disclosure. */}}
+  {{ if in (slice "reference" "essays") $section }}
+    {{ $linked := slice }}
+    {{ range findRESubmatch `\[\[([^\]|]+)(?:\|[^\]]*)?\]\]` .RawContent -1 }}
+      {{ $norm := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower (index . 1))) }}
+      {{ range $recipes }}
+        {{ if eq (strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower .Title))) $norm }}
+          {{ $linked = $linked | append . }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+    {{ $linked = sort ($linked | uniq) "Title" }}
+    {{ with $linked }}
+      <div class="rs-section">
+        <h2 class="rs-label">Recipes in this {{ cond (eq $section "reference") "guide" "essay" }} <span class="n">{{ len . }}</span></h2>
+        <div class="browse-list">
+          {{ range first 8 . }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
+        </div>
+        {{ if gt (len .) 8 }}
+          <details class="rs-more">
+            <summary>{{ sub (len .) 8 }} more</summary>
+            <div class="browse-list">
+              {{ range after 8 . }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
+            </div>
+          </details>
+        {{ end }}
+      </div>
+    {{ end }}
+  {{ end }}
+
+  {{/* Other essays in the same folder (food-memories/, technique-essays/,
+    ...). The folders aren't Hugo sections (no _index.md), so this groups
+    by file path rather than .CurrentSection. */}}
+  {{ if eq $section "essays" }}
+    {{ $dir := .File.Dir }}
+    {{ $siblings := slice }}
+    {{ range where site.RegularPages "Section" "essays" }}
+      {{ if eq .File.Dir $dir }}{{ $siblings = $siblings | append . }}{{ end }}
+    {{ end }}
+    {{ if gt (len $siblings) 1 }}
+      {{ $folder := path.Base (strings.TrimSuffix "/" $dir) }}
+      <div class="rs-section">
+        <h2 class="rs-label">{{ if eq $folder "essays" }}Essays{{ else }}{{ $folder | humanize }}{{ end }} <span class="n">{{ len $siblings }}</span></h2>
+        <div class="browse-list">
+          {{ range (sort $siblings "Title") }}
+            <a href="{{ .RelPermalink }}"{{ if eq . $page }} aria-current="page"{{ end }}>{{ .Title }}</a>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+  {{ end }}
+
+  {{/* Food Log months, newest first, with a day count from each page's
+    h2s. */}}
+  {{ if eq $section "the-food-log" }}
+    {{ $months := slice }}
+    {{ range where site.RegularPages "Section" "the-food-log" }}
+      {{ $months = $months | append (partial "reading-sidebar/log-month.html" .) }}
+    {{ end }}
+    <div class="rs-section">
+      <h2 class="rs-label">Months</h2>
+      <div class="browse-list">
+        {{ range sort $months "key" "desc" }}
+          {{ $days := len .days }}
+          <a href="{{ .page.RelPermalink }}"{{ if eq .page $page }} aria-current="page"{{ end }}>{{ .label }} <span class="n">{{ if $days }}{{ $days }} {{ cond (eq $days 1) "day" "days" }}{{ else }}undated{{ end }}</span></a>
+        {{ end }}
+      </div>
+      {{ if eq (len $months) 1 }}
+        <div class="section-caveat">The log moved here in September 2026. Older entries aren't here yet.</div>
+      {{ end }}
+    </div>
+  {{ end }}
+
+  {{/* About: the cookbook in numbers, and an optional hand-picked
+    "Start here" list from about.md's `start_here` frontmatter (page
+    titles, matched like wiki links). */}}
+  {{ if $isAbout }}
+    <div class="rs-section">
+      <h2 class="rs-label">The cookbook in numbers</h2>
+      <div class="rs-numbers">
+        <div class="rs-number">Recipes <b>{{ len $recipes }}</b></div>
+        <div class="rs-number">Cuisines <b>{{ len site.Taxonomies.cuisine }}</b></div>
+        <div class="rs-number">Essays <b>{{ len (where site.RegularPages "Section" "essays") }}</b></div>
+        <div class="rs-number">Reference guides <b>{{ len (where site.RegularPages "Section" "reference") }}</b></div>
+      </div>
+    </div>
+    {{ with .Params.start_here }}
+      <div class="rs-section">
+        <h2 class="rs-label">Start here</h2>
+        <div class="browse-list">
+          {{ range . }}
+            {{ $norm := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower .)) }}
+            {{ $hit := false }}
+            {{ range site.RegularPages }}
+              {{ if and (not $hit) (eq (strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower .Title))) $norm) }}
+                {{ $hit = . }}
+              {{ end }}
+            {{ end }}
+            {{ with $hit }}
+              {{ $kind := dict "recipes" "recipe" "essays" "essay" "reference" "guide" }}
+              <a href="{{ .RelPermalink }}">{{ .Title }} <span class="n">{{ index $kind .Section | default "" }}</span></a>
+            {{ end }}
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+  {{ end }}
+</div>

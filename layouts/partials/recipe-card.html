@@ -1,0 +1,109 @@
+{{/*
+  Recipe card (.rcard) — ratified in mockups/STYLE.md, v2 layout from
+  mockups/recipe-card-v2.html. Takes a recipe Page as context. Shared by
+  the homepage "recently added" row and the recipes list page.
+
+  Top row: two slots (cuisine takes one when present; a tag repeating the
+  cuisine is skipped), then +N. Middle: the recipe's intro paragraph (text
+  before the first ##), or frontmatter summary/description if set. Bottom:
+  one compact stat line, times shortened and parentheticals dropped for
+  the card only (the full value is in the stat's title).
+
+  The cuisine chip links to its /cuisine/<name>/ term page, so the card
+  can't be one big <a> (nested anchors are invalid HTML). Instead the
+  title link's ::after stretches over the whole card (.rcard-link in
+  custom.css) and the chip sits above that overlay.
+
+  Essays (layouts/essays/list.html) use this card too: the top row is the
+  essay's format, from its folder (food-memories/ -> "food memories"),
+  and the stat line is its reading time.
+
+  Reference guides (layouts/reference/list.html) too: the "reference"
+  tag every guide carries is skipped, and the stat line is reading time.
+
+  Food Log months (layouts/the-food-log/list.html) too: the middle uses
+  the same intro fallback as everything else (frontmatter summary, else
+  the file's first paragraph before its first heading) rather than a
+  day/heading list, and the stat line is the day count and reading time.
+
+  The win-the-fridge tag (partials/principle-chip.html) claims a top-row
+  slot the same way cuisine does, and is dropped from the plain $tags
+  list so it isn't shown twice.
+
+  A pinned page (frontmatter `pinned: true`, see DESIGN.md) gets a small
+  thumbtack icon (.pin-icon) at the end of the top row — unlinked, faint,
+  outside the cuisine/principle $room budget since it's icon-only and
+  tiny.
+*/}}
+{{ $isEssay := eq .Section "essays" }}
+{{ $isLog := eq .Section "the-food-log" }}
+{{ $isRef := eq .Section "reference" }}
+{{ $title := .Title }}
+{{ $slots := 2 }}
+{{ $cuisine := .Params.cuisine }}
+{{ $principle := partial "principle-chip.html" (dict "page" . "compact" true) }}
+{{ $tags := slice }}
+{{ range .Params.tags }}
+  {{ if and $isRef (eq (lower .) "reference") }}{{ continue }}{{ end }}
+  {{ if eq (lower .) "win-the-fridge" }}{{ continue }}{{ end }}
+  {{ if not (and $cuisine (eq (lower .) (lower $cuisine))) }}{{ $tags = $tags | append . }}{{ end }}
+{{ end }}
+{{ if $isEssay }}
+  {{ $folder := path.Base (strings.TrimSuffix "/" .File.Dir) }}
+  {{ $tags = cond (eq $folder "essays") (slice) (slice (replace $folder "-" " ")) }}
+{{ end }}
+{{ $room := $slots }}
+{{ if ne $cuisine nil }}{{ $room = sub $room 1 }}{{ end }}
+{{ if ne (len (trim $principle " \n\t")) 0 }}{{ $room = sub $room 1 }}{{ end }}
+
+{{ $intro := .Params.summary | default .Description }}
+{{ if not $intro }}
+  {{ $head := index (split .RawContent "\n## ") 0 | strings.TrimSpace }}
+  {{ if and $head (not (hasPrefix $head "#")) }}
+    {{ $intro = index (split $head "\n\n") 0 }}
+  {{ end }}
+{{ end }}
+{{ with $intro }}
+  {{ $intro = replaceRE `\[\[(?:[^\]|]*\|)?([^\]]+)\]\]` "$1" . | markdownify | plainify | htmlUnescape | truncate 240 }}
+{{ end }}
+
+{{ $stats := slice }}
+{{ range slice (slice "Prep" .Params.prep_time) (slice "Cook" .Params.cook_time) (slice "Serves" .Params.servings) }}
+  {{ $v := index . 1 }}
+  {{ if $v }}
+    {{ $v = string $v | replaceRE `\s*\([^)]*\)?` "" | strings.TrimSpace }}
+    {{ if ne (index . 0) "Serves" }}
+      {{ $v = $v | replaceRE `(?i)\s*(minutes?|mins?)\b` "m" | replaceRE `(?i)\s*(hours?|hrs?)\b` "h" | replaceRE `\s*-\s*` "-" }}
+    {{ end }}
+    {{ $stats = $stats | append (dict "label" (index . 0) "value" $v "full" (string (index . 1))) }}
+  {{ end }}
+{{ end }}
+
+{{ if $isLog }}
+  {{ $month := partial "reading-sidebar/log-month.html" . }}
+  {{ $days := $month.days }}
+  {{ $n := cond (gt (len $days) 0) (string (len $days)) "—" }}
+  {{ $stats = slice (dict "label" "Days" "value" $n "full" (cond (gt (len $days) 0) $n "undated")) (dict "label" "Read" "value" (printf "%dm" .ReadingTime) "full" (printf "%d min" .ReadingTime)) }}
+{{ end }}
+{{ if or $isEssay $isRef }}
+  {{ $stats = slice (dict "label" "Read" "value" (printf "%dm" .ReadingTime) "full" (printf "%d min" .ReadingTime)) }}
+{{ end }}
+
+<article class="rcard">
+  <div class="rcard-top">
+    {{ with $cuisine }}{{ with $.GetTerms "cuisine" }}<a class="cuisine-chip" href="{{ (index . 0).RelPermalink }}">{{ $cuisine }}</a>{{ else }}<span class="cuisine-chip">{{ . }}</span>{{ end }}{{ end }}
+    {{ $principle | safeHTML }}
+    {{ range first $room $tags }}<span class="tag">{{ . }}</span>{{ end }}
+    {{ if gt (len $tags) $room }}<span class="tag tag-more">+{{ sub (len $tags) $room }}</span>{{ end }}
+    {{ if .Params.pinned }}<span class="pin-icon" title="Pinned">{{ `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg>` | safeHTML }}</span>{{ end }}
+  </div>
+  <h3 class="rcard-title"><a class="rcard-link" href="{{ .RelPermalink }}">{{ $title }}</a></h3>
+  {{ with $intro }}<p class="rcard-intro">{{ . }}</p>{{ end }}
+  {{ with $stats }}
+    <div class="rcard-stats">
+      {{ range . }}
+        <div class="rcard-stat" title="{{ .label }}: {{ .full }}"><b>{{ .label }}</b><span>{{ .value }}</span></div>
+      {{ end }}
+    </div>
+  {{ end }}
+</article>

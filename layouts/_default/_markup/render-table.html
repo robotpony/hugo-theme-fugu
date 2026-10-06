@@ -1,0 +1,39 @@
+{{/*
+  Wraps every markdown table in a scroll container. Tables stay
+  display: inline-table (custom.css) so columns size from their content,
+  but overflow-x has no effect on a table box — a wide reference table
+  (flour-protein-content, 6 columns) pushed the whole page sideways on a
+  phone. The wrapper is a plain block, so it can scroll instead.
+  assets/js/ingredients.js looks through .table-scroll to find the table.
+*/}}
+<div class="table-scroll">
+<table
+  {{- range $k, $v := .Attributes }}
+    {{- if $v }}
+      {{- printf " %s=%q" $k (string $v) | safeHTMLAttr }}
+    {{- end }}
+  {{- end }}>
+  <thead>
+    {{- range .THead }}
+      <tr>
+        {{- range . }}
+          <th {{- with .Alignment }} style="text-align: {{ . }}" {{- end }}>
+            {{- .Text -}}
+          </th>
+        {{- end }}
+      </tr>
+    {{- end }}
+  </thead>
+  <tbody>
+    {{- range .TBody }}
+      <tr>
+        {{- range . }}
+          <td {{- with .Alignment }} style="text-align: {{ . }}" {{- end }}>
+            {{- .Text -}}
+          </td>
+        {{- end }}
+      </tr>
+    {{- end }}
+  </tbody>
+</table>
+</div>

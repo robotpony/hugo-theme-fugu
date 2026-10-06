@@ -1,0 +1,19 @@
+{{/*
+  Flattens .Fragments.Headings into a list of level 2 and 3 headings, in
+  page order, for the reading sidebar's "On this page" and the Food Log's
+  day list. Takes a slice of heading nodes; returns a slice of dicts
+  (id, title, level). Recurses through children, since Hugo nests each
+  heading under the nearest shallower one (h2s under an implicit h1).
+*/}}
+{{ $out := slice }}
+{{ range . }}
+  {{ if and (ge .Level 2) (le .Level 3) .ID }}
+    {{ $out = $out | append (dict "id" .ID "title" (.Title | plainify | htmlUnescape) "level" .Level) }}
+  {{ end }}
+  {{ with .Headings }}
+    {{ range partial "reading-sidebar/headings.html" . }}
+      {{ $out = $out | append . }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ return $out }}

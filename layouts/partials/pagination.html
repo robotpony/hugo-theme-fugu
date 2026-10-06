@@ -1,0 +1,54 @@
+{{/*
+  Override of themes/blowfish/layouts/partials/pagination.html.
+
+  The default is bare Tailwind utility classes (mx-1, no padding, no
+  border) — page numbers sit almost touching with no real target size or
+  visual weight. No mockup covers this (recipe/reference listing pages are
+  still Blowfish's default layout, Phase 6.2); restyled as pills matching
+  `.filter-pill`'s treatment (STYLE.md) since it's small, self-contained,
+  and was visibly broken in the meantime.
+
+  The wrapping .list-pagination-spacer always renders, with the <ul>
+  itself conditional inside it: list.html/term.html call this partial as
+  the last thing before the footer with nothing else providing bottom
+  spacing, so a single-page listing (no <ul> at all) was butting straight
+  up against the footer. The spacer's padding (not margin, so it can't
+  collapse away on an empty element) is what actually reserves the gap;
+  .list-pagination itself carries no vertical margin of its own.
+*/}}
+<div class="list-pagination-spacer">
+  {{- if gt .Paginator.TotalPages 1 -}}
+    <ul class="list-pagination">
+      {{- .Scratch.Set "paginator.ellipsed" false -}}
+      {{ if $.Paginator.HasPrev }}
+        <li>
+          <a href="{{ $.Paginator.Prev.URL }}" class="list-pagination-link" rel="prev">&larr;</a>
+        </li>
+      {{ end }}
+      {{- range $.Paginator.Pagers -}}
+        {{- $right := sub .TotalPages .PageNumber -}}
+        {{- $showNumber := or (le .PageNumber 1) (eq $right 0) -}}
+        {{- $showNumber := or $showNumber (and (gt .PageNumber (sub $.Paginator.PageNumber 3)) (lt .PageNumber (add $.Paginator.PageNumber 3))) -}}
+        {{- if $showNumber -}}
+          {{- $.Scratch.Set "paginator.ellipsed" false -}}
+          {{- $.Scratch.Set "paginator.shouldEllipse" false -}}
+        {{- else -}}
+          {{- $.Scratch.Set "paginator.shouldEllipse" (not ($.Scratch.Get "paginator.ellipsed") ) -}}
+          {{- $.Scratch.Set "paginator.ellipsed" true -}}
+        {{- end -}}
+        {{- if $showNumber -}}
+          <li>
+            <a href="{{ .URL }}" class="list-pagination-link{{ if eq . $.Paginator }} list-pagination-current{{ end }}">{{ .PageNumber }}</a>
+          </li>
+        {{- else if ($.Scratch.Get "paginator.shouldEllipse") -}}
+          <li><span class="list-pagination-ellipsis" aria-hidden="true">&hellip;</span></li>
+        {{- end -}}
+      {{- end -}}
+      {{ if $.Paginator.HasNext }}
+        <li>
+          <a href="{{ $.Paginator.Next.URL }}" class="list-pagination-link" rel="next">&rarr;</a>
+        </li>
+      {{ end }}
+    </ul>
+  {{- end -}}
+</div>

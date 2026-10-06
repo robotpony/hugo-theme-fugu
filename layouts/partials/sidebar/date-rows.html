@@ -1,0 +1,32 @@
+{{/*
+  Date and Updated rows for a sidebar meta rail (recipe sidebar in
+  single.html, reading sidebar in partials/reading-sidebar.html). Returns
+  a slice of (label, value) dicts, same shape as the recipe meta rows.
+
+  Date is the `date` front-matter field: when the page was added
+  (FORMAT.md). Updated is .Lastmod, which comes from the file's last git
+  commit (enableGitInfo in hugo.toml); it's only shown when it falls on a
+  different day, so a page that hasn't changed since it was added shows
+  one date. An uncommitted file has no git date and shows Date only.
+
+  Food Log pages cover a month or a season, not a day: they show the
+  month ("September 2026"), or the page title for season files
+  ("Fall and winter 2021"), whose `date` is only a sort position.
+*/}}
+{{ $rows := slice }}
+{{ $fmt := ":date_long" }}
+{{ with .Date }}
+  {{ if not .IsZero }}
+    {{ $value := . | time.Format $fmt }}
+    {{ if eq $.Section "the-food-log" }}
+      {{ $value = cond (findRE `(?i)-(spring|summer|fall|winter)$` $.File.ContentBaseName) $.Title (. | time.Format "January 2006") }}
+    {{ end }}
+    {{ $rows = $rows | append (dict "label" "Date" "value" $value) }}
+  {{ end }}
+{{ end }}
+{{ with .Lastmod }}
+  {{ if and (not .IsZero) (ne (. | time.Format "2006-01-02") ($.Date | time.Format "2006-01-02")) }}
+    {{ $rows = $rows | append (dict "label" "Updated" "value" (. | time.Format $fmt)) }}
+  {{ end }}
+{{ end }}
+{{ return $rows }}

@@ -1,0 +1,12 @@
+name = "Fugu"
+license = "MIT"
+licenselink = "https://github.com/robotpony/hugo-theme-fugu/blob/main/LICENSE"
+description = "A cookbook theme for Blowfish: recipe pages, ingredient scaling and unit conversion, formula diagrams, and wiki links."
+homepage = "https://github.com/robotpony/hugo-theme-fugu"
+tags = ["blog", "recipes", "cookbook", "food", "blowfish"]
+features = ["recipes", "ingredient scaling", "unit conversion", "wiki links", "dark mode"]
+min_version = "0.158.0"  # Blowfish's minimum; Fugu has not been tested below 0.166
+
+[author]
+  name = "Bruce Alderson"
+  homepage = "https://warpedvisions.org"

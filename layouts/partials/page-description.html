@@ -1,0 +1,44 @@
+{{/*
+  One plain-text description per page, shared by the meta description
+  (head.html) and the Open Graph / Twitter tags (social.html).
+
+  Order: frontmatter `description`, then the page's intro (the prose before
+  its first heading), then a fallback by page kind. Hugo's .Summary isn't
+  used for pages: it cuts at summaryLength words and runs straight on into
+  "Ingredients 2 tablespoons…" on recipes with a short intro.
+
+  The intro drops blockquotes (family backstory, hidden by default) and
+  shortcodes, and reduces [[wiki links]] to their text, since wiki links are
+  only converted when single.html renders the body.
+*/}}
+{{ $d := .Description }}
+{{ if and (not $d) .IsPage }}
+  {{ $intro := replaceRE `(?ms)^#{1,6}\s.*` "" .RawContent }}
+  {{ $intro = replaceRE `(?m)^>.*$` "" $intro }}
+  {{ $intro = replaceRE `(?s)\{\{[<%].*?[%>]\}\}` "" $intro }}
+  {{ $intro = replaceRE `\[\[(?:[^\]|]*\|)?([^\]]+)\]\]` "$1" $intro }}
+  {{ $intro = $intro | markdownify | plainify | htmlUnescape }}
+  {{ $intro = replaceRE `\s+` " " $intro | strings.TrimSpace }}
+  {{/* Too short to describe anything: a food log month's "_Undated._" */}}
+  {{ if ge (len $intro) 20 }}
+    {{ $d = $intro }}
+  {{ else if eq .Section "recipes" }}
+    {{ $d = printf "%s, a recipe from %s." .Title site.Title }}
+  {{ else if eq .Section "the-food-log" }}
+    {{/* A month of the log is a run of ### entries; list them. */}}
+    {{ $entries := slice }}
+    {{ range findRESubmatch `(?m)^#{2,3}\s+(.+)$` .RawContent }}
+      {{ $entries = $entries | append (index . 1 | plainify | strings.TrimSpace) }}
+    {{ end }}
+    {{ $d = printf "Kitchen notes from %s: %s." .Title (delimit $entries ", ") }}
+  {{ end }}
+{{ end }}
+{{ if and (not $d) (eq .Kind "term") }}
+  {{ if eq .Data.Plural "cuisine" }}
+    {{ $d = printf "%s recipes from %s." .Title site.Title }}
+  {{ else }}
+    {{ $d = printf "Recipes and notes tagged “%s” in %s." .Title site.Title }}
+  {{ end }}
+{{ end }}
+{{ $d = $d | default site.Params.description }}
+{{ return (truncate 160 $d) }}

@@ -1,0 +1,98 @@
+{{/*
+  Formula diagrams: a ```formula fenced block drawn as one row of icons
+  joined by +, : or →, with the label and quantity under each icon
+  (mockups/formula-diagrams.html, mockups/STYLE.md's "Formula diagram").
+
+  One slot per line, `icon | label | quantity | swaps`, with the operator
+  at the start of every line after the first:
+
+    can          | Beans   | 1 can         | black, pinto, chickpea
+    + bowl       | Starch  | 1 cup         | rice, mash, quinoa
+    + crumbs egg | Binder  | ½ cup + 1 egg | or gluten + oats
+    = patty      | Patties | 6
+    caption: Per can of beans
+    bar: yes
+
+  One operator per block (+, : or →; -> works too), plus an optional
+  closing `=` result. Icons are assets/icons/formula/<key>.svg, inlined so
+  they pick up currentColor and the theme tokens. An unknown key draws a
+  dashed circle and warns, so a typo shows up in review instead of
+  breaking the page. Obsidian shows the block as plain text.
+*/}}
+{{- $slots := slice }}
+{{- $kind := "" }}
+{{- $caption := "" }}
+{{- $bar := false }}
+{{- range split .Inner "\n" }}
+  {{- $line := trim . " \t\r" }}
+  {{- if not $line }}{{ continue }}{{ end }}
+  {{- if hasPrefix $line "caption:" }}
+    {{- $caption = trim (strings.TrimPrefix "caption:" $line) " " }}
+    {{- continue }}
+  {{- end }}
+  {{- if hasPrefix $line "bar:" }}
+    {{- $bar = in (slice "yes" "true") (trim (strings.TrimPrefix "bar:" $line) " ") }}
+    {{- continue }}
+  {{- end }}
+  {{- $op := "" }}
+  {{- with findRESubmatch `^(\+|:|→|->|=)\s+(.*)$` $line 1 }}
+    {{- $op = index (index . 0) 1 }}
+    {{- $line = index (index . 0) 2 }}
+  {{- end }}
+  {{- if eq $op "->" }}{{ $op = "→" }}{{ end }}
+  {{- if and $op (ne $op "=") }}
+    {{- if and $kind (ne $kind $op) }}
+      {{- warnf "formula: mixed operators (%s and %s) at %s" $kind $op $.Position }}
+    {{- else }}
+      {{- $kind = $op }}
+    {{- end }}
+  {{- end }}
+  {{- $f := slice }}
+  {{- range split $line "|" }}{{ $f = $f | append (trim . " ") }}{{ end }}
+  {{- $slot := dict "op" $op "icons" (findRE `[a-z-]+` (index $f 0)) "label" "" "qty" "" "swaps" slice }}
+  {{- if ge (len $f) 2 }}{{ $slot = merge $slot (dict "label" (index $f 1)) }}{{ end }}
+  {{- if ge (len $f) 3 }}{{ $slot = merge $slot (dict "qty" (index $f 2)) }}{{ end }}
+  {{- if ge (len $f) 4 }}
+    {{- $sw := slice }}
+    {{- range split (index $f 3) "," }}{{ with trim . " " }}{{ $sw = $sw | append . }}{{ end }}{{ end }}
+    {{- $slot = merge $slot (dict "swaps" $sw) }}
+  {{- end }}
+  {{- $slots = $slots | append $slot }}
+{{- end }}
+{{- if gt (len $slots) 5 }}
+  {{- warnf "formula: %d slots at %s; more than five won't fit the sidebar" (len $slots) .Position }}
+{{- end }}
+
+{{- $variant := "add" }}
+{{- if eq $kind ":" }}{{ $variant = "ratio" }}{{ else if eq $kind "→" }}{{ $variant = "seq" }}{{ end }}
+{{- $words := dict "+" "plus" ":" "to" "→" "then" "=" "makes" }}
+{{- $aria := slice }}
+{{- range $slots }}
+  {{- $part := trim (printf "%s %s" .label .qty) " " }}
+  {{- with .op }}{{ $part = printf "%s %s" (index $words .) $part }}{{ end }}
+  {{- $aria = $aria | append $part }}
+{{- end }}
+
+<figure class="formula formula-{{ $variant }}" role="img" aria-label="{{ delimit $aria ", " }}">
+  <div class="formula-row">
+    {{- range $i, $s := $slots }}
+      {{- if eq $i 0 }}
+        {{- partial "formula-slot.html" (dict "slot" $s "variant" $variant "pos" $.Position) }}
+      {{- else }}
+        <div class="f-step">
+          <span class="f-op{{ if eq $s.op "=" }} f-eq{{ end }}" aria-hidden="true">{{ $s.op }}</span>
+          {{- partial "formula-slot.html" (dict "slot" $s "variant" $variant "pos" $.Position) }}
+        </div>
+      {{- end }}
+    {{- end }}
+  </div>
+  {{- if and $bar (eq $variant "ratio") }}
+    <div class="f-bar" aria-hidden="true">
+      {{- range $slots }}
+        {{- $n := replace (replace (replace .qty "½" ".5") "¼" ".25") "¾" ".75" }}
+        {{- with findRE `^[0-9.]+` $n 1 }}<span style="flex: {{ index . 0 | float }}"></span>{{ end }}
+      {{- end }}
+    </div>
+  {{- end }}
+  {{- with $caption }}<figcaption class="f-cap">{{ . }}</figcaption>{{ end }}
+</figure>

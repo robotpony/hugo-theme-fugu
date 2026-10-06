@@ -1,0 +1,36 @@
+{{/*
+  Override of themes/blowfish/layouts/partials/article-pagination.html.
+
+  The default is bare Tailwind utility classes with no padding, a thin
+  dotted <hr>, and no distinct visual weight — it reads as unstyled
+  boilerplate sitting inside an otherwise designed page. No mockup ever
+  covered this component (recipe/essay/reference single pages are still
+  Blowfish's default layout, Phase 6.2 in PLAN.md) — restyled it here
+  against the established system (section divider + generous padding like
+  `.home-section`, arrow-link treatment like `.mega-viewall`) since it's
+  small, self-contained, and was visibly broken in the meantime.
+*/}}
+{{ if .Params.showPagination | default (.Site.Params.article.showPagination | default true) }}
+  {{ if or .NextInSection .PrevInSection }}
+    {{ $next := .NextInSection }}
+    {{ $prev := .PrevInSection }}
+    {{ if .Params.invertPagination | default (.Site.Params.article.invertPagination | default false) }}
+      {{ $next = .PrevInSection }}
+      {{ $prev = .NextInSection }}
+    {{ end }}
+    <div class="article-pagination">
+      {{ if $prev }}
+        <a class="article-pagination-link" href="{{ $prev.RelPermalink }}">
+          <span class="article-pagination-label">&larr; Previous</span>
+          <span class="article-pagination-title">{{ $prev.Title | emojify }}</span>
+        </a>
+      {{ else }}<span></span>{{ end }}
+      {{ if $next }}
+        <a class="article-pagination-link article-pagination-next" href="{{ $next.RelPermalink }}">
+          <span class="article-pagination-label">Next &rarr;</span>
+          <span class="article-pagination-title">{{ $next.Title | emojify }}</span>
+        </a>
+      {{ end }}
+    </div>
+  {{ end }}
+{{ end }}

@@ -1,0 +1,30 @@
+{{/* One slot of a formula diagram; called by layouts/_default/_markup/render-codeblock-formula.html with dict "slot" "variant" "pos". */}}
+{{- $s := .slot }}
+<div class="f-slot{{ if eq $s.op "=" }} f-result{{ end }}">
+  <span class="f-icons{{ if gt (len $s.icons) 1 }} f-pair{{ end }}">
+    {{- range $s.icons }}
+      {{- with resources.Get (printf "icons/formula/%s.svg" .) }}
+        {{- replace .Content "<svg " `<svg class="ic" aria-hidden="true" focusable="false" ` | safeHTML }}
+      {{- else }}
+        {{- warnf "formula: unknown icon %q at %s" . $.pos }}
+        <svg class="ic ic-missing" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><circle cx="24" cy="24" r="14" stroke-dasharray="4 4"/></svg>
+      {{- end }}
+    {{- end }}
+  </span>
+  {{- if eq $.variant "ratio" }}
+    {{- with $s.qty }}<span class="f-num">{{ . }}</span>{{ end }}
+    {{- with $s.label }}<span class="f-label">{{ . }}</span>{{ end }}
+  {{- else }}
+    {{- with $s.label }}<span class="f-label">{{ . }}</span>{{ end }}
+    {{- with $s.qty }}
+      {{- if and (eq $.variant "seq") (not (findRE `^[0-9½¼¾⅓⅔]` .)) }}
+        <span class="f-sub">{{ . }}</span>
+      {{- else }}
+        <span class="f-qty">{{ . }}</span>
+      {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- with $s.swaps }}
+    <span class="f-or">{{ range . }}<span>{{ . }}</span>{{ end }}</span>
+  {{- end }}
+</div>

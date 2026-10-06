@@ -1,0 +1,15 @@
+{{/*
+  Which sidebar a page gets: "recipe" (single.html's recipe sidebar),
+  "reading" (partials/reading-sidebar.html: essays, reference guides, the
+  Food Log, About), or "" (everything else, including the home page, which
+  doesn't render through single.html at all). Shared by single.html and
+  render-heading.html so the heading marks and the slots they target
+  always agree on which pages have a sidebar.
+*/}}
+{{ $kind := "" }}
+{{ if eq .Section "recipes" }}
+  {{ $kind = "recipe" }}
+{{ else if or (in (slice "essays" "reference" "the-food-log") .Section) (and (eq .Section "") (eq .Kind "page")) }}
+  {{ $kind = "reading" }}
+{{ end }}
+{{ return $kind }}

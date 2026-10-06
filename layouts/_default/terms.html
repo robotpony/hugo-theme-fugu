@@ -1,0 +1,45 @@
+{{/*
+  Taxonomy term listing (tags, cuisine) — overrides the Blowfish theme's
+  card-grid terms.html. STYLE.md ratifies .browse-list (label + right-
+  aligned mono count) as the only taxonomy-browse pattern, used on the
+  homepage's "By cuisine" section; this reuses it here instead of the
+  theme's default shadowed card component, which never matched the site's
+  design system.
+*/}}
+{{ define "main" }}
+  {{ .Scratch.Set "scope" "terms" }}
+  {{ $showHero := .Params.showHero | default site.Params.taxonomy.showHero | default false }}
+  {{ if $showHero }}
+    {{ $heroStyle := print "hero/" site.Params.taxonomy.heroStyle ".html" }}
+    {{ if templates.Exists ( printf "partials/%s" $heroStyle ) }}
+      {{ partial $heroStyle . }}
+    {{ else }}
+      {{ partial "hero/basic.html" . }}
+    {{ end }}
+  {{- end -}}
+
+  <header class="mt-5">
+    {{ if .Params.showBreadcrumbs | default (site.Params.taxonomy.showBreadcrumbs | default false) }}
+      {{ partial "breadcrumbs.html" . }}
+    {{ end }}
+    <h1 class="mt-5 text-4xl font-extrabold text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
+    <div class="mt-1 mb-2 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
+      {{ partial "article-meta/taxonomy.html" (dict "context" . "scope" "single") }}
+    </div>
+  </header>
+  {{ if .Content }}
+    <section class="flex flex-col max-w-full mt-0 prose dark:prose-invert lg:flex-row">
+      <div class="min-w-0 min-h-0 max-w-prose">
+        {{ .Content }}
+      </div>
+    </section>
+  {{ end }}
+
+  <section class="browse-grid mb-8">
+    {{ range .Data.Terms }}
+      <div class="browse-list">
+        <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }} <span class="n">{{ .Count }}</span></a>
+      </div>
+    {{ end }}
+  </section>
+{{ end }}

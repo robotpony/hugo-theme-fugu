@@ -1,0 +1,24 @@
+{{/*
+  Label, sort key, and days for one Food Log page. Log files are named by
+  month (content/the-food-log/2026-September.md) and titled in frontmatter
+  ("September 2026"); the sort key comes from the filename. Days are the
+  page's h2s ("Friday, September 18th"), minus any "Undated" section, so
+  an undated month or season has none.
+*/}}
+{{ $name := .File.ContentBaseName }}
+{{ $label := .Title | default ($name | humanize) }}
+{{ $key := 0 }}
+{{ with findRESubmatch `^(\d{4})-([A-Za-z]+)$` $name 1 }}
+  {{ $year := index (index . 0) 1 }}
+  {{ $month := index (index . 0) 2 }}
+  {{/* Undated years use season files (2024-Fall.md); each sorts at its last month. */}}
+  {{ $months := dict "january" 1 "february" 2 "march" 3 "april" 4 "may" 5 "june" 6 "july" 7 "august" 8 "september" 9 "october" 10 "november" 11 "december" 12 "spring" 6 "summer" 8 "fall" 10 "winter" 12 }}
+  {{ $key = add (mul (int $year) 100) (index $months (lower $month) | default 0) }}
+{{ end }}
+{{ $days := slice }}
+{{ $entries := slice }}
+{{ range partial "reading-sidebar/headings.html" .Fragments.Headings }}
+  {{ if and (eq .level 2) (ne (lower .title) "undated") }}{{ $days = $days | append .title }}{{ end }}
+  {{ if eq .level 3 }}{{ $entries = $entries | append .title }}{{ end }}
+{{ end }}
+{{ return dict "label" $label "key" $key "page" . "days" $days "entries" $entries }}

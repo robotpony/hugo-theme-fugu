@@ -1,0 +1,28 @@
+{{- $recipes := slice -}}
+{{- range .RegularPages.ByTitle -}}
+  {{- $raw := .RawContent -}}
+  {{- $recipe := dict
+    "title"          .Title
+    "slug"           .File.ContentBaseName
+    "date"           (cond (not .Date.IsZero) (.Date.Format "2006-01-02") "")
+    "tags"           .Params.tags
+    "cuisine"        .Params.cuisine
+    "servings"       .Params.servings
+    "portions"       .Params.portions
+    "source"         .Params.source
+    "prep_time"      .Params.prep_time
+    "cook_time"      .Params.cook_time
+    "draft"          .Draft
+    "word_count"     .WordCount
+    "has_mechanic"   (strings.Contains $raw "## Mechanic")
+    "has_variations" (strings.Contains $raw "## Variations")
+    "has_notes"      (strings.Contains $raw "## Notes")
+    "has_formula"    (strings.Contains $raw "```formula")
+  -}}
+  {{- $recipes = $recipes | append $recipe -}}
+{{- end -}}
+{{- dict
+    "generated" (now.Format "2006-01-02")
+    "count"     (len $recipes)
+    "recipes"   $recipes
+  | jsonify (dict "indent" "  ") -}}

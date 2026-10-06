@@ -1,0 +1,78 @@
+{{ define "main" }}
+{{/*
+  Single taxonomy term (/cuisine/x/, /tags/x/) — overrides Blowfish's
+  term.html (article-link rows/cards) with the same layout as the recipes
+  list (layouts/recipes/list.html): .ltitle header and the shared recipe
+  card in the .rgrid. The search box searches the whole site, not just
+  this term, so it gets the site-wide recipe count.
+
+  /tags/win-the-fridge/ is special-cased (mockups/win-the-fridge.html):
+  its content/tags/win-the-fridge/_index.md sets `principle: true`, which
+  swaps the plain description line for a definition callout (the
+  _index.md body content) linking to the reference essay, and appends a
+  "Reference & further reading" list below the recipe grid for anything
+  else on the tag that isn't a recipe. No other tag sets this frontmatter
+  field, so every other term page renders exactly as before.
+*/}}
+{{ .Scratch.Set "scope" "term" }}
+{{ $isPrinciple := .Params.principle }}
+{{ $allRecipes := eq (len (where .Pages "Section" "recipes")) (len .Pages) }}
+{{ $recipePages := where .Pages "Section" "recipes" }}
+{{/* Pinned pages (frontmatter `pinned: true`) float to the top of a term
+  listing too; everything else keeps its existing relative order. See
+  DESIGN.md. */}}
+{{ $recipePages = (where $recipePages "Params.pinned" true) | append (where $recipePages "Params.pinned" "!=" true) }}
+{{ $allPages := (where .Pages "Params.pinned" true) | append (where .Pages "Params.pinned" "!=" true) }}
+{{ $pager := "" }}
+{{ if $isPrinciple }}
+  {{ $pager = .Paginate $recipePages 16 }}
+{{ else }}
+  {{ $pager = .Paginate $allPages 16 }}
+{{ end }}
+<section class="listing">
+  <header class="listing-head">
+    {{/* Cuisine pages read "Canadian cuisine", the suffix in the accent red. */}}
+    <h1 class="ltitle">{{ .Title }}{{ if eq .Data.Plural "cuisine" }} <span class="ltitle-kind">cuisine</span>{{ end }}{{ if $isPrinciple }} <span class="ltitle-kind ltitle-kind-principle">principle</span>{{ end }}</h1>
+    <span class="listing-count">{{ if $isPrinciple }}{{ len $recipePages }} recipes{{ else }}{{ len .Pages }} {{ cond $allRecipes "recipes" "entries" }}{{ end }}{{ if gt $pager.TotalPages 1 }} · page {{ $pager.PageNumber }} of {{ $pager.TotalPages }}{{ end }}</span>
+  </header>
+  {{ if $isPrinciple }}
+    <div class="definition-callout max-w-prose">
+      <span class="definition-callout-label">Definition</span>
+      {{ .Content }}
+      {{ with site.GetPage "/essays/reference-essays/win-the-fridge" }}<a class="read-essay" href="{{ .RelPermalink }}">Read the full essay →</a>{{ end }}
+    </div>
+    <h3 class="subsection-title">Recipes that follow this principle</h3>
+  {{ else }}
+    {{/* Tagline: the term's own description (content/cuisine/<name>/_index.md)
+      if one exists, else the recipes section's (content/recipes/_index.md),
+      so the header lines up with the recipes list. */}}
+    {{ with .Description | default (site.GetPage "/recipes").Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
+  {{ end }}
+  <div class="listing-search">{{ partial "search-box.html" (len (where site.RegularPages "Section" "recipes")) }}</div>
+  <div class="rgrid">
+    {{ range $pager.Pages }}
+      {{ partial "recipe-card.html" . }}
+    {{ end }}
+  </div>
+  {{ partial "pagination.html" . }}
+  {{ if $isPrinciple }}
+    {{ $essay := site.GetPage "/essays/reference-essays/win-the-fridge" }}
+    {{ $further := slice }}
+    {{ range $allPages }}
+      {{ if ne .Section "recipes" }}
+        {{ if not (and $essay (eq .RelPermalink $essay.RelPermalink)) }}
+          {{ $further = $further | append . }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+    {{ with $further }}
+      <h3 class="subsection-title" style="margin-top:32px;">Reference &amp; further reading</h3>
+      <div class="ref-list">
+        {{ range . }}
+          <div class="ref-row"><span class="ref-kind">{{ cond (eq .Section "reference") "Reference" "Essay" }}</span><a href="{{ .RelPermalink }}">{{ .Title }}</a></div>
+        {{ end }}
+      </div>
+    {{ end }}
+  {{ end }}
+</section>
+{{ end }}

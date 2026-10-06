@@ -1,0 +1,50 @@
+{{/*
+  Overrides themes/blowfish/layouts/_default/_markup/render-image.html.
+
+  Every markdown image renders as a plain <figure data-sidebar-photo>,
+  inline where it was written. On pages with a sidebar,
+  assets/js/automagic-sidebar.js (initPhotos) turns these into the
+  sidebar's Photos module and a pop-over viewer, and leaves a small
+  "Photo N" marker in the text (mockups/sidebar-images.html). Without JS,
+  and in print, the figures stay inline.
+
+  static/images is mounted into assets as well (config/_default/hugo.toml),
+  so resources.Get finds these files and can make smaller copies: a 480px
+  wide thumbnail and a display copy capped at 1600px. SVG and GIF pass
+  through untouched.
+
+  nozoom keeps Blowfish's medium-zoom off these images on sidebar pages,
+  where the viewer replaces it.
+*/}}
+{{- $src := .Destination -}}
+{{- $alt := .Text -}}
+{{- $caption := .Title -}}
+{{- $full := $src -}}
+{{- $thumb := $src -}}
+{{- $w := 0 -}}
+{{- $h := 0 -}}
+{{- if not (urls.Parse $src).Scheme -}}
+  {{- with or ($.Page.Resources.GetMatch $src) (resources.Get (strings.TrimPrefix "/" $src)) -}}
+    {{- $full = .RelPermalink -}}
+    {{- $thumb = $full -}}
+    {{- if not (in (slice "svg" "gif") .MediaType.SubType) -}}
+      {{- $f := . -}}
+      {{- if gt .Width 1600 }}{{ $f = .Resize "1600x" }}{{ end -}}
+      {{- $t := . -}}
+      {{- if gt .Width 480 }}{{ $t = .Resize "480x" }}{{ end -}}
+      {{- $full = $f.RelPermalink -}}
+      {{- $thumb = $t.RelPermalink -}}
+      {{- $w = $f.Width -}}
+      {{- $h = $f.Height -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $sidebar := partial "sidebar/kind.html" .Page -}}
+<figure class="page-photo" data-sidebar-photo data-full="{{ $full }}" data-thumb="{{ $thumb }}"
+  {{- range $k, $v := .Attributes -}}
+    {{- if $v }}{{ printf " %s=%q" $k ($v | transform.HTMLEscape) | safeHTMLAttr }}{{ end -}}
+  {{- end -}}>
+  <img class="my-0 rounded-md{{ if $sidebar }} nozoom{{ end }}" src="{{ $full }}" alt="{{ $alt }}" loading="lazy" decoding="async"
+    {{- with $w }} width="{{ . }}"{{ end }}{{ with $h }} height="{{ . }}"{{ end }}>
+  {{- with $caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end -}}
+</figure>

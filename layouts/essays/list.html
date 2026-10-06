@@ -1,0 +1,31 @@
+{{ define "main" }}
+{{/*
+  Essays list: same layout as the recipes list (layouts/recipes/list.html),
+  listing header, tagline (_index.md description), search box, and the
+  shared card grid. Essays use recipe-card.html too; it swaps the
+  taxonomy row and stat line for the essay's format and reading time.
+*/}}
+{{ .Scratch.Set "scope" "list" }}
+{{/* Untitled pages (no frontmatter yet, e.g. edgar-wright-style-cookery.md)
+  would render as blank cards, so they're left out until they get a title. */}}
+{{ $essays := where .Pages "Title" "!=" "" }}
+{{/* Pinned essays (frontmatter `pinned: true`, e.g. the win-the-fridge
+  reference essay) float to the top, ahead of the normal date order;
+  everything else keeps its existing relative order. See DESIGN.md. */}}
+{{ $essays = (where $essays "Params.pinned" true) | append (where $essays "Params.pinned" "!=" true) }}
+{{ $pager := .Paginate $essays 16 }}
+<section class="listing">
+  <header class="listing-head">
+    <h1 class="ltitle">{{ .Title }}</h1>
+    <span class="listing-count">{{ len $essays }} {{ cond (eq (len $essays) 1) "essay" "essays" }}{{ if gt $pager.TotalPages 1 }} · page {{ $pager.PageNumber }} of {{ $pager.TotalPages }}{{ end }}</span>
+  </header>
+  {{ with .Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
+  <div class="listing-search">{{ partial "search-box.html" "Search recipes, essays, guides" }}</div>
+  <div class="rgrid">
+    {{ range $pager.Pages }}
+      {{ partial "recipe-card.html" . }}
+    {{ end }}
+  </div>
+  {{ partial "pagination.html" . }}
+</section>
+{{ end }}
