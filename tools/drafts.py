@@ -39,9 +39,13 @@ def find_drafts(paths):
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__.strip().splitlines()[0])
+    parser = argparse.ArgumentParser(
+        description=__doc__.strip().split(" — ", 1)[1],
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=fm.SITE_HELP)
     parser.add_argument("paths", nargs="*", help="specific files or dirs (default: all content)")
-    parser.add_argument("--json", action="store_true")
+    parser.add_argument("--json", action="store_true",
+                        help="print the drafts as a JSON list of {path, kind, title}")
     args = parser.parse_args()
 
     drafts = find_drafts(args.paths)

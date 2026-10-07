@@ -10,6 +10,14 @@
 
 set -euo pipefail
 
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  # The header comment above is the help text.
+  sed -n '2,/^$/{/^$/q;s/^# \{0,1\}//;p;}' "$0"
+  echo
+  echo "Needs ImageMagick 7 (magick) and exiftool."
+  exit 0
+fi
+
 MAX_EDGE=2000
 QUALITY=85
 

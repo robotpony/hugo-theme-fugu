@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
 frontmatter.py — Review and edit frontmatter across content/recipes,
-content/essays, and content/reference.
+content/essays, content/reference, and content/the-food-log.
 
-No third-party dependencies. Frontmatter in this vault is a flat YAML
+No third-party dependencies. Frontmatter on these sites is a flat YAML
 mapping (scalars, flow lists `[a, b, c]`, occasional block lists, one
 folded long value) — this parses exactly that subset, not general YAML.
 
@@ -40,6 +40,10 @@ def find_site_root():
 
 
 REPO_ROOT = find_site_root()
+
+# The --help epilog for this tool and drafts.py.
+SITE_HELP = ("Works on $FUGU_SITE_ROOT if set, else the nearest Hugo site at or\n"
+             "above the working directory (a folder with content/ and a Hugo config).")
 
 TOP_KEY_RE = re.compile(r"^([A-Za-z_][A-Za-z0-9_]*):[ \t]*(.*)$")
 BLOCK_ITEM_RE = re.compile(r"^[ \t]{2,}-[ \t]*(.*)$")
@@ -479,30 +483,38 @@ def cmd_unset(args):
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__.strip().splitlines()[0])
+    # The docstring's prose, without its own subcommand list (argparse
+    # prints one).
+    about = __doc__.strip().split(" — ", 1)[1].split("\n\nSubcommands:")[0]
+    parser = argparse.ArgumentParser(
+        description=about, formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=SITE_HELP)
     sub = parser.add_subparsers(dest="command", required=True)
 
     p_check = sub.add_parser("check", help="validate frontmatter across content/")
     p_check.add_argument("paths", nargs="*", help="specific files or dirs (default: all content)")
-    p_check.add_argument("--json", action="store_true")
+    p_check.add_argument("--json", action="store_true", help="print the issues as JSON")
     p_check.set_defaults(func=cmd_check)
 
     p_get = sub.add_parser("get", help="print a frontmatter field (or all fields)")
-    p_get.add_argument("file")
-    p_get.add_argument("field", nargs="?")
-    p_get.add_argument("--json", action="store_true")
+    p_get.add_argument("file", help="the content file to read")
+    p_get.add_argument("field", nargs="?", help="the field to print (default: all fields, as JSON)")
+    p_get.add_argument("--json", action="store_true", help="print the value as JSON")
     p_get.set_defaults(func=cmd_get)
 
     p_set = sub.add_parser("set", help="set a frontmatter field")
-    p_set.add_argument("file")
-    p_set.add_argument("field")
-    p_set.add_argument("value")
-    p_set.add_argument("--type", choices=["str", "int", "bool", "list"], default=None)
+    p_set.add_argument("file", help="the content file to change")
+    p_set.add_argument("field", help="the field to set; added if missing")
+    p_set.add_argument("value", help="the new value: `[a, b]` is a list, true/false a boolean, "
+                            "a whole number an int, anything else text")
+    p_set.add_argument("--type", choices=["str", "int", "bool", "list"], default=None,
+                       help="the value's type, instead of guessing it; with list, "
+                            "the value is written `a, b` without brackets")
     p_set.set_defaults(func=cmd_set)
 
     p_unset = sub.add_parser("unset", help="remove a frontmatter field")
-    p_unset.add_argument("file")
-    p_unset.add_argument("field")
+    p_unset.add_argument("file", help="the content file to change")
+    p_unset.add_argument("field", help="the field to remove")
     p_unset.set_defaults(func=cmd_unset)
 
     args = parser.parse_args()
