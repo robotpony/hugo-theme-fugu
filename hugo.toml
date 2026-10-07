@@ -12,6 +12,13 @@
   referenceSection = "reference"
   logSection = "the-food-log"
 
+  # Where wiki links look for glossary terms (see render-link.html): a
+  # folder in the essay section whose pages are reference essays, and a
+  # page in the reference section whose ## headings are short entries.
+  # "" turns either off.
+  referenceEssays = "reference-essays"
+  glossaryPage = "glossary"
+
   # The recipe sidebar's section boxes, top to bottom, under search and the
   # facts list. Each key takes the matching ## section out of the article
   # (photos: the page's images): to-serve, mechanic, variations, equipment,

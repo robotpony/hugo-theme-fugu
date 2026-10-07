@@ -13,12 +13,15 @@
   link opens in a new tab, as an .extlink, whatever
   article.externalLinkForceNewTab says.
 
-  Glossary popover: a [[Term]] that resolves to a reference essay (content/essays/reference-essays/)
-  renders as a .glossary-link with a hover/focus popover instead of a plain
+  Glossary popover: a [[Term]] that resolves to a reference essay (a page
+  in the essay section's params.fugu.referenceEssays folder, by default
+  content/essays/reference-essays/) renders as a .glossary-link with a hover/focus popover instead of a plain
   .wikilink — reference essays are themselves the "gets its own page" tier
   of the glossary. A [[Term]] that resolves to no page at all falls back to
-  checking headings in content/reference/glossary.md, the "doesn't get its
-  own page" tier, before giving up as a .broken-link.
+  checking ## headings in the glossary page (params.fugu.glossaryPage in the
+  reference section, by default content/reference/glossary.md), the
+  "doesn't get its own page" tier, before giving up as a .broken-link.
+  Either tier is off when its param or section is "".
 */}}
 
 {{ $destination := .Destination }}
@@ -51,7 +54,8 @@
   {{ end }}
   {{ if gt (len $matches) 0 }}
     {{ $target := index $matches 0 }}
-    {{ $isRefEssay := and (eq $target.Section "essays") (eq (path.Base (strings.TrimSuffix "/" $target.File.Dir)) "reference-essays") }}
+    {{ $refFolder := site.Params.fugu.referenceEssays | default "" }}
+    {{ $isRefEssay := and $refFolder (eq (partialCached "section/role.html" $target.Section $target.Section) "essay") (eq (path.Base (strings.TrimSuffix "/" $target.File.Dir)) $refFolder) }}
     {{ if $isRefEssay }}
       {{ $def := $target.Params.summary | default $target.Description }}
       {{ if not $def }}
@@ -66,7 +70,11 @@
       <a href="{{ $target.RelPermalink }}" class="wikilink">{{ $text }}</a>
     {{ end }}
   {{ else }}
-    {{ $glossary := site.GetPage "/reference/glossary" }}
+    {{ $glossary := "" }}
+    {{ $refSection := partial "section/name.html" "reference" }}
+    {{ with and $refSection site.Params.fugu.glossaryPage }}
+      {{ $glossary = site.GetPage (printf "/%s/%s" $refSection .) }}
+    {{ end }}
     {{ $entry := "" }}
     {{ with $glossary }}
       {{ $chunks := split .RawContent "\n## " }}
