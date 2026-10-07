@@ -5,13 +5,14 @@
   inline where it was written. On pages with a sidebar,
   assets/js/automagic-sidebar.js (initPhotos) turns these into the
   sidebar's Photos module and a pop-over viewer, and leaves a small
-  "Photo N" marker in the text (mockups/sidebar-images.html). Without JS,
+  "Photo N" marker in the text. Without JS,
   and in print, the figures stay inline.
 
-  static/images is mounted into assets as well (config/_default/hugo.toml),
-  so resources.Get finds these files and can make smaller copies: a 480px
-  wide thumbnail and a display copy capped at 1600px. SVG and GIF pass
-  through untouched.
+  An image in the page's bundle, or under assets/ (a site can mount
+  static/images there too with a [[module.mounts]] entry), is a resource,
+  so this can make smaller copies: a 480px wide thumbnail and a display
+  copy capped at 1600px. SVG and GIF pass through untouched. Anything else
+  is used as written, full size.
 
   nozoom keeps Blowfish's medium-zoom off these images on sidebar pages,
   where the viewer replaces it.

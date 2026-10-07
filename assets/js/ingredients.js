@@ -741,7 +741,7 @@
   // Kelvin conversion is fully implemented (toCelsius/fromCelsius above)
   // but is more of a joke than a real option for a home-cooking site — off
   // by default, flipped by single.html's data-enable-kelvin attribute
-  // (config/_default/params.toml's [recipe].enableKelvin), read in init().
+  // (the site's params.recipe.enableKelvin), read in init().
   var ENABLE_KELVIN = false;
   var GEAR_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
     'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
@@ -820,8 +820,7 @@
   // surface (buildPopupMenu, next to the first Ingredients heading) —
   // an earlier round of this branch also mounted a second, chrome-free
   // surface in the sidebar, which is why this is still a small
-  // attach/apply object rather than a single closure; see PLAN.md/
-  // STYLE.md history if that ever needs resurrecting.
+  // attach/apply object rather than a single closure.
   function createScaleUnitsController(pageKey) {
     // Units are a general taste, kept site-wide (like the theme toggle);
     // scale is specific to this recipe's yield, kept per-page.

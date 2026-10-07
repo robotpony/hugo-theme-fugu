@@ -1,10 +1,9 @@
 {{/*
   Taxonomy term listing (tags, cuisine) — overrides the Blowfish theme's
-  card-grid terms.html. STYLE.md ratifies .browse-list (label + right-
-  aligned mono count) as the only taxonomy-browse pattern, used on the
-  homepage's "By cuisine" section; this reuses it here instead of the
-  theme's default shadowed card component, which never matched the site's
-  design system.
+  card-grid terms.html with a .browse-list (label + right-aligned mono
+  count), a plain list that suits a taxonomy of short names better than
+  Blowfish's shadowed cards. A site's homepage can use the same class for
+  its own taxonomy lists, so there's one browse pattern throughout.
 */}}
 {{ define "main" }}
   {{ .Scratch.Set "scope" "terms" }}

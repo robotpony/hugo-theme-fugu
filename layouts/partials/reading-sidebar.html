@@ -1,5 +1,5 @@
 {{/*
-  Reading sidebar (mockups/reading-sidebar.html) for essays, reference
+  Reading sidebar for essays, reference
   guides, the Food Log, and About. Rendered by _default/single.html after
   the main column, so it sits level with the top of the body on desktop
   (the title block is above both columns) and falls below the article on
@@ -64,9 +64,8 @@
       </div>
     {{ end }}
   {{ else if and (not $isAbout) (gt (len $headings) 1) }}
-    {{/* Grouped: each h2 with the h3s under it (mockups/reading-sidebar.html,
-      "On this page" variant C). An h3 before any h2 stands alone as a
-      section. Long pages (over 12 headings) get a toggle per section,
+    {{/* Grouped: each h2 with the h3s under it. An h3 before any h2
+      stands alone as a section. Long pages (over 12 headings) get a toggle per section,
       which automagic-sidebar.js's initTocToggles collapses on load; short
       ones, and pages without JS, show every subsection. */}}
     {{ $groups := slice }}

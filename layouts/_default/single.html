@@ -159,9 +159,8 @@
         closed instance out at ~0 width, so there's no reliable pure-CSS
         way to keep one `<details>` open at `lg:` regardless of its
         `open` attribute. assets/js/automagic-sidebar.js's initSidebarToggle
-        drives the button. See PLAN.md/STYLE.md before promoting this out
-        of prototype. */}}
-      {{/* Reading sidebar (mockups/reading-sidebar.html): after the main
+        drives the button. */}}
+      {{/* Reading sidebar: after the main
         column in DOM order, so it lands on the right on desktop, level
         with the top of the body (the title block is above this section),
         and below the article on mobile. Pinned on desktop like the recipe
@@ -207,12 +206,10 @@
               Typography's kbd styling off the "/" hint. */}}
             <div class="not-prose">{{ partial "search-box.html" "Search recipes, essays, guides" }}</div>
             {{/* Meta rail: frontmatter facts that never render anywhere else
-              on a recipe page (article.showDate/showAuthor/showReadingTime
-              are all off site-wide, config/_default/params.toml) — source,
+              on a recipe page when a site turns Blowfish's
+              article.showDate/showAuthor/showReadingTime off) — source,
               aka, servings, prep/cook/total time, and author when a recipe
-              sets one (no recipe does yet; FORMAT.md has no `author` field, this repo
-              being a single-author family cookbook — the row is here for
-              whenever that changes, not fabricated for now). Date and
+              sets one (only shown when set, never filled in). Date and
               Updated close the rail (partials/sidebar/date-rows.html).
               Server-rendered directly, unlike the other slots below, since
               it's plain frontmatter rather than content that has to be

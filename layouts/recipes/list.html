@@ -3,8 +3,7 @@
   Recipes list — replaces Blowfish's default list (article-link cards with
   auto-generated summaries, which pulled in Mechanic text and ran long).
   Uses the shared recipe card (partials/recipe-card.html) in the .rgrid,
-  per mockups/recipe-card-v2.html. Listing header is STYLE.md's
-  .ltitle / .listing-count.
+  under an .ltitle / .listing-count header.
 */}}
 {{ .Scratch.Set "scope" "list" }}
 {{/* 16 = four rows of four, so pagination stays near the fold; overrides the site-wide pagerSize (12) for this page only. */}}
