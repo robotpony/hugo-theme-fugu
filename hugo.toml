@@ -1,0 +1,11 @@
+# Fugu's defaults. Hugo merges these under a site's own config, so a site
+# sets only what differs, in its [params.fugu]. The content tools in
+# tools/ read the merged values too (through `hugo config`).
+
+[params.fugu]
+  # Section folders under content/. Set one to "" to say the site doesn't
+  # have it. Only the recipe section is required.
+  recipeSection = "recipes"
+  essaySection = "essays"
+  referenceSection = "reference"
+  logSection = "the-food-log"

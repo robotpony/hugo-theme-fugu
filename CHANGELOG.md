@@ -14,6 +14,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Changed
 
+- `frontmatter.py` and `drafts.py` find the recipe, essay, reference, and log folders from the site's `[params.fugu]` (`recipeSection`, `essaySection`, `referenceSection`, `logSection`; `""` turns one off), with defaults in Fugu's new `hugo.toml`.
 - `layouts/404.html` is gone. It was Not a Chef's text adventure and now lives in that site; other sites get Blowfish's 404.
 - Header comments in every override now say what changed from Blowfish's copy and why, and comments no longer point at Not a Chef's mockups or its old plan.
 

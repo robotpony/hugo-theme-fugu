@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """
-frontmatter.py — Review and edit frontmatter across content/recipes,
-content/essays, content/reference, and content/the-food-log.
+frontmatter.py — Review and edit frontmatter across a Fugu site's recipes,
+essays, reference pages, and log. The section folders come from the
+site's [params.fugu] (recipeSection, essaySection, referenceSection,
+logSection), defaulting to content/recipes, content/essays,
+content/reference, and content/the-food-log.
 
 No third-party dependencies. Frontmatter on these sites is a flat YAML
 mapping (scalars, flow lists `[a, b, c]`, occasional block lists, one
@@ -17,6 +20,7 @@ Subcommands:
 import argparse
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -40,6 +44,46 @@ def find_site_root():
 
 
 REPO_ROOT = find_site_root()
+
+# Content kind -> section folder under content/, as Fugu's own hugo.toml
+# sets them. site_sections() lays the site's [params.fugu] over these.
+DEFAULT_SECTIONS = {
+    "recipe": "recipes",
+    "essay": "essays",
+    "reference": "reference",
+    "log": "the-food-log",
+}
+SECTION_PARAMS = {
+    "recipe": "recipesection",
+    "essay": "essaysection",
+    "reference": "referencesection",
+    "log": "logsection",
+}
+
+
+def site_sections():
+    """Each content kind's section folder, from the site's merged config
+    (`hugo config`, so Fugu's defaults and the site's overrides both
+    count). A kind set to "" is left out. Without Hugo, or if the config
+    won't load, Fugu's defaults."""
+    sections = dict(DEFAULT_SECTIONS)
+    try:
+        out = subprocess.run(
+            ["hugo", "config", "--format", "json", "--source", str(REPO_ROOT)],
+            capture_output=True, text=True, timeout=60)
+        params = json.loads(out.stdout).get("params", {}).get("fugu", {})
+    except (OSError, ValueError, subprocess.SubprocessError):
+        params = {}
+    # `hugo config` leaves empty values out of its JSON. Fugu's hugo.toml
+    # sets every section, so once the config loads, a missing one is a
+    # section the site turned off with "".
+    if params:
+        for kind, key in SECTION_PARAMS.items():
+            sections[kind] = (params.get(key) or "").strip("/")
+    return {kind: folder for kind, folder in sections.items() if folder}
+
+
+SECTIONS = site_sections()
 
 # The --help epilog for this tool and drafts.py.
 SITE_HELP = ("Works on $FUGU_SITE_ROOT if set, else the nearest Hugo site at or\n"
@@ -303,14 +347,10 @@ def infer_value(raw, type_hint=None):
 
 def classify(path):
     parts = path.relative_to(REPO_ROOT / "content").parts
-    if parts[0] == "recipes":
-        return "recipe"
-    if parts[0] == "essays":
-        return "essay"
-    if parts[0] == "reference":
-        return "reference"
-    if parts[0] == "the-food-log":
-        return "log"
+    for kind, folder in SECTIONS.items():
+        folder_parts = tuple(folder.split("/"))
+        if parts[:len(folder_parts)] == folder_parts:
+            return kind
     return None
 
 
@@ -325,7 +365,7 @@ def collect_files(paths):
                 files.append(p)
         return files
     files = []
-    for section in ("recipes", "essays", "reference", "the-food-log"):
+    for section in SECTIONS.values():
         files.extend(sorted((REPO_ROOT / "content" / section).rglob("*.md")))
     return files
 

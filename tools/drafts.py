@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-drafts.py — List content marked draft: true across content/recipes,
-content/essays, content/reference, and content/the-food-log.
+drafts.py — List content marked draft: true across a Fugu site's recipes,
+essays, reference pages, and log (the sections frontmatter.py checks; see
+its --help).
 
 Reuses frontmatter.py's parser (same constrained YAML subset, no
 third-party dependencies).
