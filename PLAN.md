@@ -8,11 +8,15 @@ Work through the sections roughly in order: the early ones remove Not a Chef ass
 
 ## 1. Housekeeping
 
+Start with the two checks: everything after this changes templates, and catching a regression on the change that caused it is much cheaper than finding it later.
+
+- [ ] A build-compare script, `tools/compare-builds.py` (stdlib only): build the site at two points (or take two build folders), compare every file with whitespace stripped, and list the files that differ, with a short diff for each. This is the check "the one rule" asks for; today it gets rewritten for each change. Mention it in CLAUDE.md.
+- [ ] Fixture sites under `tests/sites/`: recipes-only (just `tags`, no `cuisine`) and everything-on. Add a minimal GitHub Actions job now that builds both with `hugo --panicOnWarning` at the pinned Hugo and Blowfish versions. §3 makes the recipes-only site pass; until then, mark that job as allowed to fail, so §2's changes show progress without blocking. §9 extends the same workflow.
 - [ ] Clear Not a Chef out of comments and copy. 18 files still point at `mockups/STYLE.md` or name the site (`git grep -e mockups/ -e STYLE.md -e "Not a Chef"`). Where a comment explains a design decision, keep the reason and drop the pointer. Check `layouts/404.html`'s text too: it's a site joke, and may belong in Not a Chef's own layouts.
 - [ ] Comments that point at Not a Chef docs (`FORMAT.md`, `SPEC.md`, `DESIGN.md`) should point at Fugu's docs once those exist (§7). Until then, leave them.
 - [ ] Comments that cite `PLAN.md` by section number (e.g. `ingredients.js:10`, "See PLAN.md 6.2b") mean Not a Chef's old phased plan, squashed after release. Fugu now has its own PLAN.md with different numbering, so these mislead today; don't wait for §7. Replace each with the reason it pointed at, or with a Not a Chef commit if the history matters. About 29 doc pointers in all (`git grep -e PLAN.md -e SPEC.md -e DESIGN.md -e FORMAT -- layouts assets tools`).
 - [ ] Write the README's scope statement: a general cookbook theme where only recipes are required, and essays, reference pages, a dated log, `cuisine`, the glossary, and principle tags are each optional.
-- [ ] Add a `CHANGELOG.md` and start tagging versions (`v0.1.0` once §2–§3 land).
+- [ ] Add a `CHANGELOG.md` and start tagging versions (see §10 for when `v0.1.0` lands).
 
 ## 2. Configuration instead of hardcoded names
 
@@ -26,13 +30,13 @@ Everything below is written directly into templates today. Move it into one para
 - [ ] Glossary. `_markup/render-link.html` looks for `/reference/glossary` and treats `essays/reference-essays/` as the reference-essay folder. Make both params.
 - [ ] Reading sidebar labels and stats ("The cookbook in numbers", "Start here", "Months") are Not a Chef features; make each one optional.
 - [ ] Recipe frontmatter fields the templates read (`servings`, `portions`, `prep_time`, `cook_time`, `total_time`, `source`, `cuisine`, `pinned`, `start_here`, `summary`) are fine as a fixed schema, but list them in the docs (§7).
-- [ ] The section headings the JS and `render-heading.html` key on (Ingredients, Method, Mechanic, To serve, Notes, Variations) are English and fixed. Decide whether they stay a documented contract or become configurable (they matter for §4 too).
+- [ ] Make the section heading names configurable, with today's names as the defaults. Decided 2026-10-07. They're matched in templates, not JS: `render-heading.html` (the `$nonIngredientKeywords` and method-heading lists) and `partials/sidebar/heading-slot.html` (heading name → sidebar slot: Mechanic, To serve, Variations, Notes, Equipment and its aliases). The JS works from the slots and classes those templates emit. Suggested shape: a map from role to the heading names that mean it, e.g. `[params.fugu.headings] mechanic = ["Mechanic"]`, `equipment = ["Equipment", "Special equipment", "Hardware"]`, `method = [...]`, plus the list of headings that aren't ingredient sections. Not a Chef sets nothing and renders the same. This is also how §4 handles headings: a site in another language sets its own names.
 
 ## 3. Optional parts
 
 - [ ] A site with only a `recipes` section and only the `tags` taxonomy must build with no errors or warnings and no broken links. Today `cuisine` is assumed in `recipe-card.html`, `list.json.json`, and `related.html`.
 - [ ] Each optional part (essays, reference, log, glossary, principle tags, `cuisine`) turns off cleanly: no empty sidebar blocks, no dead nav, no zero counts.
-- [ ] Small fixture sites under `tests/sites/` (recipes-only; everything on) that CI builds with `hugo --panicOnWarning`. Cheaper than relying on the example site alone.
+- [ ] The recipes-only fixture (§1) builds clean in CI; drop its allowed-to-fail flag.
 
 ## 4. Translation
 
@@ -86,12 +90,13 @@ Not a Chef's docs describe Fugu's features but are written for that one site. Ma
 ## 9. Example site and CI
 
 - [ ] `exampleSite/` with 6–10 recipes from Not a Chef (CC BY-SA 4.0 allows it; credit and link the licence; the content needs its own `exampleSite/LICENSE`, since the repo is MIT): a simple recipe, a multi-component one, one with a Mechanic, one with a formula block, plus an essay, a reference page, and a glossary entry if those ship.
-- [ ] GitHub Actions: build `exampleSite/` and the fixtures with the pinned Hugo and Blowfish versions, `--panicOnWarning`, and run the tool tests.
+- [ ] Extend the §1 GitHub Actions workflow: build `exampleSite/` and the fixtures with the pinned Hugo and Blowfish versions, `--panicOnWarning`, and run the tool tests.
 - [ ] A link check over the built example site.
 
 ## 10. Release
 
-- [ ] `v0.1.0` once §1–§3 are done and the example site builds; `v1.0.0` after §5–§7.
+- [ ] Basic styles that demo well with Blowfish, before the first release: a small Fugu stylesheet that makes the recipe page, cards, sidebar, and formula diagrams look good under Blowfish's stock schemes in light and dark mode, with no site CSS at all. Builds on §5's structural CSS and `--fugu-*` properties; it's a presentable baseline, not the full designed look §5 ends with. Check it in the example site and the fixtures, in Chrome at desktop and phone widths.
+- [ ] `v0.1.0` once §1–§3 are done, the basic styles above land, and the example site builds; `v1.0.0` after §5–§7.
 - [ ] `images/screenshot.png` (1500×1000) and `images/tn.png` (900×600) from the example site.
 - [ ] Optional: list it on themes.gohugo.io (PR to `gohugoio/hugoThemesSiteBuilder`). Their rules may need the theme to build on its own; check how they handle themes that need a parent theme.
 
