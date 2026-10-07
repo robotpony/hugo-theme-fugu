@@ -1,0 +1,12 @@
+# The smallest site Fugu supports: recipes and tags, nothing else.
+# See ../README.md.
+baseURL = "https://example.org/"
+title = "Recipes only"
+theme = ["fugu", "blowfish"]
+themesDir = "../../../.."
+
+[taxonomies]
+  tag = "tags"
+
+[params]
+  mainSections = ["recipes"]

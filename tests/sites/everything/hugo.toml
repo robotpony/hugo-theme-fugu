@@ -1,0 +1,36 @@
+# Every optional part Fugu supports, turned on. See ../README.md.
+baseURL = "https://example.org/"
+title = "Everything"
+theme = ["fugu", "blowfish"]
+themesDir = "../../../.."
+
+[taxonomies]
+  tag = "tags"
+  cuisine = "cuisine"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[related]
+  threshold = 50
+  toLower = true
+  [[related.indices]]
+    name = "tags"
+    weight = 100
+  [[related.indices]]
+    name = "cuisine"
+    weight = 80
+
+[params]
+  mainSections = ["recipes"]
+  enableSearch = true
+
+  [params.article]
+    showTableOfContents = true
+    showRelatedContent = true
+    relatedContentLimit = 3  # Blowfish errors without it when related content is on
+    showTaxonomies = true
+    showBreadcrumbs = true
+
+  [params.recipe]
+    enableKelvin = false

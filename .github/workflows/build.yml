@@ -1,0 +1,43 @@
+# Builds the fixture sites (tests/sites/) against pinned Hugo and Blowfish
+# versions, failing on any warning. PLAN.md §9 extends this with the
+# example site, the tool tests, and a link check.
+#
+# Hugo is pinned inside Blowfish's declared range for that commit
+# (e9699d8 allows 0.158.0–0.161.1); outside it, Hugo warns about the
+# module and --panicOnWarning fails the build. Move both together.
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  HUGO_VERSION: 0.161.1
+  BLOWFISH_REF: e9699d8c5da9a64a105eb8401fd2cf79c6015c6f
+
+jobs:
+  fixtures:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        site: [recipes-only, everything]
+    steps:
+      # The fixtures find their themes at ../../../.. (themesDir), so Fugu
+      # and Blowfish go side by side under themes/, as in a real site.
+      - uses: actions/checkout@v4
+        with:
+          path: themes/fugu
+      - uses: actions/checkout@v4
+        with:
+          repository: nunocoracao/blowfish
+          ref: ${{ env.BLOWFISH_REF }}
+          path: themes/blowfish
+      - name: Install Hugo
+        run: |
+          curl -sSLf -o hugo.deb "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          sudo dpkg -i hugo.deb
+          hugo version
+      - name: Build ${{ matrix.site }}
+        run: hugo --source themes/fugu/tests/sites/${{ matrix.site }} --panicOnWarning --destination "$RUNNER_TEMP/${{ matrix.site }}"

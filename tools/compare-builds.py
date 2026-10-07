@@ -24,6 +24,7 @@ import difflib
 import os
 import re
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
@@ -149,6 +150,7 @@ def compare(old, new, max_lines):
 
 
 def main():
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL)  # quiet exit when piped to head
     parser = argparse.ArgumentParser(
         description=__doc__.strip().split("\n\n")[0].split("— ", 1)[1].replace("\n", " "),
         epilog="With no arguments, compares Fugu at HEAD with the working tree.")
