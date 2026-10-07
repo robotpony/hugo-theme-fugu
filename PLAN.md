@@ -15,6 +15,10 @@ Start with the two checks: everything after this changes templates, and catching
 - [ ] Clear Not a Chef out of comments and copy. 18 files still point at `mockups/STYLE.md` or name the site (`git grep -e mockups/ -e STYLE.md -e "Not a Chef"`). Where a comment explains a design decision, keep the reason and drop the pointer. Check `layouts/404.html`'s text too: it's a site joke, and may belong in Not a Chef's own layouts.
 - [ ] Comments that point at Not a Chef docs (`FORMAT.md`, `SPEC.md`, `DESIGN.md`) should point at Fugu's docs once those exist (§7). Until then, leave them.
 - [ ] Comments that cite `PLAN.md` by section number (e.g. `ingredients.js:10`, "See PLAN.md 6.2b") mean Not a Chef's old phased plan, squashed after release. Fugu now has its own PLAN.md with different numbering, so these mislead today; don't wait for §7. Replace each with the reason it pointed at, or with a Not a Chef commit if the history matters. About 29 doc pointers in all (`git grep -e PLAN.md -e SPEC.md -e DESIGN.md -e FORMAT -- layouts assets tools`).
+- [ ] Fix `_default/single.html`'s header comment. It says the only change from Blowfish's copy is the body content render, but about 218 diff lines differ (it also loads `automagic-sidebar.js` and `ingredients.js`, adds the recipe notes, and more). Rewrite it to list what actually changed and why.
+- [ ] Check every override's header against a real diff. For each of the 14 files Fugu copies from Blowfish (§6), diff it against Blowfish at `e9699d8` and make sure the header says what changed and why. These headers become `docs/blowfish.md` (§6), so they need to be right first.
+- [ ] Add the missing header comments: `partials/head.html` (a full Blowfish override, about 21 lines changed, with no header) and `recipes/list.json.json` (builds the recipe index, with no header). Every template and JS file should open with one, per CLAUDE.md.
+- [ ] Fix the tool help text. `frontmatter.py --help` and `drafts.py --help` cut the description off mid-sentence ("…across content/recipes,") because argparse takes only the docstring's first line; pass the full description, or a one-line summary that stands on its own. Give `drafts.py --json` a help string. Every tool should explain itself with `--help` alone.
 - [ ] Write the README's scope statement: a general cookbook theme where only recipes are required, and essays, reference pages, a dated log, `cuisine`, the glossary, and principle tags are each optional.
 - [ ] Add a `CHANGELOG.md` and start tagging versions (see §10 for when `v0.1.0` lands).
 
@@ -74,11 +78,14 @@ Not a Chef's docs describe Fugu's features but are written for that one site. Ma
 
 - [ ] `docs/recipe-format.md`, from Not a Chef's `FORMAT.md`: frontmatter, sections, multi-component recipes, wiki links, formula blocks. Its house style (Canadian English, metric first) becomes a suggestion, not a rule.
 - [ ] `docs/essay-format.md` from `FORMAT-ESSAYS.md`, if essays stay a supported section.
-- [ ] `docs/configuration.md`: every `[params.fugu]` setting (§2), the optional parts (§3), and which Blowfish params matter.
+- [ ] `docs/README.md`: an index of the docs, one line each, so the README can link one place.
+- [ ] `docs/getting-started.md`: from an empty Blowfish site to one working recipe page, end to end: install, the minimum config, a first recipe file, what you should see, and where to go next. Today there's no way to do this without reading Not a Chef's `FORMAT.md`.
+- [ ] `docs/configuration.md`: every `[params.fugu]` setting (§2), including the heading-name map, the optional parts (§3), personal notes, and which Blowfish params matter.
+- [ ] `docs/frontmatter.md` (or a section of `recipe-format.md`): every field the templates read (§2's list), its type, and what it changes on the page.
 - [ ] `docs/customizing.md`: the three layers (site → Fugu → Blowfish), overriding partials, the CSS custom properties (§5), fonts.
 - [ ] `docs/features.md`: scaling and unit conversion, ingredient check-off, formula diagrams and the icon kit, wiki links and the glossary, pinned pages, principle tags, the reading and recipe sidebars, `index.json`.
 - [ ] `docs/tools.md`: `frontmatter.py`, `drafts.py`, `add-image.sh` (needs ImageMagick 7's `magick` and `exiftool`), `$FUGU_SITE_ROOT`.
-- [ ] README: short, with install, quick start, a screenshot, and links into `docs/`.
+- [ ] README: short, with install, quick start, a screenshot, and links into `docs/`. Replace the "What it adds" list, which is the only feature description today, with a short summary linking to `docs/features.md`.
 
 ## 8. Tooling
 
