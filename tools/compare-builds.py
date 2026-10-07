@@ -4,7 +4,9 @@ compare-builds.py — Check that a change to Fugu doesn't alter a site's
 built pages by accident.
 
 Builds the site twice and compares every file with all whitespace
-stripped, so reindented templates don't count as changes. Lists the files
+stripped, so reindented templates don't count as changes, and with
+fingerprints taken out of bundle names (main.bundle.min.<hash>.css), so a
+CSS change shows up once, as that bundle, rather than on every page. Lists the files
 that were added, removed, or changed, with a short diff for each changed
 text file (files with the same diff share one copy). Exits 0 when the builds match, 1 when they differ.
 
@@ -36,6 +38,23 @@ TEXT_SUFFIXES = {
     ".webmanifest", ".toml", ".yaml", ".yml",
 }
 WS_RE = re.compile(rb"\s+")
+# Fingerprinted bundles (Hugo's resources.Fingerprint): main.bundle.min.<hash>.css.
+# Any change to the CSS renames the bundle and changes its integrity hash on
+# every page, which would hide the real differences, so references to them
+# are compared without the hash, and the renamed bundle is paired with the
+# old one and diffed as one file.
+FINGERPRINT_RE = re.compile(rb"\.[0-9a-f]{32,}(\.(?:css|js)\b)")
+INTEGRITY_RE = re.compile(rb'integrity="[^"]*"')
+FINGERPRINT_NAME_RE = re.compile(r"\.[0-9a-f]{32,}(\.(?:css|js))$")
+
+
+def without_fingerprints(data):
+    return INTEGRITY_RE.sub(b'integrity=""', FINGERPRINT_RE.sub(rb".#\1", data))
+
+
+def file_key(rel):
+    """A file's path with any fingerprint taken out of its name."""
+    return FINGERPRINT_NAME_RE.sub(r".#\1", rel)
 
 
 def find_site_root():
@@ -81,7 +100,9 @@ def themes_at_ref(ref, into):
 
 
 def files_under(root):
-    return {p.relative_to(root).as_posix() for p in root.rglob("*") if p.is_file()}
+    """{file_key: path} for every file in a build folder."""
+    return {file_key(rel): rel for rel in
+            (p.relative_to(root).as_posix() for p in root.rglob("*") if p.is_file())}
 
 
 def is_text(rel):
@@ -93,7 +114,8 @@ def same(a, b, rel):
     if da == db:
         return True
     if is_text(rel):
-        return WS_RE.sub(b"", da) == WS_RE.sub(b"", db)
+        return (WS_RE.sub(b"", without_fingerprints(da))
+                == WS_RE.sub(b"", without_fingerprints(db)))
     return False
 
 
@@ -101,7 +123,7 @@ def readable_lines(data):
     """Collapse whitespace and put each tag on its own line, so a diff of
     minified or reflowed HTML shows the tags that changed, not one huge
     line."""
-    text = re.sub(r"\s+", " ", data.decode("utf-8", errors="replace"))
+    text = re.sub(r"\s+", " ", without_fingerprints(data).decode("utf-8", errors="replace"))
     parts = re.split(r"(?<=>)|(?=<)", text)
     return [p.strip() for p in parts if p.strip()]
 
@@ -120,12 +142,13 @@ def short_diff(a, b, max_lines):
 
 def compare(old, new, max_lines):
     old_files, new_files = files_under(old), files_under(new)
-    removed = sorted(old_files - new_files)
-    added = sorted(new_files - old_files)
-    changed = sorted(rel for rel in old_files & new_files
-                     if not same(old / rel, new / rel, rel))
+    removed = sorted(old_files[k] for k in old_files.keys() - new_files.keys())
+    added = sorted(new_files[k] for k in new_files.keys() - old_files.keys())
+    # (old path, new path, label); the paths differ only for a renamed bundle.
+    changed = sorted((old_files[k], new_files[k], k) for k in old_files.keys() & new_files.keys()
+                     if not same(old / old_files[k], new / new_files[k], k))
 
-    print(f"Compared {len(old_files | new_files)} files: "
+    print(f"Compared {len(old_files.keys() | new_files.keys())} files: "
           f"{len(changed)} changed, {len(added)} added, {len(removed)} removed.")
     for rel in removed:
         print(f"\n- removed  {rel}")
@@ -134,10 +157,10 @@ def compare(old, new, max_lines):
     # One template change usually shows up the same way on many pages, so
     # files with an identical diff are listed together under one copy of it.
     groups = {}
-    for rel in changed:
-        diff = (tuple(short_diff(old / rel, new / rel, max_lines))
-                if is_text(rel) and max_lines else ())
-        groups.setdefault(diff, []).append(rel)
+    for old_rel, new_rel, label in changed:
+        diff = (tuple(short_diff(old / old_rel, new / new_rel, max_lines))
+                if is_text(label) and max_lines else ())
+        groups.setdefault(diff, []).append(label)
     for diff, rels in groups.items():
         print()
         for rel in rels[:5]:

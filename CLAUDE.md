@@ -23,7 +23,7 @@ Not a Chef must render exactly as before unless a change means to alter it. For 
 2. Run `python3 tools/compare-builds.py` from inside the site. It builds the site with Fugu at `HEAD` and with the working tree, compares every file with whitespace stripped, and prints the differences (identical diffs across pages are grouped). Use `--ref REV` to compare against an older commit, or `compare-builds.py OLD NEW` for two folders you built yourself.
 3. The only differences should be the ones intended.
 
-`python3 tests/check.py --compare` (from inside the site) does that and also builds every fixture site in `tests/sites/` and checks its pages against its `expect.txt`, the same check CI runs. Blowfish `e9699d8` only allows Hugo up to 0.161.1, so with a newer Hugo the fixtures fail on its version warning; point `HUGO` at a 0.161.1 binary until Blowfish is updated.
+`python3 tests/check.py --compare` (from inside the site) does that and also builds every fixture site in `tests/sites/` and checks its pages against its `expect.txt`, the same check CI runs. Use a Hugo inside Blowfish's declared range (0.163.0–0.166.0 for `295dae3`), or the fixtures fail on its version warning; `HUGO=/path/to/hugo` picks another binary.
 
 For visual changes, also check in Chrome (not Safari) at desktop and phone widths, in light and dark mode. Measure rendered boxes with `getBoundingClientRect()` rather than trusting computed styles: earlier layout bugs on this site passed every grep and build check and were only caught by looking.
 

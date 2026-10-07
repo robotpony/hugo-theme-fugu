@@ -3,7 +3,7 @@
 # example site, the tool tests, and a link check.
 #
 # Hugo is pinned inside Blowfish's declared range for that commit
-# (e9699d8 allows 0.158.0–0.161.1); outside it, Hugo warns about the
+# (295dae3 allows 0.163.0–0.166.0); outside it, Hugo warns about the
 # module and --panicOnWarning fails the build. Move both together.
 name: Build
 
@@ -13,8 +13,8 @@ on:
   pull_request:
 
 env:
-  HUGO_VERSION: 0.161.1
-  BLOWFISH_REF: e9699d8c5da9a64a105eb8401fd2cf79c6015c6f
+  HUGO_VERSION: 0.166.0
+  BLOWFISH_REF: 295dae334547f6737a939a5d49f2807d6c0b73b8
 
 jobs:
   fixtures:

@@ -5,7 +5,7 @@ description = "A cookbook theme for Blowfish: recipe pages, ingredient scaling a
 homepage = "https://github.com/robotpony/hugo-theme-fugu"
 tags = ["blog", "recipes", "cookbook", "food", "blowfish"]
 features = ["recipes", "ingredient scaling", "unit conversion", "wiki links", "dark mode"]
-min_version = "0.158.0"  # Blowfish's minimum; Fugu has not been tested below 0.166
+min_version = "0.163.0"  # Blowfish 295dae3's minimum; CI tests 0.166.0
 
 [author]
   name = "Bruce Alderson"
