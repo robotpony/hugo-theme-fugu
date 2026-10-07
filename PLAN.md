@@ -103,8 +103,11 @@ Not a Chef's docs describe Fugu's features but are written for that one site. Ma
 ## 10. Release
 
 - [ ] Basic styles that demo well with Blowfish, before the first release: a small Fugu stylesheet that makes the recipe page, cards, sidebar, and formula diagrams look good under Blowfish's stock schemes in light and dark mode, with no site CSS at all. Builds on §5's structural CSS and `--fugu-*` properties; it's a presentable baseline, not the full designed look §5 ends with. Check it in the example site and the fixtures, in Chrome at desktop and phone widths.
-- [ ] `v0.1.0` once §1–§3 are done, the basic styles above land, and the example site builds; `v1.0.0` after §5–§7.
-- [ ] `images/screenshot.png` (1500×1000) and `images/tn.png` (900×600) from the example site.
+- [ ] Screenshots, after the basic styles and before `v0.1.0`, taken from the example site with no site CSS so they show what a new user gets:
+  - `images/screenshot.png` (1500×1000) and `images/tn.png` (900×600), the sizes themes.gohugo.io expects.
+  - For the README and docs: a recipe page (ingredients, sidebar, a formula diagram), a recipe list of cards, and the scaling and unit controls in use; light and dark mode; one at phone width.
+  - Keep them in `images/` (listing) and `docs/images/` (docs), and note in the docs how they were taken (page, window size, scheme), so they can be retaken whenever the styles change. Retake them again for `v1.0.0` after §5's designed look lands.
+- [ ] `v0.1.0` once §1–§3 are done, the basic styles and screenshots above land, and the example site builds; `v1.0.0` after §5–§7.
 - [ ] Optional: list it on themes.gohugo.io (PR to `gohugoio/hugoThemesSiteBuilder`). Their rules may need the theme to build on its own; check how they handle themes that need a parent theme.
 
 ## Features
