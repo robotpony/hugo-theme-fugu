@@ -1,3 +1,17 @@
+{{/*
+  Full override of themes/blowfish/layouts/partials/head.html. Three
+  changes, everything else as Blowfish has it:
+
+  - Fonts: calls partials/fonts.html (empty by default) near the top, since
+    Blowfish has no hook for a site's web fonts.
+  - Meta description: one text per page from partials/page-description.html
+    (frontmatter description, else the page's intro, else a fallback by
+    page kind), instead of Blowfish's summary/description/site order.
+    Blowfish's seo.metaDescriptionOrder param no longer applies.
+  - Open Graph and Twitter tags: partials/social.html instead of Hugo's
+    _internal/opengraph.html and twitter_cards.html, so they use the same
+    description.
+*/}}
 <head>
   <meta charset="utf-8">
   {{ with .Site.Language.Params.htmlCode | default .Site.Language.Locale }}

@@ -1,3 +1,16 @@
+{{- /*
+  /recipes/index.json: a machine-readable index of every recipe, for
+  tools and agents that answer questions about the collection (coverage,
+  missing metadata, which recipes have a Mechanic or a formula) without
+  parsing the content folder. Built only when the recipes section's
+  _index.md asks for it with `outputs: [HTML, JSON]`.
+
+  One entry per recipe, by title: frontmatter facts, word count, and
+  has_* flags for the optional sections. The flags are substring checks on
+  the raw Markdown, so a "## Notes" inside a code block counts too.
+  `generated` is the build date, so this file differs between builds made
+  on different days.
+*/ -}}
 {{- $recipes := slice -}}
 {{- range .RegularPages.ByTitle -}}
   {{- $raw := .RawContent -}}
