@@ -19,9 +19,9 @@ This repo is checked out as a git submodule at `themes/fugu` inside Not a Chef, 
 
 Not a Chef must render exactly as before unless a change means to alter it. For any template, JS, or CSS change:
 
-1. Build the site before the change into a scratch folder.
-2. Make the change, build again into a second folder.
-3. Compare every file, ignoring whitespace (e.g. a short Python script that strips `\s+` from both and compares). The only differences should be the ones intended.
+1. Make the change, uncommitted.
+2. Run `python3 tools/compare-builds.py` from inside the site. It builds the site with Fugu at `HEAD` and with the working tree, compares every file with whitespace stripped, and prints the differences (identical diffs across pages are grouped). Use `--ref REV` to compare against an older commit, or `compare-builds.py OLD NEW` for two folders you built yourself.
+3. The only differences should be the ones intended.
 
 For visual changes, also check in Chrome (not Safari) at desktop and phone widths, in light and dark mode. Measure rendered boxes with `getBoundingClientRect()` rather than trusting computed styles: earlier layout bugs on this site passed every grep and build check and were only caught by looking.
 
@@ -33,7 +33,7 @@ After any edit while `hugo server -D` is running, restart it before trusting pag
 - `assets/js/`: plain, dependency-free, progressive JS. `ingredients.js` (check-off, scaling, unit conversion), `automagic-sidebar.js` (moves Mechanic/To serve/Notes/photos into the sidebar, photo viewer), `search.js` (Fuse.js search, pinned results first). Pages must still read and print with JS off.
 - `assets/icons/formula/`: the formula diagram icon kit, one SVG per key.
 - `archetypes/`: `recipes.md` and the default.
-- `tools/`: `frontmatter.py`, `drafts.py` (Python standard library only), `add-image.sh` (ImageMagick 7 and `exiftool`). They work on the Hugo site containing the working directory, or `$FUGU_SITE_ROOT`.
+- `tools/`: `frontmatter.py`, `drafts.py`, `compare-builds.py` (Python standard library only), `add-image.sh` (ImageMagick 7 and `exiftool`). They work on the Hugo site containing the working directory, or `$FUGU_SITE_ROOT`.
 
 ## Content the theme expects
 
