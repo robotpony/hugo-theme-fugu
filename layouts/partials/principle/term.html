@@ -1,0 +1,43 @@
+{{/*
+  A principle tag: one whose own content/tags/<slug>/_index.md says
+  `principle: true`. Takes a tag name (as written in a page's `tags`, or a
+  term page's slug) and returns a dict, or false when the tag isn't a
+  principle:
+
+    page   the tag's term page
+    essay  the essay that explains it: the page named by the _index.md's
+           `essay` (a content path, e.g. essays/reference-essays/win-the-
+           fridge), else the first reference essay (params.fugu.
+           referenceEssays) carrying the tag, else false
+    short  the chip's label on cards: the _index.md's `short`, else its
+           title
+
+  Shared by principle-chip.html, recipe-card.html and term.html. Callers
+  use partialCached keyed by the tag; it's called once per tag per card.
+*/}}
+{{ $result := false }}
+{{ $slug := . | lower | urlize }}
+{{ with site.GetPage (printf "/tags/%s" $slug) }}
+  {{ if .Params.principle }}
+    {{ $term := . }}
+    {{ $essay := false }}
+    {{ with .Params.essay }}
+      {{ $essay = site.GetPage (printf "/%s" (strings.TrimPrefix "/" .)) | default false }}
+    {{ else }}
+      {{ $section := partial "section/name.html" "essay" }}
+      {{ $folder := site.Params.fugu.referenceEssays | default "" }}
+      {{ if and $section $folder }}
+        {{ range where site.RegularPages "Section" $section }}
+          {{ $candidate := . }}
+          {{ if and (not $essay) (eq (path.Base (strings.TrimSuffix "/" .File.Dir)) $folder) }}
+            {{ range .Params.tags }}
+              {{ if eq (. | lower | urlize) $slug }}{{ $essay = $candidate }}{{ end }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+    {{ $result = dict "page" $term "essay" $essay "short" ($term.Params.short | default $term.Title) }}
+  {{ end }}
+{{ end }}
+{{ return $result }}

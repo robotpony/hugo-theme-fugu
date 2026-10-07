@@ -25,9 +25,9 @@
   the file's first paragraph before its first heading) rather than a
   day/heading list, and the stat line is the day count and reading time.
 
-  The win-the-fridge tag (partials/principle-chip.html) claims a top-row
-  slot the same way cuisine does, and is dropped from the plain $tags
-  list so it isn't shown twice.
+  A principle tag (partials/principle-chip.html) claims a top-row slot
+  the same way cuisine does, and is dropped from the plain $tags list so
+  it isn't shown twice.
 
   A pinned page (frontmatter `pinned: true`, see DESIGN.md) gets a small
   thumbtack icon (.pin-icon) at the end of the top row — unlinked, faint,
@@ -47,9 +47,10 @@
 {{ $cuisine := .Params.cuisine }}
 {{ $principle := partial "principle-chip.html" (dict "page" . "compact" true) }}
 {{ $tags := slice }}
+{{ $principles := 0 }}
 {{ range .Params.tags }}
   {{ if and $isRef (eq (lower .) "reference") }}{{ continue }}{{ end }}
-  {{ if eq (lower .) "win-the-fridge" }}{{ continue }}{{ end }}
+  {{ if partialCached "principle/term.html" . . }}{{ $principles = add $principles 1 }}{{ continue }}{{ end }}
   {{ if not (and $cuisine (eq (lower .) (lower $cuisine))) }}{{ $tags = $tags | append . }}{{ end }}
 {{ end }}
 {{ if $isEssay }}
@@ -58,7 +59,7 @@
 {{ end }}
 {{ $room := $slots }}
 {{ if ne $cuisine nil }}{{ $room = sub $room 1 }}{{ end }}
-{{ if ne (len (trim $principle " \n\t")) 0 }}{{ $room = sub $room 1 }}{{ end }}
+{{ $room = sub $room $principles }}
 
 {{ $intro := .Params.summary | default .Description }}
 {{ if not $intro }}

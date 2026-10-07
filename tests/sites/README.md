@@ -4,7 +4,7 @@ Small Hugo sites that build against Fugu and Blowfish, for CI (`.github/workflow
 
 - `recipes-only/`: the smallest site Fugu should support. One section, `recipes`, and one taxonomy, `tags` (no `cuisine`). PLAN.md §3 makes it fully right (no empty blocks, zero counts, or dead links where `cuisine` and the other sections would be).
 - `everything/`: every optional part turned on: essays (including a reference essay), reference pages with a glossary, a dated log, `cuisine`, a principle tag, pinned pages, a formula diagram, multi-component recipes, and wiki links between them.
-- `renamed/`: the everything site with every section renamed (`dishes`, `writing`, `guides`, `journal`) through `[params.fugu]`, each section's `_index.md` setting `type` to the default name. Anything in Fugu that still hardcodes a section name breaks here. Expected to fail until PLAN.md §2 is done (see its `XFAIL`).
+- `renamed/`: the everything site with every section renamed (`dishes`, `writing`, `guides`, `journal`) through `[params.fugu]`, each section's `_index.md` setting `type` to the default name. Anything in Fugu that hardcodes a section name breaks here.
 
 Each site's `expect.txt` lists what its built pages must (or mustn't) contain; `tests/check.py` builds every site and checks them:
 

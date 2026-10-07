@@ -6,6 +6,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Added
 
+- Principle tags work for any tag whose `content/tags/<slug>/_index.md` sets `principle: true`, not just `win-the-fridge`. Its essay is the page named by `essay` there, else the reference essay carrying the tag; its chip on recipe cards reads `short`, else the tag's title. Sites that relied on the card's old "WTF" label set `short: WTF`.
 - `params.fugu.referenceEssays` (default `reference-essays`, a folder in the essay section) and `params.fugu.glossaryPage` (default `glossary`, a page in the reference section): where `[[wiki links]]` find glossary terms. `""` turns either off.
 - `params.fugu.recipeSidebar`: the recipe sidebar's section boxes, in order (`photos`, `to-serve`, `mechanic`, `variations`, `equipment`, `notes`). A key left out keeps that section in the article; an unknown key warns. The default is the old fixed order, so a site that doesn't set it renders the same.
 - Formula strip on recipe cards: a page with a ```` ```formula ```` block shows its icons and operators (and a ratio's numbers) as a small row under the card's intro, with each ingredient's label, quantity, and swaps in a hover tooltip (`partials/formula-strip.html`). Cards with a strip get `.has-formula`; the site styles `.rcard-formula`, `.rcard-formula-link` and `.slot`.

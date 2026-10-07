@@ -13,16 +13,18 @@
   showBreadcrumbs, cardView, cardViewScreenWidth, groupByYear, the
   article-meta/term row, and the "no articles" message are all dropped.
 
-  A term whose own _index.md sets `principle: true` (content/tags/
-  win-the-fridge/_index.md is the only one so far) is a principle: the
+  A term whose own _index.md sets `principle: true` (e.g. content/tags/
+  win-the-fridge/_index.md) is a principle: the
   tagline becomes a definition callout (the _index.md body) with a link to
   the full essay, the grid lists only recipes, and anything else on the
   tag that isn't a recipe or that essay follows in a "Reference & further
-  reading" list. The essay is looked up at /essays/reference-essays/
-  win-the-fridge for every principle, which only works for that one tag.
+  reading" list. The essay is the one principle/term.html finds: the
+  _index.md's `essay`, else the reference essay carrying the tag.
 */}}
 {{ .Scratch.Set "scope" "term" }}
 {{ $isPrinciple := .Params.principle }}
+{{ $essay := false }}
+{{ with and $isPrinciple (partialCached "principle/term.html" .Data.Term .Data.Term) }}{{ $essay = .essay }}{{ end }}
 {{ $recipeSection := partial "section/name.html" "recipe" }}
 {{ $allRecipes := eq (len (where .Pages "Section" $recipeSection)) (len .Pages) }}
 {{ $recipePages := where .Pages "Section" $recipeSection }}
@@ -47,7 +49,7 @@
     <div class="definition-callout max-w-prose">
       <span class="definition-callout-label">Definition</span>
       {{ .Content }}
-      {{ with site.GetPage "/essays/reference-essays/win-the-fridge" }}<a class="read-essay" href="{{ .RelPermalink }}">Read the full essay →</a>{{ end }}
+      {{ with $essay }}<a class="read-essay" href="{{ .RelPermalink }}">Read the full essay →</a>{{ end }}
     </div>
     <h3 class="subsection-title">Recipes that follow this principle</h3>
   {{ else }}
@@ -64,7 +66,6 @@
   </div>
   {{ partial "pagination.html" . }}
   {{ if $isPrinciple }}
-    {{ $essay := site.GetPage "/essays/reference-essays/win-the-fridge" }}
     {{ $further := slice }}
     {{ range $allPages }}
       {{ if ne .Section $recipeSection }}
