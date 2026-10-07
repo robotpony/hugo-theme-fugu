@@ -8,8 +8,9 @@ Work through the sections roughly in order: the early ones remove Not a Chef ass
 
 ## 1. Housekeeping
 
-- [ ] Clear Not a Chef out of comments and copy. 17 files still point at `mockups/STYLE.md` or name the site (`git grep -e mockups/ -e STYLE.md -e "Not a Chef"`). Where a comment explains a design decision, keep the reason and drop the pointer. Check `layouts/404.html`'s text too: it's a site joke, and may belong in Not a Chef's own layouts.
+- [ ] Clear Not a Chef out of comments and copy. 18 files still point at `mockups/STYLE.md` or name the site (`git grep -e mockups/ -e STYLE.md -e "Not a Chef"`). Where a comment explains a design decision, keep the reason and drop the pointer. Check `layouts/404.html`'s text too: it's a site joke, and may belong in Not a Chef's own layouts.
 - [ ] Comments that point at Not a Chef docs (`FORMAT.md`, `SPEC.md`, `DESIGN.md`) should point at Fugu's docs once those exist (§7). Until then, leave them.
+- [ ] Comments that cite `PLAN.md` by section number (e.g. `ingredients.js:10`, "See PLAN.md 6.2b") mean Not a Chef's old phased plan, squashed after release. Fugu now has its own PLAN.md with different numbering, so these mislead today; don't wait for §7. Replace each with the reason it pointed at, or with a Not a Chef commit if the history matters. About 29 doc pointers in all (`git grep -e PLAN.md -e SPEC.md -e DESIGN.md -e FORMAT -- layouts assets tools`).
 - [ ] Write the README's scope statement: a general cookbook theme where only recipes are required, and essays, reference pages, a dated log, `cuisine`, the glossary, and principle tags are each optional.
 - [ ] Add a `CHANGELOG.md` and start tagging versions (`v0.1.0` once §2–§3 land).
 
@@ -17,9 +18,11 @@ Work through the sections roughly in order: the early ones remove Not a Chef ass
 
 Everything below is written directly into templates today. Move it into one params block, e.g. `[params.fugu]`, with defaults in a theme-level `hugo.toml` so a site sets only what differs. When a param is renamed (e.g. `params.recipe.enableKelvin`), change Not a Chef's config in the same step.
 
-- [ ] Section names. `"recipes"` is hardcoded in `_default/single.html` (5 places), `_default/term.html`, `_markup/render-heading.html`, `partials/page-description.html`, and `partials/reading-sidebar.html`. `"essays"`, `"reference"`, and `"the-food-log"` are hardcoded in `reading-sidebar.html`, `recipe-card.html`, `sidebar/kind.html`, `sidebar/date-rows.html`, `term.html`, and `page-description.html`. Suggested params: `recipeSection`, `essaySection`, `referenceSection`, `logSection`, each empty to turn the section off.
-- [ ] The section list templates (`layouts/recipes/`, `layouts/essays/`, `layouts/reference/`, `layouts/the-food-log/`) are found by folder name, so a site with different section names won't get them. Move them to layouts selected by `type` (or a cascade in the site's section `_index.md`) and document it.
-- [ ] Principle tags. `partials/principle-chip.html` and `recipe-card.html` hardcode `win-the-fridge`. The tag's own `content/tags/<slug>/_index.md` already says `principle: true`; read that instead, so any site can have principle tags.
+- [ ] Section names. `"recipes"` is hardcoded in `_default/single.html` (5 places), `_default/term.html`, `_markup/render-heading.html`, `partials/page-description.html`, and `partials/reading-sidebar.html`. `"essays"`, `"reference"`, and `"the-food-log"` are hardcoded in `reading-sidebar.html`, `recipe-card.html`, `sidebar/kind.html`, `sidebar/date-rows.html`, `term.html`, `page-description.html`, `_markup/render-link.html`, `essays/list.html`, `reference/list.html`, and `reading-sidebar/log-month.html`. Suggested params: `recipeSection`, `essaySection`, `referenceSection`, `logSection`, each empty to turn the section off.
+- [ ] The content tools hardcode the same names: `tools/frontmatter.py` (the `recipes` check at line 302, the section loop at line 324, the docstring) and `tools/drafts.py` (its labels and docstring). Have them read the section params from the site's config (`hugo config --format json` if Hugo is installed, else parse `hugo.toml`/`config/_default/`), falling back to the defaults.
+- [ ] The section list templates (`layouts/recipes/`, including `list.json.json`, which builds the recipe index; `layouts/essays/`, `layouts/reference/`, `layouts/the-food-log/`) are found by folder name, so a site with different section names won't get them. Move them to layouts selected by `type` (or a cascade in the site's section `_index.md`) and document it.
+- [ ] Principle tags. `partials/principle-chip.html` and `recipe-card.html` hardcode `win-the-fridge`. The tag's own `content/tags/<slug>/_index.md` already says `principle: true`; read that instead, so any site can have principle tags. The tag's essay is hardcoded too: `term.html` (lines 42 and 59) and `principle-chip.html` (line 42) look up `/essays/reference-essays/win-the-fridge`. Let the tag's `_index.md` name its essay (e.g. `essay: essays/reference-essays/win-the-fridge`), or find the reference essay carrying that tag.
+- [ ] Hidden personal notes. `ingredients.js` hides family-history blocks client-side: `hideFamilyHistory` hides blockquotes before a recipe's first H2, and `hideHistorySections` hides a `## History` section (flagged by `render-heading.html` with `data-hide-heading`). Generalize this into one "personal notes" feature: a configurable list of hidden heading names (default `History`), a toggle for the intro blockquotes, and a way to turn it off. Rename the functions and the comments to match. Document that this only hides text visually: it is still in the HTML and in the search index (`_default/index.json` includes `.Plain`), and possibly the RSS feed, so it isn't private. Real privacy would mean leaving the text out of the build, which is a separate option to consider.
 - [ ] Glossary. `_markup/render-link.html` looks for `/reference/glossary` and treats `essays/reference-essays/` as the reference-essay folder. Make both params.
 - [ ] Reading sidebar labels and stats ("The cookbook in numbers", "Start here", "Months") are Not a Chef features; make each one optional.
 - [ ] Recipe frontmatter fields the templates read (`servings`, `portions`, `prep_time`, `cook_time`, `total_time`, `source`, `cuisine`, `pinned`, `start_here`, `summary`) are fine as a fixed schema, but list them in the docs (§7).
@@ -51,12 +54,14 @@ Fugu has no CSS of its own yet. Every class its templates use is styled by Not a
 
 ## 6. Blowfish compatibility
 
-Fugu overrides 14 Blowfish files: `404.html`, `_default/single.html`, `_default/term.html`, `_default/terms.html`, `_default/index.json`, `_default/_markup/render-heading.html`, `render-image.html`, `render-link.html`, `partials/head.html`, `partials/article-meta/basic.html`, `partials/article-pagination.html`, `partials/pagination.html`, `partials/related.html`, `partials/toc.html`. Each is a full copy, so a Blowfish update can break it without any error.
+Fugu overrides 14 Blowfish files: `404.html`, `_default/single.html`, `_default/term.html`, `_default/terms.html`, `_default/index.json`, `_default/_markup/render-heading.html`, `render-image.html`, `render-link.html`, `partials/head.html`, `partials/article-meta/basic.html`, `partials/article-pagination.html`, `partials/pagination.html`, `partials/related.html`, `partials/toc.html`. Each is a full copy, so a Blowfish update can break it without any error. Fugu also replaces one Blowfish asset, `assets/js/search.js`, with the same risk; count it with the templates in everything below.
 
 - [ ] Write `docs/blowfish.md`: for each overridden file, what Fugu changes and why, and the Blowfish version it was copied from (the submodule was at `e9699d8`, May 2026).
 - [ ] List the Blowfish params Fugu ignores or uses differently (e.g. `footer.showAppearanceSwitcher` controls a header toggle; homepage `layout`; `bg-neutral` resolving to white in every scheme). Not a Chef's `config/_default/params.toml` comments have most of these.
 - [ ] Where Blowfish offers a hook (`extend-head.html`, `extend-footer.html`, etc.), prefer it over a full override, and shrink overrides where possible.
 - [ ] Pin the supported Blowfish version: a `go.mod` for Hugo modules (`module github.com/robotpony/hugo-theme-fugu`, requiring Blowfish's module), and the same version in CI.
+- [ ] Pick the install method. The README installs Fugu and Blowfish as git submodules; the `go.mod` above implies Hugo modules. Either support both and document both, or choose one and make the README, docs, and example site agree.
+- [ ] Settle the Hugo version. `theme.toml` says `min_version = "0.158.0"` (Blowfish's minimum) but notes Fugu hasn't been tested below 0.166. Test the lower bound or raise `min_version`, and use the same version in CI.
 - [ ] An upgrade checklist: diff each overridden file against the new Blowfish version, rebuild the fixtures and the example site.
 
 ## 7. Docs
@@ -80,7 +85,7 @@ Not a Chef's docs describe Fugu's features but are written for that one site. Ma
 
 ## 9. Example site and CI
 
-- [ ] `exampleSite/` with 6–10 recipes from Not a Chef (CC BY-SA 4.0 allows it; credit and link the licence): a simple recipe, a multi-component one, one with a Mechanic, one with a formula block, plus an essay, a reference page, and a glossary entry if those ship.
+- [ ] `exampleSite/` with 6–10 recipes from Not a Chef (CC BY-SA 4.0 allows it; credit and link the licence; the content needs its own `exampleSite/LICENSE`, since the repo is MIT): a simple recipe, a multi-component one, one with a Mechanic, one with a formula block, plus an essay, a reference page, and a glossary entry if those ship.
 - [ ] GitHub Actions: build `exampleSite/` and the fixtures with the pinned Hugo and Blowfish versions, `--panicOnWarning`, and run the tool tests.
 - [ ] A link check over the built example site.
 
@@ -94,7 +99,11 @@ Not a Chef's docs describe Fugu's features but are written for that one site. Ma
 
 Theme features moved here from Not a Chef's plan on 2026-10-07. They build on the templates and JS in this repo; content-side follow-ups stay in Not a Chef's PLAN.md.
 
+**These come after 1.0** (§1–§10), unless one is needed sooner by Not a Chef. Several cite `SPEC.md`, which still lives in Not a Chef; it moves into Fugu's docs in §7, and until then read it there.
+
 ### Formula strip on recipe cards
+
+- [ ] Build it, as described below.
 
 Show a recipe's formula diagram as a 24px strip on its card, so a recipe's shape is visible while browsing (home page "Recently added", the recipes list, tag and cuisine pages). Mocked up in Not a Chef's `mockups/formula-diagrams.html` §5; not built.
 
@@ -139,6 +148,6 @@ Client JS, alongside `ingredients.js`.
 - [ ] Substitutions: an interactive swap control on top of the static `## Substitutions` section.
 - [ ] Shopping list across selected recipes, in department order.
 - [ ] Pantry tool: on-hand ingredients → matching recipes (Not a Chef calls this win-the-fridge).
-- [ ] Method check-off: tap a method sentence to strike it, kept in `localStorage` per recipe. Ingredient check-off already exists; check whether it persists.
+- [ ] Method check-off: tap a method sentence to strike it, kept in `localStorage` per recipe. Ingredient check-off, scale, and units already persist in `localStorage` (`ingredients.js`, around lines 645, 833, 839); reuse that pattern and key scheme.
 
 **Deferred, on purpose** (`SPEC.md` §10): saved recipes, personal notes, ratings, and reader-side change tracking need a backend; nutrition data has no model yet.
