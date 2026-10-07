@@ -1,5 +1,6 @@
 ---
 title: About
+stats: true
 date: 2026-10-01
 start_here:
   - dishes/veg-patties

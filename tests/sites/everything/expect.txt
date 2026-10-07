@@ -40,3 +40,6 @@ recipes/veg-patties/index.html: Win the fridge</a>
 
 # Intro blockquotes stay hidden by default.
 recipes/plain-rice/index.html: !data-show-intro-quotes
+
+# The numbers on About, asked for with stats: true.
+about/index.html: The cookbook in numbers

@@ -180,25 +180,25 @@
           <a href="{{ .page.RelPermalink }}"{{ if eq .page $page }} aria-current="page"{{ end }}>{{ .label }} <span class="n">{{ if $days }}{{ $days }} {{ cond (eq $days 1) "day" "days" }}{{ else }}undated{{ end }}</span></a>
         {{ end }}
       </div>
-      {{ if eq (len $months) 1 }}
-        <div class="section-caveat">The log moved here in September 2026. Older entries aren't here yet.</div>
-      {{ end }}
     </div>
   {{ end }}
 
-  {{/* About: the cookbook in numbers, and an optional hand-picked
-    "Start here" list from about.md's `start_here` frontmatter (page
-    titles, matched like wiki links). */}}
+  {{/* Root pages like About: the cookbook in numbers, when the page's
+    frontmatter says `stats: true`, and an optional hand-picked "Start
+    here" list from its `start_here` frontmatter (page titles, matched like
+    wiki links). Each row of the numbers needs its section or taxonomy. */}}
   {{ if $isAbout }}
+    {{ if .Params.stats }}
     <div class="rs-section">
       <h2 class="rs-label">The cookbook in numbers</h2>
       <div class="rs-numbers">
         <div class="rs-number">Recipes <b>{{ len $recipes }}</b></div>
-        <div class="rs-number">Cuisines <b>{{ len site.Taxonomies.cuisine }}</b></div>
+        {{ with site.Taxonomies.cuisine }}<div class="rs-number">Cuisines <b>{{ len . }}</b></div>{{ end }}
         {{ with partial "section/name.html" "essay" }}<div class="rs-number">Essays <b>{{ len (where site.RegularPages "Section" .) }}</b></div>{{ end }}
         {{ with partial "section/name.html" "reference" }}<div class="rs-number">Reference guides <b>{{ len (where site.RegularPages "Section" .) }}</b></div>{{ end }}
       </div>
     </div>
+    {{ end }}
     {{ with .Params.start_here }}
       <div class="rs-section">
         <h2 class="rs-label">Start here</h2>
