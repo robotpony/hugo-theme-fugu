@@ -9,3 +9,9 @@
   essaySection = "essays"
   referenceSection = "reference"
   logSection = "the-food-log"
+
+  # The recipe sidebar's section boxes, top to bottom, under search and the
+  # facts list. Each key takes the matching ## section out of the article
+  # (photos: the page's images): to-serve, mechanic, variations, equipment,
+  # notes, photos. Leave a key out to keep that section in the article.
+  recipeSidebar = ["photos", "to-serve", "mechanic", "variations", "equipment", "notes"]

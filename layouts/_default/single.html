@@ -269,12 +269,17 @@
             {{ end }}
             {{/* Photos (see partials/reading-sidebar.html): desktop only,
               a strip under the title on mobile. */}}
-            <div class="recipe-sidebar-section sidebar-photos" data-sidebar-slot="photos" hidden></div>
-            <div class="recipe-sidebar-section" data-sidebar-slot="to-serve" hidden></div>
-            <div class="recipe-sidebar-section" data-sidebar-slot="mechanic" hidden></div>
-            <div class="recipe-sidebar-section" data-sidebar-slot="variations" hidden></div>
-            <div class="recipe-sidebar-section" data-sidebar-slot="equipment" hidden></div>
-            <div class="recipe-sidebar-section" data-sidebar-slot="notes" hidden></div>
+            {{/* The section boxes, in params.fugu.recipeSidebar's order
+              (hugo.toml). A key left out has no box, so the JS leaves that
+              section in the article. */}}
+            {{ $known := slice "photos" "to-serve" "mechanic" "variations" "equipment" "notes" }}
+            {{ range site.Params.fugu.recipeSidebar | default $known }}
+              {{ if in $known . }}
+                <div class="recipe-sidebar-section{{ if eq . "photos" }} sidebar-photos{{ end }}" data-sidebar-slot="{{ . }}" hidden></div>
+              {{ else }}
+                {{ warnf "params.fugu.recipeSidebar: unknown section %q (known: %s)" . (delimit $known ", ") }}
+              {{ end }}
+            {{ end }}
           </div>
         </div>
       {{ end }}
