@@ -20,7 +20,7 @@ Start with the two checks: everything after this changes templates, and catching
 - [x] Add the missing header comments: `partials/head.html` (a full Blowfish override, about 21 lines changed, with no header) and `recipes/list.json.json` (builds the recipe index, with no header). Every template and JS file should open with one, per CLAUDE.md. *Done 2026-10-07; a check of every file under `layouts/` and `assets/js/` found no others.*
 - [x] Fix the tool help text. `frontmatter.py --help` and `drafts.py --help` cut the description off mid-sentence ("…across content/recipes,") because argparse takes only the docstring's first line; pass the full description, or a one-line summary that stands on its own. Give `drafts.py --json` a help string. Every tool should explain itself with `--help` alone. *Done 2026-10-07: full descriptions, help for every argument, an epilog saying which site the Python tools work on, and `--help` for `add-image.sh` (printed from its header comment). `frontmatter.py`'s docstring now lists `the-food-log`, which it always checked.*
 - [x] Write the README's scope statement: a general cookbook theme where only recipes are required, and essays, reference pages, a dated log, `cuisine`, the glossary, and principle tags are each optional. *Done 2026-10-07: a Scope section after the intro, saying plainly that Fugu doesn't fully live up to it yet.*
-- [ ] Add a `CHANGELOG.md` and start tagging versions (see §10 for when `v0.1.0` lands).
+- [x] Add a `CHANGELOG.md` and start tagging versions (see §10 for when `v0.1.0` lands). *Done 2026-10-07: `CHANGELOG.md` with an Unreleased section, and a CLAUDE.md convention to keep it up to date. No tags yet: the first is `v0.1.0` (§10).*
 
 ## 2. Configuration instead of hardcoded names
 
