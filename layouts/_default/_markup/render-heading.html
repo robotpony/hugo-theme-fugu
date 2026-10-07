@@ -35,7 +35,7 @@
   below).
 */}}
 {{ $anchor := anchorize .Anchor }}
-{{ $isRecipe := eq .Page.Section "recipes" }}
+{{ $isRecipe := eq (partialCached "section/role.html" .Page.Section .Page.Section) "recipe" }}
 
 {{/* Word-level, not full-phrase: "Timing examples", "Basic method", and
      "General rules" all need to fall out of the ingredient default the same

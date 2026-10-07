@@ -76,7 +76,7 @@
         this TOC (lg:hidden), since the sidebar's "On this page" is
         desktop-only. */}}
       {{ $reading := eq (partial "sidebar/kind.html" .) "reading" }}
-      {{ if and $showToc (ne .Section "recipes") }}
+      {{ if and $showToc (ne (partialCached "section/role.html" .Section .Section) "recipe") }}
         <div class="order-first lg:ms-auto px-0 lg:order-last lg:ps-8 lg:max-w-2xs{{ if $reading }} lg:hidden{{ end }}">
           <div class="toc ps-5 print:hidden lg:sticky {{ $topClass }}">
             {{ partial "toc.html" . }}
@@ -87,7 +87,7 @@
 
       <div class="min-w-0 min-h-0 max-w-fit">
         {{ partial "series/series.html" . }}
-        <div class="article-content max-w-prose mb-20"{{ if eq .Section "recipes" }} data-page-key="{{ .RelPermalink }}" data-enable-kelvin="{{ site.Params.recipe.enableKelvin | default false }}"{{ end }}>
+        <div class="article-content max-w-prose mb-20"{{ if eq (partialCached "section/role.html" .Section .Section) "recipe" }} data-page-key="{{ .RelPermalink }}" data-enable-kelvin="{{ site.Params.recipe.enableKelvin | default false }}"{{ end }}>
           {{/* Reset before every render pass through this content — Hugo's
             own automatic .Summary/.Description generation also runs the
             heading hook against the same Page/Scratch, so this pass must
@@ -111,7 +111,7 @@
             {{ $sidebarJS := resources.Get "js/automagic-sidebar.js" | resources.Minify | resources.Fingerprint "sha256" }}
             <script src="{{ $sidebarJS.RelPermalink }}" integrity="{{ $sidebarJS.Data.Integrity }}" defer></script>
           {{ end }}
-          {{ if eq .Section "recipes" }}
+          {{ if eq (partialCached "section/role.html" .Section .Section) "recipe" }}
             {{ $ingredientsJS := resources.Get "js/ingredients.js" | resources.Minify | resources.Fingerprint "sha256" }}
             <script src="{{ $ingredientsJS.RelPermalink }}" integrity="{{ $ingredientsJS.Data.Integrity }}" defer></script>
           {{ end }}
@@ -141,7 +141,7 @@
           of this flex item so the recipe sidebar, a sibling of this div,
           lands right after Method on mobile via plain DOM order rather
           than after sharing links and a grid of unrelated recipe cards. */}}
-        {{ if ne .Section "recipes" }}
+        {{ if ne (partialCached "section/role.html" .Section .Section) "recipe" }}
           {{ if (.Params.showAuthorBottom | default (site.Params.article.showAuthorBottom | default false)) }}
             {{ template "SingleAuthor" . }}
           {{ end }}
@@ -194,7 +194,7 @@
         </div>
       {{ end }}
 
-      {{ if eq .Section "recipes" }}
+      {{ if eq (partialCached "section/role.html" .Section .Section) "recipe" }}
         {{/* order-first/lg:order-last: same trick as the TOC block above
           (bare `order-last` doesn't exist in Blowfish's compiled CSS, see
           the comment there — `order-first` and `lg:order-last` both do,
@@ -297,7 +297,7 @@
       section above so they can't land between Method and the sidebar's
       mobile position. max-w-prose matches the header/footer's width so
       this reads as a continuation of the same column. */}}
-    {{ if eq .Section "recipes" }}
+    {{ if eq (partialCached "section/role.html" .Section .Section) "recipe" }}
       <div class="max-w-prose">
         {{ if (.Params.showAuthorBottom | default (site.Params.article.showAuthorBottom | default false)) }}
           {{ template "SingleAuthor" . }}

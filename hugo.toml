@@ -4,7 +4,9 @@
 
 [params.fugu]
   # Section folders under content/. Set one to "" to say the site doesn't
-  # have it. Only the recipe section is required.
+  # have it. Only the recipe section is required. A renamed section's
+  # _index.md also sets `type` to the default name (e.g. `type: recipes` in
+  # content/dishes/_index.md), so Hugo finds Fugu's list layout for it.
   recipeSection = "recipes"
   essaySection = "essays"
   referenceSection = "reference"

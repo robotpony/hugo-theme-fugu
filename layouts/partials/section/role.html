@@ -1,0 +1,14 @@
+{{/*
+  Which of Fugu's sections a content folder is: "recipe", "essay",
+  "reference", "log", or "" for anything else (including root pages, whose
+  .Section is ""). Takes a section name, usually a page's .Section, so
+  templates compare roles instead of folder names a site may have renamed
+  (section/name.html goes the other way).
+*/}}
+{{ $role := "" }}
+{{ if . }}
+  {{ range slice "recipe" "essay" "reference" "log" }}
+    {{ if eq (partial "section/name.html" .) $ }}{{ $role = . }}{{ break }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ return $role }}

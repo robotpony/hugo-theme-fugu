@@ -18,6 +18,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 ### Changed
 
 - Built and tested against Blowfish `295dae3` (2026-09-13) and Hugo 0.166.0, up from Blowfish `e9699d8` and Hugo 0.161.1; `min_version` is now 0.163.0, Blowfish's minimum. Fugu's copies of Blowfish's `single.html`, `head.html`, `toc.html`, `article-meta/basic.html`, and `search.js` take that release's changes: deferred image zoom with its new setup script, reading progress, the comments partial, accessible labels on the table of contents, Cmd/Ctrl+K and focus handling in search, and badges for custom taxonomies.
+- The templates read the section names from `[params.fugu]` too, so a site can call its sections anything (`dishes`, `writing`, ...). The list layouts are still found by folder (`layouts/recipes/`, `essays/`, `reference/`, `the-food-log/`), so a renamed section's `_index.md` sets `type` to the default name, e.g. `type: recipes`, to get them (and, for recipes, the `index.json` output).
 - `frontmatter.py` and `drafts.py` find the recipe, essay, reference, and log folders from the site's `[params.fugu]` (`recipeSection`, `essaySection`, `referenceSection`, `logSection`; `""` turns one off), with defaults in Fugu's new `hugo.toml`.
 - `layouts/404.html` is gone. It was Not a Chef's text adventure and now lives in that site; other sites get Blowfish's 404.
 - Header comments in every override now say what changed from Blowfish's copy and why, and comments no longer point at Not a Chef's mockups or its old plan.

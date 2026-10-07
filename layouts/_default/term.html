@@ -23,8 +23,9 @@
 */}}
 {{ .Scratch.Set "scope" "term" }}
 {{ $isPrinciple := .Params.principle }}
-{{ $allRecipes := eq (len (where .Pages "Section" "recipes")) (len .Pages) }}
-{{ $recipePages := where .Pages "Section" "recipes" }}
+{{ $recipeSection := partial "section/name.html" "recipe" }}
+{{ $allRecipes := eq (len (where .Pages "Section" $recipeSection)) (len .Pages) }}
+{{ $recipePages := where .Pages "Section" $recipeSection }}
 {{/* Pinned pages (frontmatter `pinned: true`) float to the top of a term
   listing too; everything else keeps its existing relative order. See
   DESIGN.md. */}}
@@ -51,11 +52,11 @@
     <h3 class="subsection-title">Recipes that follow this principle</h3>
   {{ else }}
     {{/* Tagline: the term's own description (content/cuisine/<name>/_index.md)
-      if one exists, else the recipes section's (content/recipes/_index.md),
+      if one exists, else the recipe section's (content/recipes/_index.md by default),
       so the header lines up with the recipes list. */}}
-    {{ with .Description | default (site.GetPage "/recipes").Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
+    {{ with .Description | default (site.GetPage (printf "/%s" $recipeSection)).Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
   {{ end }}
-  <div class="listing-search">{{ partial "search-box.html" (len (where site.RegularPages "Section" "recipes")) }}</div>
+  <div class="listing-search">{{ partial "search-box.html" (len (where site.RegularPages "Section" $recipeSection)) }}</div>
   <div class="rgrid">
     {{ range $pager.Pages }}
       {{ partial "recipe-card.html" . }}
@@ -66,7 +67,7 @@
     {{ $essay := site.GetPage "/essays/reference-essays/win-the-fridge" }}
     {{ $further := slice }}
     {{ range $allPages }}
-      {{ if ne .Section "recipes" }}
+      {{ if ne .Section $recipeSection }}
         {{ if not (and $essay (eq .RelPermalink $essay.RelPermalink)) }}
           {{ $further = $further | append . }}
         {{ end }}
@@ -76,7 +77,7 @@
       <h3 class="subsection-title" style="margin-top:32px;">Reference &amp; further reading</h3>
       <div class="ref-list">
         {{ range . }}
-          <div class="ref-row"><span class="ref-kind">{{ cond (eq .Section "reference") "Reference" "Essay" }}</span><a href="{{ .RelPermalink }}">{{ .Title }}</a></div>
+          <div class="ref-row"><span class="ref-kind">{{ cond (eq (partialCached "section/role.html" .Section .Section) "reference") "Reference" "Essay" }}</span><a href="{{ .RelPermalink }}">{{ .Title }}</a></div>
         {{ end }}
       </div>
     {{ end }}

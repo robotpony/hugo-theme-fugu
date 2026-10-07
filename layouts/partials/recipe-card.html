@@ -38,9 +38,10 @@
   the intro (partials/formula-strip.html), and .has-formula on the card so
   the intro can give up a line and the card keeps its height.
 */}}
-{{ $isEssay := eq .Section "essays" }}
-{{ $isLog := eq .Section "the-food-log" }}
-{{ $isRef := eq .Section "reference" }}
+{{ $role := partialCached "section/role.html" .Section .Section }}
+{{ $isEssay := eq $role "essay" }}
+{{ $isLog := eq $role "log" }}
+{{ $isRef := eq $role "reference" }}
 {{ $title := .Title }}
 {{ $slots := 2 }}
 {{ $cuisine := .Params.cuisine }}
@@ -53,7 +54,7 @@
 {{ end }}
 {{ if $isEssay }}
   {{ $folder := path.Base (strings.TrimSuffix "/" .File.Dir) }}
-  {{ $tags = cond (eq $folder "essays") (slice) (slice (replace $folder "-" " ")) }}
+  {{ $tags = cond (eq $folder .Section) (slice) (slice (replace $folder "-" " ")) }}
 {{ end }}
 {{ $room := $slots }}
 {{ if ne $cuisine nil }}{{ $room = sub $room 1 }}{{ end }}

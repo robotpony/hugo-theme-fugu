@@ -18,7 +18,7 @@
 {{ with .Date }}
   {{ if not .IsZero }}
     {{ $value := . | time.Format $fmt }}
-    {{ if eq $.Section "the-food-log" }}
+    {{ if eq (partialCached "section/role.html" $.Section $.Section) "log" }}
       {{ $value = cond (findRE `(?i)-(spring|summer|fall|winter)$` $.File.ContentBaseName) $.Title (. | time.Format "January 2006") }}
     {{ end }}
     {{ $rows = $rows | append (dict "label" "Date" "value" $value) }}

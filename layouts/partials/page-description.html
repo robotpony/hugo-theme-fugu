@@ -22,9 +22,9 @@
   {{/* Too short to describe anything: a food log month's "_Undated._" */}}
   {{ if ge (len $intro) 20 }}
     {{ $d = $intro }}
-  {{ else if eq .Section "recipes" }}
+  {{ else if eq (partialCached "section/role.html" .Section .Section) "recipe" }}
     {{ $d = printf "%s, a recipe from %s." .Title site.Title }}
-  {{ else if eq .Section "the-food-log" }}
+  {{ else if eq (partialCached "section/role.html" .Section .Section) "log" }}
     {{/* A month of the log is a run of ### entries; list them. */}}
     {{ $entries := slice }}
     {{ range findRESubmatch `(?m)^#{2,3}\s+(.+)$` .RawContent }}
