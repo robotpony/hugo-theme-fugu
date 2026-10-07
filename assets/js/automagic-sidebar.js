@@ -255,14 +255,32 @@
       // Anywhere that isn't the photo, its caption, or a button closes it.
       if (!e.target.closest('.pv-foot, .pv-stage img, .pv-btn')) dlg.close();
     });
+    // Touch swipe. Without touch-action, iOS takes a sideways drag as a
+    // pan and sends pointercancel instead of pointerup, so the swipe never
+    // lands; pan-y keeps vertical scrolling (a long caption) and pinch-zoom.
+    // A swipe that ends off the photo also fires a click, which would
+    // close the viewer, so that one click is swallowed.
+    dlg.style.touchAction = 'pan-y pinch-zoom';
     var x0 = null;
+    var swiped = false;
     dlg.addEventListener('pointerdown', function (e) { x0 = e.pointerType === 'mouse' ? null : e.clientX; });
+    dlg.addEventListener('pointercancel', function () { x0 = null; });
     dlg.addEventListener('pointerup', function (e) {
       if (x0 === null || !multi) return;
       var dx = e.clientX - x0;
       x0 = null;
-      if (Math.abs(dx) > 50) show(idx + (dx < 0 ? 1 : -1));
+      if (Math.abs(dx) > 50) {
+        swiped = true;
+        setTimeout(function () { swiped = false; }, 400);
+        show(idx + (dx < 0 ? 1 : -1));
+      }
     });
+    dlg.addEventListener('click', function (e) {
+      if (!swiped) return;
+      swiped = false;
+      e.stopImmediatePropagation();
+      e.preventDefault();
+    }, true);
 
     return function open(i) {
       show(i);

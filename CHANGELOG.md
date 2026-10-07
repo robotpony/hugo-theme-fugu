@@ -22,6 +22,10 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 - `layouts/404.html` is gone. It was Not a Chef's text adventure and now lives in that site; other sites get Blowfish's 404.
 - Header comments in every override now say what changed from Blowfish's copy and why, and comments no longer point at Not a Chef's mockups or its old plan.
 
+### Fixed
+
+- Swiping between photos in the photo viewer works on iOS. Safari took a sideways swipe as scrolling and cancelled it, and a swipe that ended off the photo closed the viewer.
+
 ## 2026-10-06: split from Not a Chef
 
 Templates, render hooks, JS, formula icons, archetypes, and the content tools moved out of [Not a Chef](https://github.com/robotpony/not-a-chef) into this repo, unchanged. Not a Chef uses it as a git submodule at `themes/fugu`.
