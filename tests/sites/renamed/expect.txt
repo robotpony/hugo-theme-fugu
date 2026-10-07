@@ -3,6 +3,7 @@
 dishes/veg-patties/index.html: data-ing-heading="true"
 dishes/plain-rice/index.html: data-method-heading="true"
 dishes/plain-rice/index.html: data-sidebar-heading="notes"
+dishes/plain-rice/index.html: data-show-intro-quotes="true"
 dishes/veg-patties/index.html: !data-sidebar-heading="notes"
 dishes/veg-patties/index.html: id="recipe-sidebar"
 dishes/veg-patties/index.html: class="formula

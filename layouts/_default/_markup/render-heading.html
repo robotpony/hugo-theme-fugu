@@ -76,12 +76,13 @@
 {{ if and (partial "sidebar/kind.html" .Page) (eq .Level 2) }}
   {{ $sidebarHeading = partial "sidebar/heading-slot.html" $normalized }}
 {{ end }}
-{{/* "History" (the "hidden" headings) is family-provenance text (same reason as the intro
-     blockquotes handled in assets/js/ingredients.js's hideFamilyHistory) —
-     not meant for anonymous visitors until sign-in exists, so it's hidden
-     client-side by the same "walk to the next H2" approach as the sidebar
-     sections above, rather than relocated anywhere visible. */}}
-{{ $isHistoryHeading := and $isRecipe (eq .Level 2) (eq $headingRole "hidden") }}
+{{/* Personal notes: a recipe section in params.fugu.headings.hidden
+     ("History" by default, family-provenance text) is hidden client-side
+     by ingredients.js (hideHiddenSections), the same way as the intro
+     blockquotes (hideIntroQuotes), by the same "walk to the next H2"
+     approach as the sidebar sections above, rather than relocated
+     anywhere visible. Still in the HTML, so not private. */}}
+{{ $isHiddenHeading := and $isRecipe (eq .Level 2) (eq $headingRole "hidden") }}
 
 {{ if and $isRecipe (eq .Level 2) }}
   {{ .Page.Scratch.Set "ingSection" $isIngredientHeading }}
@@ -89,7 +90,7 @@
 {{ $inIngredientSection := and $isRecipe (in (slice 3 4) .Level) (.Page.Scratch.Get "ingSection") }}
 
 <h{{ .Level }} class="relative group{{ if $inIngredientSection }} ing-subhead{{ end }}"
-  {{- if and $isRecipe (eq .Level 2) }} data-ing-heading="{{ $isIngredientHeading }}" data-method-heading="{{ $isMethodHeading }}"{{ if $isHistoryHeading }} data-hide-heading="true"{{ end }}{{ end -}}
+  {{- if and $isRecipe (eq .Level 2) }} data-ing-heading="{{ $isIngredientHeading }}" data-method-heading="{{ $isMethodHeading }}"{{ if $isHiddenHeading }} data-hide-heading="true"{{ end }}{{ end -}}
   {{- with $sidebarHeading }} data-sidebar-heading="{{ . }}"{{ end -}}
 >{{ .Text | safeHTML }}
     <div id="{{ $anchor }}" class="anchor"></div>

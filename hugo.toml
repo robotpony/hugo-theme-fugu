@@ -19,6 +19,12 @@
   referenceEssays = "reference-essays"
   glossaryPage = "glossary"
 
+  # Personal notes: blockquotes in a recipe's intro (before its first ##)
+  # are hidden from readers, like the headings.hidden sections below. Only
+  # hidden: the text is still in the HTML, the search index, and the RSS
+  # feed, so it isn't private. false shows them.
+  hideIntroQuotes = true
+
   # The recipe sidebar's section boxes, top to bottom, under search and the
   # facts list. Each key takes the matching ## section out of the article
   # (photos: the page's images): to-serve, mechanic, variations, equipment,

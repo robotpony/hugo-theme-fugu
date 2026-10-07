@@ -87,7 +87,7 @@
 
       <div class="min-w-0 min-h-0 max-w-fit">
         {{ partial "series/series.html" . }}
-        <div class="article-content max-w-prose mb-20"{{ if eq (partialCached "section/role.html" .Section .Section) "recipe" }} data-page-key="{{ .RelPermalink }}" data-enable-kelvin="{{ site.Params.recipe.enableKelvin | default false }}"{{ end }}>
+        <div class="article-content max-w-prose mb-20"{{ if eq (partialCached "section/role.html" .Section .Section) "recipe" }} data-page-key="{{ .RelPermalink }}" data-enable-kelvin="{{ site.Params.recipe.enableKelvin | default false }}"{{ if eq site.Params.fugu.hideIntroQuotes false }} data-show-intro-quotes="true"{{ end }}{{ end }}>
           {{/* Reset before every render pass through this content — Hugo's
             own automatic .Summary/.Description generation also runs the
             heading hook against the same Page/Scratch, so this pass must

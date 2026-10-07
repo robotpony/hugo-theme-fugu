@@ -904,17 +904,19 @@
     return details;
   }
 
-  // --- Family history blockquotes (intro section only) -------------------
+  // --- Personal notes ----------------------------------------------------
   //
   // A blockquote in a recipe's intro (the prose before the first H2 —
   // Ingredients, or a multi-component recipe's first "## ComponentName")
-  // carries family-history/provenance text migrated from the source
-  // archive, e.g. content/recipes/bienenstich.md. That's not meant to
-  // publish to anonymous visitors — sign-in is a future feature, so for
-  // now these are just hidden client-side rather than left server-rendered
-  // for anyone to read in the page source. `.hidden`, not a CSS class,
-  // matches how the sidebar slots are hidden/shown (automagic-sidebar.js).
-  function hideFamilyHistory(article) {
+  // holds personal notes, like family history, that a site may not want in
+  // front of every reader. They're hidden here, client-side, unless the
+  // site sets params.fugu.hideIntroQuotes = false (single.html then adds
+  // data-show-intro-quotes). This only hides them: the text is still in
+  // the HTML, the search index, and the RSS feed, so it isn't private.
+  // `.hidden`, not a CSS class, matches how the sidebar slots are
+  // hidden/shown (automagic-sidebar.js).
+  function hideIntroQuotes(article) {
+    if (article.dataset.showIntroQuotes === 'true') return;
     var el = article.firstElementChild;
     while (el && el.tagName !== 'H2') {
       if (el.tagName === 'BLOCKQUOTE') el.hidden = true;
@@ -922,11 +924,12 @@
     }
   }
 
-  // A top-level "## History" section (render-heading.html flags its H2 with
-  // data-hide-heading) is the same family-provenance content as the intro
+  // A top-level section whose title is in params.fugu.headings.hidden
+  // ("## History" by default; render-heading.html flags its H2 with
+  // data-hide-heading) is the same kind of personal note as the intro
   // blockquotes above, just further down the page — hidden the same way,
   // by walking forward to the next H2 rather than relocating it anywhere.
-  function hideHistorySections(article) {
+  function hideHiddenSections(article) {
     article.querySelectorAll('h2[data-hide-heading="true"]').forEach(function (h2) {
       h2.hidden = true;
       var el = h2.nextElementSibling;
@@ -943,8 +946,8 @@
     var pageKey = root.dataset.pageKey;
     ENABLE_KELVIN = root.dataset.enableKelvin === 'true';
 
-    hideFamilyHistory(root);
-    hideHistorySections(root);
+    hideIntroQuotes(root);
+    hideHiddenSections(root);
 
     var headings = root.querySelectorAll('h2[data-ing-heading="true"]');
     headings.forEach(function (h2) {
