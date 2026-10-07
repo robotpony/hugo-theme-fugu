@@ -10,6 +10,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 - Formula strip on recipe cards: a page with a ```` ```formula ```` block shows its icons and operators (and a ratio's numbers) as a small row under the card's intro, with each ingredient's label, quantity, and swaps in a hover tooltip (`partials/formula-strip.html`). Cards with a strip get `.has-formula`; the site styles `.rcard-formula`, `.rcard-formula-link` and `.slot`.
 - `tools/compare-builds.py`: builds a site with Fugu at a git ref and with the working tree, and lists every file that differs (whitespace ignored), so a theme change can't alter a site by accident.
 - Fixture sites in `tests/sites/` (`recipes-only` and `everything`) and a GitHub Actions job that builds both with `--panicOnWarning` against Hugo 0.161.1 and Blowfish `e9699d8`.
+- `tests/check.py`: builds every fixture site and checks its pages against its `expect.txt`; `--compare` also runs `compare-builds.py`. CI runs it. A third fixture, `renamed`, moves every section to a new name and is expected to fail until the templates read section names from config.
 - `--help` for every tool, including `add-image.sh`.
 - A scope statement in the README: only recipes are required.
 

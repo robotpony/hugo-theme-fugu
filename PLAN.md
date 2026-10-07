@@ -39,6 +39,8 @@ Everything below is written directly into templates today. Move it into one para
 
 ## 3. Optional parts
 
+`tests/check.py` builds the fixtures and checks their pages against each one's `expect.txt` (added 2026-10-07). §2 is done when the `renamed` fixture passes and its `XFAIL` file is deleted; add an `expect.txt` line for each part this section makes optional.
+
 - [ ] A site with only a `recipes` section and only the `tags` taxonomy must build with no errors or warnings and no broken links. Today `cuisine` is assumed in `recipe-card.html`, `list.json.json`, and `related.html`.
 - [ ] Accept `cuisine` as a list as well as a string. `recipe-card.html` calls `lower` on it and fails the build on `cuisine: [Thai]` (found by the fixtures, 2026-10-07). Not a Chef's `FORMAT.md` says string, but Hugo taxonomies are lists, and other sites will write them that way.
 - [ ] Each optional part (essays, reference, log, glossary, principle tags, `cuisine`) turns off cleanly: no empty sidebar blocks, no dead nav, no zero counts.

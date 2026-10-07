@@ -1,0 +1,33 @@
+# Recipe page: ingredient and method markers, the recipe sidebar, the
+# formula diagram, wiki links, and a glossary link.
+dishes/veg-patties/index.html: data-ing-heading="true"
+dishes/plain-rice/index.html: data-method-heading="true"
+dishes/veg-patties/index.html: id="recipe-sidebar"
+dishes/veg-patties/index.html: class="formula
+dishes/veg-patties/index.html: href="/dishes/plain-rice/"
+dishes/veg-patties/index.html: glossary-link
+dishes/veg-patties/index.html: !broken-link
+dishes/veg-patties/index.html: cuisine-chip
+dishes/plain-rice/index.html: href="/writing/reference-essays/win-the-fridge/"
+
+# Section lists use Fugu's list template, with recipe cards.
+dishes/index.html: class="ltitle
+dishes/index.html: class="rcard
+dishes/index.html: rcard-formula
+writing/index.html: class="ltitle
+guides/index.html: class="ltitle
+journal/index.html: class="ltitle
+dishes/index.json: "has_formula": true
+
+# Reading pages get the reading sidebar, not the recipe one.
+writing/cooking-reflections/why-ratios/index.html: reading-sidebar
+writing/cooking-reflections/why-ratios/index.html: !id="recipe-sidebar"
+guides/rice-ratios/index.html: reading-sidebar
+journal/2026-september/index.html: reading-sidebar
+journal/2026-september/index.html: href="/dishes/veg-patties/"
+
+# Taxonomies: cuisine pages, and the principle tag's definition and essay.
+cuisine/american/index.html: class="rcard
+tags/win-the-fridge/index.html: definition-callout
+tags/win-the-fridge/index.html: read-essay
+index.json:

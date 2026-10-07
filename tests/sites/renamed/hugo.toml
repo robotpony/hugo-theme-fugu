@@ -1,0 +1,44 @@
+# The everything site with every section under a different name, and the
+# glossary and reference essays moved with them. Anything in Fugu that
+# still hardcodes a section name shows up here. See ../README.md.
+baseURL = "https://example.org/"
+title = "Renamed"
+theme = ["fugu", "blowfish"]
+themesDir = "../../../.."
+
+[taxonomies]
+  tag = "tags"
+  cuisine = "cuisine"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[related]
+  threshold = 50
+  toLower = true
+  [[related.indices]]
+    name = "tags"
+    weight = 100
+  [[related.indices]]
+    name = "cuisine"
+    weight = 80
+
+[params]
+  mainSections = ["dishes"]
+  enableSearch = true
+
+  [params.article]
+    showTableOfContents = true
+    showRelatedContent = true
+    relatedContentLimit = 3  # Blowfish errors without it when related content is on
+    showTaxonomies = true
+    showBreadcrumbs = true
+
+  [params.recipe]
+    enableKelvin = false
+
+  [params.fugu]
+    recipeSection = "dishes"
+    essaySection = "writing"
+    referenceSection = "guides"
+    logSection = "journal"

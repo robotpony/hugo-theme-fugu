@@ -1,0 +1,12 @@
+# Recipes and tags only: recipe pages work, and nothing points at the
+# sections and taxonomy this site doesn't have.
+recipes/rice-bowl/index.html: data-ing-heading="true"
+recipes/rice-bowl/index.html: id="recipe-sidebar"
+recipes/rice-bowl/index.html: href="/recipes/plain-rice/"
+recipes/rice-bowl/index.html: !broken-link
+recipes/rice-bowl/index.html: !cuisine-chip
+recipes/index.html: class="ltitle
+recipes/index.html: class="rcard
+recipes/index.json:
+!cuisine/index.html
+!essays/index.html

@@ -1,0 +1,4 @@
+# Hugo build output from building a fixture site in place.
+tests/sites/*/.hugo_build.lock
+tests/sites/*/public/
+tests/sites/*/resources/

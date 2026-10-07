@@ -1,5 +1,5 @@
 # Builds the fixture sites (tests/sites/) against pinned Hugo and Blowfish
-# versions, failing on any warning. PLAN.md §9 extends this with the
+# versions, failing on any warning, and checks their pages (tests/check.py). PLAN.md §9 extends this with the
 # example site, the tool tests, and a link check.
 #
 # Hugo is pinned inside Blowfish's declared range for that commit
@@ -19,10 +19,6 @@ env:
 jobs:
   fixtures:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        site: [recipes-only, everything]
     steps:
       # The fixtures find their themes at ../../../.. (themesDir), so Fugu
       # and Blowfish go side by side under themes/, as in a real site.
@@ -39,5 +35,7 @@ jobs:
           curl -sSLf -o hugo.deb "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
           sudo dpkg -i hugo.deb
           hugo version
-      - name: Build ${{ matrix.site }}
-        run: hugo --source themes/fugu/tests/sites/${{ matrix.site }} --panicOnWarning --destination "$RUNNER_TEMP/${{ matrix.site }}"
+      # Builds every site in tests/sites/ and checks its expect.txt. Sites
+      # with an XFAIL file are reported but don't fail the job.
+      - name: Build and check the fixtures
+        run: python3 themes/fugu/tests/check.py
