@@ -26,10 +26,10 @@ jobs:
     steps:
       # The fixtures find their themes at ../../../.. (themesDir), so Fugu
       # and Blowfish go side by side under themes/, as in a real site.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           path: themes/fugu
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           repository: nunocoracao/blowfish
           ref: ${{ env.BLOWFISH_REF }}
