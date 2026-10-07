@@ -46,9 +46,12 @@
      these words collide with a real ingredient-bearing heading there — a
      word this generic-sounding but actually used as a component name (e.g.
      a future "## Combo A") would still misfire, so keep new additions to
-     words that read as meta/reference language, not food. */}}
-{{ $nonIngredientKeywords := slice "method" "directions" "steps" "notes" "serve" "variations" "timing" "example" "examples" "rules" "equipment" "hardware" "substitutions" "mechanic" "history" }}
-{{ $methodHeadings := slice "method" "directions" "steps" }}
+     words that read as meta/reference language, not food. The words are
+     params.fugu.headings.notIngredients; a heading whose whole title has a
+     role there (headings/role.html: Method, Notes, ...) isn't an
+     ingredient section either. */}}
+{{ $nonIngredientKeywords := slice }}
+{{ range site.Params.fugu.headings.notIngredients }}{{ $nonIngredientKeywords = $nonIngredientKeywords | append (lower .) }}{{ end }}
 {{/* These optional top-level sections (Mechanic, To serve, Variations,
      Equipment, Notes) get pulled out of the reading flow and into the
      page's sidebar by assets/js/automagic-sidebar.js, which walks forward
@@ -62,22 +65,23 @@
      top-level "## To serve" prose section — components are always one
      level deeper. */}}
 {{ $normalized := .Text | plainify | strings.TrimSuffix ":" | strings.TrimSpace | lower }}
-{{ $hasNonIngredientWord := false }}
+{{ $headingRole := partialCached "headings/role.html" $normalized $normalized }}
+{{- $hasNonIngredientWord := ne $headingRole "" }}
 {{ range split $normalized " " }}
   {{ if in $nonIngredientKeywords . }}{{ $hasNonIngredientWord = true }}{{ end }}
 {{ end }}
 {{ $isIngredientHeading := and $isRecipe (eq .Level 2) (not $hasNonIngredientWord) }}
-{{ $isMethodHeading := and $isRecipe (eq .Level 2) (in $methodHeadings $normalized) }}
+{{ $isMethodHeading := and $isRecipe (eq .Level 2) (eq $headingRole "method") }}
 {{ $sidebarHeading := "" }}
 {{ if and (partial "sidebar/kind.html" .Page) (eq .Level 2) }}
   {{ $sidebarHeading = partial "sidebar/heading-slot.html" $normalized }}
 {{ end }}
-{{/* "History" is family-provenance text (same reason as the intro
+{{/* "History" (the "hidden" headings) is family-provenance text (same reason as the intro
      blockquotes handled in assets/js/ingredients.js's hideFamilyHistory) —
      not meant for anonymous visitors until sign-in exists, so it's hidden
      client-side by the same "walk to the next H2" approach as the sidebar
      sections above, rather than relocated anywhere visible. */}}
-{{ $isHistoryHeading := and $isRecipe (eq .Level 2) (eq $normalized "history") }}
+{{ $isHistoryHeading := and $isRecipe (eq .Level 2) (eq $headingRole "hidden") }}
 
 {{ if and $isRecipe (eq .Level 2) }}
   {{ .Page.Scratch.Set "ingSection" $isIngredientHeading }}

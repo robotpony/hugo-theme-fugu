@@ -6,6 +6,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Added
 
+- `[params.fugu.headings]`: the `##` titles that mean `method`, `mechanic`, `to-serve`, `variations`, `notes`, `equipment`, and `hidden` (lists of whole titles, any case), plus `notIngredients`, the words that keep a recipe heading from being read as an ingredient section. The defaults are the old fixed names, so a site writing in English with Fugu's section names sets nothing.
 - Principle tags work for any tag whose `content/tags/<slug>/_index.md` sets `principle: true`, not just `win-the-fridge`. Its essay is the page named by `essay` there, else the reference essay carrying the tag; its chip on recipe cards reads `short`, else the tag's title. Sites that relied on the card's old "WTF" label set `short: WTF`.
 - `params.fugu.referenceEssays` (default `reference-essays`, a folder in the essay section) and `params.fugu.glossaryPage` (default `glossary`, a page in the reference section): where `[[wiki links]]` find glossary terms. `""` turns either off.
 - `params.fugu.recipeSidebar`: the recipe sidebar's section boxes, in order (`photos`, `to-serve`, `mechanic`, `variations`, `equipment`, `notes`). A key left out keeps that section in the article; an unknown key warns. The default is the old fixed order, so a site that doesn't set it renders the same.

@@ -17,10 +17,10 @@ Rice on the stove, by ratio. Leftovers go into [[Veg patties]].
 - 375 ml (1½ cups) water
 - ½ tsp salt
 
-## Method
+## How to
 
 Rinse the rice until the water runs clear. Bring the rice, water, and salt to a boil in a small pot, cover, and turn the heat to low. Cook for 15 minutes, then let it sit, covered, for 5 more.
 
-## Notes
+## Tips
 
 - Day-old rice is drier, which is what a patty or fried rice wants.

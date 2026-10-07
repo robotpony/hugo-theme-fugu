@@ -42,3 +42,8 @@ themesDir = "../../../.."
     essaySection = "writing"
     referenceSection = "guides"
     logSection = "journal"
+
+    # Headings renamed too, so the heading map is read from config.
+    [params.fugu.headings]
+      method = ["How to"]
+      notes = ["Tips"]

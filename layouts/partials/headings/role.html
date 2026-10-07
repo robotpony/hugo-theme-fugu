@@ -1,0 +1,21 @@
+{{/*
+  What an H2 means, from [params.fugu.headings] (defaults in Fugu's
+  hugo.toml): "method", "mechanic", "to-serve", "variations", "notes",
+  "equipment", "hidden", or "" for anything else (an ingredient section,
+  on a recipe). Takes the heading's normalized title: plain text,
+  lowercase, trailing ":" trimmed. Each role lists the whole titles that
+  mean it, compared lowercase, so a site writing in another language, or
+  calling its notes "Tips", sets its own names.
+
+  Shared by render-heading.html and sidebar/heading-slot.html.
+*/}}
+{{ $text := . }}
+{{ $role := "" }}
+{{ $headings := site.Params.fugu.headings | default dict }}
+{{ range slice "method" "mechanic" "to-serve" "variations" "notes" "equipment" "hidden" }}
+  {{ $r := . }}
+  {{ range index $headings . }}
+    {{ if and (not $role) (eq (lower .) $text) }}{{ $role = $r }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ return $role }}

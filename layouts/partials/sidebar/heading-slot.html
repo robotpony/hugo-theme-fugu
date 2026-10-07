@@ -3,11 +3,11 @@
   slot it moves into (data-sidebar-slot), or "" if it stays in the
   article. Used by render-heading.html to mark the heading and by
   reading-sidebar.html to keep moved sections out of "On this page".
-  "special equipment" and "hardware" share the "equipment" slot:
-  FORMAT.md's own name for this section is "Equipment", but at least one
-  real recipe (migrated from the family archive, predating FORMAT.md)
-  titles it "Hardware"; all three land in the same box rather than
-  earning separate slots.
+
+  The titles come from [params.fugu.headings] (headings/role.html); the
+  slot is the role's name. Several titles can share one slot: the default
+  equipment list is "Equipment", "Special equipment", and "Hardware", all
+  landing in the same box.
 */}}
-{{ $keys := dict "mechanic" "mechanic" "to serve" "to-serve" "variations" "variations" "notes" "notes" "equipment" "equipment" "special equipment" "equipment" "hardware" "equipment" }}
-{{ return (index $keys . | default "") }}
+{{ $role := partialCached "headings/role.html" . . }}
+{{ return (cond (in (slice "mechanic" "to-serve" "variations" "notes" "equipment") $role) $role "") }}

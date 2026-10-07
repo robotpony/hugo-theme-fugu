@@ -2,6 +2,8 @@
 # formula diagram, wiki links, and a glossary link.
 dishes/veg-patties/index.html: data-ing-heading="true"
 dishes/plain-rice/index.html: data-method-heading="true"
+dishes/plain-rice/index.html: data-sidebar-heading="notes"
+dishes/veg-patties/index.html: !data-sidebar-heading="notes"
 dishes/veg-patties/index.html: id="recipe-sidebar"
 dishes/veg-patties/index.html: class="formula
 dishes/veg-patties/index.html: href="/dishes/plain-rice/"
