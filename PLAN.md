@@ -119,7 +119,7 @@ Theme features moved here from Not a Chef's plan on 2026-10-07. They build on th
 
 ### Formula strip on recipe cards
 
-- [ ] Build it, as described below.
+- [x] Build it, as described below. Done 2026-10-07: `partials/formula-strip.html`, called from `recipe-card.html`; each slot also carries a title tooltip (label, quantity, swaps).
 
 Show a recipe's formula diagram as a 24px strip on its card, so a recipe's shape is visible while browsing (home page "Recently added", the recipes list, tag and cuisine pages). Mocked up in Not a Chef's `mockups/formula-diagrams.html` §5; not built.
 

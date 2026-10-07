@@ -1,0 +1,69 @@
+{{/*
+  Formula strip: a page's first ```formula block drawn as one small row of
+  icons and operators, for its card (recipe-card.html). Takes a Page.
+
+  Cards don't render the body, so this finds the block in .RawContent and
+  reads each line the way render-codeblock-formula.html does, keeping only
+  the operator and icon keys, plus the quantity for a `:` ratio, where the
+  numbers are the point. Labels, swaps, the `=` result, caption and bar
+  never show here. Outputs nothing when the page has no formula block, and
+  skips unknown icon keys quietly (the recipe page's build already warns).
+
+  Each slot carries the rest in a native tooltip (title): label, quantity,
+  and swaps on a second line. The card's stretched title link would cover
+  the strip and swallow the hover, so the strip's contents sit in their
+  own link to the page, lifted above it (custom.css), kept out of the tab
+  order and hidden from screen readers, which get the role="img" label.
+*/}}
+{{- with findRESubmatch "(?s)```formula[^\\n]*\\n(.*?)\\n```" .RawContent 1 }}
+  {{- $slots := slice }}
+  {{- $kind := "" }}
+  {{- range split (index (index . 0) 1) "\n" }}
+    {{- $line := trim . " \t\r" }}
+    {{- if or (not $line) (hasPrefix $line "caption:") (hasPrefix $line "bar:") }}{{ continue }}{{ end }}
+    {{- $op := "" }}
+    {{- with findRESubmatch `^(\+|:|→|->|=)\s+(.*)$` $line 1 }}
+      {{- $op = index (index . 0) 1 }}
+      {{- $line = index (index . 0) 2 }}
+    {{- end }}
+    {{- if eq $op "=" }}{{ continue }}{{ end }}
+    {{- if eq $op "->" }}{{ $op = "→" }}{{ end }}
+    {{- if and $op (not $kind) }}{{ $kind = $op }}{{ end }}
+    {{- $f := split $line "|" }}
+    {{- $label := "" }}
+    {{- $qty := "" }}
+    {{- $swaps := "" }}
+    {{- if ge (len $f) 2 }}{{ $label = trim (index $f 1) " " }}{{ end }}
+    {{- if ge (len $f) 3 }}{{ $qty = trim (index $f 2) " " }}{{ end }}
+    {{- if ge (len $f) 4 }}{{ $swaps = trim (index $f 3) " " }}{{ end }}
+    {{- $tip := $label }}
+    {{- with $qty }}{{ $tip = cond (ne $tip "") (printf "%s · %s" $tip .) . }}{{ end }}
+    {{- with $swaps }}{{ $tip = printf "%s\n%s" $tip (cond (hasPrefix . "or ") . (printf "or %s" .)) }}{{ end }}
+    {{- $slots = $slots | append (dict "op" $op "icons" (findRE `[a-z-]+` (index $f 0)) "label" $label "qty" $qty "tip" $tip) }}
+  {{- end }}
+  {{- $ratio := eq $kind ":" }}
+  {{- $words := dict "+" "plus" ":" "to" "→" "then" }}
+  {{- $aria := slice }}
+  {{- range $slots }}
+    {{- $part := cond $ratio (trim (printf "%s %s" .label .qty) " ") .label }}
+    {{- with .op }}{{ $part = printf "%s %s" (index $words .) $part }}{{ end }}
+    {{- $aria = $aria | append $part }}
+  {{- end }}
+  {{- with $slots }}
+<div class="rcard-formula" role="img" aria-label="{{ delimit $aria " " }}">
+<a class="rcard-formula-link" href="{{ $.RelPermalink }}" tabindex="-1" aria-hidden="true">
+    {{- range $i, $s := . }}
+      {{- if gt $i 0 }}<span class="op">{{ $s.op | default $kind }}</span>{{ end }}
+      <span class="slot"{{ with $s.tip }} title="{{ . }}"{{ end }}>
+      {{- range $s.icons }}
+        {{- with resources.Get (printf "icons/formula/%s.svg" .) }}
+          {{- replace .Content "<svg " `<svg class="ic" aria-hidden="true" focusable="false" ` | safeHTML }}
+        {{- end }}
+      {{- end }}
+      {{- if and $ratio $s.qty }}<span class="n">{{ $s.qty }}</span>{{ end }}
+      </span>
+    {{- end }}
+</a>
+</div>
+  {{- end }}
+{{- end }}

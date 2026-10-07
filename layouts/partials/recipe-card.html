@@ -33,6 +33,10 @@
   thumbtack icon (.pin-icon) at the end of the top row — unlinked, faint,
   outside the cuisine/principle $room budget since it's icon-only and
   tiny.
+
+  A page with a ```formula block gets a small strip of its icons under
+  the intro (partials/formula-strip.html), and .has-formula on the card so
+  the intro can give up a line and the card keeps its height.
 */}}
 {{ $isEssay := eq .Section "essays" }}
 {{ $isLog := eq .Section "the-food-log" }}
@@ -66,6 +70,9 @@
   {{ $intro = replaceRE `\[\[(?:[^\]|]*\|)?([^\]]+)\]\]` "$1" . | markdownify | plainify | htmlUnescape | truncate 240 }}
 {{ end }}
 
+{{ $formula := partial "formula-strip.html" . }}
+{{ $hasFormula := ne (len (trim $formula " \n\t")) 0 }}
+
 {{ $stats := slice }}
 {{ range slice (slice "Prep" .Params.prep_time) (slice "Cook" .Params.cook_time) (slice "Serves" .Params.servings) }}
   {{ $v := index . 1 }}
@@ -88,7 +95,7 @@
   {{ $stats = slice (dict "label" "Read" "value" (printf "%dm" .ReadingTime) "full" (printf "%d min" .ReadingTime)) }}
 {{ end }}
 
-<article class="rcard">
+<article class="rcard{{ if $hasFormula }} has-formula{{ end }}">
   <div class="rcard-top">
     {{ with $cuisine }}{{ with $.GetTerms "cuisine" }}<a class="cuisine-chip" href="{{ (index . 0).RelPermalink }}">{{ $cuisine }}</a>{{ else }}<span class="cuisine-chip">{{ . }}</span>{{ end }}{{ end }}
     {{ $principle | safeHTML }}
@@ -98,6 +105,7 @@
   </div>
   <h3 class="rcard-title"><a class="rcard-link" href="{{ .RelPermalink }}">{{ $title }}</a></h3>
   {{ with $intro }}<p class="rcard-intro">{{ . }}</p>{{ end }}
+  {{ if $hasFormula }}{{ $formula }}{{ end }}
   {{ with $stats }}
     <div class="rcard-stats">
       {{ range . }}
