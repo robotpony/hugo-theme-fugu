@@ -72,7 +72,7 @@
             own automatic .Summary/.Description generation also runs the
             heading hook against the same Page/Scratch, so this pass must
             not inherit whatever state that (or a previous pass) left
-            behind. See render-heading.html and PLAN.md 6.2b. */}}
+            behind. See render-heading.html. */}}
           {{ .Scratch.Set "ingSection" false }}
           {{ $md := .RawContent }}
           {{/* Aliased form first ([[Title|Alias]]), so the plain-form pass

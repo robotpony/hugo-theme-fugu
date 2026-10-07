@@ -3,12 +3,9 @@
 
   The default is bare Tailwind utility classes with no padding, a thin
   dotted <hr>, and no distinct visual weight — it reads as unstyled
-  boilerplate sitting inside an otherwise designed page. No mockup ever
-  covered this component (recipe/essay/reference single pages are still
-  Blowfish's default layout, Phase 6.2 in PLAN.md) — restyled it here
-  against the established system (section divider + generous padding like
-  `.home-section`, arrow-link treatment like `.mega-viewall`) since it's
-  small, self-contained, and was visibly broken in the meantime.
+  boilerplate sitting inside an otherwise designed page. Restyled with a
+  section divider, generous padding, and arrow links, to match the other
+  section breaks on the page.
 */}}
 {{ if .Params.showPagination | default (.Site.Params.article.showPagination | default true) }}
   {{ if or .NextInSection .PrevInSection }}

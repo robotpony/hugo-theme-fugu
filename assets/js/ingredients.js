@@ -7,15 +7,14 @@
 // that part: walk forward from each marked heading to the next h2,
 // collecting the <ul> it finds, and turn it into the real component
 // (checkbox, quantity span, sub-note rows) with checked state persisted
-// per-browser via localStorage. See PLAN.md 6.2b.
+// per-browser via localStorage.
 //
 // It also injects a config menu (next to the first Ingredients heading)
 // that scales quantities and converts them between metric/imperial/Kelvin.
 // The same engine drives two surfaces: the ingredient list (<ul>/<li>,
 // walked from an "ing" heading) and inline quantities/temperatures inside
 // Directions/Method prose (walked from a "method" heading, marked
-// data-method-heading="true" by the same render hook). See PLAN.md's
-// "Ingredient helpers" line under Phase 9.
+// data-method-heading="true" by the same render hook).
 
 (function () {
   // Best-effort leading-quantity matcher, built from real recipes in this
@@ -119,9 +118,8 @@
 
   // "base" is the unit's size in its family's canonical unit (grams for
   // mass, mL for volume) — approximate, cooking-standard conversions
-  // (1 cup = 240 mL, not the precise 236.588), consistent with this
-  // project's existing tolerance for ballpark-not-exact numbers (see
-  // data/ingredient_prices.yaml in PLAN.md).
+  // (1 cup = 240 mL, not the precise 236.588): a home cook measures to
+  // the nearest line on the cup, so a ballpark number is the honest one.
   var UNIT_INFO = {
     g: { system: 'metric', family: 'mass', base: 1 },
     kg: { system: 'metric', family: 'mass', base: 1000 },

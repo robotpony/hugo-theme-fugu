@@ -24,11 +24,9 @@
   walks the DOM client-side from each marked heading to the next h2, and
   turns the <ul> it finds into the real checkbox/qty component (under an
   ingredients heading) or scans the prose for inline quantities/temperatures
-  (under a method heading). See PLAN.md 6.2b for why: a template-level
-  wrapping div can't be safely closed (heading hooks render one self-
-  contained tag at a time, with no "end of section" hook to close it), so
-  the div-wrapping approach that would otherwise be the more obvious fix
-  isn't used.
+  (under a method heading). Wrapping each section in a div would be the
+  obvious alternative, but a heading hook renders one self-contained tag
+  at a time, and there's no "end of section" hook to close the div.
 */}}
 {{ $anchor := anchorize .Anchor }}
 {{ $isRecipe := eq .Page.Section "recipes" }}
