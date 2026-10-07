@@ -27,6 +27,12 @@
   (under a method heading). Wrapping each section in a div would be the
   obvious alternative, but a heading hook renders one self-contained tag
   at a time, and there's no "end of section" hook to close the div.
+
+  Blowfish's markup is otherwise kept (the anchor div and the hover "#"
+  link, still behind article.showHeadingAnchors). Added: the data-ing-
+  heading, data-method-heading, data-hide-heading and data-sidebar-heading
+  attributes, the .ing-subhead class, and the "#" moved into CSS (see
+  below).
 */}}
 {{ $anchor := anchorize .Anchor }}
 {{ $isRecipe := eq .Page.Section "recipes" }}

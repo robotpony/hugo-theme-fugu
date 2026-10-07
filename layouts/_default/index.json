@@ -1,7 +1,7 @@
 {{- /*
-  Project override of themes/blowfish/layouts/_default/index.json — same
+  Override of themes/blowfish/layouts/_default/index.json — same
   search index, plus a "pinned" field (frontmatter `pinned: true`) so
-  assets/js/search.js (also a project override) can float pinned pages
+  assets/js/search.js (also overridden) can float pinned pages
   to the top of matching results. See DESIGN.md.
 */ -}}
 {{- $index := slice -}}

@@ -5,7 +5,9 @@
   dotted <hr>, and no distinct visual weight — it reads as unstyled
   boilerplate sitting inside an otherwise designed page. Restyled with a
   section divider, generous padding, and arrow links, to match the other
-  section breaks on the page.
+  section breaks on the page. Each link gets a "Previous"/"Next" label
+  over the title; Blowfish's dates under each link are dropped.
+  showPagination and invertPagination work as in Blowfish.
 */}}
 {{ if .Params.showPagination | default (.Site.Params.article.showPagination | default true) }}
   {{ if or .NextInSection .PrevInSection }}

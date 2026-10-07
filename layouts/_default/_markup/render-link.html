@@ -1,14 +1,19 @@
 {{/*
-  Wiki link render hook.
+  Wiki link render hook. Full override of themes/blowfish/layouts/
+  _default/_markup/render-link.html.
 
-  migrate.py converts [[Recipe Name]] to [Recipe Name](Recipe Name) — a link
-  where the href is the recipe title (no scheme, no slash, no anchor).
+  _default/single.html rewrites [[Recipe Name]] to [Recipe Name](<Recipe
+  Name>) before rendering — a link whose href is the page title (no
+  scheme, no slash, no anchor). This hook catches those links, looks up
+  the target page by title, and emits a proper Hugo URL.
 
-  This hook intercepts those links, looks up the target page by title, and
-  emits a proper Hugo URL. Standard http/https/relative links pass through.
+  Every other link is written out as given. That differs from Blowfish's
+  hook (Hugo's embedded one) in two ways: relative paths and #fragment
+  links aren't resolved through GetPage or resources, and every http(s)
+  link opens in a new tab, as an .extlink, whatever
+  article.externalLinkForceNewTab says.
 
-  Glossary popover: a [[Term]]
-  that resolves to a reference essay (content/essays/reference-essays/)
+  Glossary popover: a [[Term]] that resolves to a reference essay (content/essays/reference-essays/)
   renders as a .glossary-link with a hover/focus popover instead of a plain
   .wikilink — reference essays are themselves the "gets its own page" tier
   of the glossary. A [[Term]] that resolves to no page at all falls back to

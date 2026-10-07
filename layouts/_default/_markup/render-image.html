@@ -16,6 +16,11 @@
 
   nozoom keeps Blowfish's medium-zoom off these images on sidebar pages,
   where the viewer replaces it.
+
+  Compared with Blowfish's hook, this drops the responsive srcset (800w and
+  1280w copies), data-zoom-src, and the disableImageOptimizationMD param:
+  one display copy and one thumbnail serve both the inline figure and the
+  viewer.
 */}}
 {{- $src := .Destination -}}
 {{- $alt := .Text -}}

@@ -1,14 +1,20 @@
 {{/* Override of themes/blowfish/layouts/partials/article-meta/basic.html.
-     Only change: the draft label no longer sits in the date/reading-time
-     row (where it forced its own line above the tags row on recipe
-     pages). It now renders at the start of the taxonomies row, to the
-     left of the tags, styled as a distinct --flag badge instead of the
-     same treatment as a tag.
-     (Previously pushed to the far right with ms-auto: on reading pages
-     that put it at the header's right edge, right next to where the
-     reading sidebar starts, which read as if it had landed in the
-     sidebar instead of the tags row.)
-     Also adds the cuisine chip at the start of the taxonomies row. */}}
+     The date/reading-time row is unchanged; the changes are all in the
+     taxonomies row below it:
+
+     - The draft label moves out of the date row (where it forced its own
+       line above the tags on recipe pages) to the start of the taxonomies
+       row, as a distinct .draft-badge rather than a tag-styled badge. The
+       row renders for a draft even when taxonomies are off. (It was pushed
+       to the far right with ms-auto once; on reading pages that put it
+       beside the reading sidebar, where it read as part of the sidebar.)
+     - Cuisine leads the row as a linked .cuisine-chip, the same chip the
+       recipe cards use, then the principle chip (partials/principle-chip
+       .html) spelled out in full; the principle's own tag is skipped from
+       the plain tags so it isn't shown twice.
+     - Spacing is one `gap` on the row (.tags-row) instead of Blowfish's
+       per-badge mt-[0.5rem] me-2, which put dead space above the first
+       line. */}}
 
 {{/* Determine the correct context and scope */}}
 {{/* This allows for different logic depending on where the partial is called */}}

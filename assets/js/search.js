@@ -1,6 +1,6 @@
-// Project override of themes/blowfish/assets/js/search.js — identical
+// Override of themes/blowfish/assets/js/search.js — identical
 // except executeQuery() stable-sorts results so pinned pages (frontmatter
-// `pinned: true`, carried through by the project's layouts/_default/index.json
+// `pinned: true`, carried through by Fugu's layouts/_default/index.json
 // override) come first among matches, ahead of Fuse's relevance order.
 // See DESIGN.md.
 var fuse;

@@ -1,15 +1,28 @@
 {{/*
-  Full override of themes/blowfish/layouts/_default/single.html.
+  Full override of themes/blowfish/layouts/_default/single.html. What
+  changed from Blowfish's copy, and why:
 
-  Goldmark has no built-in syntax for Obsidian-style [[Wiki Links]] — left
-  alone, Hugo renders them as literal bracket text (confirmed on real
-  content: content/recipes/pulled-pork.md and
-  content/reference/soft-sandwich-bun-research.md both rendered broken
-  before this fix). The only line changed from Blowfish's original is the
-  body content render (was `{{ .Content }}`): raw markdown is rewritten to
-  standard `[text](title)` links before rendering, so it flows through the
-  existing render-link.html hook (which resolves the title and applies
-  .wikilink/.extlink/.broken-link styling) same as any other link.
+  - Wiki links. Goldmark has no syntax for Obsidian's [[Title]] and
+    [[Title|Alias]]; left alone they render as literal brackets. The body
+    is rendered from .RawContent with each one rewritten to a standard
+    [text](<Title>) link first (was `{{ .Content }}`), so it flows through
+    render-link.html, which resolves the title like any other link.
+  - Recipe sidebar. Recipes don't get Blowfish's jump-to TOC; they get a
+    sidebar instead: search, a meta rail of frontmatter facts, and empty
+    slots (photos, To serve, Mechanic, Variations, Equipment, Notes) that
+    assets/js/automagic-sidebar.js fills from the article body. On mobile
+    it sits above the ingredients, behind a "Recipe notes" toggle.
+  - Reading sidebar. Essays, reference pages, the log, and About (see
+    partials/sidebar/kind.html) get partials/reading-sidebar.html on
+    desktop; Blowfish's TOC stays for their mobile view only.
+  - Scripts. Pages with either sidebar load automagic-sidebar.js; recipes
+    also load ingredients.js (check-off, scaling, units), and their
+    content div carries the data-page-key and data-enable-kelvin it reads.
+  - Render state. The ingSection scratch value that render-heading.html
+    uses is reset before the body renders.
+  - Recipe page order. On recipes, the bottom author block, sharing links,
+    and related content move below the two-column section, so on mobile
+    they can't land between the method and the sidebar.
 */}}
 {{ define "main" }}
   {{ .Scratch.Set "scope" "single" }}
@@ -131,7 +144,7 @@
         {{ end }}
       </div>
 
-      {{/* Sidebar prototype (recipe-sidebar-prototype branch): recipes get
+      {{/* Recipe sidebar: recipes get
         a dedicated sidebar instead of the generic jump-to TOC above —
         To serve, Mechanic, and Notes are relocated here client-side by
         assets/js/automagic-sidebar.js (moveSidebarSections), driven by the
@@ -205,8 +218,8 @@
               (partials/reading-sidebar.html). not-prose keeps Tailwind
               Typography's kbd styling off the "/" hint. */}}
             <div class="not-prose">{{ partial "search-box.html" "Search recipes, essays, guides" }}</div>
-            {{/* Meta rail: frontmatter facts that never render anywhere else
-              on a recipe page when a site turns Blowfish's
+            {{/* Meta rail: frontmatter facts that don't render anywhere
+              else on a recipe page (once a site turns Blowfish's
               article.showDate/showAuthor/showReadingTime off) — source,
               aka, servings, prep/cook/total time, and author when a recipe
               sets one (only shown when set, never filled in). Date and
