@@ -1,6 +1,6 @@
 {{/*
   A draft's mark on its card (recipe-card.html): the label (or `short`,
-  for a card's tight top row, with the full label as its title) as a chip that
+  for a card's tight top row; the popover heading has the full label) as a chip that
   opens a popover with the longer hover text, the page's `working_on`
   line, and the link to the explainer page. A button, lifted above the
   card's stretched link, so hovering, focusing, or tapping it opens the
@@ -10,7 +10,7 @@
 {{ $d := site.Params.fugu.development | default dict }}
 {{ $icon := partialCached "development/icon.html" . "icon" }}
 <span class="dev-mark">
-  <button type="button" class="dev-chip"{{ with $d.short }} title="{{ $d.label }}"{{ end }}>{{ $icon | safeHTML }}{{ $d.short | default $d.label }}</button>
+  <button type="button" class="dev-chip">{{ $icon | safeHTML }}{{ $d.short | default $d.label }}</button>
   <span class="dev-pop" role="tooltip">
     <span class="dev-pop-head">{{ $icon | safeHTML }}{{ $d.label }}</span>
     <span class="dev-pop-text">{{ $d.hover }}</span>
