@@ -7,28 +7,12 @@
   label, e.g. "WTF", for the recipe card's tight top row; full pages use
   the tag's title, e.g. "Win the fridge").
 
-  Also carries the glossary popover (render-link.html's reference-essay
-  branch): the chip is wrapped in the same .glossary-term/.glossary-pop
-  markup as an inline [[Term]] mention of a reference essay, pulling its
-  definition from the tag's essay, so hovering/focusing the tag itself explains
-  the term without a trip to the tag page. The chip's own look (filled
-  pill, not dotted underline) is unchanged — .glossary-link is not
-  applied to the anchor, only the popover-reveal wrapper is reused. The
-  extra .glossary-term-chip class (custom.css) flips the popover to open
-  downward instead of the inline mechanism's default upward — the chip
-  always sits near the top of a card or a page's tags row, with no room
-  above it before colliding with the nav/hero.
-
-  Compact (card) form adds .glossary-term-chip-compact on top of that:
-  the popover's fixed 260px width is wider than a grid card, so left:0
-  let it bleed sideways into the next card. That variant drops its own
-  positioning context (position: static) so the popover's containing
-  block resolves up to .rcard-top instead (custom.css gives it
-  position: relative for exactly this), and spans left:0/right:0 there
-  — i.e. exactly the card's own width, however wide the grid happens to
-  make it, instead of a hardcoded pixel value that assumes prose-width
-  room. The full (tags-row) form keeps the original fixed-width popover
-  since that context has plenty of spare width either side.
+  Also carries a popover (the shared .pop-host/.pop component, see
+  assets/js/popover.js) with the term's definition from the tag's essay,
+  so hovering or focusing the chip explains it without a trip to the tag
+  page. It opens downward, since the chip sits at the top of a card or a
+  page's tags row. On a card (compact), .pop-card makes it span the card's
+  top row instead of a fixed width, which would bleed into the next card.
 */}}
 {{ $page := .page }}
 {{ $compact := .compact }}
@@ -50,8 +34,7 @@
     {{ end }}
     {{ $chip := printf `<a class="principle-chip" href="%s">%s%s</a>` .page.RelPermalink ($icon | safeHTML) $label }}
     {{ if $def }}
-      {{ $termClass := cond $compact "glossary-term glossary-term-chip glossary-term-chip-compact" "glossary-term glossary-term-chip" }}
-      <span class="{{ $termClass }}" tabindex="0">{{ $chip | safeHTML }}<span class="glossary-pop"><span class="glossary-pop-term">{{ .page.Title }}</span>{{ $def }} {{ with $essay }}<a href="{{ .RelPermalink }}">Read the full essay →</a>{{ end }}</span></span>
+      <span class="pop-host pop-principle{{ if $compact }} pop-card{{ end }}">{{ $chip | safeHTML }}<span class="pop" role="tooltip"><span class="pop-head">{{ .page.Title }}</span><span class="pop-text">{{ $def }}</span>{{ with $essay }}<a class="pop-link" href="{{ .RelPermalink }}">Read the full essay</a>{{ end }}</span></span>
     {{ else }}
       {{ $chip | safeHTML }}
     {{ end }}

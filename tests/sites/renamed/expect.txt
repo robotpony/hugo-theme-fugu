@@ -38,7 +38,7 @@ index.json:
 # Principle chips: the short label on cards, the tag's title with the
 # essay's popover on the recipe page.
 dishes/index.html: WTF</a>
-dishes/veg-patties/index.html: glossary-term-chip
+dishes/veg-patties/index.html: pop-principle
 dishes/veg-patties/index.html: Win the fridge</a>
 
 # The numbers on About, asked for with stats: true.

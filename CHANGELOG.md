@@ -26,6 +26,8 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Changed
 
+- One popover component for glossary terms, principle chips, and the draft mark: `.pop-host` wraps the trigger and a `.pop` holding `.pop-head`, `.pop-text`, optional `.pop-note`, and `.pop-link` (the site adds the arrow). Modifiers: `.pop-up` (opens upward, prose terms), `.pop-card` (spans a card's top row), and a kind class (`.pop-glossary`, `.pop-principle`, `.pop-dev`). The new `assets/js/popover.js`, loaded on every page, puts the pointer under the trigger (`--pop-x`), flips a popover that would open off-screen (`.pop-flip`), and closes on Escape. Replaces `.glossary-term`, `.glossary-term-chip`, `.glossary-term-chip-compact`, `.glossary-pop`, `.glossary-pop-term`, `.dev-mark`, `.dev-pop`, `.dev-pop-head`, `.dev-pop-text`, `.dev-pop-note`; the wrappers no longer take `tabindex` (the trigger inside is already focusable).
+
 - The draft badge in the meta row (`.draft-badge`) is gone; a draft's banner replaces it. `site.Params.article.showDraftLabel` now turns the banner on and off.
 
 - The recipe scale/units menu: units are one row of segment buttons (with `aria-pressed`) instead of wrapping buttons, the scale value sits beside the "Scale" label, whole steps 1–5 are labelled under the slider, a yield line ("Serves 4–6 · 9 patties") follows the scale, Escape closes the menu, and the slider sets `--fill` for a filled track. New classes for a site to style: `.ing-config-head`, `.ing-scale-range`, `.ing-scale-ticks` (current step: `.is-current`), `.ing-yield`, `.ing-units`; `.ing-config-row` and `.ing-scale-slider` are gone.

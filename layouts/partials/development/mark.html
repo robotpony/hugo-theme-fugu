@@ -4,17 +4,18 @@
   opens a popover with the longer hover text, the page's `working_on`
   line, and the link to the explainer page. A button, lifted above the
   card's stretched link, so hovering, focusing, or tapping it opens the
-  popover instead of following the card. CSS only, like the glossary
-  popover. Takes the page.
+  popover instead of following the card. The popover is the shared
+  .pop-host/.pop component (assets/js/popover.js), spanning the card's
+  top row (.pop-card). Takes the page.
 */}}
 {{ $d := site.Params.fugu.development | default dict }}
 {{ $icon := partialCached "development/icon.html" . "icon" }}
-<span class="dev-mark">
+<span class="pop-host pop-dev pop-card">
   <button type="button" class="dev-chip">{{ $icon | safeHTML }}{{ $d.short | default $d.label }}</button>
-  <span class="dev-pop" role="tooltip">
-    <span class="dev-pop-head">{{ $icon | safeHTML }}{{ $d.label }}</span>
-    <span class="dev-pop-text">{{ $d.hover }}</span>
-    {{ with .Params.working_on }}<span class="dev-pop-note">{{ $d.note }}: {{ . }}</span>{{ end }}
-    {{ with partial "development/page.html" . }}<a class="dev-link" href="{{ .RelPermalink }}">{{ $d.more }}</a>{{ end }}
+  <span class="pop" role="tooltip">
+    <span class="pop-head">{{ $icon | safeHTML }}{{ $d.label }}</span>
+    <span class="pop-text">{{ $d.hover }}</span>
+    {{ with .Params.working_on }}<span class="pop-note">{{ $d.note }}: {{ . }}</span>{{ end }}
+    {{ with partial "development/page.html" . }}<a class="pop-link" href="{{ .RelPermalink }}">{{ $d.more }}</a>{{ end }}
   </span>
 </span>

@@ -65,7 +65,7 @@
         {{ end }}
       {{ end }}
       {{ $def = $def | markdownify | plainify | htmlUnescape | truncate 200 }}
-      <span class="glossary-term" tabindex="0"><a href="{{ $target.RelPermalink }}" class="glossary-link">{{ $text }}</a><span class="glossary-pop"><span class="glossary-pop-term">{{ $target.Title }}</span>{{ $def }} <a href="{{ $target.RelPermalink }}">Read the full essay →</a></span></span>
+      <span class="pop-host pop-glossary"><a href="{{ $target.RelPermalink }}" class="glossary-link">{{ $text }}</a><span class="pop pop-up" role="tooltip"><span class="pop-head">{{ $target.Title }}</span><span class="pop-text">{{ $def }}</span><a class="pop-link" href="{{ $target.RelPermalink }}">Read the full essay</a></span></span>
     {{ else }}
       <a href="{{ $target.RelPermalink }}" class="wikilink">{{ $text }}</a>
     {{ end }}
@@ -89,7 +89,7 @@
       {{ end }}
     {{ end }}
     {{ if $entry }}
-      <span class="glossary-term" tabindex="0"><a href="{{ $glossary.RelPermalink }}#{{ $entry.slug }}" class="glossary-link">{{ $text }}</a><span class="glossary-pop"><span class="glossary-pop-term">{{ $entry.term }}</span>{{ $entry.def }} <a href="{{ $glossary.RelPermalink }}#{{ $entry.slug }}">Full entry in the glossary →</a></span></span>
+      <span class="pop-host pop-glossary"><a href="{{ $glossary.RelPermalink }}#{{ $entry.slug }}" class="glossary-link">{{ $text }}</a><span class="pop pop-up" role="tooltip"><span class="pop-head">{{ $entry.term }}</span><span class="pop-text">{{ $entry.def }}</span><a class="pop-link" href="{{ $glossary.RelPermalink }}#{{ $entry.slug }}">Full entry in the glossary</a></span></span>
     {{ else }}
       <span class="broken-link" title="Not found: {{ $destination }}">{{ $text }}</span>
     {{ end }}

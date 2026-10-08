@@ -1,5 +1,5 @@
 {{/*
-  Full override of themes/blowfish/layouts/partials/head.html. Three
+  Full override of themes/blowfish/layouts/partials/head.html. Four
   changes, everything else as Blowfish has it:
 
   - Fonts: calls partials/fonts.html (empty by default) near the top, since
@@ -11,6 +11,8 @@
   - Open Graph and Twitter tags: partials/social.html instead of Hugo's
     _internal/opengraph.html and twitter_cards.html, so they use the same
     description.
+  - Popovers: loads assets/js/popover.js (deferred) on every page, since
+    glossary terms, principle chips, and draft marks can be anywhere.
 */}}
 <head>
   <meta charset="utf-8">
@@ -149,6 +151,8 @@
     type="text/javascript"
     src="{{ $jsAppearance.RelPermalink }}"
     integrity="{{ $jsAppearance.Data.Integrity }}"></script>
+  {{ $jsPopover := resources.Get "js/popover.js" | resources.Minify | resources.Fingerprint $alg }}
+  <script defer src="{{ $jsPopover.RelPermalink }}" integrity="{{ $jsPopover.Data.Integrity }}"></script>
   {{ partial "language-redirect.html" . }}
   {{ $enableA11y := .Site.Params.enableA11y | default false }}
   {{ if $enableA11y }}
