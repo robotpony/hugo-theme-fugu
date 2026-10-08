@@ -15,10 +15,10 @@
 INPUT=$(cat)
 CMD=$(printf '%s' "$INPUT" | jq -r '.tool_input.command // empty')
 
-case "$CMD" in
-    *git*commit*) ;;
-    *) exit 0 ;;
-esac
+# Only a command that runs `git commit` (also `git -C dir commit`), not one
+# that merely mentions both words, say while editing this hook or a doc
+# quoting the trailer.
+printf '%s' "$CMD" | grep -qE '(^|[;&|( ]|\$\()git( +-[Cc] +[^ ]+| +--?[a-zA-Z-]+(=[^ ]+)?)* +commit( |$)' || exit 0
 
 TEXT=$CMD
 for f in $(printf '%s' "$CMD" | sed -nE 's/.*(-F|--file)[ =]+([^ ;&|]+).*/\2/p'); do
