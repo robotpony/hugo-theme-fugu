@@ -132,7 +132,7 @@ Each of these is found by its heading. The names are the defaults; a site can ad
 | `## Method` | `Directions`, `Steps` | The method prose, for a one-component recipe. | Stays in the article |
 | `## History` | | Your notes on where the recipe came from. | Hidden from readers (still in the HTML) |
 
-Which sections move into the sidebar, and in what order, is `recipeSidebar` in `[params.fugu]`. A section left out of that list stays in the article. With JavaScript off, and in print, every section stays where it was written.
+Which sections move into the sidebar, and in what order, is `recipeSidebar` in `[params.fugu]`. A section left out of that list stays in the article. With JavaScript off, every section stays where it was written.
 
 Other headings you might use, such as `## Substitutions` or `## Timing`, stay in the article as written. Tables are fine for timing or ratio references with several variables.
 
@@ -179,7 +179,7 @@ Embed photos with standard Markdown where they belong in the text:
 ![A bowl of tomato soup with croutons](/images/recipes/tomato-soup.jpg "Lazy tomato soup")
 ```
 
-The alt text describes the photo; the optional title in quotes is its caption, and the alt text stands in when there's no title. On the page, photos move into the sidebar as thumbnails that open a viewer, leaving a small "Photo 1" marker in the text. With JavaScript off, and in print, they stay inline.
+The alt text describes the photo; the optional title in quotes is its caption, and the alt text stands in when there's no title. On the page, photos move into the sidebar as thumbnails that open a viewer, leaving a small "Photo 1" marker in the text. With JavaScript off they stay inline, and in print they always do.
 
 A photo in the page's bundle (a recipe written as `plain-rice/index.md` with the photo beside it) or under `assets/` gets a thumbnail and a resized display copy. One under `static/` is used as it is. `tools/add-image.sh` prepares photos for the site ([tools.md](tools.md)).
 

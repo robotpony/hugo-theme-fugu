@@ -19,6 +19,8 @@ Fugu doesn't fully live up to this yet: some templates still expect Not a Chef's
 
 ## What it adds
 
+The full tour is [docs/features.md](docs/features.md).
+
 - Recipe pages with a sidebar for the Mechanic, To serve, Notes, and photos
 - Ingredient check-off, scaling, and metric/imperial unit conversion, all client-side and dependency-free
 - Formula diagrams: a ```` ```formula ```` code block drawn as a row of icons
