@@ -103,6 +103,7 @@ Not a Chef's docs describe Fugu's features but are written for that one site. Ma
 - [ ] `exampleSite/` with 6–10 recipes from Not a Chef (CC BY-SA 4.0 allows it; credit and link the licence; the content needs its own `exampleSite/LICENSE`, since the repo is MIT): a simple recipe, a multi-component one, one with a Mechanic, one with a formula block, plus an essay, a reference page, and a glossary entry if those ship.
 - [ ] Extend the §1 GitHub Actions workflow: build `exampleSite/` and the fixtures with the pinned Hugo and Blowfish versions, `--panicOnWarning`, and run the tool tests.
 - [ ] A link check over the built example site.
+- [ ] An install job: CI starts from `hugo new site`, installs Fugu and Blowfish the way `docs/getting-started.md` says (Fugu from the commit under test, by the method §6 settles on), adds the getting-started recipe, builds with `--panicOnWarning`, and checks the recipe page has its ingredients, method, and sidebar facts. This catches the install steps and docs drifting from the theme, which the fixtures can't, since they find the themes through `themesDir`.
 
 ## 10. Release
 
@@ -113,7 +114,7 @@ Not a Chef's docs describe Fugu's features but are written for that one site. Ma
   - Keep them in `images/` (listing) and `docs/images/` (docs), and note in the docs how they were taken (page, window size, scheme), so they can be retaken whenever the styles change. Retake them again for `v1.0.0` after §5's designed look lands.
 - [ ] `v0.1.0` once §1–§3 are done, the basic styles and screenshots above land, and the example site builds; `v1.0.0` after §5–§7.
 - [ ] Optional: list it on themes.gohugo.io (PR to `gohugoio/hugoThemesSiteBuilder`). Their rules may need the theme to build on its own; check how they handle themes that need a parent theme.
-- [ ] Later, once there are tagged releases to test against: a separate test-site repo that installs Fugu exactly as an outsider would and pulls tagged releases, for checking a release before announcing it. Until then, don't split it out: a CI job (§9) that installs Fugu the same way covers this without another repo to maintain.
+- [ ] Later, once there are tagged releases to test against: a separate test-site repo that installs Fugu exactly as an outsider would and pulls tagged releases, for checking a release before announcing it. Until then, don't split it out: §9's install job covers this without another repo to maintain.
 
 ## Features
 
