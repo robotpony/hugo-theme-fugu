@@ -3,8 +3,8 @@
   path as site.GetPage takes it, e.g. "essays/reference-essays/test-kitchen").
   Returns false when the param is "" or the page doesn't exist. The draft
   banner and card mark link to it (development/banner.html, mark.html),
-  and it lists every draft after its own text (development/list.html,
-  called from single.html).
+  and it lists every draft in place of related content
+  (development/list.html, called from related.html).
 */}}
 {{ $page := false }}
 {{ with site.Params.fugu.development.page }}{{ $page = site.GetPage . }}{{ end }}

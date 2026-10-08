@@ -22,7 +22,8 @@
     uses is reset before the body renders.
   - Drafts. A draft gets a banner under its title and tags
     (partials/development/banner.html), and the page named by
-    params.fugu.development.page lists every draft after its text.
+    params.fugu.development.page lists every draft in place of related
+    content (partials/related.html).
   - Recipe page order. On recipes, the bottom author block, sharing links,
     and related content move below the two-column section, so on mobile
     they can't land between the method and the sidebar.
@@ -108,9 +109,6 @@
           {{ $md = replaceRE `\[\[([^\]|]+)\|([^\]]+)\]\]` `[$2](<$1>)` $md }}
           {{ $md = replaceRE `\[\[([^\]]+)\]\]` `[$1](<$1>)` $md }}
           {{ .RenderString $md }}
-          {{ with partial "development/page.html" . }}
-            {{ if eq .RelPermalink $.RelPermalink }}{{ partial "development/list.html" $ }}{{ end }}
-          {{ end }}
           {{/* Sidebar first: its DOMContentLoaded handler has to run
             before ingredients.js's (see automagic-sidebar.js). Every page
             with a sidebar gets it, recipe or reading. */}}

@@ -50,10 +50,12 @@
     hover   = "Published while it's still being worked out. It works, but the next version will be a little different."
     note    = "Working on"
     # A page that explains drafts: the banner and card mark link to it,
-    # and it lists every draft after its own text. A path as site.GetPage
-    # takes it; "" means no link and no list.
+    # and it lists every draft, under `heading`, in place of related
+    # content. A path as site.GetPage takes it; "" means no link and no
+    # list.
     page    = ""
     more    = "How this works"
+    heading = "In development now"
     # What that page's list says when there are no drafts (or the site
     # doesn't build them).
     empty   = "Nothing is in development right now."

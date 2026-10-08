@@ -14,7 +14,12 @@
   Blowfish's .prose column, so .not-prose keeps the typography plugin's
   heading/paragraph/link styles off the cards.
 */}}
-{{ if .Params.showRelatedContent | default (.Site.Params.article.showRelatedContent | default false) }}
+{{ $devPage := partial "development/page.html" . }}
+{{ if and $devPage (eq $devPage.RelPermalink .RelPermalink) }}
+  {{/* The page that explains drafts lists them here instead, in the same
+    section: two card grids at the end of one page read as one too many. */}}
+  {{ partial "development/list.html" . }}
+{{ else if .Params.showRelatedContent | default (.Site.Params.article.showRelatedContent | default false) }}
   {{ $related := .Site.RegularPages.Related . | first .Site.Params.article.relatedContentLimit }}
   {{ with $related }}
     <div class="related-section not-prose">

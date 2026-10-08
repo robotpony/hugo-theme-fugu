@@ -1,22 +1,25 @@
 {{/*
   Every draft on the site as the shared card grid, recipes first, newest
-  first within each group. Appended after the text of the page named by
-  params.fugu.development.page (see development/page.html), so that page
-  should end on a heading or sentence that introduces the list.
+  first within each group, under params.fugu.development.heading. Shown in
+  place of related content on the page named by
+  params.fugu.development.page (partials/related.html), in the same
+  .related-section wrapper, so it gets that section's divider and heading.
 
   Drafts only exist when the site builds them (buildDrafts, or
-  `hugo server -D`); without them the list says so instead.
+  `hugo server -D`); without them the list says `empty` instead.
 */}}
+{{ $d := site.Params.fugu.development | default dict }}
 {{ $recipeSection := partial "section/name.html" "recipe" }}
 {{ $drafts := where site.RegularPages "Draft" true }}
 {{ $recipes := where $drafts "Section" $recipeSection }}
 {{ $others := where $drafts "Section" "!=" $recipeSection }}
-<div class="development-list not-prose">
+<div class="related-section development-list not-prose">
+  <h2 class="block-title related-heading">{{ $d.heading }}</h2>
   {{ with $recipes.ByDate.Reverse | append $others.ByDate.Reverse }}
-    <div class="rgrid">
+    <section class="rgrid">
       {{ range . }}{{ partial "recipe-card.html" . }}{{ end }}
-    </div>
+    </section>
   {{ else }}
-    <p class="section-caveat">{{ site.Params.fugu.development.empty }}</p>
+    <p class="section-caveat">{{ $d.empty }}</p>
   {{ end }}
 </div>
