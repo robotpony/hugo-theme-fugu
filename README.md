@@ -28,6 +28,9 @@ Fugu doesn't fully live up to this yet: some templates still expect Not a Chef's
 
 ## Install
 
+The full walkthrough, from an empty site to a recipe page, is [docs/getting-started.md](docs/getting-started.md).
+
+
 Add Fugu and Blowfish as submodules, then list Fugu first so it takes precedence:
 
 ```sh
@@ -59,7 +62,7 @@ Hugo uses your site's files before Fugu's, and Fugu's before Blowfish's. To load
 - [ ] Section names and site-specific features moved into params
 - [ ] Optional sections (essays, reference, log) and `cuisine` safe to leave out
 - [ ] A default design, so Fugu works without Not a Chef's CSS
-- [ ] Recipe format documentation
+- [x] Recipe format documentation: [docs/](docs/README.md)
 - [ ] `exampleSite/` and CI against a pinned Blowfish
 
 ## Licence

@@ -6,6 +6,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Added
 
+- Docs, in `docs/`: `getting-started.md` (an empty site to a working recipe page), `recipe-format.md` (writing a recipe), and `frontmatter.md` (every field Fugu reads).
 - Drafts as pages that are published but still changing, for a site that builds drafts. `[params.fugu.development]` sets the words (`label`, `short` for the card chip, `message`, `hover`, `note`, `more`, `heading`, `empty`), an optional icon (`icon`, an SVG in the site's assets, inlined; a dot otherwise), and the page that explains drafts (`page`). A draft gets a banner under its title and tags, at the end of the page header (`partials/development/banner.html`, `.dev-strip`), and on its card a chip that leads the top row and takes a slot, with a hover/focus popover (`development/mark.html`, `.dev-mark`, `.dev-chip`, `.dev-pop`). A page's `working_on` frontmatter shows under the banner and in the popover. The `page` lists every draft under `heading`, in place of its related content (`development/list.html`, in `.related-section.development-list`). The defaults say "In development".
 - `working_on` in `recipes/index.json`.
 - A cuisine's term page (`content/cuisine/<name>/_index.md`) can set `short`, shown on recipe cards in place of the full name (which becomes its title), like a principle tag's `short`.
