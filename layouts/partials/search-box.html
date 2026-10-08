@@ -1,12 +1,16 @@
 {{/*
   Search box — opens Blowfish's search modal (search.js binds
-  #search-button, so use this once per page). Takes the recipe count, or
-  a string to use as the whole placeholder label. Shared by the homepage
+  #search-button, so use this once per page). Takes the recipe count
+  ("Search 12 recipes, tags, cuisines", cuisines only when the site has
+  any), "site" for the site-wide label (search-box/site-label.html), or
+  any other string to use as the whole placeholder label. Shared by the homepage
   hero, the recipes list page, term pages (layouts/_default/term.html),
   and the reading sidebar (layouts/partials/reading-sidebar.html).
 */}}
 <button id="search-button" type="button" class="search-box">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
-  {{ if eq (printf "%T" .) "string" }}{{ . }}{{ else }}Search {{ . }} recipes, tags, cuisines{{ end }}&hellip;
+  {{- if eq . "site" }}{{ partialCached "search-box/site-label.html" . "site" }}
+  {{- else if eq (printf "%T" .) "string" }}{{ . }}
+  {{- else }}Search {{ . }} recipes, tags{{ if site.Taxonomies.cuisine }}, cuisines{{ end }}{{ end }}&hellip;
   <kbd>/</kbd>
 </button>

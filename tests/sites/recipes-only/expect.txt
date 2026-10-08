@@ -10,3 +10,15 @@ recipes/index.html: class="rcard
 recipes/index.json:
 !cuisine/index.html
 !essays/index.html
+
+# Search placeholders name only what the site has.
+recipes/rice-bowl/index.html: Search recipes&hellip;
+recipes/index.html: Search 2 recipes, tags&hellip;
+
+# The numbers on About count recipes only: no zero rows for parts the
+# site doesn't use.
+about/index.html: The cookbook in numbers
+about/index.html: Recipes <b>2</b>
+about/index.html: !Essays <b>
+about/index.html: !Reference guides <b>
+about/index.html: !Cuisines <b>

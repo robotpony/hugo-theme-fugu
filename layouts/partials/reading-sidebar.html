@@ -25,7 +25,7 @@
 
 <div class="reading-sidebar not-prose">
   <div class="rs-section">
-    {{ partial "search-box.html" "Search recipes, essays, guides" }}
+    {{ partial "search-box.html" "site" }}
   </div>
 
   {{/* Date and Updated, in the recipe sidebar's meta rail style. */}}
@@ -186,7 +186,8 @@
   {{/* Root pages like About: the cookbook in numbers, when the page's
     frontmatter says `stats: true`, and an optional hand-picked "Start
     here" list from its `start_here` frontmatter (page titles, matched like
-    wiki links). Each row of the numbers needs its section or taxonomy. */}}
+    wiki links). Each row of the numbers needs its section or taxonomy, and
+    at least one page in it, so a part a site doesn't use never shows 0. */}}
   {{ if $isAbout }}
     {{ if .Params.stats }}
     <div class="rs-section">
@@ -194,8 +195,12 @@
       <div class="rs-numbers">
         <div class="rs-number">Recipes <b>{{ len $recipes }}</b></div>
         {{ with site.Taxonomies.cuisine }}<div class="rs-number">Cuisines <b>{{ len . }}</b></div>{{ end }}
-        {{ with partial "section/name.html" "essay" }}<div class="rs-number">Essays <b>{{ len (where site.RegularPages "Section" .) }}</b></div>{{ end }}
-        {{ with partial "section/name.html" "reference" }}<div class="rs-number">Reference guides <b>{{ len (where site.RegularPages "Section" .) }}</b></div>{{ end }}
+        {{ range slice (slice "essay" "Essays") (slice "reference" "Reference guides") }}
+          {{ $label := index . 1 }}
+          {{ with partial "section/name.html" (index . 0) }}
+            {{ with where site.RegularPages "Section" . }}<div class="rs-number">{{ $label }} <b>{{ len . }}</b></div>{{ end }}
+          {{ end }}
+        {{ end }}
       </div>
     </div>
     {{ end }}

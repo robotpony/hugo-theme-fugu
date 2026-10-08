@@ -47,3 +47,10 @@ recipes/plain-rice/index.html: !data-show-intro-quotes
 
 # The numbers on About, asked for with stats: true.
 about/index.html: The cookbook in numbers
+
+# Search placeholders name every section and the cuisines.
+recipes/veg-patties/index.html: Search recipes, essays, guides&hellip;
+recipes/index.html: recipes, tags, cuisines&hellip;
+about/index.html: Essays <b>
+about/index.html: Reference guides <b>
+about/index.html: Cuisines <b>

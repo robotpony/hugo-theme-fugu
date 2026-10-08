@@ -1,0 +1,11 @@
+{{/*
+  The site-wide search placeholder, "Search recipes, essays, guides",
+  naming only the sections that have pages, so a recipes-only site reads
+  "Search recipes". Called cached from search-box.html.
+*/}}
+{{ $words := slice }}
+{{ range slice (slice "recipe" "recipes") (slice "essay" "essays") (slice "reference" "guides") }}
+  {{ $name := partial "section/name.html" (index . 0) }}
+  {{ if and $name (where site.RegularPages "Section" $name) }}{{ $words = $words | append (index . 1) }}{{ end }}
+{{ end }}
+{{ return (printf "Search %s" (delimit $words ", ")) }}

@@ -26,6 +26,8 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Changed
 
+- Search placeholders name only what the site has: the site-wide one lists the recipe, essay and reference sections that have pages ("Search recipes" on a recipes-only site), and the recipe count one says "cuisines" only when there are any. `partials/search-box.html` takes `"site"` for the site-wide label (`search-box/site-label.html`); any other string is still used as the whole label.
+- The cookbook in numbers (About, `stats: true`) leaves out a section with no pages instead of showing 0.
 - One popover component for glossary terms, principle chips, and the draft mark: `.pop-host` wraps the trigger and a `.pop` holding `.pop-head`, `.pop-text`, optional `.pop-note`, and `.pop-link` (the site adds the arrow). Modifiers: `.pop-up` (opens upward, prose terms), `.pop-card` (spans a card's top row), and a kind class (`.pop-glossary`, `.pop-principle`, `.pop-dev`). The new `assets/js/popover.js`, loaded on every page, puts the pointer under the trigger (`--pop-x`), flips a popover that would open off-screen (`.pop-flip`), and closes on Escape. Replaces `.glossary-term`, `.glossary-term-chip`, `.glossary-term-chip-compact`, `.glossary-pop`, `.glossary-pop-term`, `.dev-mark`, `.dev-pop`, `.dev-pop-head`, `.dev-pop-text`, `.dev-pop-note`; the wrappers no longer take `tabindex` (the trigger inside is already focusable).
 
 - The draft badge in the meta row (`.draft-badge`) is gone; a draft's banner replaces it. `site.Params.article.showDraftLabel` now turns the banner on and off.

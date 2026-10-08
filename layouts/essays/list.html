@@ -20,7 +20,7 @@
     <span class="listing-count">{{ len $essays }} {{ cond (eq (len $essays) 1) "essay" "essays" }}{{ if gt $pager.TotalPages 1 }} · page {{ $pager.PageNumber }} of {{ $pager.TotalPages }}{{ end }}</span>
   </header>
   {{ with .Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
-  <div class="listing-search">{{ partial "search-box.html" "Search recipes, essays, guides" }}</div>
+  <div class="listing-search">{{ partial "search-box.html" "site" }}</div>
   <div class="rgrid">
     {{ range $pager.Pages }}
       {{ partial "recipe-card.html" . }}
