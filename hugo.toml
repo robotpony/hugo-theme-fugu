@@ -46,6 +46,9 @@
   # add its own `working_on` line, shown under the banner's sentence.
   [params.fugu.development]
     label   = "In development"
+    # The card chip's label, when `label` is too long for a card's top
+    # row; "" uses `label`. The popover and banner always use `label`.
+    short   = ""
     message = "This recipe is still changing. Cook it, change it, and expect it to move before it becomes canon."
     hover   = "Published while it's still being worked out. It works, but the next version will be a little different."
     note    = "Working on"
