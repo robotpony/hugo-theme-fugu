@@ -41,7 +41,7 @@
   # notIngredients words ("Basic method", "Timing examples").
   # Drafts (`draft: true`) as pages that are published but still
   # changing, when the site builds drafts (buildDrafts). A draft gets a
-  # banner above its title (partials/development/banner.html) and a mark
+  # banner under its title and tags (partials/development/banner.html) and a mark
   # on its card with the hover text (partials/recipe-card.html). A page can
   # add its own `working_on` line, shown under the banner's sentence.
   [params.fugu.development]
