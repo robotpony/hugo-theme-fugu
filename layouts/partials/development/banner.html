@@ -1,0 +1,20 @@
+{{/*
+  The banner above a draft's title: published, but still changing.
+  Shown when the page is a draft and site.Params.article.showDraftLabel
+  is on (it replaces the small draft badge Blowfish put in the meta row).
+  Words from params.fugu.development: label, message, the link to the
+  explainer page (page, more), and the page's own `working_on` line under
+  a rule, after the `note` label. Takes the page.
+*/}}
+{{ if and .Draft site.Params.article.showDraftLabel }}
+  {{ $d := site.Params.fugu.development | default dict }}
+  <aside class="dev-strip" role="note">
+    {{ partialCached "development/icon.html" . "icon" | safeHTML }}
+    <div class="dev-strip-body">
+      <strong class="dev-strip-label">{{ $d.label }}</strong>
+      <span class="dev-strip-msg">{{ $d.message }}</span>
+      {{ with partial "development/page.html" . }}<a class="dev-link" href="{{ .RelPermalink }}">{{ $d.more }}</a>{{ end }}
+      {{ with .Params.working_on }}<span class="dev-strip-note"><b>{{ $d.note }}:</b> {{ . }}</span>{{ end }}
+    </div>
+  </aside>
+{{ end }}

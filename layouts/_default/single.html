@@ -20,6 +20,9 @@
     content div carries the data-page-key and data-enable-kelvin it reads.
   - Render state. The ingSection scratch value that render-heading.html
     uses is reset before the body renders.
+  - Drafts. A draft gets a banner above its title
+    (partials/development/banner.html), and the page named by
+    params.fugu.development.page lists every draft after its text.
   - Recipe page order. On recipes, the bottom author block, sharing links,
     and related content move below the two-column section, so on mobile
     they can't land between the method and the sidebar.
@@ -51,6 +54,7 @@
       {{ if .Params.showBreadcrumbs | default (site.Params.article.showBreadcrumbs | default false) }}
         {{ partial "breadcrumbs.html" . }}
       {{ end }}
+      {{ partial "development/banner.html" . }}
       <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
         {{ .Title | emojify }}
       </h1>

@@ -1,0 +1,14 @@
+{{/*
+  The draft mark: the SVG named by params.fugu.development.icon (a path
+  in the site's assets/), inlined so it takes currentColor, or a dot when
+  there isn't one. Takes nothing; returns HTML.
+*/}}
+{{ $out := `<span class="dev-dot" aria-hidden="true"></span>` }}
+{{ with site.Params.fugu.development.icon }}
+  {{ with resources.Get . }}
+    {{ $out = replace .Content "<svg " `<svg class="dev-icon" aria-hidden="true" focusable="false" ` 1 }}
+  {{ else }}
+    {{ warnf "fugu: params.fugu.development.icon %q isn't in assets/" . }}
+  {{ end }}
+{{ end }}
+{{ return $out }}

@@ -2,12 +2,8 @@
      The date/reading-time row is unchanged; the changes are all in the
      taxonomies row below it:
 
-     - The draft label moves out of the date row (where it forced its own
-       line above the tags on recipe pages) to the start of the taxonomies
-       row, as a distinct .draft-badge rather than a tag-styled badge. The
-       row renders for a draft even when taxonomies are off. (It was pushed
-       to the far right with ms-auto once; on reading pages that put it
-       beside the reading sidebar, where it read as part of the sidebar.)
+     - No draft label. A draft gets a banner above its title instead
+       (partials/development/banner.html, called from single.html).
      - Cuisine leads the row as a linked .cuisine-chip, the same chip the
        recipe cards use, then the principle chip (partials/principle-chip
        .html) spelled out in full; the principle's own tag is skipped from
@@ -85,7 +81,6 @@
     {{ $meta.Add "partials" (slice (partial "meta/zen-mode.html" .)) }}
   {{ end }}
 
-  {{ $showDraftLabel := and (eq $scope "single") (and .Draft .Site.Params.article.showDraftLabel) }}
 
   <div class="flex flex-row flex-wrap items-center">
     {{/* Output partials */}}
@@ -111,25 +106,14 @@
     </div>
   {{ end }}
 
-  {{/* Output the draft badge, then taxonomies, in the same row.
+  {{/* Taxonomies.
     Spacing between entries (and between wrapped rows) is a single `gap`
     on the row itself (.tags-row, custom.css) rather than a margin on each
     child — the per-child mt-[0.5rem] me-2 this replaced put an unwanted
     top margin on the row's first line too, adding dead space between the
     title and the tags that had nothing to do with row-wrapping. */}}
-  {{ if or ($showDraftLabel) (.Params.showTaxonomies | default (.Site.Params.article.showTaxonomies | default false)) }}
+  {{ if .Params.showTaxonomies | default (.Site.Params.article.showTaxonomies | default false) }}
     <div class="flex flex-row flex-wrap items-center tags-row">
-      {{/* Linked to the page that explains drafts and lists them all,
-        when params.fugu.developmentPage names one; its description is the
-        hover text. */}}
-      {{ if $showDraftLabel }}
-        {{ with partial "development/page.html" . }}
-          <a class="draft-badge" href="{{ .RelPermalink }}"{{ with .Description }} title="{{ . }}"{{ end }}>{{ i18n "article.draft" | emojify }}</a>
-        {{ else }}
-          <span class="draft-badge">{{ i18n "article.draft" | emojify }}</span>
-        {{ end }}
-      {{ end }}
-      {{ if .Params.showTaxonomies | default (.Site.Params.article.showTaxonomies | default false) }}
         {{/* Cuisine leads the row as the same yellow chip the recipe cards
           use (partials/recipe-card.html), linked to its term page. */}}
         {{ range .GetTerms "cuisine" }}
@@ -169,7 +153,6 @@
             {{ end }}
           {{ end }}
         {{ end }}
-      {{ end }}
     </div>
   {{ end }}
 {{ end }}

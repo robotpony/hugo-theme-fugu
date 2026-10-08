@@ -1,7 +1,7 @@
 {{/*
   Every draft on the site as the shared card grid, recipes first, newest
   first within each group. Appended after the text of the page named by
-  params.fugu.developmentPage (see development/page.html), so that page
+  params.fugu.development.page (see development/page.html), so that page
   should end on a heading or sentence that introduces the list.
 
   Drafts only exist when the site builds them (buildDrafts, or
@@ -17,6 +17,6 @@
       {{ range . }}{{ partial "recipe-card.html" . }}{{ end }}
     </div>
   {{ else }}
-    <p class="section-caveat">Nothing is in development right now.</p>
+    <p class="section-caveat">{{ site.Params.fugu.development.empty }}</p>
   {{ end }}
 </div>

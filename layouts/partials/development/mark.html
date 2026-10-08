@@ -1,0 +1,19 @@
+{{/*
+  A draft's mark on its card (recipe-card.html): the label as a chip that
+  opens a popover with the longer hover text, the page's `working_on`
+  line, and the link to the explainer page. A button, lifted above the
+  card's stretched link, so hovering, focusing, or tapping it opens the
+  popover instead of following the card. CSS only, like the glossary
+  popover. Takes the page.
+*/}}
+{{ $d := site.Params.fugu.development | default dict }}
+{{ $icon := partialCached "development/icon.html" . "icon" }}
+<span class="dev-mark">
+  <button type="button" class="dev-chip">{{ $icon | safeHTML }}{{ $d.label }}</button>
+  <span class="dev-pop" role="tooltip">
+    <span class="dev-pop-head">{{ $icon | safeHTML }}{{ $d.label }}</span>
+    <span class="dev-pop-text">{{ $d.hover }}</span>
+    {{ with .Params.working_on }}<span class="dev-pop-note">{{ $d.note }}: {{ . }}</span>{{ end }}
+    {{ with partial "development/page.html" . }}<a class="dev-link" href="{{ .RelPermalink }}">{{ $d.more }}</a>{{ end }}
+  </span>
+</span>

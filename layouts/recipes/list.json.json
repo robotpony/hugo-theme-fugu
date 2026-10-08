@@ -26,6 +26,7 @@
     "prep_time"      .Params.prep_time
     "cook_time"      .Params.cook_time
     "draft"          .Draft
+    "working_on"     .Params.working_on
     "word_count"     .WordCount
     "has_mechanic"   (strings.Contains $raw "## Mechanic")
     "has_variations" (strings.Contains $raw "## Variations")

@@ -19,11 +19,6 @@
   referenceEssays = "reference-essays"
   glossaryPage = "glossary"
 
-  # A page that explains drafts (pages with `draft: true`, published as
-  # "still changing" when the site builds drafts). The draft badge links
-  # to it, and it lists every draft after its own text. A path as
-  # site.GetPage takes it; "" leaves the badge unlinked.
-  developmentPage = ""
 
   # Personal notes: blockquotes in a recipe's intro (before its first ##)
   # are hidden from readers, like the headings.hidden sections below. Only
@@ -44,6 +39,29 @@
   # hidden from readers (still in the HTML; not private). Every other ##
   # on a recipe is an ingredient section unless it has one of the
   # notIngredients words ("Basic method", "Timing examples").
+  # Drafts (`draft: true`) as pages that are published but still
+  # changing, when the site builds drafts (buildDrafts). A draft gets a
+  # banner above its title (partials/development/banner.html) and a mark
+  # on its card with the hover text (partials/recipe-card.html). A page can
+  # add its own `working_on` line, shown under the banner's sentence.
+  [params.fugu.development]
+    label   = "In development"
+    message = "This recipe is still changing. Cook it, change it, and expect it to move before it becomes canon."
+    hover   = "Published while it's still being worked out. It works, but the next version will be a little different."
+    note    = "Working on"
+    # A page that explains drafts: the banner and card mark link to it,
+    # and it lists every draft after its own text. A path as site.GetPage
+    # takes it; "" means no link and no list.
+    page    = ""
+    more    = "How this works"
+    # What that page's list says when there are no drafts (or the site
+    # doesn't build them).
+    empty   = "Nothing is in development right now."
+    # An SVG in the site's assets/ to use as the mark (e.g.
+    # "icons/development.svg"), inlined so it can use currentColor. ""
+    # draws a dot.
+    icon    = ""
+
   [params.fugu.headings]
     method = ["Method", "Directions", "Steps"]
     mechanic = ["Mechanic"]

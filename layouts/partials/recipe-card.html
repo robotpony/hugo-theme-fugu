@@ -29,6 +29,9 @@
   the same way cuisine does, and is dropped from the plain $tags list so
   it isn't shown twice.
 
+  A draft leads the top row with its mark (partials/development/mark.html),
+  which takes a slot like cuisine does and opens a popover explaining it.
+
   A pinned page (frontmatter `pinned: true`, see DESIGN.md) gets a small
   thumbtack icon (.pin-icon) at the end of the top row — unlinked, faint,
   outside the cuisine/principle $room budget since it's icon-only and
@@ -60,6 +63,7 @@
 {{ $room := $slots }}
 {{ if ne $cuisine nil }}{{ $room = sub $room 1 }}{{ end }}
 {{ $room = sub $room $principles }}
+{{ if .Draft }}{{ $room = sub $room 1 }}{{ end }}
 
 {{ $intro := .Params.summary | default .Description }}
 {{ if not $intro }}
@@ -99,6 +103,7 @@
 
 <article class="rcard{{ if $hasFormula }} has-formula{{ end }}">
   <div class="rcard-top">
+    {{ if .Draft }}{{ partial "development/mark.html" . }}{{ end }}
     {{ with $cuisine }}{{ with $.GetTerms "cuisine" }}<a class="cuisine-chip" href="{{ (index . 0).RelPermalink }}">{{ $cuisine }}</a>{{ else }}<span class="cuisine-chip">{{ . }}</span>{{ end }}{{ end }}
     {{ $principle | safeHTML }}
     {{ range first $room $tags }}<span class="tag">{{ . }}</span>{{ end }}

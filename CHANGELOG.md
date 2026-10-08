@@ -6,7 +6,8 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Added
 
-- `params.fugu.developmentPage` (default `""`): a page that explains drafts. When set, the draft badge links to it (its description as hover text), and that page lists every draft after its own text as the card grid, recipes first (`partials/development/page.html`, `development/list.html`). With drafts not built, the list says nothing is in development. The site styles `a.draft-badge` and `.development-list`.
+- Drafts as pages that are published but still changing, for a site that builds drafts. `[params.fugu.development]` sets the words (`label`, `message`, `hover`, `note`, `more`, `empty`), an optional icon (`icon`, an SVG in the site's assets, inlined; a dot otherwise), and the page that explains drafts (`page`). A draft gets a banner above its title (`partials/development/banner.html`, `.dev-strip`), and on its card a chip that leads the top row and takes a slot, with a hover/focus popover (`development/mark.html`, `.dev-mark`, `.dev-chip`, `.dev-pop`). A page's `working_on` frontmatter shows under the banner and in the popover. The `page` lists every draft after its own text (`development/list.html`, `.development-list`). The defaults say "In development".
+- `working_on` in `recipes/index.json`.
 
 - Personal notes: `params.fugu.hideIntroQuotes` (default `true`) hides blockquotes in a recipe's intro, and `params.fugu.headings.hidden` (default `["History"]`) hides whole sections; `false` and `[]` turn them off. This only hides the text from readers: it's still in the HTML, the search index, and the RSS feed.
 - `[params.fugu.headings]`: the `##` titles that mean `method`, `mechanic`, `to-serve`, `variations`, `notes`, `equipment`, and `hidden` (lists of whole titles, any case), plus `notIngredients`, the words that keep a recipe heading from being read as an ingredient section. The defaults are the old fixed names, so a site writing in English with Fugu's section names sets nothing.
@@ -22,6 +23,8 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 - A scope statement in the README: only recipes are required.
 
 ### Changed
+
+- The draft badge in the meta row (`.draft-badge`) is gone; a draft's banner replaces it. `site.Params.article.showDraftLabel` now turns the banner on and off.
 
 - The recipe scale/units menu: units are one row of segment buttons (with `aria-pressed`) instead of wrapping buttons, the scale value sits beside the "Scale" label, whole steps 1–5 are labelled under the slider, a yield line ("Serves 4–6 · 9 patties") follows the scale, Escape closes the menu, and the slider sets `--fill` for a filled track. New classes for a site to style: `.ing-config-head`, `.ing-scale-range`, `.ing-scale-ticks` (current step: `.is-current`), `.ing-yield`, `.ing-units`; `.ing-config-row` and `.ing-scale-slider` are gone.
 - The sidebar's Serves row now scales ranges ("3–4") and numbers leading words ("9 burgers"), not only bare numbers, and Makes scales too. The `recipe:scale` event carries the scaled `servings` and `portions`. The Makes row gets `id="recipe-meta-portions"` and `data-portions-base`.
