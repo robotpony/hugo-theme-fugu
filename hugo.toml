@@ -32,13 +32,6 @@
   # notes, photos. Leave a key out to keep that section in the article.
   recipeSidebar = ["photos", "to-serve", "mechanic", "variations", "equipment", "notes"]
 
-  # What each ## heading means, by its whole title (any case, trailing ":"
-  # ignored). method: prose whose quantities and temperatures get marked.
-  # mechanic, to-serve, variations, notes, equipment: sections that can
-  # move into the sidebar (see recipeSidebar). hidden: recipe sections
-  # hidden from readers (still in the HTML; not private). Every other ##
-  # on a recipe is an ingredient section unless it has one of the
-  # notIngredients words ("Basic method", "Timing examples").
   # Drafts (`draft: true`) as pages that are published but still
   # changing, when the site builds drafts (buildDrafts). A draft gets a
   # banner under its title and tags (partials/development/banner.html) and a mark
@@ -67,6 +60,13 @@
     # draws a dot.
     icon    = ""
 
+  # What each ## heading means, by its whole title (any case, trailing ":"
+  # ignored). method: prose whose quantities and temperatures get marked.
+  # mechanic, to-serve, variations, notes, equipment: sections that can
+  # move into the sidebar (see recipeSidebar). hidden: recipe sections
+  # hidden from readers (still in the HTML; not private). Every other ##
+  # on a recipe is an ingredient section unless it has one of the
+  # notIngredients words ("Basic method", "Timing examples").
   [params.fugu.headings]
     method = ["Method", "Directions", "Steps"]
     mechanic = ["Mechanic"]
