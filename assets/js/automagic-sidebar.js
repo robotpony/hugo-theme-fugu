@@ -76,22 +76,21 @@
   // text, not a .qty span — it isn't a quantity in an ingredient/method
   // sense, just a frontmatter fact, but it should still track the scale
   // slider. ingredients.js announces scale changes with a `recipe:scale`
-  // event rather than touching the sidebar itself. Only updated when the
-  // frontmatter value is a bare number (data-servings-base); a descriptive
-  // value like "4–6" or "1 loaf" (FORMAT.md allows both) can't be scaled
-  // arithmetically and is left exactly as written.
+  // event rather than touching the sidebar itself, and scales the values
+  // too (detail.servings and detail.portions, from ingredients.js's
+  // scaleYield), so Serves, Makes and the scale callout's yield line
+  // always agree. A number, a range
+  // ("3–4") or a number leading some words ("9 burgers") scales; anything
+  // else ("1 loaf", "makes ~750 ml") arrives as null and is left exactly
+  // as written.
   function initServings() {
-    var el = document.getElementById('recipe-meta-servings');
-    if (!el) return;
-    var raw = el.dataset.servingsBase;
-    // A strict whole-string match, not just isNaN(parseFloat(...)) — that
-    // check passes "4-6" (parseFloat reads its leading "4" and stops,
-    // silently truncating a real range like braised-red-cabbage's
-    // servings instead of leaving it alone).
-    if (!/^\d+(\.\d+)?$/.test(raw)) return;
-    var base = parseFloat(raw);
-    document.addEventListener('recipe:scale', function (e) {
-      el.textContent = String(Math.round(base * e.detail.scale));
+    [['recipe-meta-servings', 'servings'], ['recipe-meta-portions', 'portions']].forEach(function (pair) {
+      var el = document.getElementById(pair[0]);
+      if (!el) return;
+      var written = el.textContent;
+      document.addEventListener('recipe:scale', function (e) {
+        el.textContent = e.detail[pair[1]] || written;
+      });
     });
   }
 

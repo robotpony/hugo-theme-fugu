@@ -233,11 +233,12 @@
               Updated close the rail (partials/sidebar/date-rows.html).
               Server-rendered directly, unlike the other slots below, since
               it's plain frontmatter rather than content that has to be
-              walked out of the article body. Serves gets a
-              data-servings-base hook so assets/js/automagic-sidebar.js can keep
-              it in step with the scale slider (parseable numbers only — a
-              descriptive value like "4–6" is left as written, see
-              initServings). */}}
+              walked out of the article body. Serves and Makes get
+              data-servings-base / data-portions-base hooks: ingredients.js
+              reads both for the scale callout's yield line, and
+              automagic-sidebar.js keeps Serves in step with the slider
+              (numbers, ranges, and numbers leading words scale; anything
+              else is left as written, see scaleYield). */}}
             {{ $metaRows := slice }}
             {{/* Source: `original`/`family`/a book title render as plain
               text, same as every other meta row. A URL (bare domain like
@@ -261,7 +262,7 @@
             {{ end }}
             {{ with .Params.aka }}{{ $metaRows = $metaRows | append (dict "label" "Aka" "value" .) }}{{ end }}
             {{ with .Params.servings }}{{ $metaRows = $metaRows | append (dict "label" "Serves" "value" . "id" "recipe-meta-servings" "base" .) }}{{ end }}
-            {{ with .Params.portions }}{{ $metaRows = $metaRows | append (dict "label" "Makes" "value" .) }}{{ end }}
+            {{ with .Params.portions }}{{ $metaRows = $metaRows | append (dict "label" "Makes" "value" . "id" "recipe-meta-portions" "portions" .) }}{{ end }}
             {{ with .Params.prep_time }}{{ $metaRows = $metaRows | append (dict "label" "Prep" "value" .) }}{{ end }}
             {{ with .Params.cook_time }}{{ $metaRows = $metaRows | append (dict "label" "Cook" "value" .) }}{{ end }}
             {{ with .Params.total_time }}{{ $metaRows = $metaRows | append (dict "label" "Total" "value" .) }}{{ end }}
@@ -270,7 +271,7 @@
             {{ if $metaRows }}
               <div class="recipe-meta">
                 {{ range $metaRows }}
-                  <div class="recipe-meta-row"><span class="recipe-meta-label">{{ .label }}</span><span class="recipe-meta-value"{{ with .id }} id="{{ . }}"{{ end }}{{ with .base }} data-servings-base="{{ . }}"{{ end }}>{{ if .link }}<a href="{{ .link }}" class="extlink" rel="noopener noreferrer" target="_blank">{{ .value }}</a>{{ else }}{{ .value }}{{ end }}</span></div>
+                  <div class="recipe-meta-row"><span class="recipe-meta-label">{{ .label }}</span><span class="recipe-meta-value"{{ with .id }} id="{{ . }}"{{ end }}{{ with .base }} data-servings-base="{{ . }}"{{ end }}{{ with .portions }} data-portions-base="{{ . }}"{{ end }}>{{ if .link }}<a href="{{ .link }}" class="extlink" rel="noopener noreferrer" target="_blank">{{ .value }}</a>{{ else }}{{ .value }}{{ end }}</span></div>
                 {{ end }}
               </div>
             {{ end }}

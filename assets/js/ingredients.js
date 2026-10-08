@@ -753,11 +753,33 @@
     btn.className = 'ing-btn';
     btn.textContent = text;
     btn.dataset.units = value;
+    btn.setAttribute('aria-pressed', 'false');
     return btn;
   }
 
   function formatScaleValue(n) {
     return (Number.isInteger(n) ? String(n) : n.toFixed(1)) + '×';
+  }
+
+  // Scales a servings/portions frontmatter value for the yield line and
+  // the sidebar's Serves row: a bare number ("4"), a range ("3–4"), or
+  // either one leading some words ("8 individual pizzas", "about 1.5 L").
+  // A range widens outward (low end down, high end up), so 3–4 at 1.5×
+  // reads 4–6 rather than claiming a precision the recipe doesn't have.
+  // Anything else ("makes ~750 ml", "scales to bird size") returns null:
+  // it can't be scaled honestly, so callers leave it out or as written.
+  function scaleYield(raw, scale) {
+    var m = /^((?:about|~)\s*)?(\d+(?:\.\d+)?)(?:\s*[–-]\s*(\d+(?:\.\d+)?))?(\s+\S.*)?$/.exec((raw || '').trim());
+    if (!m) return null;
+    var prefix = m[1] || '', rest = m[4] || '';
+    var lo = parseFloat(m[2]) * scale;
+    function num(n) { return Number.isInteger(n) ? String(n) : String(Math.round(n * 10) / 10); }
+    if (m[3] === undefined) {
+      var one = parseFloat(m[2]) % 1 === 0 ? Math.round(lo) : lo;
+      return prefix + num(one) + rest;
+    }
+    var hi = parseFloat(m[3]) * scale;
+    return prefix + Math.floor(lo) + '–' + Math.ceil(hi) + rest;
   }
 
   // Scale and units both live with the ingredient list now (buildPopupMenu
@@ -767,35 +789,64 @@
   function buildControlSurface() {
     var frag = document.createDocumentFragment();
 
+    // Scale: label and current value on one row, the slider, a label
+    // under each whole step, then the yield line ("Serves 4–6 · 9
+    // patties"), which only shows when the recipe's servings or portions
+    // can be scaled (scaleYield).
     var scaleGroup = document.createElement('div');
     scaleGroup.className = 'ing-config-group';
-    var scaleLabel = document.createElement('div');
+    var scaleHead = document.createElement('div');
+    scaleHead.className = 'ing-config-head';
+    var scaleLabel = document.createElement('label');
     scaleLabel.className = 'ing-config-label';
-    scaleLabel.textContent = 'Scale recipe';
-    scaleGroup.appendChild(scaleLabel);
+    scaleLabel.textContent = 'Scale';
+    var scaleValue = document.createElement('span');
+    scaleValue.className = 'ing-scale-value mono';
+    scaleHead.appendChild(scaleLabel);
+    scaleHead.appendChild(scaleValue);
+    scaleGroup.appendChild(scaleHead);
 
-    var scaleSliderRow = document.createElement('div');
-    scaleSliderRow.className = 'ing-scale-slider';
     var scaleSlider = document.createElement('input');
     scaleSlider.type = 'range';
+    scaleSlider.className = 'ing-scale-range';
+    scaleSlider.id = 'ing-scale-range';
+    scaleLabel.htmlFor = scaleSlider.id;
     scaleSlider.min = String(SCALE_MIN);
     scaleSlider.max = String(SCALE_MAX);
     scaleSlider.step = String(SCALE_STEP);
-    var scaleValue = document.createElement('span');
-    scaleValue.className = 'ing-scale-value mono';
-    scaleSliderRow.appendChild(scaleSlider);
-    scaleSliderRow.appendChild(scaleValue);
-    scaleGroup.appendChild(scaleSliderRow);
+    scaleGroup.appendChild(scaleSlider);
+
+    var ticks = document.createElement('div');
+    ticks.className = 'ing-scale-ticks mono';
+    ticks.setAttribute('aria-hidden', 'true');
+    var scaleTicks = [];
+    for (var t = SCALE_MIN; t <= SCALE_MAX; t++) {
+      var tick = document.createElement('span');
+      tick.textContent = String(t);
+      tick.dataset.step = String(t);
+      ticks.appendChild(tick);
+      scaleTicks.push(tick);
+    }
+    scaleGroup.appendChild(ticks);
+
+    var yieldLine = document.createElement('p');
+    yieldLine.className = 'ing-yield';
+    yieldLine.hidden = true;
+    scaleGroup.appendChild(yieldLine);
     frag.appendChild(scaleGroup);
 
     var unitsGroup = document.createElement('div');
     unitsGroup.className = 'ing-config-group ing-config-group--units';
     var unitsLabel = document.createElement('div');
     unitsLabel.className = 'ing-config-label';
+    unitsLabel.id = 'ing-units-label';
     unitsLabel.textContent = 'Units';
     unitsGroup.appendChild(unitsLabel);
+    // A segmented control: every option on one row, one tap to switch.
     var unitsRow = document.createElement('div');
-    unitsRow.className = 'ing-config-row';
+    unitsRow.className = 'ing-units';
+    unitsRow.setAttribute('role', 'group');
+    unitsRow.setAttribute('aria-labelledby', unitsLabel.id);
     var unitOptions = [
       ['original', 'As written'], ['metric', 'Metric'], ['imperial', 'Imperial']
     ];
@@ -808,7 +859,10 @@
     unitsGroup.appendChild(unitsRow);
     frag.appendChild(unitsGroup);
 
-    return { frag: frag, scaleSlider: scaleSlider, scaleValue: scaleValue, unitButtons: unitButtons };
+    return {
+      frag: frag, scaleSlider: scaleSlider, scaleValue: scaleValue,
+      scaleTicks: scaleTicks, yieldLine: yieldLine, unitButtons: unitButtons
+    };
   }
 
   // Owns the scale/units state for the whole page (a multi-component
@@ -842,12 +896,40 @@
     var state = { scale: readScale(), units: readUnits() };
     var surface = null;
 
+    // The recipe's yield, from the sidebar's meta rows (single.html).
+    function metaBase(id, attr) {
+      var el = document.getElementById(id);
+      return el ? el.getAttribute(attr) : null;
+    }
+    var servingsBase = metaBase('recipe-meta-servings', 'data-servings-base');
+    var portionsBase = metaBase('recipe-meta-portions', 'data-portions-base');
+
+    function yieldText() {
+      var parts = [];
+      var serves = scaleYield(servingsBase, state.scale);
+      var makes = scaleYield(portionsBase, state.scale);
+      if (serves) parts.push('Serves ' + serves);
+      if (makes) parts.push(makes);
+      return parts.join(' · ');
+    }
+
     function syncControls() {
       if (!surface) return;
-      surface.scaleSlider.value = String(state.scale);
+      var s = surface.scaleSlider;
+      s.value = String(state.scale);
+      // Filled track up to the thumb (custom.css reads --fill).
+      s.style.setProperty('--fill', ((state.scale - SCALE_MIN) / (SCALE_MAX - SCALE_MIN) * 100) + '%');
       surface.scaleValue.textContent = formatScaleValue(state.scale);
+      surface.scaleTicks.forEach(function (tick) {
+        tick.classList.toggle('is-current', Number(tick.dataset.step) === state.scale);
+      });
+      var y = yieldText();
+      surface.yieldLine.textContent = y;
+      surface.yieldLine.hidden = !y;
       surface.unitButtons.forEach(function (btn) {
-        btn.classList.toggle('active', btn.dataset.units === state.units);
+        var on = btn.dataset.units === state.units;
+        btn.classList.toggle('active', on);
+        btn.setAttribute('aria-pressed', String(on));
       });
     }
 
@@ -859,7 +941,13 @@
         renderTemp(temp, state.units);
       });
       // The sidebar's Serves row listens for this (automagic-sidebar.js).
-      document.dispatchEvent(new CustomEvent('recipe:scale', { detail: { scale: state.scale } }));
+      document.dispatchEvent(new CustomEvent('recipe:scale', {
+        detail: {
+          scale: state.scale,
+          servings: scaleYield(servingsBase, state.scale),
+          portions: scaleYield(portionsBase, state.scale)
+        }
+      }));
       syncControls();
     }
 
@@ -899,6 +987,13 @@
     var surface = buildControlSurface();
     panel.appendChild(surface.frag);
     details.appendChild(panel);
+
+    // Escape closes the callout and hands focus back to the gear.
+    details.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape' || !details.open) return;
+      details.open = false;
+      summary.focus();
+    });
 
     controller.attachSurface(surface);
     return details;
