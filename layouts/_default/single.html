@@ -104,6 +104,9 @@
           {{ $md = replaceRE `\[\[([^\]|]+)\|([^\]]+)\]\]` `[$2](<$1>)` $md }}
           {{ $md = replaceRE `\[\[([^\]]+)\]\]` `[$1](<$1>)` $md }}
           {{ .RenderString $md }}
+          {{ with partial "development/page.html" . }}
+            {{ if eq .RelPermalink $.RelPermalink }}{{ partial "development/list.html" $ }}{{ end }}
+          {{ end }}
           {{/* Sidebar first: its DOMContentLoaded handler has to run
             before ingredients.js's (see automagic-sidebar.js). Every page
             with a sidebar gets it, recipe or reading. */}}

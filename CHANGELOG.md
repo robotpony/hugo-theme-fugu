@@ -6,6 +6,8 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Added
 
+- `params.fugu.developmentPage` (default `""`): a page that explains drafts. When set, the draft badge links to it (its description as hover text), and that page lists every draft after its own text as the card grid, recipes first (`partials/development/page.html`, `development/list.html`). With drafts not built, the list says nothing is in development. The site styles `a.draft-badge` and `.development-list`.
+
 - Personal notes: `params.fugu.hideIntroQuotes` (default `true`) hides blockquotes in a recipe's intro, and `params.fugu.headings.hidden` (default `["History"]`) hides whole sections; `false` and `[]` turn them off. This only hides the text from readers: it's still in the HTML, the search index, and the RSS feed.
 - `[params.fugu.headings]`: the `##` titles that mean `method`, `mechanic`, `to-serve`, `variations`, `notes`, `equipment`, and `hidden` (lists of whole titles, any case), plus `notIngredients`, the words that keep a recipe heading from being read as an ingredient section. The defaults are the old fixed names, so a site writing in English with Fugu's section names sets nothing.
 - Principle tags work for any tag whose `content/tags/<slug>/_index.md` sets `principle: true`, not just `win-the-fridge`. Its essay is the page named by `essay` there, else the reference essay carrying the tag; its chip on recipe cards reads `short`, else the tag's title. Sites that relied on the card's old "WTF" label set `short: WTF`.

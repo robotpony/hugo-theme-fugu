@@ -1,0 +1,22 @@
+{{/*
+  Every draft on the site as the shared card grid, recipes first, newest
+  first within each group. Appended after the text of the page named by
+  params.fugu.developmentPage (see development/page.html), so that page
+  should end on a heading or sentence that introduces the list.
+
+  Drafts only exist when the site builds them (buildDrafts, or
+  `hugo server -D`); without them the list says so instead.
+*/}}
+{{ $recipeSection := partial "section/name.html" "recipe" }}
+{{ $drafts := where site.RegularPages "Draft" true }}
+{{ $recipes := where $drafts "Section" $recipeSection }}
+{{ $others := where $drafts "Section" "!=" $recipeSection }}
+<div class="development-list not-prose">
+  {{ with $recipes.ByDate.Reverse | append $others.ByDate.Reverse }}
+    <div class="rgrid">
+      {{ range . }}{{ partial "recipe-card.html" . }}{{ end }}
+    </div>
+  {{ else }}
+    <p class="section-caveat">Nothing is in development right now.</p>
+  {{ end }}
+</div>

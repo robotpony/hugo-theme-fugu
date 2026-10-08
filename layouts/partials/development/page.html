@@ -1,0 +1,10 @@
+{{/*
+  The page that explains drafts, from params.fugu.developmentPage (a path
+  as site.GetPage takes it, e.g. "essays/reference-essays/recipes-in-development").
+  Returns nil when the param is "" or the page doesn't exist. The draft
+  badge links to it (article-meta/basic.html), and it lists every draft
+  after its own text (development/list.html, called from single.html).
+*/}}
+{{ $page := false }}
+{{ with site.Params.fugu.developmentPage }}{{ $page = site.GetPage . }}{{ end }}
+{{ return $page }}

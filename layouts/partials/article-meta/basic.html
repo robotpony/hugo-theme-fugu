@@ -119,8 +119,15 @@
     title and the tags that had nothing to do with row-wrapping. */}}
   {{ if or ($showDraftLabel) (.Params.showTaxonomies | default (.Site.Params.article.showTaxonomies | default false)) }}
     <div class="flex flex-row flex-wrap items-center tags-row">
+      {{/* Linked to the page that explains drafts and lists them all,
+        when params.fugu.developmentPage names one; its description is the
+        hover text. */}}
       {{ if $showDraftLabel }}
-        <span class="draft-badge">{{ i18n "article.draft" | emojify }}</span>
+        {{ with partial "development/page.html" . }}
+          <a class="draft-badge" href="{{ .RelPermalink }}"{{ with .Description }} title="{{ . }}"{{ end }}>{{ i18n "article.draft" | emojify }}</a>
+        {{ else }}
+          <span class="draft-badge">{{ i18n "article.draft" | emojify }}</span>
+        {{ end }}
       {{ end }}
       {{ if .Params.showTaxonomies | default (.Site.Params.article.showTaxonomies | default false) }}
         {{/* Cuisine leads the row as the same yellow chip the recipe cards
