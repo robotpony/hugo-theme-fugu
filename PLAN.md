@@ -113,6 +113,7 @@ Not a Chef's docs describe Fugu's features but are written for that one site. Ma
   - Keep them in `images/` (listing) and `docs/images/` (docs), and note in the docs how they were taken (page, window size, scheme), so they can be retaken whenever the styles change. Retake them again for `v1.0.0` after §5's designed look lands.
 - [ ] `v0.1.0` once §1–§3 are done, the basic styles and screenshots above land, and the example site builds; `v1.0.0` after §5–§7.
 - [ ] Optional: list it on themes.gohugo.io (PR to `gohugoio/hugoThemesSiteBuilder`). Their rules may need the theme to build on its own; check how they handle themes that need a parent theme.
+- [ ] Later, once there are tagged releases to test against: a separate test-site repo that installs Fugu exactly as an outsider would and pulls tagged releases, for checking a release before announcing it. Until then, don't split it out: a CI job (§9) that installs Fugu the same way covers this without another repo to maintain.
 
 ## Features
 
