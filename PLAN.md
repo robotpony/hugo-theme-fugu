@@ -41,10 +41,10 @@ Everything below is written directly into templates today. Move it into one para
 
 `tests/check.py` builds the fixtures and checks their pages against each one's `expect.txt` (added 2026-10-07). The `renamed` fixture has passed since 2026-10-07 (section names, glossary, principle tags); add an `expect.txt` line for each part this section makes optional.
 
-- [ ] A site with only a `recipes` section and only the `tags` taxonomy must build with no errors or warnings and no broken links. Today `cuisine` is assumed in `recipe-card.html`, `list.json.json`, and `related.html`.
-- [ ] Accept `cuisine` as a list as well as a string. `recipe-card.html` calls `lower` on it and fails the build on `cuisine: [Thai]` (found by the fixtures, 2026-10-07). Not a Chef's `FORMAT.md` says string, but Hugo taxonomies are lists, and other sites will write them that way.
+- [x] A site with only a `recipes` section and only the `tags` taxonomy must build with no errors or warnings and no broken links. Today `cuisine` is assumed in `recipe-card.html`, `list.json.json`, and `related.html`. *Checked 2026-10-08: the `recipes-only` fixture builds with `--panicOnWarning` and every internal link resolves; `related.html` reads no taxonomy (the related indices are site config), and `list.json.json` writes `null`. What's left is wording (search placeholders naming cuisines, essays, guides), under the next item.*
+- [x] Accept `cuisine` as a list as well as a string. `recipe-card.html` calls `lower` on it and fails the build on `cuisine: [Thai]` (found by the fixtures, 2026-10-07). Not a Chef's `FORMAT.md` says string, but Hugo taxonomies are lists, and other sites will write them that way. *Done 2026-10-08: the card shows the first cuisine and skips tags repeating any; the `everything` fixture's `plain-rice` uses the list form.*
 - [ ] Each optional part (essays, reference, log, glossary, principle tags, `cuisine`) turns off cleanly: no empty sidebar blocks, no dead nav, no zero counts.
-- [ ] The recipes-only fixture (§1) builds clean in CI; drop its allowed-to-fail flag.
+- [x] The recipes-only fixture (§1) builds clean in CI; drop its allowed-to-fail flag. *2026-10-08: it never needed the flag (see §1); CI builds it with `--panicOnWarning`.*
 
 ## 4. Translation
 

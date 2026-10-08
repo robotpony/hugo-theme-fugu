@@ -8,6 +8,9 @@
   one compact stat line, times shortened and parentheticals dropped for
   the card only (the full value is in the stat's title).
 
+  `cuisine` may be a string or a list (Hugo taxonomies are lists); the
+  card shows the first, and skips tags repeating any of them.
+
   A cuisine whose term page (content/cuisine/<name>/_index.md) sets
   `short` shows that on the card ("USA" for American), with the full name
   as its title; recipe pages and the term page keep the full name.
@@ -51,21 +54,29 @@
 {{ $isRef := eq $role "reference" }}
 {{ $title := .Title }}
 {{ $slots := 2 }}
-{{ $cuisine := .Params.cuisine }}
+{{ $cuisines := slice }}
+{{ with .Params.cuisine }}
+  {{ if reflect.IsSlice . }}{{ range . }}{{ $cuisines = $cuisines | append (string .) }}{{ end }}
+  {{ else }}{{ $cuisines = slice (string .) }}{{ end }}
+{{ end }}
+{{ $cuisine := "" }}
+{{ with $cuisines }}{{ $cuisine = index . 0 }}{{ end }}
+{{ $cuisinesLower := slice }}
+{{ range $cuisines }}{{ $cuisinesLower = $cuisinesLower | append (lower .) }}{{ end }}
 {{ $principle := partial "principle-chip.html" (dict "page" . "compact" true) }}
 {{ $tags := slice }}
 {{ $principles := 0 }}
 {{ range .Params.tags }}
   {{ if and $isRef (eq (lower .) "reference") }}{{ continue }}{{ end }}
   {{ if partialCached "principle/term.html" . . }}{{ $principles = add $principles 1 }}{{ continue }}{{ end }}
-  {{ if not (and $cuisine (eq (lower .) (lower $cuisine))) }}{{ $tags = $tags | append . }}{{ end }}
+  {{ if not (in $cuisinesLower (lower .)) }}{{ $tags = $tags | append . }}{{ end }}
 {{ end }}
 {{ if $isEssay }}
   {{ $folder := path.Base (strings.TrimSuffix "/" .File.Dir) }}
   {{ $tags = cond (eq $folder .Section) (slice) (slice (replace $folder "-" " ")) }}
 {{ end }}
 {{ $room := $slots }}
-{{ if ne $cuisine nil }}{{ $room = sub $room 1 }}{{ end }}
+{{ if $cuisine }}{{ $room = sub $room 1 }}{{ end }}
 {{ $room = sub $room $principles }}
 {{ if .Draft }}{{ $room = sub $room 1 }}{{ end }}
 

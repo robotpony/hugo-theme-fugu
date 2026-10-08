@@ -19,6 +19,10 @@ reference/index.html: class="ltitle
 the-food-log/index.html: class="ltitle
 recipes/index.json: "has_formula": true
 
+# cuisine works as a list as well as a string (plain-rice has [Japanese]).
+recipes/index.html: href="/cuisine/japanese/"
+recipes/index.html: href="/cuisine/american/"
+
 # Reading pages get the reading sidebar, not the recipe one.
 essays/cooking-reflections/why-ratios/index.html: reading-sidebar
 essays/cooking-reflections/why-ratios/index.html: !id="recipe-sidebar"

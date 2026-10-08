@@ -1,7 +1,7 @@
 ---
 title: Plain rice
 tags: [sides, basics, win-the-fridge]
-cuisine: Japanese
+cuisine: [Japanese]
 source: original
 date: 2026-10-01
 servings: 4

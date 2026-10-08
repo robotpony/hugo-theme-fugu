@@ -41,6 +41,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Fixed
 
+- `cuisine` can be a list (`cuisine: [Thai]`) as well as a string; it used to fail the build on recipe cards. The card shows the first and skips tags repeating any of them.
 - Swiping between photos in the photo viewer works on iOS. Safari took a sideways swipe as scrolling and cancelled it, and a swipe that ended off the photo closed the viewer.
 
 ## 2026-10-06: split from Not a Chef
