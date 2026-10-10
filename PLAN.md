@@ -93,7 +93,7 @@ Not a Chef's docs describe Fugu's features but are written for that one site. Ma
 - [ ] `docs/customizing.md`: the three layers (site → Fugu → Blowfish), overriding partials, the CSS custom properties (§5), fonts.
 - [x] `docs/features.md`: scaling and unit conversion, ingredient check-off, formula diagrams and the icon kit, wiki links and the glossary, pinned pages, principle tags, the reading and recipe sidebars, `index.json`. *Done 2026-10-08. Reader-facing: links to recipe-format, frontmatter, and configuration for how to write and set each part. Also corrected recipe-format.md, which said moved sections stay in the article in print; only photos do.*
 - [ ] `docs/tools.md`: `frontmatter.py`, `drafts.py`, `add-image.sh` (needs ImageMagick 7's `magick` and `exiftool`), `$FUGU_SITE_ROOT`.
-- [ ] README: short, with install, quick start, a screenshot, and links into `docs/`. Replace the "What it adds" list, which is the only feature description today, with a short summary linking to `docs/features.md`.
+- [ ] README: short, with install, quick start, a screenshot, and links into `docs/`. Replace the "What it adds" list, which is the only feature description today, with a short summary linking to `docs/features.md`. *Started 2026-10-09: the feature list is a paragraph linking `docs/features.md`, with a Docs list, a current Status list, and a Contributing note. Still needs the screenshot (§10) and the Hugo modules install (§6).*
 
 ## 8. Tooling
 

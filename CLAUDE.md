@@ -46,6 +46,7 @@ Recipes follow Not a Chef's `FORMAT.md` (in that repo, until PLAN.md §7 brings 
 - Match the surrounding code: Hugo template comments in `{{/* */}}` at the top of each file explaining why it exists, plain JS without a build step.
 - Canadian English in docs and comments. Short declarative commit messages that state the purpose (e.g. "Moves the section names into params."). Don't add Claude as a co-author. A PreToolUse hook (`.claude/hooks/check-commit-message.sh`) refuses a commit whose message does.
 - Add a line to `CHANGELOG.md` under Unreleased for anything a site would notice: a changed page, a new or renamed param, a new tool or option.
+- Keep `README.md` current in the same commit as the change: its Status list when a PLAN.md item lands, its Docs list (and `docs/README.md`) when a doc is added, and its install, version, and feature lines when those change.
 - Commit finished work without waiting to be asked. Pushing, tagging releases, and anything published elsewhere need the user's go-ahead.
 - Keep the licence notes intact: Fugu is MIT; files derived from Blowfish keep Blowfish's notice (`LICENSE-blowfish`).
 - After pushing here, the Not a Chef repo needs its submodule pointer bumped (`git add themes/fugu` there) for the site to pick up the change.
