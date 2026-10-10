@@ -11,6 +11,9 @@
      - Cuisine is skipped in the taxonomy loop that follows (Blowfish
        would otherwise add it as a second, plain badge for any taxonomy
        besides tags and categories).
+     - Plain tags are `<a class="tag">`, the class the recipe cards use,
+       instead of Blowfish's badge. Categories and other taxonomies keep
+       the badge.
      - Spacing is one `gap` on the row (.tags-row) instead of Blowfish's
        per-badge mt-[0.5rem] me-2, which put dead space above the first
        line. */}}
@@ -140,9 +143,7 @@
                 {{ end }}
               {{ else if (eq $taxonomy "tags") }}
                 {{ if and (.Params.showTags | default (.Site.Params.article.showTags | default true)) (not .Params.principle) }}
-                  <a class="relative" href="{{ .RelPermalink }}">
-                    {{ partial "badge.html" .LinkTitle }}
-                  </a>
+                  <a class="tag" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
                 {{ end }}
               {{ else }}
                 {{/* Any other taxonomy a site adds gets a plain badge. */}}
