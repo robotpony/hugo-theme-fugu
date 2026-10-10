@@ -54,3 +54,19 @@ recipes/index.html: recipes, tags, cuisines&hellip;
 about/index.html: Essays <b>
 about/index.html: Reference guides <b>
 about/index.html: Cuisines <b>
+
+# Drafts (buildDrafts): published with a banner and a card chip, but left
+# out of every feed. Fridge soup has a cuisine and a principle tag too,
+# which used to leave its card a negative number of tag slots.
+recipes/fridge-soup/index.html: dev-strip
+recipes/index.html: dev-chip
+recipes/index.html: href="/recipes/fridge-soup/"
+index.xml: !/recipes/fridge-soup/
+recipes/index.xml: !/recipes/fridge-soup/
+tags/mains/index.xml: !/recipes/fridge-soup/
+cuisine/canadian/index.xml: !/recipes/fridge-soup/
+
+# Pages link their section's feed; feeds still list published pages.
+recipes/veg-patties/index.html: type="application/rss+xml" href="/recipes/index.xml" title="Recipes on Everything"
+essays/cooking-reflections/why-ratios/index.html: type="application/rss+xml"
+recipes/index.xml: /recipes/veg-patties/

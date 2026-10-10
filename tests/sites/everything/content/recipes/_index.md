@@ -1,5 +1,5 @@
 ---
 title: Recipes
 description: Recipes for testing.
-outputs: [HTML, JSON]
+outputs: [HTML, RSS, JSON]
 ---

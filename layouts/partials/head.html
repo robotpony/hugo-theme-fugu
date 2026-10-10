@@ -1,6 +1,10 @@
 {{/*
-  Full override of themes/blowfish/layouts/partials/head.html. Five
+  Full override of themes/blowfish/layouts/partials/head.html. Six
   changes, everything else as Blowfish has it:
+
+  - Feed link on pages: a regular page links its section's RSS feed
+    (else the first section's, else the site's), since it has none of
+    its own.
 
   - Styles: bundles assets/css/fugu.css after Blowfish's main.css and
     before the site's custom.css, unless params.fugu.styles is false.
@@ -66,6 +70,24 @@
       <link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .RelPermalink ($.Site.Title | emojify) |
       safeHTML
     }}
+  {{ end }}
+  {{/* A page has no feed of its own: point at its section's, else the
+    first section's, else the site's, so a reader given a recipe link can
+    find the recipes feed. */}}
+  {{ if .IsPage }}
+    {{ $feedPage := false }}
+    {{ range slice .CurrentSection .FirstSection site.Home }}
+      {{ if and (not $feedPage) (.OutputFormats.Get "RSS") }}{{ $feedPage = . }}{{ end }}
+    {{ end }}
+    {{ with $feedPage }}
+      {{ $title := cond .IsHome site.Title (printf "%s on %s" .Title site.Title) }}
+      {{ with .OutputFormats.Get "RSS" }}
+        {{ printf `
+      <link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .RelPermalink ($title | emojify) |
+          safeHTML
+        }}
+      {{ end }}
+    {{ end }}
   {{ end }}
   {{ with site.Home.OutputFormats.Get "LLMS" }}
     <link rel="describedby" href="{{ .RelPermalink }}">

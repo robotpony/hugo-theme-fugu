@@ -27,7 +27,7 @@ These Blowfish and Hugo settings also matter:
 | `params.article.showDraftLabel = true` | The banner on draft pages (below). |
 | `params.article.relatedContentLimit` | Required when `showRelatedContent` is on: without it Fugu's related-content partial fails the build. |
 | `enableGitInfo = true` | The **Updated** date in sidebars, from each file's last commit. |
-| `buildDrafts = true` | Publishes drafts, which Fugu shows as pages still in development. |
+| `buildDrafts = true` | Publishes drafts, which Fugu shows as pages still in development, and keeps out of feeds. |
 | `params.recipe.enableKelvin = true` | Adds Kelvin to the temperature units. Off by default; it's a joke more than a feature. |
 
 ## Sections
@@ -54,7 +54,7 @@ To rename a section, set its folder here and also set `type` in that section's `
 ---
 title: Dishes
 type: recipes
-outputs: [HTML, JSON]
+outputs: [HTML, RSS, JSON]
 ---
 ```
 
@@ -179,6 +179,8 @@ For a site that builds drafts, Fugu publishes them as pages still in development
 | `icon` | An SVG in the site's `assets/` to use as the mark (`icons/development.svg`), inlined so it takes the text colour. `""` draws a dot. |
 
 The banner also needs `showDraftLabel = true` under `[params.article]`.
+
+Drafts never appear in RSS feeds (the site's, a section's, or a tag's), so subscribers only get finished pages. `[services.rss] limit` counts the pages left after drafts are taken out.
 
 ## Styles
 

@@ -3,6 +3,7 @@ baseURL = "https://example.org/"
 title = "Everything"
 theme = ["fugu", "blowfish"]
 themesDir = "../../../.."
+buildDrafts = true  # drafts publish as pages in development
 
 [taxonomies]
   tag = "tags"

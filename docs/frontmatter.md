@@ -112,4 +112,4 @@ A reference essay's `summary` (or `description`) is what its glossary popover sh
 
 ## In `recipes/index.json`
 
-When the recipes section's `_index.md` sets `outputs: [HTML, JSON]`, Fugu writes `/recipes/index.json`, one entry per recipe, with `title`, the file's slug, `date`, `tags`, `cuisine`, `servings`, `portions`, `source`, `prep_time`, `cook_time`, `draft`, `working_on`, a word count, and flags for whether the recipe has a Mechanic, Variations, Notes, or a formula diagram. It's meant for scripts and tools that ask questions about the whole collection.
+When the recipes section's `_index.md` sets `outputs: [HTML, RSS, JSON]` (JSON is the part that matters here), Fugu writes `/recipes/index.json`, one entry per recipe, with `title`, the file's slug, `date`, `tags`, `cuisine`, `servings`, `portions`, `source`, `prep_time`, `cook_time`, `draft`, `working_on`, a word count, and flags for whether the recipe has a Mechanic, Variations, Notes, or a formula diagram. It's meant for scripts and tools that ask questions about the whole collection.

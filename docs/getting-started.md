@@ -43,11 +43,11 @@ Create `content/recipes/_index.md`:
 ```yaml
 ---
 title: Recipes
-outputs: [HTML, JSON]
+outputs: [HTML, RSS, JSON]
 ---
 ```
 
-`outputs: [HTML, JSON]` also builds `/recipes/index.json`, a list of every recipe and its facts for tools and scripts. Leave it out if you don't want that.
+`outputs` builds the recipes page (HTML), its feed (RSS), and `/recipes/index.json`, a list of every recipe and its facts for tools and scripts. Listing outputs replaces Hugo's defaults, so keep `RSS` in the list for the feed. Leave the line out to get Hugo's defaults (the page and the feed) without the JSON.
 
 ## 4. A first recipe
 
