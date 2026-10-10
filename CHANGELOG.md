@@ -6,6 +6,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Added
 
+- Basic styles: `assets/css/fugu.css` styles every class Fugu emits (recipe page, ingredients and the scale/units panel, sidebars, cards, list pages, formula diagrams, popovers, drafts, photos), coloured from the site's Blowfish scheme through `--fugu-*` custom properties, in light and dark. `head.html` bundles it after Blowfish's CSS and before the site's `custom.css`. `params.fugu.styles = false` leaves it out.
 - Docs, in `docs/`: `getting-started.md` (an empty site to a working recipe page), `recipe-format.md` (writing a recipe), and `frontmatter.md` (every field Fugu reads).
 - `docs/configuration.md`: every `[params.fugu]` setting and the Blowfish settings Fugu depends on.
 - `docs/features.md`: a tour of what Fugu adds, as a reader sees it.
@@ -29,9 +30,9 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Changed
 
-- Search placeholders name only what the site has: the site-wide one lists the recipe, essay and reference sections that have pages ("Search recipes" on a recipes-only site), and the recipe count one says "cuisines" only when there are any. `partials/search-box.html` takes `"site"` for the site-wide label (`search-box/site-label.html`); any other string is still used as the whole label.
 - Header tags (`article-meta/basic.html`) are `<a class="tag">` links, the class recipe cards use, instead of Blowfish's badge. Categories and other taxonomies keep the badge. A site styling `.tag` may want an `a.tag:hover` rule.
 
+- Search placeholders name only what the site has: the site-wide one lists the recipe, essay and reference sections that have pages ("Search recipes" on a recipes-only site), and the recipe count one says "cuisines" only when there are any. `partials/search-box.html` takes `"site"` for the site-wide label (`search-box/site-label.html`); any other string is still used as the whole label.
 - The cookbook in numbers (About, `stats: true`) leaves out a section with no pages instead of showing 0.
 - One popover component for glossary terms, principle chips, and the draft mark: `.pop-host` wraps the trigger and a `.pop` holding `.pop-head`, `.pop-text`, optional `.pop-note`, and `.pop-link` (the site adds the arrow). Modifiers: `.pop-up` (opens upward, prose terms), `.pop-card` (spans a card's top row), and a kind class (`.pop-glossary`, `.pop-principle`, `.pop-dev`). The new `assets/js/popover.js`, loaded on every page, puts the pointer under the trigger (`--pop-x`), flips a popover that would open off-screen (`.pop-flip`), and closes on Escape. Replaces `.glossary-term`, `.glossary-term-chip`, `.glossary-term-chip-compact`, `.glossary-pop`, `.glossary-pop-term`, `.dev-mark`, `.dev-pop`, `.dev-pop-head`, `.dev-pop-text`, `.dev-pop-note`; the wrappers no longer take `tabindex` (the trigger inside is already focusable).
 
@@ -48,10 +49,10 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Fixed
 
+- A draft recipe card with both a cuisine and a principle tag no longer fails the build (`recipe-card.html` ran out of tag slots and called `first` with a negative count).
 - `cuisine` can be a list (`cuisine: [Thai]`) as well as a string; it used to fail the build on recipe cards. The card shows the first and skips tags repeating any of them.
 - Swiping between photos in the photo viewer works on iOS. Safari took a sideways swipe as scrolling and cancelled it, and a swipe that ended off the photo closed the viewer.
 
-- A draft recipe card with both a cuisine and a principle tag no longer fails the build (`recipe-card.html` ran out of tag slots and called `first` with a negative count).
 ## 2026-10-06: split from Not a Chef
 
 Templates, render hooks, JS, formula icons, archetypes, and the content tools moved out of [Not a Chef](https://github.com/robotpony/not-a-chef) into this repo, unchanged. Not a Chef uses it as a git submodule at `themes/fugu`.

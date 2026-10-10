@@ -1,6 +1,9 @@
 {{/*
-  Full override of themes/blowfish/layouts/partials/head.html. Four
+  Full override of themes/blowfish/layouts/partials/head.html. Five
   changes, everything else as Blowfish has it:
+
+  - Styles: bundles assets/css/fugu.css after Blowfish's main.css and
+    before the site's custom.css, unless params.fugu.styles is false.
 
   - Fonts: calls partials/fonts.html (empty by default) near the top, since
     Blowfish has no hook for a site's web fonts.
@@ -132,6 +135,9 @@
   {{ $cssScheme := resources.Get (printf "css/schemes/%s.css" (lower $schemeName)) | default (resources.Get "css/schemes/blowfish.css") }}
   {{ $cssResources = $cssResources | append $cssScheme }}
   {{ $cssResources = $cssResources | append (resources.Get "css/compiled/main.css") }}
+  {{ if site.Params.fugu.styles }}
+    {{ $cssResources = $cssResources | append (resources.Get "css/fugu.css") }}
+  {{ end }}
   {{ with resources.Get "css/custom.css" }}
     {{ $cssResources = $cssResources | append . }}
   {{ end }}

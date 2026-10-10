@@ -2,7 +2,7 @@
 
 A cookbook theme for [Blowfish](https://github.com/nunocoracao/blowfish). Fugu is an add-on, not a standalone theme: it sits on top of Blowfish and replaces the parts a cookbook needs, so Blowfish must be installed alongside it.
 
-> **Work in progress, not released yet.** Fugu was split out of [Not a Chef](https://github.com/robotpony/not-a-chef) on 2026-10-06. It builds and works on a fresh site, but it has no styles of its own yet: Not a Chef's CSS styles the classes Fugu emits, so on another site the recipe pages work but look plain. See "Status" below.
+> **Work in progress, not released yet.** Fugu was split out of [Not a Chef](https://github.com/robotpony/not-a-chef) on 2026-10-06. It builds and works on a fresh site, with basic styles coloured from your Blowfish scheme; a designed default look comes later. See "Status" below.
 
 ## Scope
 
@@ -74,7 +74,8 @@ python3 themes/fugu/tools/drafts.py
 - [x] Fixture sites and CI against pinned Hugo and Blowfish versions (`tests/`)
 - [ ] Docs: five written; customizing, tools, and Blowfish compatibility to come
 - [ ] English text moved into `i18n/` for translation
-- [ ] A default design, so Fugu looks right without Not a Chef's CSS
+- [x] Basic styles that follow the site's Blowfish colour scheme, light and dark (`params.fugu.styles`)
+- [ ] A default design of its own, with Not a Chef's CSS split into structure and look
 - [ ] Hugo modules install, `exampleSite/`, screenshots, and the first release, `v0.1.0`
 
 ## Contributing

@@ -3,6 +3,11 @@
 # tools/ read the merged values too (through `hugo config`).
 
 [params.fugu]
+  # Fugu's basic styles (assets/css/fugu.css), coloured from the site's
+  # Blowfish scheme. false leaves every class Fugu emits unstyled, for a
+  # site that styles them all in its own assets/css/custom.css.
+  styles = true
+
   # Section folders under content/. Set one to "" to say the site doesn't
   # have it. Only the recipe section is required. A renamed section's
   # _index.md also sets `type` to the default name (e.g. `type: recipes` in

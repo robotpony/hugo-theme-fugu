@@ -180,6 +180,15 @@ For a site that builds drafts, Fugu publishes them as pages still in development
 
 The banner also needs `showDraftLabel = true` under `[params.article]`.
 
+## Styles
+
+```toml
+[params.fugu]
+  styles = true
+```
+
+Fugu's stylesheet, `assets/css/fugu.css`, styles everything Fugu adds, coloured from your Blowfish `colorScheme`, light and dark. It loads after Blowfish's CSS and before your `assets/css/custom.css`, so your rules win. To change the colours alone, set the `--fugu-*` custom properties at the top of the file in your `custom.css` (under `:root`, and `.dark` for dark mode). `false` leaves it out, for a site that styles every class itself.
+
 ## Fonts
 
 Fugu loads no web fonts. To add some, override `layouts/partials/fonts.html` in your site; it's included in every page's `<head>` and is empty by default.
