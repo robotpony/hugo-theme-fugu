@@ -79,6 +79,8 @@
 {{ if $cuisine }}{{ $room = sub $room 1 }}{{ end }}
 {{ $room = sub $room $principles }}
 {{ if .Draft }}{{ $room = sub $room 1 }}{{ end }}
+{{/* A draft with a cuisine and a principle can use up every slot. */}}
+{{ if lt $room 0 }}{{ $room = 0 }}{{ end }}
 
 {{ $intro := .Params.summary | default .Description }}
 {{ if not $intro }}

@@ -49,6 +49,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 - `cuisine` can be a list (`cuisine: [Thai]`) as well as a string; it used to fail the build on recipe cards. The card shows the first and skips tags repeating any of them.
 - Swiping between photos in the photo viewer works on iOS. Safari took a sideways swipe as scrolling and cancelled it, and a swipe that ended off the photo closed the viewer.
 
+- A draft recipe card with both a cuisine and a principle tag no longer fails the build (`recipe-card.html` ran out of tag slots and called `first` with a negative count).
 ## 2026-10-06: split from Not a Chef
 
 Templates, render hooks, JS, formula icons, archetypes, and the content tools moved out of [Not a Chef](https://github.com/robotpony/not-a-chef) into this repo, unchanged. Not a Chef uses it as a git submodule at `themes/fugu`.
