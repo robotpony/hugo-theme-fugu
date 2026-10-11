@@ -159,6 +159,18 @@ From Not a Chef's `SPEC.md`, which should become Fugu docs as part of §7.
 - [ ] Table of contents behaviour on long reference pages.
 - [ ] Extra taxonomies in the page header's tags row. `article-meta/basic.html` gives cuisine a chip and tags their `.tag` links, but any other taxonomy a site adds falls through to Blowfish's plain badge (`rounded-md border border-primary-400 …`), unstyled by the site and often repeating a tag. Found 2026-10-10: Not a Chef's `blueprint` taxonomy (`blueprint: [burgers]`, see its `docs/METHODS.md`) shows "Burgers" twice on every burger page, the badge beside the `burgers` tag. Either skip taxonomies a site lists (a param, e.g. `fugu.headerTaxonomies`) or render them as a chip like cuisine. Not a Chef hides the badge with a stopgap rule in its `custom.css` (`.tags-row > a[href*="/blueprint/"]:not(.tag)`); tell it to remove that rule when this lands.
 
+### Concept pages: principle, status, method
+
+Needed sooner by Not a Chef (its `docs/PLAN.md`, Methods phase 2; spec in its `docs/METHODS.md`). Design: its `mockups/methods-pages.html` (2026-10-10), checked against its `mockups/STYLE.md`. A concept is a named idea with a definition, an icon, a chip, and a list of what belongs to it. Today there are two, built separately: principle (`principle/term.html`, `principle-chip.html`, `term.html`'s `principle: true` branch) and status (`partials/development/*`, the test kitchen). Methods add a third.
+
+- [ ] Generalize into shared concept partials with a `kind` (`principle`, `status`, `method`): the header's kind suffix, the definition callout (label with the kind's icon, body from the `_index.md`, a link), the chip and its popover, and the "Reference & further reading" list. The kind sets the colour token and icon. Principle and test kitchen must render exactly as now (`compare-builds.py`).
+- [ ] Method chip (`.method-chip`, accent fill, fan-out icon: Not a Chef's `assets/icons/methods/fan-out.svg`, CSS already in its `custom.css`). On a method's card it replaces the folder label in the top row; on its page it leads the tags row. A method is any page in the essays section's `methods/` folder (the folder decides; Not a Chef also cascades a `method` tag onto it).
+- [ ] Methods list (the `method` tag's term page, `content/tags/method/_index.md` marks it `kind: method`): definition callout, then a "Blueprints" block per blueprint (name, description, count, its `parts` as a compact numbered list, written parts linked, unwritten ones faint), then "Techniques and ratios": methods with no blueprint, as cards.
+- [ ] Blueprint term page (`blueprint` taxonomy, `/blueprint/<slug>/`): header with a "blueprint" kind suffix, definition callout from the term's `_index.md` body, a reserved slot for a stack diagram, the parts in the `_index.md`'s `parts` order (each with the methods whose `part` matches, and "Not written yet" for the rest), then recipes as cards, then stories and reference pages as a further-reading list.
+- [ ] Blueprint chip (accent outline) in the page header's tags row, replacing Blowfish's plain badge (see "Extra taxonomies in the page header's tags row", above): "Burgers" on recipes and stories, "Burgers · Patty construction" on a method. Not on cards.
+- [ ] Part navigation at the foot of a method in a blueprint: back to the blueprint, and the next part in `parts` order, in place of the date-ordered article pagination.
+- [ ] Add `blueprint` and `part` to `index.json`.
+
 ### Build-time enrichment
 
 - [ ] Parsed ingredients per recipe in `recipes/index.json` (or a sibling file), the shared input for the ingredient features below.
