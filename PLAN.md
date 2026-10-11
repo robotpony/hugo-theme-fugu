@@ -144,6 +144,25 @@ Show a recipe's formula diagram as a 24px strip on its card, so a recipe's shape
 - [ ] `/lint` checks formula blocks: unknown icon keys, mixed operators, more than five slots. The build already warns on all three (`render-codeblock-formula.html`); this catches them before a build.
 - [ ] Grow the icon kit as recipes need it: one SVG per key in `assets/icons/formula/`, drawn on the kit's rules (§5), plus a gallery page in the docs or example site so there's a reference for the whole kit.
 
+### Stack diagrams (exploded builds)
+
+Asked for by Not a Chef on 2026-10-10 (its `docs/PLAN.md`, Methods phase 4). This is a sibling of the formula block that draws a build (a burger, a sandwich, a lasagne) as an exploded view. The layers run top to bottom, each drawn as the thing from a three-quarter angle and pulled apart vertically, with a dotted leader line from each layer to its label and role on the right. The design, accepted as v1, is in Not a Chef's `mockups/exploded-builds.html` and the `mockups/STYLE.md` entry "Exploded build diagram". The mock's JS ("Shape kit" and "Composer") is the working reference: a shape function for each layer, the stacking, the leader lines, and the repeat bracket. The spec is in its `docs/METHODS.md`, "Diagrams" and "Inside a blueprint". Not a Chef keeps a later pass to refine the drawings from reference examples (its Methods phase 6), so the layer art here is v1.
+
+````
+```stack
+bun-top    | Toasted bun       | soft, toasted
+lettuce    | Shredded lettuce  | cold crunch
+patty-thin | Thin patty, 140 g | salt, fat, savoury
+bun-base   | Toasted bun       | barrier
+caption: Deluxe griddle
+```
+````
+
+- [ ] The layer kit, `assets/icons/layers/<key>.svg`, like `assets/icons/formula/`: a common width, each layer at its own height, so the hook can stack them. Drawn in the formula icon style: one `--ink` stroke, `--accent-soft` on bodies and sides, `--surface` on top faces, detail as strokes, all theme tokens, inlined so dark mode follows. Start with the keys in the mock's §2: bun-top, bun-base, lettuce, tomato, onion-raw, onion-fried, pickle, cheese, bacon, patty-thin, patty-thick, patty-smash, sauce-ketchup-mustard, sauce-burger, mustard, bread, mayo, pasta, ragu, bechamel, cheese-top. Generating the SVGs from the mock's shape functions is fine.
+- [ ] `render-codeblock-stack.html`: one `key | label | role` line per layer, top to bottom, plus optional `caption:` and `repeat:`. `repeat:` draws a "× n" bracket on the left for repeated layers (lasagne). The mock has the bracket but no syntax yet, so settle one, e.g. `repeat: 3-5 x3` (layers 3 to 5, three times). Labels go on the right (Franklin 600 label, Lora italic role in `--ink-muted`). An unknown key draws a placeholder and warns at build time, like the formula block; Obsidian shows the block as plain text.
+- [ ] Compact stack for build cards (`partials/stack-strip.html`, like `formula-strip.html`): no labels, tighter gaps, about 150px wide, found in `.RawContent`. The build card on the blueprint page and the build page's diagram slot (Concept pages, below) use it.
+- [ ] Document the block next to the formula block in the format doc, and tell Not a Chef where the kit lives.
+
 ### Recipe format and validator
 
 From Not a Chef's `SPEC.md`, which should become Fugu docs as part of §7.
