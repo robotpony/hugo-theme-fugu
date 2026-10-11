@@ -11,12 +11,12 @@
   assets/js/popover.js) with the term's definition from the tag's essay,
   so hovering or focusing the chip explains it without a trip to the tag
   page. It opens downward, since the chip sits at the top of a card or a
-  page's tags row. On a card (compact), .pop-card makes it span the card's
-  top row instead of a fixed width, which would bleed into the next card.
+  page's tags row. The chip and popover are the shared concept ones
+  (concept/pop.html, concept/icon.html).
 */}}
 {{ $page := .page }}
 {{ $compact := .compact }}
-{{ $icon := `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8a5 5 0 0 1 8.5-3.5M13 8a5 5 0 0 1-8.5 3.5"/><path d="M11 2v2.5H8.5M5 14v-2.5h2.5"/></svg>` }}
+{{ $icon := partial "concept/icon.html" "principle" }}
 {{ range $page.Params.tags }}
   {{ with partialCached "principle/term.html" . . }}
     {{ $label := cond $compact .short .page.Title }}
@@ -34,7 +34,7 @@
     {{ end }}
     {{ $chip := printf `<a class="principle-chip" href="%s">%s%s</a>` .page.RelPermalink ($icon | safeHTML) $label }}
     {{ if $def }}
-      <span class="pop-host pop-principle{{ if $compact }} pop-card{{ end }}">{{ $chip | safeHTML }}<span class="pop" role="tooltip"><span class="pop-head">{{ .page.Title }}</span><span class="pop-text">{{ $def }}</span>{{ with $essay }}<a class="pop-link" href="{{ .RelPermalink }}">Read the full essay</a>{{ end }}</span></span>
+      {{ partial "concept/pop.html" (dict "kind" "principle" "card" $compact "trigger" $chip "head" (.page.Title | htmlEscape) "text" $def "link" $essay "more" "Read the full essay") }}
     {{ else }}
       {{ $chip | safeHTML }}
     {{ end }}

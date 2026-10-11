@@ -64,7 +64,9 @@ A tag or cuisine can have its own page, `content/tags/<slug>/_index.md` (or `con
 | `title` | any term | The term's display name. |
 | `description` | any term | Text under the title on the term page. |
 | `short` | cuisine, principle tag | A shorter label for cards: `short: TH` for "Thai". The full name is still on the term page and in the chip's tooltip. |
-| `principle` | tag | `true` makes the tag a principle (below). |
+| `principle` | tag | `true` makes the tag a principle (below). `kind: principle` does the same. |
+| `kind` | tag | `method` makes the tag's page the methods list (see [Methods and blueprints](#methods-and-blueprints)). |
+| `parts` | blueprint | The blueprint's parts, in order (below). |
 | `essay` | principle tag | The page that explains the principle, as a content path: `essays/reference-essays/win-the-fridge`. |
 
 ### Principle tags
@@ -84,6 +86,62 @@ description: Recipes built around what's already in the fridge.
 ---
 Win the fridge is the practice of using what you have before it goes to waste.
 ```
+
+## Methods and blueprints
+
+A method is a page in the essay section's methods folder (`content/essays/methods/`, [configuration.md](configuration.md#methods-and-blueprints)). It takes the essay fields, and shows a method chip on its card and page. A method can belong to a blueprint, a dish type made of parts, through the blueprint taxonomy:
+
+| Field | On | What it does |
+| --- | --- | --- |
+| `blueprint` | any page | The blueprints it belongs to: `[burgers]`. Methods, recipes, and essays all carry it, so the blueprint's page collects all of them. |
+| `part` | method | The part of the blueprint it covers, as written in the blueprint's `parts`: `Patty construction`. |
+| `build_name` | method | Makes the method a build: a named combination with one pick per part (`Deluxe griddle`), unique in its blueprint. Not `build`, which Hugo keeps for its own build options. |
+| `build_name` | recipe | The build the recipe is made from, the same name as the build page's. |
+| `profile` | build | One line on what the build tastes and feels like, shown in italics under its title, on its card, and in the blueprint's comparison table. |
+| `picks` | build | One pick per part, as a list of `"Part: pick"` strings. |
+
+A blueprint's own page, `content/blueprint/<slug>/_index.md`, gives its definition (the body) and its parts in order:
+
+```yaml
+---
+title: Burgers
+description: "A burger is a patty and a build."
+parts:
+  - Patty construction
+  - Cooking
+  - Assembly
+---
+A burger is a stack of parts. Each part has its own method, and a build picks one option for each.
+```
+
+A part's choices aren't pages: they're a table under `## Options` in its method, whose first column the blueprint's page shows as pills (a trailing parenthetical is dropped: "Thick (170 g and up)" shows as "Thick").
+
+```markdown
+## Options
+
+| Option | Pick it when | Changes |
+|---|---|---|
+| Thin (115–140 g) | Most of the time | Cooking: griddle, flip once |
+| Thick (170 g and up) | You want a pink centre | Cooking: grill or reverse sear |
+```
+
+A build page looks like this:
+
+```yaml
+---
+title: Deluxe griddle burger
+tags: [method, burgers]
+blueprint: [burgers]
+build_name: Deluxe griddle
+profile: Cold crunch and sharp against a salty patty.
+picks:
+  - "Patty construction: thin, 140 g"
+  - "Cooking: griddle, flip once"
+  - "Assembly: lettuce, tomato, onion, pickle"
+---
+```
+
+The methods list is the method tag's own page, `content/tags/method/_index.md` with `kind: method`; its body is the definition at the top.
 
 ## Pages at the site's root
 
@@ -112,4 +170,4 @@ A reference essay's `summary` (or `description`) is what its glossary popover sh
 
 ## In `recipes/index.json`
 
-When the recipes section's `_index.md` sets `outputs: [HTML, RSS, JSON]` (JSON is the part that matters here), Fugu writes `/recipes/index.json`, one entry per recipe, with `title`, the file's slug, `date`, `tags`, `cuisine`, `servings`, `portions`, `source`, `prep_time`, `cook_time`, `draft`, `working_on`, a word count, and flags for whether the recipe has a Mechanic, Variations, Notes, or a formula diagram. It's meant for scripts and tools that ask questions about the whole collection.
+When the recipes section's `_index.md` sets `outputs: [HTML, RSS, JSON]` (JSON is the part that matters here), Fugu writes `/recipes/index.json`, one entry per recipe, with `title`, the file's slug, `date`, `tags`, `cuisine`, `servings`, `portions`, `source`, `prep_time`, `cook_time`, `draft`, `working_on`, `blueprint`, `build_name`, a word count, and flags for whether the recipe has a Mechanic, Variations, Notes, or a formula diagram. It's meant for scripts and tools that ask questions about the whole collection.

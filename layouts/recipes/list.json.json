@@ -5,8 +5,9 @@
   parsing the content folder. Built only when the recipes section's
   _index.md asks for it with `outputs: [HTML, RSS, JSON]`.
 
-  One entry per recipe, by title: frontmatter facts, word count, and
-  has_* flags for the optional sections. The flags are substring checks on
+  One entry per recipe, by title: frontmatter facts (with `blueprint` and
+  `build_name`, which say which blueprint and build a recipe belongs to),
+  word count, and has_* flags for the optional sections. The flags are substring checks on
   the raw Markdown, so a "## Notes" inside a code block counts too.
   `generated` is the build date, so this file differs between builds made
   on different days.
@@ -20,6 +21,8 @@
     "date"           (cond (not .Date.IsZero) (.Date.Format "2006-01-02") "")
     "tags"           .Params.tags
     "cuisine"        .Params.cuisine
+    "blueprint"      .Params.blueprint
+    "build_name"     .Params.build_name
     "servings"       .Params.servings
     "portions"       .Params.portions
     "source"         .Params.source

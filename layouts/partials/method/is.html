@@ -1,0 +1,13 @@
+{{/*
+  Whether a page is a method: a regular page in the essay section's
+  params.fugu.methods.folder (content/essays/methods/ by default), at any
+  depth. The folder decides, not the page's tags. Takes a page; returns a
+  bool, false when the essay section or the folder is turned off.
+*/}}
+{{ $is := false }}
+{{ $section := partial "section/name.html" "essay" }}
+{{ $folder := site.Params.fugu.methods.folder | default "" }}
+{{ if and $section $folder .IsPage .File (eq .Section $section) }}
+  {{ $is = hasPrefix (replace .File.Dir "\\" "/") (printf "%s/%s/" $section $folder) }}
+{{ end }}
+{{ return $is }}

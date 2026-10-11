@@ -1,0 +1,22 @@
+{{/*
+  "Recipes in this build", after a build page's body (single.html): the
+  recipes in its blueprint whose `build_name` matches the page's, as
+  cards. Nothing when none do. Takes the page.
+*/}}
+{{ $taxonomy := site.Params.fugu.methods.taxonomy | default "" }}
+{{ if and $taxonomy .Params.build_name (partial "method/is.html" .) }}
+  {{ with .GetTerms $taxonomy }}
+    {{ $term := index . 0 }}
+    {{ $place := partial "method/place.html" (dict "page" $ "term" $term) }}
+    {{ range $place.info.groups }}
+      {{ if eq (lower .name) (lower $place.name) }}
+        {{ with .recipes }}
+          <section class="build-recipes not-prose">
+            <h2 class="subsection-title">Recipes in this build<span class="subsection-count">{{ len . }}</span></h2>
+            <div class="rgrid">{{ range . }}{{ partial "recipe-card.html" . }}{{ end }}</div>
+          </section>
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}

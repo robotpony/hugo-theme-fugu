@@ -1,0 +1,123 @@
+{{/*
+  A blueprint's term page (/blueprint/<slug>/, called from term.html): a
+  dish type made of parts, with the builds that combine them. In order:
+
+  - the header, "Burgers blueprint", with counts of parts, builds, recipes
+  - the definition callout (concept/callout.html) from the term's
+    _index.md body, linking to the methods list
+  - "Builds": a card per build page (blueprint/build-card.html), then, with
+    two or more, a table comparing their profiles and picks part by part
+    (rows no build fills are left out)
+  - "Parts", in the _index.md's `parts` order: each part's methods with
+    their descriptions and the options from their ## Options table as
+    pills, or "Not written yet"
+  - "Recipes", grouped by `build_name` (blueprint/info.html), then those
+    with none; one plain grid when no recipe names a build
+  - stories, reference pages, and methods with neither a part nor a build
+    name, as further reading (concept/further.html)
+
+  Takes the term page.
+*/}}
+{{ $info := partialCached "blueprint/info.html" . .Path }}
+{{ $list := partialCached "method/list-page.html" . "list" }}
+<section class="listing blueprint-page">
+  <header class="listing-head">
+    <h1 class="ltitle">{{ .Title }} <span class="ltitle-kind ltitle-kind-method">blueprint</span></h1>
+    <span class="listing-count">
+      {{- $counts := slice -}}
+      {{- with $info.parts }}{{ $counts = $counts | append (printf "%d %s" (len .) (cond (eq (len .) 1) "part" "parts")) }}{{ end -}}
+      {{- with $info.builds }}{{ $counts = $counts | append (printf "%d %s" (len .) (cond (eq (len .) 1) "build" "builds")) }}{{ end -}}
+      {{- $counts = $counts | append (printf "%d %s" (len $info.recipes) (cond (eq (len $info.recipes) 1) "recipe" "recipes")) -}}
+      {{- delimit $counts " · " -}}
+    </span>
+  </header>
+  {{ if .Content }}
+    {{ $more := "" }}
+    {{ with $list }}{{ $more = printf "All %s" (lower .Title) }}{{ end }}
+    {{ partial "concept/callout.html" (dict "kind" "method" "label" "Blueprint" "content" .Content "link" $list "more" $more) }}
+  {{ else }}
+    {{ with .Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
+  {{ end }}
+
+  {{ with $info.builds }}
+    <h3 class="subsection-title">Builds<span class="subsection-count">{{ len . }}</span></h3>
+    <div class="rgrid build-grid">
+      {{ range . }}
+        {{ $name := lower (string .Params.build_name) }}
+        {{ $n := 0 }}
+        {{ range $info.groups }}{{ if eq (lower .name) $name }}{{ $n = len .recipes }}{{ end }}{{ end }}
+        {{ partial "blueprint/build-card.html" (dict "page" . "recipes" $n) }}
+      {{ end }}
+    </div>
+    {{ if ge (len .) 2 }}
+      {{ $builds := . }}
+      {{ $picks := slice }}
+      {{ range $builds }}{{ $picks = $picks | append (partial "method/picks.html" .) }}{{ end }}
+      <h3 class="subsection-title subsection-gap">Builds compared</h3>
+      <div class="table-scroll">
+        <table class="builds-compared">
+          <thead><tr><th></th>{{ range $builds }}<th scope="col"><a href="{{ .RelPermalink }}">{{ .Params.build_name }}</a></th>{{ end }}</tr></thead>
+          <tbody>
+            <tr class="profile-row"><th scope="row">Profile</th>{{ range $builds }}<td>{{ with .Params.profile }}<span class="build-profile">{{ . }}</span>{{ end }}</td>{{ end }}</tr>
+            {{ range $info.parts }}
+              {{ $key := lower .name }}
+              {{ $cells := slice }}
+              {{ $any := false }}
+              {{ range $picks }}
+                {{ $cell := index . $key | default "" }}
+                {{ if $cell }}{{ $any = true }}{{ end }}
+                {{ $cells = $cells | append $cell }}
+              {{ end }}
+              {{ if $any }}
+                <tr><th scope="row">{{ .name }}</th>{{ range $cells }}<td>{{ . }}</td>{{ end }}</tr>
+              {{ end }}
+            {{ end }}
+          </tbody>
+        </table>
+      </div>
+    {{ end }}
+  {{ end }}
+
+  {{ with $info.parts }}
+    <h3 class="subsection-title{{ if $info.builds }} subsection-gap{{ end }}">Parts<span class="subsection-count">{{ len . }}</span></h3>
+    <ol class="parts parts-full">
+      {{ range . }}
+        {{ $part := . }}
+        <li{{ if not .methods }} class="todo"{{ end }}>
+          <span class="part-name">{{ with .methods }}<a href="{{ (index . 0).RelPermalink }}">{{ $part.name }}</a>{{ else }}{{ .name }}{{ end }}</span>
+          <span class="part-methods">
+            {{- with .methods -}}
+              {{- range . }}<span class="part-method"><a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ with .Description }} <span class="part-desc">{{ . }}</span>{{ end }}</span>{{ end -}}
+              {{- with $part.options }}<span class="opts"><span class="opt-pill"><b>Options</b></span>{{ range . }}<span class="opt-pill">{{ . }}</span>{{ end }}</span>{{ end -}}
+            {{- else -}}
+              Not written yet.
+            {{- end -}}
+          </span>
+        </li>
+      {{ end }}
+    </ol>
+  {{ end }}
+
+  {{ with $info.recipes }}
+    <h3 class="subsection-title{{ if or $info.builds $info.parts }} subsection-gap{{ end }}">Recipes<span class="subsection-count">{{ len . }}</span></h3>
+    {{ $named := 0 }}
+    {{ range $info.groups }}{{ $named = add $named (len .recipes) }}{{ end }}
+    {{ if $named }}
+      {{ range $info.groups }}
+        {{ $g := . }}
+        {{ with .recipes }}
+          <h4 class="recipe-group">{{ with $g.page }}<a href="{{ .RelPermalink }}">{{ $g.name }}</a>{{ else }}{{ $g.name }}{{ end }}<span class="subsection-count">{{ len . }}</span></h4>
+          <div class="rgrid">{{ range . }}{{ partial "recipe-card.html" . }}{{ end }}</div>
+        {{ end }}
+      {{ end }}
+      {{ with $info.loose }}
+        <h4 class="recipe-group">No build yet<span class="subsection-count">{{ len . }}</span></h4>
+        <div class="rgrid">{{ range . }}{{ partial "recipe-card.html" . }}{{ end }}</div>
+      {{ end }}
+    {{ else }}
+      <div class="rgrid">{{ range . }}{{ partial "recipe-card.html" . }}{{ end }}</div>
+    {{ end }}
+  {{ end }}
+
+  {{ partial "concept/further.html" (dict "pages" $info.others "heading" "Stories &amp; further reading") }}
+</section>

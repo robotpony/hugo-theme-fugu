@@ -1,0 +1,19 @@
+{{/*
+  The blueprint chip in a page's tags row (article-meta/basic.html), one
+  per blueprint the page is in, in place of Blowfish's plain badge. Not on
+  cards. It names the blueprint, then where the page sits in it, in
+  lighter text (method/place.html):
+
+    a part's method     Burgers · Patty construction
+    a build page        Burgers · Build
+    a recipe of a build Burgers · Deluxe griddle   (links to the build page)
+    anything else       Burgers
+
+  Takes a dict: page, term (the blueprint's term page).
+*/}}
+{{ $place := partial "method/place.html" . }}
+{{ $href := .term.RelPermalink }}
+{{ $suffix := $place.name }}
+{{ if eq $place.kind "build" }}{{ $suffix = "Build" }}{{ end }}
+{{ with $place.build }}{{ $href = .RelPermalink }}{{ end }}
+<a class="blueprint-chip" href="{{ $href }}">{{ .term.LinkTitle }}{{ with $suffix }}<span class="blueprint-chip-part"> · {{ . }}</span>{{ end }}</a>

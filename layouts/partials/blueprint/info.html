@@ -1,0 +1,82 @@
+{{/*
+  Everything a blueprint holds, worked out once per blueprint and shared by
+  its term page, the methods list, the blueprint chip, the build page, and
+  part navigation. A blueprint is a term in the params.fugu.methods.taxonomy
+  taxonomy (e.g. content/blueprint/burgers/_index.md), whose `parts` lists
+  the slots every dish of the type fills, in order. Takes the term page
+  (call it with partialCached, keyed by the term's path); returns a dict:
+
+    term     the term page
+    parts    one dict per name in `parts`: name, n (1-based), methods (the
+             methods with that `part`, not builds), options (from the first
+             method's ## Options table, method/options.html)
+    written  how many parts have a method
+    builds   the methods on the blueprint with a `build_name`, by weight,
+             date, then title
+    recipes  the recipes on the blueprint
+    groups   the recipes by `build_name`: one dict per build name (name,
+             page: its build page or false, recipes), build pages' order
+             first, then names with no page yet; recipes with no build
+             name are in `loose`
+    others   everything else on the blueprint: stories, reference pages,
+             and methods with neither a part nor a build name
+*/}}
+{{ $term := . }}
+{{ $recipeSection := partial "section/name.html" "recipe" }}
+{{ $methods := slice }}
+{{ $builds := slice }}
+{{ $recipes := slice }}
+{{ $others := slice }}
+{{ range $term.Pages.ByWeight }}
+  {{ if partial "method/is.html" . }}
+    {{ if .Params.build_name }}{{ $builds = $builds | append . }}
+    {{ else if .Params.part }}{{ $methods = $methods | append . }}
+    {{ else }}{{ $others = $others | append . }}{{ end }}
+  {{ else if and $recipeSection (eq .Section $recipeSection) }}
+    {{ $recipes = $recipes | append . }}
+  {{ else }}
+    {{ $others = $others | append . }}
+  {{ end }}
+{{ end }}
+
+{{ $parts := slice }}
+{{ $written := 0 }}
+{{ range $i, $name := $term.Params.parts | default slice }}
+  {{ $mine := slice }}
+  {{ range $methods }}
+    {{ if eq (lower (string .Params.part)) (lower $name) }}{{ $mine = $mine | append . }}{{ end }}
+  {{ end }}
+  {{ $options := slice }}
+  {{ with $mine }}
+    {{ $written = add $written 1 }}
+    {{ $options = partial "method/options.html" (index . 0) }}
+  {{ end }}
+  {{ $parts = $parts | append (dict "name" $name "n" (add $i 1) "methods" $mine "options" $options) }}
+{{ end }}
+
+{{/* Recipes by build name: build pages' order first, then names no page
+  has yet, alphabetically. */}}
+{{ $names := slice }}
+{{ range $builds }}{{ $names = $names | append (string .Params.build_name) }}{{ end }}
+{{ $extra := slice }}
+{{ range $recipes }}
+  {{ with .Params.build_name }}
+    {{ $n := string . }}
+    {{ $known := false }}
+    {{ range $names | append $extra }}{{ if eq (lower .) (lower $n) }}{{ $known = true }}{{ end }}{{ end }}
+    {{ if not $known }}{{ $extra = $extra | append $n }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ $groups := slice }}
+{{ range $names | append (sort $extra) }}
+  {{ $name := . }}
+  {{ $page := false }}
+  {{ range $builds }}{{ if and (not $page) (eq (lower (string .Params.build_name)) (lower $name)) }}{{ $page = . }}{{ end }}{{ end }}
+  {{ $mine := slice }}
+  {{ range $recipes }}{{ if eq (lower (string (.Params.build_name | default ""))) (lower $name) }}{{ $mine = $mine | append . }}{{ end }}{{ end }}
+  {{ $groups = $groups | append (dict "name" $name "page" $page "recipes" $mine) }}
+{{ end }}
+{{ $loose := slice }}
+{{ range $recipes }}{{ if not .Params.build_name }}{{ $loose = $loose | append . }}{{ end }}{{ end }}
+
+{{ return dict "term" $term "parts" $parts "written" $written "builds" $builds "recipes" $recipes "groups" $groups "loose" $loose "others" $others }}

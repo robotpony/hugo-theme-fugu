@@ -1,0 +1,15 @@
+{{/*
+  A concept kind's icon, as inline SVG that takes currentColor: the cycle
+  arrows for a principle, the draft mark for status (development/icon.html),
+  and params.fugu.methods.icon for a method (method/icon.html). Takes the
+  kind; returns HTML, "" for an unknown kind.
+*/}}
+{{ $out := "" }}
+{{ if eq . "principle" }}
+  {{ $out = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8a5 5 0 0 1 8.5-3.5M13 8a5 5 0 0 1-8.5 3.5"/><path d="M11 2v2.5H8.5M5 14v-2.5h2.5"/></svg>` }}
+{{ else if eq . "status" }}
+  {{ $out = partialCached "development/icon.html" . "icon" }}
+{{ else if eq . "method" }}
+  {{ $out = partialCached "method/icon.html" . "icon" }}
+{{ end }}
+{{ return $out }}

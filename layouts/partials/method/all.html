@@ -1,0 +1,13 @@
+{{/*
+  Every method on the site (method/is.html), by weight, then date, then
+  title. Takes anything (call it with partialCached, keyed "all");
+  returns Pages, empty when the essay section or methods folder is off.
+*/}}
+{{ $out := slice }}
+{{ with partial "section/name.html" "essay" }}
+  {{ $pages := where site.RegularPages "Section" . }}
+  {{ range $pages.ByWeight }}
+    {{ if partial "method/is.html" . }}{{ $out = $out | append . }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ return $out }}

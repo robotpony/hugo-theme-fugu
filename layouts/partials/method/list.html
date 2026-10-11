@@ -1,0 +1,74 @@
+{{/*
+  The methods list: the methods tag's term page, when its _index.md sets
+  `kind: method` (called from term.html). Laid out as a map, not a feed:
+
+  - the header, with a count of methods and blueprints
+  - the definition callout (concept/callout.html) from the _index.md body
+  - "Blueprints": one block per blueprint (params.fugu.methods.taxonomy),
+    with its description, how many parts are written, its parts as a
+    compact numbered list (written parts link to their method, unwritten
+    ones are faint), and its builds as pills
+  - "Techniques and ratios": methods in no blueprint, as cards
+  - anything else carrying the tag that isn't a method, as further reading
+
+  Methods are found by folder (method/all.html), not by the tag, so a
+  method that forgot the tag still shows. No pagination: a site has tens
+  of methods, not hundreds. Takes the term page.
+*/}}
+{{ $taxonomy := site.Params.fugu.methods.taxonomy | default "" }}
+{{ $methods := partialCached "method/all.html" "all" "all" }}
+{{ $blueprints := slice }}
+{{ with and $taxonomy (site.GetPage (printf "/%s" $taxonomy)) }}
+  {{ $blueprints = .Pages.ByTitle }}
+{{ end }}
+{{ $standalone := slice }}
+{{ range $methods }}
+  {{ if not (and $taxonomy (index .Params $taxonomy)) }}{{ $standalone = $standalone | append . }}{{ end }}
+{{ end }}
+{{ $further := slice }}
+{{ range .Pages }}
+  {{ if not (partial "method/is.html" .) }}{{ $further = $further | append . }}{{ end }}
+{{ end }}
+<section class="listing method-list">
+  <header class="listing-head">
+    <h1 class="ltitle">{{ .Title }}</h1>
+    <span class="listing-count">{{ len $methods }} {{ cond (eq (len $methods) 1) "method" "methods" }}{{ with $blueprints }} · {{ len . }} {{ cond (eq (len .) 1) "blueprint" "blueprints" }}{{ end }}</span>
+  </header>
+  {{ partial "concept/callout.html" (dict "kind" "method" "label" (site.Params.fugu.methods.label | default "Method") "content" .Content) }}
+
+  {{ with $blueprints }}
+    <h3 class="subsection-title">Blueprints<span class="subsection-count">{{ len . }}</span></h3>
+    <div class="bp-list">
+      {{ range . }}
+        {{ $info := partialCached "blueprint/info.html" . .Path }}
+        <section class="bp">
+          <div class="bp-head">
+            <a class="bp-name" href="{{ .RelPermalink }}">{{ partialCached "method/icon.html" . "icon" | safeHTML }}{{ .Title }}</a>
+            <span class="bp-count">{{ with $info.parts }}{{ $info.written }} of {{ len . }} parts{{ else }}{{ len $info.recipes }} recipes{{ end }}{{ with $info.builds }} · {{ len . }} {{ cond (eq (len .) 1) "build" "builds" }}{{ end }}</span>
+          </div>
+          {{ with .Description }}<p class="bp-desc">{{ . }}</p>{{ end }}
+          {{ with $info.parts }}
+            <ol class="parts parts-compact">
+              {{ range . }}
+                {{ $part := . }}
+                <li{{ if not .methods }} class="todo"{{ end }}><span class="part-name">{{ with .methods }}<a href="{{ (index . 0).RelPermalink }}">{{ $part.name }}</a>{{ else }}{{ .name }}{{ end }}</span></li>
+              {{ end }}
+            </ol>
+          {{ end }}
+          {{ with $info.builds }}
+            <div class="opts"><span class="opt-pill"><b>Builds</b></span>{{ range . }}<a class="opt-pill" href="{{ .RelPermalink }}">{{ .Params.build_name }}</a>{{ end }}</div>
+          {{ end }}
+        </section>
+      {{ end }}
+    </div>
+  {{ end }}
+
+  {{ with $standalone }}
+    <h3 class="subsection-title{{ if $blueprints }} subsection-gap{{ end }}">Techniques and ratios<span class="subsection-count">{{ len . }}</span></h3>
+    <div class="rgrid">
+      {{ range . }}{{ partial "recipe-card.html" . }}{{ end }}
+    </div>
+  {{ end }}
+
+  {{ partial "concept/further.html" (dict "pages" $further) }}
+</section>

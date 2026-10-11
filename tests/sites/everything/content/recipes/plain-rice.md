@@ -8,6 +8,8 @@ servings: 4
 prep_time: 5 min
 cook_time: 20 min
 total_time: 25 min
+blueprint: [rice-bowls]
+build_name: Plain bowl
 ---
 Rice on the stove, by ratio. Leftovers go into [[Veg patties]].
 

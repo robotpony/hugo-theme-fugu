@@ -89,6 +89,21 @@ A tag can name an idea that several recipes follow, such as cooking from what's 
 
 Setting one up is in [frontmatter.md](frontmatter.md#principle-tags).
 
+## Methods and blueprints
+
+Methods explain how a kind of food or a process works in general. Any page in the essay section's methods folder is one, and shows a method chip on its card and page, with a popover giving the definition. The method tag's page becomes the methods list: the definition, then each blueprint with its parts in order (written parts linked, the rest faint) and its builds, then the methods that belong to no blueprint, as cards.
+
+A blueprint is a dish type made of parts, such as a burger: patty, seasoning, cooking, assembly, sauces. Its page shows:
+
+- Its builds, the named combinations, as cards with their profile, and a table comparing their picks part by part.
+- Its parts in order, each with its method and the method's options as pills, or "Not written yet".
+- Its recipes, grouped by the build they're made from.
+- The stories and reference pages that carry it.
+
+A page in a blueprint gets a chip in its header that says where it sits: "Burgers · Patty construction" on a part's method, "Burgers · Build" on a build, and "Burgers · Deluxe griddle" on a recipe made from a build, linking to the build. A build page shows its profile under the title, its picks before the body, and the recipes made from it after. A part's method and a build end with navigation back to the blueprint and on to the next part or build, in place of the date-ordered previous and next.
+
+The fields are in [frontmatter.md](frontmatter.md#methods-and-blueprints) and the settings in [configuration.md](configuration.md#methods-and-blueprints).
+
 ## Drafts
 
 For a site that builds drafts, a draft is published as a page still in development, not hidden: a banner under its title, a mark on its card with a popover explaining it, and an optional one-line note on what's being worked on. One page can explain how drafts work and list every current draft. The words are all settings ([configuration.md](configuration.md#drafts)).

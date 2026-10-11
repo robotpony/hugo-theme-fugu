@@ -6,16 +6,12 @@
   card's stretched link, so hovering, focusing, or tapping it opens the
   popover instead of following the card. The popover is the shared
   .pop-host/.pop component (assets/js/popover.js), spanning the card's
-  top row (.pop-card). Takes the page.
+  top row (.pop-card), through concept/pop.html, which every concept
+  chip shares. Takes the page.
 */}}
 {{ $d := site.Params.fugu.development | default dict }}
 {{ $icon := partialCached "development/icon.html" . "icon" }}
-<span class="pop-host pop-dev pop-card">
-  <button type="button" class="dev-chip">{{ $icon | safeHTML }}{{ $d.short | default $d.label }}</button>
-  <span class="pop" role="tooltip">
-    <span class="pop-head">{{ $icon | safeHTML }}{{ $d.label }}</span>
-    <span class="pop-text">{{ $d.hover }}</span>
-    {{ with .Params.working_on }}<span class="pop-note">{{ $d.note }}: {{ . }}</span>{{ end }}
-    {{ with partial "development/page.html" . }}<a class="pop-link" href="{{ .RelPermalink }}">{{ $d.more }}</a>{{ end }}
-  </span>
-</span>
+{{ $trigger := printf `<button type="button" class="dev-chip">%s%s</button>` $icon ($d.short | default $d.label | htmlEscape) }}
+{{ $note := "" }}
+{{ with .Params.working_on }}{{ $note = printf "%s: %s" $d.note . }}{{ end }}
+{{ partial "concept/pop.html" (dict "kind" "dev" "card" true "trigger" $trigger "head" (printf "%s%s" $icon ($d.label | htmlEscape)) "text" $d.hover "note" $note "link" (partial "development/page.html" .) "more" $d.more) }}

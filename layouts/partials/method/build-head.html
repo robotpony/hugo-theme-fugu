@@ -1,0 +1,9 @@
+{{/*
+  A build page's profile, under its title and tags (single.html): the
+  free-text `profile` line, set like the build's card and the blueprint
+  page's comparison table. Only on a build (a method with `build_name`).
+  Takes the page.
+*/}}
+{{ if and .Params.build_name .Params.profile (partial "method/is.html" .) }}
+  <p class="build-profile build-profile-lead">{{ .Params.profile }}</p>
+{{ end }}

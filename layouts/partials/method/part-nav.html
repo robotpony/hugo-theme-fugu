@@ -1,0 +1,27 @@
+{{/*
+  Part navigation at the foot of a method in a blueprint, in place of the
+  date-ordered previous/next (article-pagination.html): back to the
+  blueprint on the left, and on the right the next written part in the
+  blueprint's `parts` order (for a part's method) or the next build (for
+  a build page). Returns the HTML, or "" when the page isn't a part or a
+  build, so the caller can fall back. Takes the page.
+*/}}
+{{ $out := "" }}
+{{ $taxonomy := site.Params.fugu.methods.taxonomy | default "" }}
+{{ if and $taxonomy (or .Params.part .Params.build_name) (partial "method/is.html" .) }}
+  {{ with .GetTerms $taxonomy }}
+    {{ $term := index . 0 }}
+    {{ $place := partial "method/place.html" (dict "page" $ "term" $term) }}
+    {{ if in (slice "part" "build") $place.kind }}
+      {{ $isBuild := eq $place.kind "build" }}
+      {{ $next := "" }}
+      {{ with $place.next }}
+        {{ $label := cond $isBuild "Next build" (printf "Part %d" $place.nextN) }}
+        {{ $title := cond $isBuild (string .Params.build_name) (string .Params.part) }}
+        {{ $next = printf `<a class="article-pagination-link article-pagination-next part-nav-next" href="%s"><span class="article-pagination-label">%s &rarr;</span><span class="article-pagination-title">%s</span></a>` .RelPermalink $label ($title | htmlEscape) }}
+      {{ end }}
+      {{ $out = printf `<nav class="article-pagination part-nav" aria-label="%s"><a class="article-pagination-link part-nav-up" href="%s"><span class="article-pagination-label">&larr; %s</span><span class="article-pagination-title">%s</span></a>%s</nav>` (printf "%s blueprint" $term.LinkTitle | htmlEscape) $term.RelPermalink (printf "%s blueprint" $term.LinkTitle | htmlEscape) (cond $isBuild "All builds" "All parts") $next }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ return (safeHTML $out) }}

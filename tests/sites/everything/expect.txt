@@ -70,3 +70,35 @@ cuisine/canadian/index.xml: !/recipes/fridge-soup/
 recipes/veg-patties/index.html: type="application/rss+xml" href="/recipes/index.xml" title="Recipes on Everything"
 essays/cooking-reflections/why-ratios/index.html: type="application/rss+xml"
 recipes/index.xml: /recipes/veg-patties/
+
+# Methods: the methods list (the method tag's page, kind: method), a
+# blueprint's page, a build page, a part's method, and the chips.
+tags/method/index.html: class="bp"
+tags/method/index.html: href="/blueprint/rice-bowls/"
+tags/method/index.html: class="todo"
+tags/method/index.html: Techniques and ratios
+tags/method/index.html: href="/essays/methods/thinking-in-ratios/"
+blueprint/rice-bowls/index.html: ltitle-kind-method
+blueprint/rice-bowls/index.html: definition-callout k-method
+blueprint/rice-bowls/index.html: build-card
+blueprint/rice-bowls/index.html: class="builds-compared
+blueprint/rice-bowls/index.html: <td>a veg patty</td>
+blueprint/rice-bowls/index.html: <span class="opt-pill">Short grain</span>
+blueprint/rice-bowls/index.html: <span class="opt-pill">Plain rice leftovers</span>
+blueprint/rice-bowls/index.html: Not written yet.
+blueprint/rice-bowls/index.html: href="/essays/methods/plain-bowl/">Plain bowl</a><span class="subsection-count">1
+essays/methods/plain-bowl/index.html: build-profile-lead
+essays/methods/plain-bowl/index.html: class="picks
+essays/methods/plain-bowl/index.html: href="/essays/methods/cooking-rice/">Rice</a>
+essays/methods/plain-bowl/index.html: <dt>Sauce</dt>
+essays/methods/plain-bowl/index.html: Recipes in this build
+essays/methods/plain-bowl/index.html: part-nav
+essays/methods/plain-bowl/index.html: · Build</span>
+essays/methods/cooking-rice/index.html: · Rice</span>
+essays/methods/cooking-rice/index.html: method-chip
+essays/methods/thinking-in-ratios/index.html: !part-nav
+recipes/plain-rice/index.html: href="/essays/methods/plain-bowl/">Rice bowls<span class="blueprint-chip-part"> · Plain bowl
+recipes/plain-rice/index.html: !class="method-chip
+essays/index.html: class="method-chip
+recipes/index.json: "build_name": "Plain bowl"
+

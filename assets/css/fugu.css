@@ -213,6 +213,8 @@ li:has(> input[type="checkbox"]:checked) {
 .tag,
 .cuisine-chip,
 .principle-chip,
+.method-chip,
+.blueprint-chip,
 .dev-chip {
   box-sizing: border-box; display: inline-flex; align-items: center; gap: 4px;
   font-size: .7rem; line-height: 1.5; padding: 2px 7px; border: 1px solid transparent; border-radius: 4px;
@@ -226,6 +228,15 @@ a.cuisine-chip:hover, a.cuisine-chip:focus-visible { border-color: var(--fugu-cu
 .principle-chip { font-weight: 600; background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); }
 .principle-chip svg { width: 10px; height: 10px; flex: none; }
 a.principle-chip:hover, a.principle-chip:focus-visible { border-color: var(--fugu-accent); outline: none; }
+/* Methods (partials/method/chip.html): filled like the principle chip; a
+ * blueprint (blueprint/chip.html) is an outline, "belongs to". */
+.method-chip { font-weight: 600; background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); }
+.method-chip svg { width: 12px; height: 12px; flex: none; }
+a.method-chip:hover, a.method-chip:focus-visible { border-color: var(--fugu-accent); outline: none; }
+.rcard a.method-chip { position: relative; z-index: 1; }
+.blueprint-chip { font-weight: 600; color: var(--fugu-accent-strong); border-color: color-mix(in srgb, var(--fugu-accent) 55%, transparent); }
+.blueprint-chip-part { font-weight: 500; color: var(--fugu-ink-muted); white-space: pre; }
+a.blueprint-chip:hover, a.blueprint-chip:focus-visible { border-color: var(--fugu-accent); outline: none; }
 .pin-icon { display: inline-flex; align-items: center; color: var(--fugu-ink-faint); flex: none; opacity: .7; }
 .pin-icon svg { width: 11px; height: 11px; }
 
@@ -351,7 +362,8 @@ a.principle-chip:hover, a.principle-chip:focus-visible { border-color: var(--fug
   border-radius: 0 var(--fugu-radius) var(--fugu-radius) 0;
 }
 .definition-callout:hover, .definition-callout:focus-within { border-color: var(--fugu-accent); }
-.definition-callout-label { color: var(--fugu-accent-strong); }
+.definition-callout-label { display: inline-flex; align-items: center; gap: 6px; color: var(--fugu-accent-strong); }
+.definition-callout-label svg { width: 14px; height: 14px; flex: none; }
 .definition-callout p { max-width: 72ch; margin: 0; line-height: 1.55; }
 .definition-callout p + p { margin-top: 10px; }
 .definition-callout p a { position: relative; z-index: 1; }
@@ -359,6 +371,8 @@ a.principle-chip:hover, a.principle-chip:focus-visible { border-color: var(--fug
 .definition-callout .read-essay::after { content: ""; position: absolute; inset: 0; }
 .definition-callout .read-essay:hover { text-decoration: underline; }
 .subsection-title { font-size: 1rem; font-weight: 700; margin: 0 0 12px; }
+.subsection-count { margin-left: 6px; font-family: var(--fugu-font-mono); font-size: .74rem; font-weight: 500; color: var(--fugu-ink-faint); }
+.subsection-gap { margin-top: 36px; }
 .ref-list { display: flex; flex-direction: column; gap: 2px; margin-top: 4px; }
 .ref-row { display: flex; align-items: baseline; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--fugu-border); font-size: .9rem; }
 .ref-row a { color: var(--fugu-ink); text-decoration: none; font-weight: 600; }
@@ -687,3 +701,83 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
 .recipe-sidebar-section .f-qty { font-size: .66rem; }
 .recipe-sidebar-section :is(.f-sub, .f-or) { font-size: .62rem; }
 .recipe-sidebar-section .formula-ratio :is(.f-num, .f-op) { font-size: 1.1rem; }
+
+/* ---------------------------------------------------------------------
+ * Methods and blueprints (partials/method/, partials/blueprint/): the
+ * methods list, a blueprint's page, and a build page's picks.
+ * ------------------------------------------------------------------- */
+
+/* Blueprint blocks on the methods list */
+.bp-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 16px; }
+.bp { display: flex; flex-direction: column; gap: 10px; background: var(--fugu-surface); border: 1px solid var(--fugu-border); border-radius: var(--fugu-radius); padding: 16px 18px 14px; }
+.bp:hover, .bp:focus-within { border-color: var(--fugu-accent); }
+.bp-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.bp-name { display: inline-flex; align-items: center; gap: 8px; font-size: 1.15rem; font-weight: 700; color: var(--fugu-ink); text-decoration: none; }
+.bp-name svg { width: 16px; height: 16px; color: var(--fugu-accent-strong); }
+.bp-name:hover { color: var(--fugu-accent-strong); }
+.bp-count { font-family: var(--fugu-font-mono); font-size: .7rem; color: var(--fugu-ink-faint); white-space: nowrap; }
+.bp-desc { margin: 0; font-size: .88rem; color: var(--fugu-ink-muted); }
+
+/* A blueprint's parts, numbered: compact on the methods list, full on the
+ * blueprint's page. Unwritten parts are faint. */
+.parts { list-style: none; margin: 0; padding: 0; counter-reset: part; }
+.parts li { counter-increment: part; display: grid; grid-template-columns: 28px 1fr; gap: 2px 10px; align-items: baseline; padding: 9px 0; border-top: 1px solid var(--fugu-border); margin: 0; }
+.parts li::before { content: counter(part, decimal-leading-zero); grid-row: span 2; font-family: var(--fugu-font-mono); font-size: .72rem; color: var(--fugu-accent); }
+.part-name { font-weight: 600; font-size: .9rem; }
+.part-name a { color: var(--fugu-ink); text-decoration: none; }
+.part-name a:hover { color: var(--fugu-accent-strong); }
+.part-methods { font-size: .88rem; color: var(--fugu-ink-muted); }
+.part-method { display: block; }
+.part-method + .part-method { margin-top: 4px; }
+.part-method > a { font-weight: 600; color: var(--fugu-ink); text-decoration-color: var(--fugu-accent); text-underline-offset: 2px; }
+.part-desc { display: block; }
+.parts li.todo::before, .parts li.todo .part-name { color: var(--fugu-ink-faint); font-weight: 500; }
+.parts li.todo .part-methods { font-style: italic; color: var(--fugu-ink-faint); }
+.parts-compact li { grid-template-columns: 24px 1fr; padding: 6px 0; }
+.parts-compact .part-name { font-size: .84rem; }
+.parts-full li { grid-template-columns: 36px 1fr; padding: 14px 0; }
+.parts-full .part-name { font-size: 1rem; }
+
+/* Option and build pills */
+.opts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.opt-pill { padding: 2px 8px; border: 1px solid var(--fugu-border-strong); border-radius: 12px; font-size: .72rem; font-style: normal; color: var(--fugu-ink-muted); white-space: nowrap; text-decoration: none; }
+.opt-pill b { font-weight: 600; color: var(--fugu-ink); }
+a.opt-pill:hover { border-color: var(--fugu-accent); color: var(--fugu-ink); }
+
+/* A build's profile: an italic line on an accent rule, the same on its
+ * card, its page, and the comparison table. */
+.build-profile { margin: 0; padding-left: 10px; border-left: 2px solid var(--fugu-accent); font-style: italic; font-size: .9rem; color: var(--fugu-ink); }
+.build-profile-lead { max-width: 65ch; margin: -8px 0 20px; font-size: 1.05rem; }
+
+/* Builds compared, part by part */
+.table-scroll { overflow-x: auto; }
+.builds-compared { width: 100%; min-width: 560px; border-collapse: collapse; font-size: .88rem; }
+.builds-compared th, .builds-compared td { padding: 9px 10px; border-bottom: 1px solid var(--fugu-border); text-align: left; vertical-align: top; }
+.builds-compared thead th { font-weight: 700; color: var(--fugu-ink); }
+.builds-compared thead th a { color: inherit; text-decoration: none; }
+.builds-compared thead th a:hover { color: var(--fugu-accent-strong); }
+.builds-compared tbody th { width: 1%; font-size: .8rem; font-weight: 600; color: var(--fugu-ink-muted); white-space: nowrap; }
+.builds-compared .profile-row td { border-bottom: 2px solid var(--fugu-border-strong); }
+.builds-compared .build-profile { display: block; font-size: inherit; }
+
+/* Recipes grouped by build on a blueprint's page */
+.recipe-group { margin: 20px 0 10px; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--fugu-ink-muted); }
+.recipe-group a { color: inherit; text-decoration: none; }
+.recipe-group a:hover { color: var(--fugu-accent-strong); }
+
+/* A build page: picks before the body (with the stack diagram beside
+ * them, when there is one), recipes after it. */
+.build-picks { display: grid; gap: 28px; align-items: start; max-width: 65ch; margin-bottom: 28px; }
+.build-picks.has-diagram { max-width: none; }
+@media (min-width: 760px) { .build-picks.has-diagram { grid-template-columns: minmax(0, 1fr) 300px; } }
+.picks { display: grid; grid-template-columns: auto 1fr; gap: 0 16px; margin: 0; border-top: 1px solid var(--fugu-border); }
+.picks dt, .picks dd { margin: 0; padding: 9px 0; border-bottom: 1px solid var(--fugu-border); }
+.picks dt { font-size: .84rem; font-weight: 600; color: var(--fugu-ink-muted); white-space: nowrap; }
+.picks dt a { color: inherit; text-decoration-color: var(--fugu-accent); text-underline-offset: 2px; }
+.picks dd { font-size: .95rem; color: var(--fugu-ink); }
+@media (max-width: 520px) {
+  .picks { grid-template-columns: 1fr; }
+  .picks dt { border-bottom: none; padding-bottom: 0; }
+}
+.build-recipes { margin-bottom: 40px; }
+

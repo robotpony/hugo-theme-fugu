@@ -1,8 +1,8 @@
 {{/*
   A principle tag: one whose own content/tags/<slug>/_index.md says
-  `principle: true`. Takes a tag name (as written in a page's `tags`, or a
-  term page's slug) and returns a dict, or false when the tag isn't a
-  principle:
+  `principle: true` (or `kind: principle`). Takes a tag name (as written
+  in a page's `tags`, or a term page's slug) and returns a dict, or false
+  when the tag isn't a principle:
 
     page   the tag's term page
     essay  the essay that explains it: the page named by the _index.md's
@@ -18,7 +18,7 @@
 {{ $result := false }}
 {{ $slug := . | lower | urlize }}
 {{ with site.GetPage (printf "/tags/%s" $slug) }}
-  {{ if .Params.principle }}
+  {{ if or .Params.principle (eq .Params.kind "principle") }}
     {{ $term := . }}
     {{ $essay := false }}
     {{ with .Params.essay }}

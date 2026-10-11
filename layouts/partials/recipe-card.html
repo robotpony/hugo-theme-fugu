@@ -36,6 +36,9 @@
   the same way cuisine does, and is dropped from the plain $tags list so
   it isn't shown twice.
 
+  A method (partials/method/is.html) shows the method chip in place of
+  its folder name, taking a slot, then its own tags, less the methods tag.
+
   A draft leads the top row with its mark (partials/development/mark.html),
   which takes a slot like cuisine does and opens a popover explaining it.
 
@@ -71,7 +74,13 @@
   {{ if partialCached "principle/term.html" . . }}{{ $principles = add $principles 1 }}{{ continue }}{{ end }}
   {{ if not (in $cuisinesLower (lower .)) }}{{ $tags = $tags | append . }}{{ end }}
 {{ end }}
-{{ if $isEssay }}
+{{ $isMethod := partial "method/is.html" . }}
+{{ if $isMethod }}
+  {{ $methodTag := site.Params.fugu.methods.tag | default "" | urlize }}
+  {{ $own := slice }}
+  {{ range $tags }}{{ if ne (urlize .) $methodTag }}{{ $own = $own | append . }}{{ end }}{{ end }}
+  {{ $tags = $own }}
+{{ else if $isEssay }}
   {{ $folder := path.Base (strings.TrimSuffix "/" .File.Dir) }}
   {{ $tags = cond (eq $folder .Section) (slice) (slice (replace $folder "-" " ")) }}
 {{ end }}
@@ -79,6 +88,7 @@
 {{ if $cuisine }}{{ $room = sub $room 1 }}{{ end }}
 {{ $room = sub $room $principles }}
 {{ if .Draft }}{{ $room = sub $room 1 }}{{ end }}
+{{ if $isMethod }}{{ $room = sub $room 1 }}{{ end }}
 {{/* A draft with a cuisine and a principle can use up every slot. */}}
 {{ if lt $room 0 }}{{ $room = 0 }}{{ end }}
 
@@ -122,6 +132,7 @@
   <div class="rcard-top">
     {{ if .Draft }}{{ partial "development/mark.html" . }}{{ end }}
     {{ with $cuisine }}{{ with $.GetTerms "cuisine" }}{{ $term := index . 0 }}<a class="cuisine-chip" href="{{ $term.RelPermalink }}"{{ with $term.Params.short }} title="{{ $cuisine }}"{{ end }}>{{ $term.Params.short | default $cuisine }}</a>{{ else }}<span class="cuisine-chip">{{ . }}</span>{{ end }}{{ end }}
+    {{ if $isMethod }}{{ partial "method/chip.html" (dict "card" true) }}{{ end }}
     {{ $principle | safeHTML }}
     {{ range first $room $tags }}<span class="tag">{{ . }}</span>{{ end }}
     {{ if gt (len $tags) $room }}<span class="tag tag-more">+{{ sub (len $tags) $room }}</span>{{ end }}

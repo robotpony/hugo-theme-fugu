@@ -105,6 +105,29 @@ Set either to `""` to turn it off. A link that matches neither is shown as broke
 
 No settings: a tag becomes a principle when its own `_index.md` says `principle: true`. See [frontmatter.md](frontmatter.md#principle-tags).
 
+## Methods and blueprints
+
+Methods are pages that explain how a kind of food or a process works in general, so a reader can cook dishes that aren't written down. A blueprint is a dish type made of parts, with named builds that pick one option for each part ([frontmatter.md](frontmatter.md#methods-and-blueprints)).
+
+```toml
+[params.fugu.methods]
+  folder   = "methods"
+  tag      = "method"
+  taxonomy = "blueprint"
+  label    = "Method"
+  icon     = "icons/methods/fan-out.svg"
+```
+
+| Key | What it is |
+| --- | --- |
+| `folder` | A folder in the essay section (`content/essays/methods/`). A page in it, at any depth, is a method; the folder decides, not the page's tags. |
+| `tag` | The tag whose term page is the methods list, when its `content/tags/<tag>/_index.md` sets `kind: method`. The method chip links there. |
+| `taxonomy` | The taxonomy that holds blueprints. The site has to declare it under `[taxonomies]` (`blueprint = "blueprint"`). |
+| `label` | The method chip's words. |
+| `icon` | An SVG in `assets/` (the site's, else Fugu's fan-out), inlined so it takes the text colour. `""` leaves the chip without one. |
+
+Set any of `folder`, `tag`, or `taxonomy` to `""` to turn that part off.
+
 ## Recipe headings
 
 How Fugu reads a recipe's `##` headings, by their whole title. Matching ignores case and a trailing colon.

@@ -14,12 +14,13 @@ Fugu is a general cookbook theme. The only thing a site needs is recipes: a `rec
 - A `cuisine` taxonomy, shown as a chip on recipe cards and pages
 - A glossary, which `[[Term]]` links fall back to when no page has that title
 - Principle tags: a tag with its own definition page and essay, gathering the recipes that follow it
+- Methods: general patterns in an essays folder, and blueprints (dish types made of parts, with named builds) that gather the methods, recipes, and stories for each
 
 Every section can be renamed in config (`dishes`, `writing`, …), and a part that's left out leaves no empty blocks, dead links, or zero counts behind.
 
 ## What it adds
 
-Recipe pages with a sidebar for the Mechanic, To serve, Notes, and photos; ingredient check-off, scaling, and metric/imperial conversion; formula diagrams drawn from a ```` ```formula ```` block; `[[wiki links]]` as written in Obsidian; recipe cards; drafts published as "in development"; search; and a JSON index of every recipe. All the JavaScript is plain and dependency-free, and pages still read and print with it off. The full tour is [docs/features.md](docs/features.md).
+Recipe pages with a sidebar for the Mechanic, To serve, Notes, and photos; ingredient check-off, scaling, and metric/imperial conversion; formula diagrams drawn from a ```` ```formula ```` block; `[[wiki links]]` as written in Obsidian; recipe cards; drafts published as "in development"; methods and blueprint pages; search; and a JSON index of every recipe. All the JavaScript is plain and dependency-free, and pages still read and print with it off. The full tour is [docs/features.md](docs/features.md).
 
 Content tools live in `tools/`: `frontmatter.py` (check and edit frontmatter), `drafts.py` (list drafts), `add-image.sh` (prepare photos), and `compare-builds.py` (check a theme change doesn't alter a site's pages). The Python tools use the standard library only; every tool explains itself with `--help`.
 

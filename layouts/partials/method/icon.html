@@ -1,0 +1,15 @@
+{{/*
+  The method mark: the SVG named by params.fugu.methods.icon (a path in
+  the site's or Fugu's assets/; Fugu ships icons/methods/fan-out.svg, one
+  node branching to three), inlined so it takes currentColor. "" when the
+  param is "". Takes nothing; returns HTML.
+*/}}
+{{ $out := "" }}
+{{ with site.Params.fugu.methods.icon }}
+  {{ with resources.Get . }}
+    {{ $out = replace .Content "<svg " `<svg class="method-icon" aria-hidden="true" focusable="false" ` 1 }}
+  {{ else }}
+    {{ warnf "fugu: params.fugu.methods.icon %q isn't in assets/" . }}
+  {{ end }}
+{{ end }}
+{{ return $out }}

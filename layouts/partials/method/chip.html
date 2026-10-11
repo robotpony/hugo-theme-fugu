@@ -1,0 +1,23 @@
+{{/*
+  The method chip: the method icon and params.fugu.methods.label
+  ("Method"), linked to the methods list (method/list-page.html), with a
+  popover that gives the list's definition. Shown on a method's card, in
+  place of its folder name, and at the start of its page's tags row.
+  Takes a dict: card (true on a card, where the popover spans the card's
+  top row), label (optional, in place of the param, e.g. "Build" on a
+  blueprint's build cards).
+*/}}
+{{ $m := site.Params.fugu.methods | default dict }}
+{{ $label := .label | default ($m.label | default "Method") }}
+{{ $icon := partialCached "method/icon.html" . "icon" }}
+{{ $list := partialCached "method/list-page.html" . "list" }}
+{{ if $list }}
+  {{ $chip := printf `<a class="method-chip" href="%s">%s%s</a>` $list.RelPermalink $icon ($label | htmlEscape) }}
+  {{ with $list.Description }}
+    {{ partial "concept/pop.html" (dict "kind" "method" "card" $.card "trigger" $chip "head" ($list.Title | htmlEscape) "text" . "link" $list "more" (printf "All %s" (lower $list.Title))) }}
+  {{ else }}
+    {{ $chip | safeHTML }}
+  {{ end }}
+{{ else }}
+  <span class="method-chip">{{ $icon | safeHTML }}{{ $label }}</span>
+{{ end }}

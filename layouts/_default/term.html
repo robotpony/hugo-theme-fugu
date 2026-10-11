@@ -20,9 +20,21 @@
   tag that isn't a recipe or that essay follows in a "Reference & further
   reading" list. The essay is the one principle/term.html finds: the
   _index.md's `essay`, else the reference essay carrying the tag.
+  `kind: principle` there means the same as `principle: true`.
+
+  Two other concept kinds get their own layouts: the methods list (a term
+  whose _index.md sets `kind: method`, partials/method/list.html) and a
+  blueprint (a term in params.fugu.methods.taxonomy,
+  partials/blueprint/page.html).
 */}}
 {{ .Scratch.Set "scope" "term" }}
-{{ $isPrinciple := .Params.principle }}
+{{ $blueprints := site.Params.fugu.methods.taxonomy | default "" }}
+{{ if eq .Params.kind "method" }}
+  {{ partial "method/list.html" . }}
+{{ else if and $blueprints (eq .Data.Plural $blueprints) }}
+  {{ partial "blueprint/page.html" . }}
+{{ else }}
+{{ $isPrinciple := or .Params.principle (eq .Params.kind "principle") }}
 {{ $essay := false }}
 {{ with and $isPrinciple (partialCached "principle/term.html" .Data.Term .Data.Term) }}{{ $essay = .essay }}{{ end }}
 {{ $recipeSection := partial "section/name.html" "recipe" }}
@@ -46,11 +58,7 @@
     <span class="listing-count">{{ if $isPrinciple }}{{ len $recipePages }} recipes{{ else }}{{ len .Pages }} {{ cond $allRecipes "recipes" "entries" }}{{ end }}{{ if gt $pager.TotalPages 1 }} · page {{ $pager.PageNumber }} of {{ $pager.TotalPages }}{{ end }}</span>
   </header>
   {{ if $isPrinciple }}
-    <div class="definition-callout max-w-prose">
-      <span class="definition-callout-label">Definition</span>
-      {{ .Content }}
-      {{ with $essay }}<a class="read-essay" href="{{ .RelPermalink }}">Read the full essay →</a>{{ end }}
-    </div>
+    {{ partial "concept/callout.html" (dict "kind" "principle" "label" "Definition" "content" .Content "link" $essay "more" "Read the full essay") }}
     <h3 class="subsection-title">Recipes that follow this principle</h3>
   {{ else }}
     {{/* Tagline: the term's own description (content/cuisine/<name>/_index.md)
@@ -74,14 +82,8 @@
         {{ end }}
       {{ end }}
     {{ end }}
-    {{ with $further }}
-      <h3 class="subsection-title" style="margin-top:32px;">Reference &amp; further reading</h3>
-      <div class="ref-list">
-        {{ range . }}
-          <div class="ref-row"><span class="ref-kind">{{ cond (eq (partialCached "section/role.html" .Section .Section) "reference") "Reference" "Essay" }}</span><a href="{{ .RelPermalink }}">{{ .Title }}</a></div>
-        {{ end }}
-      </div>
-    {{ end }}
+    {{ partial "concept/further.html" (dict "pages" $further) }}
   {{ end }}
 </section>
+{{ end }}
 {{ end }}

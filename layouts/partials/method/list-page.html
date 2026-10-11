@@ -1,0 +1,11 @@
+{{/*
+  The methods list: the term page of params.fugu.methods.tag (e.g.
+  content/tags/method/_index.md, which sets `kind: method` so term.html
+  lays it out as the list). Takes anything (call it with partialCached);
+  returns the page, or false when the tag is "" or has no page.
+*/}}
+{{ $page := false }}
+{{ with site.Params.fugu.methods.tag }}
+  {{ with site.GetPage (printf "/tags/%s" (. | urlize)) }}{{ $page = . }}{{ end }}
+{{ end }}
+{{ return $page }}

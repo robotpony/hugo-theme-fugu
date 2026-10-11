@@ -8,9 +8,16 @@
   section breaks on the page. Each link gets a "Previous"/"Next" label
   over the title; Blowfish's dates under each link are dropped.
   showPagination and invertPagination work as in Blowfish.
+
+  A method that's a part or a build of a blueprint gets part navigation
+  instead (partials/method/part-nav.html): back to the blueprint, and the
+  next part or build in the blueprint's order.
 */}}
+{{ $partNav := partial "method/part-nav.html" . }}
 {{ if .Params.showPagination | default (.Site.Params.article.showPagination | default true) }}
-  {{ if or .NextInSection .PrevInSection }}
+  {{ if $partNav }}
+    {{ $partNav }}
+  {{ else if or .NextInSection .PrevInSection }}
     {{ $next := .NextInSection }}
     {{ $prev := .PrevInSection }}
     {{ if .Params.invertPagination | default (.Site.Params.article.invertPagination | default false) }}

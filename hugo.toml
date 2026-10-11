@@ -65,6 +65,27 @@
     # draws a dot.
     icon    = ""
 
+  # Methods: pages that explain how a kind of food or a process works in
+  # general, so a reader can cook dishes that aren't written down. A page
+  # in the essay section's `folder` (at any depth) is a method; the folder
+  # decides, not its tags. The `tag`'s term page (content/tags/<tag>/
+  # _index.md with `kind: method`) becomes the methods list. A method can
+  # belong to a blueprint, a dish type made of parts, through the
+  # `taxonomy` (e.g. `blueprint: [burgers]`, with content/blueprint/
+  # burgers/_index.md listing its `parts`), and say which part it covers
+  # (`part`) or which named combination it is (`build`, `profile`,
+  # `picks`). "" turns any of them off.
+  [params.fugu.methods]
+    folder   = "methods"
+    tag      = "method"
+    taxonomy = "blueprint"
+    # The method chip's words, on a method's card and at the start of its
+    # page's tags row.
+    label    = "Method"
+    # An SVG in assets/ (the site's, else Fugu's), inlined so it takes
+    # currentColor. "" leaves the chip without an icon.
+    icon     = "icons/methods/fan-out.svg"
+
   # What each ## heading means, by its whole title (any case, trailing ":"
   # ignored). method: prose whose quantities and temperatures get marked.
   # mechanic, to-serve, variations, notes, equipment: sections that can

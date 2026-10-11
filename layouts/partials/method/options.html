@@ -1,0 +1,23 @@
+{{/*
+  A part's options: the first column of the table under its method's
+  `## Options` heading, one name per row, without a trailing
+  parenthetical ("Thick (170 g and up)" is "Thick") and with [[wiki links]]
+  reduced to their text. Options aren't pages; the blueprint page shows
+  them as pills. Takes a page; returns a slice of strings, empty without
+  such a table.
+*/}}
+{{ $out := slice }}
+{{ with findRESubmatch `(?ms)^##[ \t]+Options[ \t]*$(.*?)(?:^##[ \t]|\z)` .RawContent 1 }}
+  {{ $rows := slice }}
+  {{ range split (index (index . 0) 1) "\n" }}
+    {{ $line := strings.TrimSpace . }}
+    {{ if and (hasPrefix $line "|") (not (findRE `^\|[\s:|-]+$` $line)) }}{{ $rows = $rows | append $line }}{{ end }}
+  {{ end }}
+  {{/* The first row is the table's header. */}}
+  {{ range after 1 $rows }}
+    {{ $cell := index (split . "|") 1 | replaceRE `\[\[(?:[^\]|]*\|)?([^\]]+)\]\]` "$1" | markdownify | plainify | htmlUnescape }}
+    {{ $cell = replaceRE `\s*\(.*$` "" $cell | strings.TrimSpace }}
+    {{ with $cell }}{{ $out = $out | append . }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ return $out }}
