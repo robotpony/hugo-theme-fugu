@@ -157,6 +157,7 @@ From Not a Chef's `SPEC.md`, which should become Fugu docs as part of §7.
 - [ ] Sort or filter controls on the recipes list (cuisine, prep time, tag).
 - [ ] Tag and cuisine term pages that work as filters, not just link lists.
 - [ ] Table of contents behaviour on long reference pages.
+- [ ] Extra taxonomies in the page header's tags row. `article-meta/basic.html` gives cuisine a chip and tags their `.tag` links, but any other taxonomy a site adds falls through to Blowfish's plain badge (`rounded-md border border-primary-400 …`), unstyled by the site and often repeating a tag. Found 2026-10-10: Not a Chef's `blueprint` taxonomy (`blueprint: [burgers]`, see its `docs/METHODS.md`) shows "Burgers" twice on every burger page, the badge beside the `burgers` tag. Either skip taxonomies a site lists (a param, e.g. `fugu.headerTaxonomies`) or render them as a chip like cuisine. Not a Chef hides the badge with a stopgap rule in its `custom.css` (`.tags-row > a[href*="/blueprint/"]:not(.tag)`); tell it to remove that rule when this lands.
 
 ### Build-time enrichment
 
