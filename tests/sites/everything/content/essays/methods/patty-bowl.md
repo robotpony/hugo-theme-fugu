@@ -5,6 +5,8 @@ tags: [method, rice]
 blueprint: [rice-bowls]
 build_name: Patty bowl
 profile: Crisp edges over soft rice.
+origin: Takeout, 1990s
+era: 1990
 picks:
   - "Rice: long grain"
   - "Topping: a veg patty"

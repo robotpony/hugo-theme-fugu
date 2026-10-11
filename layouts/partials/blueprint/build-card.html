@@ -1,7 +1,8 @@
 {{/*
   A build's card on its blueprint's page: the shared card (.rcard) with
   .build-card, the method chip reading "Build", the build's name, its
-  profile, and how many recipes are made from it. When the stack diagram
+  origin (where and when it comes from), its profile, and how many recipes
+  are made from it. When the stack diagram
   partial exists (partials/stack-strip.html, see PLAN.md "Stack
   diagrams"), the build page's diagram goes under the profile, compact.
   Takes a dict: page (the build page), recipes (the count).
@@ -13,6 +14,7 @@
     {{ partial "method/chip.html" (dict "card" true "label" "Build") }}
   </div>
   <h3 class="rcard-title"><a class="rcard-link" href="{{ $page.RelPermalink }}">{{ $page.Params.build_name }}</a></h3>
+  {{ with $page.Params.origin }}<p class="build-origin">{{ . }}</p>{{ end }}
   {{ with $page.Params.profile }}<p class="build-profile">{{ . }}</p>{{ end }}
   {{ if templates.Exists "partials/stack-strip.html" }}{{ partial "stack-strip.html" (dict "page" $page "labels" false) }}{{ end }}
   <div class="rcard-stats">

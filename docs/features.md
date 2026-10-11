@@ -95,12 +95,13 @@ Methods explain how a kind of food or a process works in general. Any page in th
 
 A blueprint is a dish type made of parts, such as a burger: patty, seasoning, cooking, assembly, sauces. Its page shows:
 
-- Its builds, the named combinations, as cards with their profile, and a table comparing their picks part by part.
+- A lineage timeline: the builds placed by era on a track of decades, with planned ones faint.
+- Its builds, the named combinations, as cards with their origin and profile, oldest first, and a table comparing their picks part by part.
 - Its parts in order, each with its method and the method's options as pills, or "Not written yet".
 - Its recipes, grouped by the build they're made from.
 - The stories and reference pages that carry it.
 
-A page in a blueprint gets a chip in its header that says where it sits: "Burgers · Patty construction" on a part's method, "Burgers · Build" on a build, and "Burgers · Deluxe griddle" on a recipe made from a build, linking to the build. A build page shows its profile under the title, its picks before the body, and the recipes made from it after. A part's method and a build end with navigation back to the blueprint and on to the next part or build, in place of the date-ordered previous and next.
+A page in a blueprint gets a chip in its header that says where it sits: "Burgers · Patty construction" on a part's method, "Burgers · Build" on a build, and "Burgers · Deluxe griddle" on a recipe made from a build, linking to the build. A build page shows its profile and origin under the title, its picks before the body, and the recipes made from it after. A part's method and a build end with navigation back to the blueprint and on to the next part or build, in place of the date-ordered previous and next.
 
 The fields are in [frontmatter.md](frontmatter.md#methods-and-blueprints) and the settings in [configuration.md](configuration.md#methods-and-blueprints).
 

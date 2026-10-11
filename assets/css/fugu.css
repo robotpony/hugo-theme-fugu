@@ -749,6 +749,40 @@ a.opt-pill:hover { border-color: var(--fugu-accent); color: var(--fugu-ink); }
 .build-profile { margin: 0; padding-left: 10px; border-left: 2px solid var(--fugu-accent); font-style: italic; font-size: .9rem; color: var(--fugu-ink); }
 .build-profile-lead { max-width: 65ch; margin: -8px 0 20px; font-size: 1.05rem; }
 
+/* Where and when a build comes from: under its name on its card, under
+ * the profile on its page. */
+.build-origin { margin: 0; font-family: var(--fugu-font-mono); font-size: .7rem; letter-spacing: .02em; color: var(--fugu-ink-faint); }
+.build-origin-lead { margin: -12px 0 20px; }
+
+/* A blueprint's lineage: builds as dots on a track of decades, placed by
+ * era, labels above. Planned builds are faint. Under 640px, a list. */
+.timeline { position: relative; margin: 8px 0 34px; padding: 50px 0 0; }
+.tl-track { position: relative; height: 2px; margin: 0 6px; background: var(--fugu-border-strong); }
+.tl-list { margin: 0; padding: 0; list-style: none; }
+.tl-mark { position: absolute; bottom: -6px; display: flex; flex-direction: column; align-items: center; margin: 0; transform: translateX(-50%); }
+.tl-dot { order: 2; width: 12px; height: 12px; border-radius: 50%; background: var(--fugu-accent); border: 2px solid var(--fugu-bg); box-shadow: 0 0 0 1px var(--fugu-accent); }
+.tl-name { order: 1; margin-bottom: 6px; font-size: .78rem; font-weight: 600; white-space: nowrap; color: var(--fugu-ink); text-decoration: none; }
+a.tl-name:hover { color: var(--fugu-accent-strong); }
+.tl-mark.alt .tl-name { margin-bottom: 24px; }
+.tl-mark.alt .tl-name::after { content: ""; display: block; width: 1px; height: 16px; margin: 2px auto 0; background: var(--fugu-border-strong); }
+.tl-mark.todo .tl-dot { background: var(--fugu-bg); box-shadow: 0 0 0 1px var(--fugu-ink-faint); }
+.tl-mark.todo .tl-name { font-weight: 500; color: var(--fugu-ink-faint); }
+.tl-detail { display: none; font-family: var(--fugu-font-mono); font-size: .68rem; font-weight: 400; color: var(--fugu-ink-faint); }
+.tl-ticks { position: relative; height: 28px; margin: 0 6px; }
+.tl-tick { position: absolute; top: 8px; transform: translateX(-50%); font-family: var(--fugu-font-mono); font-size: .66rem; color: var(--fugu-ink-faint); }
+.tl-tick::before { content: ""; position: absolute; left: 50%; top: -12px; width: 1px; height: 6px; background: var(--fugu-border-strong); }
+@media (max-width: 640px) {
+  .timeline { padding: 0; }
+  .tl-ticks { display: none; }
+  .tl-track { height: auto; margin: 0 0 30px; background: none; }
+  .tl-list { display: flex; flex-direction: column; margin-left: 6px; border-left: 2px solid var(--fugu-border-strong); }
+  .tl-mark { position: static; flex-direction: row; gap: 10px; margin-left: -7px; padding: 6px 0; transform: none; }
+  .tl-mark .tl-dot { order: 0; flex: none; }
+  .tl-mark .tl-name, .tl-mark.alt .tl-name { margin: 0; white-space: normal; }
+  .tl-mark.alt .tl-name::after { display: none; }
+  .tl-detail { display: inline; }
+}
+
 /* Builds compared, part by part */
 .table-scroll { overflow-x: auto; }
 .builds-compared { width: 100%; min-width: 560px; border-collapse: collapse; font-size: .88rem; }

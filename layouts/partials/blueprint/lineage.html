@@ -1,0 +1,80 @@
+{{/*
+  A blueprint's lineage (blueprint/page.html, before "Builds"): its builds
+  on a horizontal track of decades, each placed by its `era` (a year) as a
+  dot with its name, linking to its page. Builds with no `era` are left
+  off. The blueprint's _index.md can add builds nobody has written yet as
+  `planned: ["1985: Pub burger"]`; they show faint and unlinked, and drop
+  out once a build page of the same name exists. A label sits higher
+  (.alt) when its dot is close to the one before. Under 640px the CSS
+  turns the track into a vertical list with each build's origin.
+
+  The track runs from the first entry's decade to the end of the last's,
+  a decade more at an end whose entry sits within three years of it, and
+  at least three decades wide. Nothing renders with no dated entries.
+
+  Takes a dict: builds (the blueprint's builds, blueprint/info.html),
+  planned (the _index.md's `planned` list, or nil).
+*/}}
+{{ $entries := slice }}
+{{ $names := slice }}
+{{ range .builds }}
+  {{ $names = $names | append (lower (string .Params.build_name)) }}
+  {{ if .Params.era }}
+    {{ $entries = $entries | append (dict "year" (int .Params.era) "name" (string .Params.build_name) "detail" (.Params.origin | default "") "page" .) }}
+  {{ end }}
+{{ end }}
+{{ range .planned }}
+  {{ $m := findRESubmatch `^\s*(\d{3,4})\s*:\s*(.+?)\s*$` (string .) 1 }}
+  {{ with $m }}
+    {{ $name := index (index . 0) 2 }}
+    {{ if not (in $names (lower $name)) }}
+      {{ $year := int (index (index . 0) 1) }}
+      {{ $entries = $entries | append (dict "year" $year "name" $name "detail" (printf "%d, not written yet" $year) "page" false) }}
+    {{ end }}
+  {{ else }}
+    {{ warnf "blueprint: planned build %q should read \"year: name\"" . }}
+  {{ end }}
+{{ end }}
+
+{{ with $entries }}
+  {{ $entries = sort . "year" }}
+  {{ $first := (index $entries 0).year }}
+  {{ $last := (index $entries (sub (len $entries) 1)).year }}
+  {{ $start := mul (div $first 10) 10 }}
+  {{ $end := add (mul (div $last 10) 10) 10 }}
+  {{/* A year in the first or last few of its decade would sit at the very
+    end of the track, its label hanging off the page: add a decade there. */}}
+  {{ if lt (sub $first $start) 3 }}{{ $start = sub $start 10 }}{{ end }}
+  {{ if lt (sub $end $last) 3 }}{{ $end = add $end 10 }}{{ end }}
+  {{ if eq (sub $end $start) 10 }}{{ $start = sub $start 10 }}{{ $end = add $end 10 }}
+  {{ else if eq (sub $end $start) 20 }}{{ $end = add $end 10 }}{{ end }}
+  {{ $span := float (sub $end $start) }}
+  <div class="timeline">
+    <div class="tl-track">
+      <ol class="tl-list">
+        {{ $prev := -100.0 }}
+        {{ $prevAlt := false }}
+        {{ range $entries }}
+          {{ $pos := div (mul (float (sub .year $start)) 100) $span }}
+          {{ $alt := and (lt (sub $pos $prev) 18) (not $prevAlt) }}
+          {{ $prev = $pos }}
+          {{ $prevAlt = $alt }}
+          <li class="tl-mark{{ if $alt }} alt{{ end }}{{ if not .page }} todo{{ end }}" style="left:{{ printf "%.1f" $pos }}%">
+            {{- $detail := cond (ne .detail "") (printf " · %s" .detail) "" -}}
+            {{- with .page -}}
+              <a class="tl-name" href="{{ .RelPermalink }}"{{ with .Params.origin }} title="{{ . }}"{{ end }}>{{ .Params.build_name }}<span class="tl-detail">{{ $detail }}</span></a>
+            {{- else -}}
+              <span class="tl-name" title="{{ .detail }}">{{ .name }}<span class="tl-detail">{{ $detail }}</span></span>
+            {{- end -}}
+            <span class="tl-dot" aria-hidden="true"></span>
+          </li>
+        {{ end }}
+      </ol>
+    </div>
+    <div class="tl-ticks" aria-hidden="true">
+      {{- range seq $start 10 (sub $end 10) -}}
+        <span class="tl-tick" style="left:{{ printf "%.1f" (div (mul (float (sub . $start)) 100) $span) }}%">{{ . }}s</span>
+      {{- end -}}
+    </div>
+  </div>
+{{ end }}

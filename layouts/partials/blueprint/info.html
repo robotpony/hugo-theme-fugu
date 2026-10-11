@@ -11,8 +11,9 @@
              methods with that `part`, not builds), options (from the first
              method's ## Options table, method/options.html)
     written  how many parts have a method
-    builds   the methods on the blueprint with a `build_name`, by weight,
-             date, then title
+    builds   the methods on the blueprint with a `build_name`: those with
+             an `era` (a year) oldest first, then the rest, each by
+             weight, date, then title
     recipes  the recipes on the blueprint
     groups   the recipes by `build_name`: one dict per build name (name,
              page: its build page or false, recipes), build pages' order
@@ -38,6 +39,15 @@
     {{ $others = $others | append . }}
   {{ end }}
 {{ end }}
+
+{{/* Builds by era, oldest first; undated ones after. sort is stable, so
+  builds of the same era keep their weight order. */}}
+{{ $dated := slice }}
+{{ $undated := slice }}
+{{ range $builds }}
+  {{ if .Params.era }}{{ $dated = $dated | append . }}{{ else }}{{ $undated = $undated | append . }}{{ end }}
+{{ end }}
+{{ $builds = (sort $dated "Params.era") | append $undated }}
 
 {{ $parts := slice }}
 {{ $written := 0 }}

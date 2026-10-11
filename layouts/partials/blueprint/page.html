@@ -5,7 +5,9 @@
   - the header, "Burgers blueprint", with counts of parts, builds, recipes
   - the definition callout (concept/callout.html) from the term's
     _index.md body, linking to the methods list
-  - "Builds": a card per build page (blueprint/build-card.html), then, with
+  - "Lineage": the builds with an `era`, and the _index.md's `planned`
+    ones, on a timeline (blueprint/lineage.html)
+  - "Builds", oldest era first: a card per build page (blueprint/build-card.html), then, with
     two or more, a table comparing their profiles and picks part by part
     (rows no build fills are left out)
   - "Parts", in the _index.md's `parts` order: each part's methods with
@@ -37,6 +39,12 @@
     {{ partial "concept/callout.html" (dict "kind" "method" "label" "Blueprint" "content" .Content "link" $list "more" $more) }}
   {{ else }}
     {{ with .Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
+  {{ end }}
+
+  {{ $lineage := partial "blueprint/lineage.html" (dict "builds" $info.builds "planned" .Params.planned) }}
+  {{ with trim $lineage " \n\t" }}
+    <h3 class="subsection-title">Lineage</h3>
+    {{ . | safeHTML }}
   {{ end }}
 
   {{ with $info.builds }}

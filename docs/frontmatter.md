@@ -67,6 +67,7 @@ A tag or cuisine can have its own page, `content/tags/<slug>/_index.md` (or `con
 | `principle` | tag | `true` makes the tag a principle (below). `kind: principle` does the same. |
 | `kind` | tag | `method` makes the tag's page the methods list (see [Methods and blueprints](#methods-and-blueprints)). |
 | `parts` | blueprint | The blueprint's parts, in order (below). |
+| `planned` | blueprint | Builds nobody has written yet, as `"year: name"` strings, shown faint on the lineage timeline (below). |
 | `essay` | principle tag | The page that explains the principle, as a content path: `essays/reference-essays/win-the-fridge`. |
 
 ### Principle tags
@@ -99,6 +100,8 @@ A method is a page in the essay section's methods folder (`content/essays/method
 | `build_name` | recipe | The build the recipe is made from, the same name as the build page's. |
 | `profile` | build | One line on what the build tastes and feels like, shown in italics under its title, on its card, and in the blueprint's comparison table. |
 | `picks` | build | One pick per part, as a list of `"Part: pick"` strings. |
+| `origin` | build | Where and when the build comes from, short free text (`Drive-in, 1960s`), shown small under its name on its card and under its profile on its page. |
+| `era` | build | A year (`1960`) that places the build on the blueprint's lineage timeline. The blueprint's page lists dated builds oldest first, then the rest. |
 
 A blueprint's own page, `content/blueprint/<slug>/_index.md`, gives its definition (the body) and its parts in order:
 
@@ -113,6 +116,8 @@ parts:
 ---
 A burger is a stack of parts. Each part has its own method, and a build picks one option for each.
 ```
+
+When any build has an `era`, the blueprint's page opens with a lineage timeline: each dated build as a dot on a track of decades, linking to its page. Builds without an `era` are left off. `planned: ["1985: Pub burger", "2010: Smash burger"]` adds faint, unlinked dots for builds the blueprint expects; one drops out once a build page of that name exists. On a phone the timeline is a list, with each build's origin.
 
 A part's choices aren't pages: they're a table under `## Options` in its method, whose first column the blueprint's page shows as pills (a trailing parenthetical is dropped: "Thick (170 g and up)" shows as "Thick").
 
@@ -134,6 +139,8 @@ tags: [method, burgers]
 blueprint: [burgers]
 build_name: Deluxe griddle
 profile: Cold crunch and sharp against a salty patty.
+origin: Drive-in, 1960s
+era: 1960
 picks:
   - "Patty construction: thin, 140 g"
   - "Cooking: griddle, flip once"
