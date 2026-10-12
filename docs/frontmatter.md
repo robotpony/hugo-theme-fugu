@@ -123,7 +123,7 @@ Parts are the slots every dish of the type fills; a part's name is its title. Bu
 
 When any build has an `era`, the blueprint's page shows a lineage timeline: each dated build as a dot on a track of decades, labelled with its title and era and linking to its page. Builds without an `era` are left off, and a draft build shows faint, so a build nobody has written yet can be a stub with its title, `era`, and `draft: true`. On a phone the timeline is a list.
 
-A part's choices aren't pages: they're a table under `## Options` in the part's page, whose first column the blueprint's page shows as pills (a trailing parenthetical is dropped: "Thick (170 g and up)" shows as "Thick").
+A part's choices aren't pages: they're a table under `## Options` in the part's page, shown there as written. Fugu also reads the first column as the part's options for templates to use (`blueprint/info.html`, with a trailing parenthetical dropped: "Thick (170 g and up)" is "Thick"), though no page lists them elsewhere now.
 
 ```markdown
 ## Options

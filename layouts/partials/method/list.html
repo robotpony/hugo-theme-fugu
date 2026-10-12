@@ -14,10 +14,11 @@
     one: its name links to the blueprint, and its parts are a compact
     numbered list whose rows are whole-row links to the part. The list
     carries --rows, half its length rounded up, so CSS can run it in two
-    columns numbered down then across. Under the block, when the blueprint
-    has builds, "Builds · N" and their cards in info.html's order, the
-    same cards as on the blueprint's page (blueprint/build-card.html),
-    wrapping down the page. A blueprint with no builds is the block alone.
+    columns numbered down then across. When the blueprint has builds, a
+    line under the parts (.bp-builds-inline): a "Builds" label (.lbl),
+    then a pill per build (a.opt-pill) in info.html's order, its name
+    without the blueprint's (blueprint/short-name.html) and its era
+    (.y); a draft's pill is .todo. The cards are on the blueprint's page.
   - "Techniques and ratios": methods in no blueprint, as cards
 
   The sidebar: search; counts in the date-rows style (methods,
@@ -68,6 +69,7 @@
     <h3 class="subsection-title" id="blueprints">Blueprints<span class="subsection-count">{{ len . }}</span></h3>
     <div class="bp-list">
       {{ range . }}
+        {{ $bp := . }}
         {{ $info := partialCached "blueprint/info.html" . .Path }}
         <div class="bp-row" id="bp-{{ .Title | urlize }}">
           <section class="bp">
@@ -83,15 +85,15 @@
                 {{ end }}
               </ol>
             {{ end }}
-          </section>
-          {{ with $info.builds }}
-            <div class="bp-builds">
-              <div class="bp-builds-head"><span>Builds · {{ len . }}</span></div>
-              <div class="rgrid build-grid">
-                {{ range . }}{{ partial "blueprint/build-card.html" . }}{{ end }}
+            {{ with $info.builds }}
+              <div class="bp-builds-inline">
+                <span class="lbl">Builds</span>
+                {{- range . }}
+                  <a class="opt-pill{{ if .Draft }} todo{{ end }}" href="{{ .RelPermalink }}">{{ partial "blueprint/short-name.html" (dict "page" . "blueprint" $bp) }}{{ with .Params.era }}<span class="y">{{ . }}</span>{{ end }}</a>
+                {{- end }}
               </div>
-            </div>
-          {{ end }}
+            {{ end }}
+          </section>
         </div>
       {{ end }}
     </div>

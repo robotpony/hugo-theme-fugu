@@ -15,8 +15,11 @@
   - "Lineage" (#lineage, in .blueprint-lineage): the builds with an
     `era` on a timeline (blueprint/lineage.html), below 1024px only; at
     desktop widths it's in the sidebar
-  - "Parts" (#parts), in weight order: each part's title, description,
-    and the options from its ## Options table as pills
+  - "Parts" (#parts), in weight order: the methods list's compact block,
+    a numbered list of whole-row links (ol.parts.parts-compact, with
+    --rows for two columns), in the .bp box without its head
+    (section.bp.bp-parts-only). Descriptions and options are on each
+    part's own page
   - "Builds" (#builds), oldest era first: a card per build
     (blueprint/build-card.html)
 
@@ -80,18 +83,13 @@
 
   {{ with $info.parts }}
     <h3 class="subsection-title{{ if $hasLineage }} subsection-gap{{ end }}" id="parts">Parts<span class="subsection-count">{{ len . }}</span></h3>
-    <ol class="parts parts-full">
-      {{ range . }}
-        {{ $part := . }}
-        <li>
-          <span class="part-name"><a href="{{ .page.RelPermalink }}">{{ .name }}</a></span>
-          <span class="part-methods">
-            {{- with .page.Description }}<span class="part-method"><span class="part-desc">{{ . }}</span></span>{{ end -}}
-            {{- with $part.options }}<span class="opts"><span class="opt-pill"><b>Options</b></span>{{ range . }}<span class="opt-pill">{{ . }}</span>{{ end }}</span>{{ end -}}
-          </span>
-        </li>
-      {{ end }}
-    </ol>
+    <section class="bp bp-parts-only">
+      <ol class="parts parts-compact" style="--rows:{{ div (add (len .) 1) 2 }}">
+        {{ range . }}
+          <li><a class="part-row" href="{{ .page.RelPermalink }}">{{ .name }}</a></li>
+        {{ end }}
+      </ol>
+    </section>
   {{ end }}
 
   {{ with $info.builds }}

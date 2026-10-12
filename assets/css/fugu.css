@@ -760,19 +760,12 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
 .bp-count { font-family: var(--fugu-font-mono); font-size: .7rem; color: var(--fugu-ink-faint); white-space: nowrap; }
 .bp-desc { margin: 0; font-size: .88rem; color: var(--fugu-ink-muted); }
 
-/* A blueprint's parts, numbered: compact on the methods list, full on the
- * blueprint's page. */
+/* A blueprint's parts, numbered, on the methods list and the blueprint's
+ * page. On its page they're in the .bp box without its head. */
 .parts { list-style: none; margin: 0; padding: 0; counter-reset: part; }
 .parts li { counter-increment: part; display: grid; grid-template-columns: 28px 1fr; gap: 2px 10px; align-items: baseline; padding: 9px 0; border-top: 1px solid var(--fugu-border); margin: 0; }
 .parts li::before { content: counter(part, decimal-leading-zero); grid-row: span 2; font-family: var(--fugu-font-mono); font-size: .72rem; color: var(--fugu-accent); }
-.part-name { font-weight: 600; font-size: .9rem; }
-.part-name a { color: var(--fugu-ink); text-decoration: none; }
-.part-name a:hover { color: var(--fugu-accent-strong); }
-.part-methods { font-size: .88rem; color: var(--fugu-ink-muted); }
-.part-method { display: block; }
-.part-method + .part-method { margin-top: 4px; }
-.part-method > a { font-weight: 600; color: var(--fugu-ink); text-decoration-color: var(--fugu-accent); text-underline-offset: 2px; }
-.part-desc { display: block; }
+.bp.bp-parts-only { padding: 6px 18px 8px; }
 /* Compact rows are whole-row links: the number moves into the row, and
  * on hover the row fills and an arrow slides in. */
 .parts-compact li { display: block; padding: 0; }
@@ -788,23 +781,22 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
   .parts-compact[style*="--rows"] { display: grid; grid-auto-flow: column; grid-template-rows: repeat(var(--rows), auto); column-gap: 28px; }
 }
 
-/* Builds under a blueprint: a small heading, then the build cards
- * (blueprint/build-card.html) in the shared card grid. */
-.bp-builds { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.bp-builds-head { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--fugu-ink-faint); }
+/* A blueprint's builds on the methods list: one line under its parts, a
+ * label then a pill per build with its era; a draft's pill is dashed. */
+.bp-builds-inline { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding-top: 10px; border-top: 1px solid var(--fugu-border); }
+.bp-builds-inline .lbl { margin-right: 4px; font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--fugu-ink-faint); }
 @media (prefers-reduced-motion: reduce) {
   .bp-name .go, .parts-compact .part-row, .parts-compact a.part-row::after { transition: none; }
 }
-.parts-full .part-name { font-size: 1rem; }
-.parts-full li { grid-template-columns: 36px minmax(0, 1fr); column-gap: 24px; padding: 14px 0; }
 
-/* Option and build pills */
-.opts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+/* Build pills */
 .opt-pill { padding: 2px 8px; border: 1px solid var(--fugu-border-strong); border-radius: 12px; font-size: .72rem; font-style: normal; color: var(--fugu-ink-muted); white-space: nowrap; text-decoration: none; }
 .opt-pill b { font-weight: 600; color: var(--fugu-ink); }
 a.opt-pill:hover { border-color: var(--fugu-accent); color: var(--fugu-ink); }
+.opt-pill.todo { border-style: dashed; color: var(--fugu-ink-faint); }
+.opt-pill .y { margin-left: 5px; font-family: var(--fugu-font-mono); font-size: .64rem; color: var(--fugu-ink-faint); }
 
-/* A build's era: under its name on its card and tile. */
+/* A build's era: under its name on its card. */
 .build-origin { margin: 0; font-family: var(--fugu-font-mono); font-size: .7rem; letter-spacing: .02em; color: var(--fugu-ink-faint); }
 
 /* A blueprint's lineage: builds as dots on a track of decades, placed by

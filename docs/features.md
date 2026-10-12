@@ -95,13 +95,13 @@ Setting one up is in [frontmatter.md](frontmatter.md#principle-tags).
 
 ## Methods and blueprints
 
-Methods explain how a kind of food or a process works in general. Any page in the methods section, or in the essay section's methods folder, is one, and shows a method chip on its card and page (on the page, with a popover giving the definition). The methods section's page, or without one the method tag's page, is the methods list: the definition, then each blueprint with its parts in order as whole-row links, with its builds as cards under it, the same cards as on the blueprint's page, then the methods that belong to no blueprint, as cards.
+Methods explain how a kind of food or a process works in general. Any page in the methods section, or in the essay section's methods folder, is one, and shows a method chip on its card and page (on the page, with a popover giving the definition). The methods section's page, or without one the method tag's page, is the methods list: the definition, then each blueprint with its parts in order as whole-row links, with its builds as a line of named pills under its parts (drafts dashed), then the methods that belong to no blueprint, as cards.
 
 A blueprint is a dish type made of parts, such as a burger: patty, seasoning, cooking, assembly, sauces. It's a folder under the methods, with its parts and builds in subfolders. Its page is on the reading layout, like the methods list, and shows:
 
 - Its definition, from the folder's `_index.md`, with a link to the methods list.
 - A lineage timeline: the builds placed by era, with drafts faint. At desktop widths it's in the sidebar, a vertical spine drawn to scale; narrower, a track of decades in the body (a list on a phone).
-- Its parts in order, each with its description and its options as pills.
+- Its parts in order, as numbered links, as on the methods list. Each part's description and options are on its own page.
 - Its builds, the named combinations, as cards with their era, description, and stack diagram, oldest first.
 - In the sidebar: search, counts of parts and builds, the lineage, "On this page", and the pages linked from the `## Further reading` at the end of its definition.
 

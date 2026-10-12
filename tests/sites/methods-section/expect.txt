@@ -7,7 +7,8 @@ methods/index.html: reading-sidebar-wrap
 methods/index.html: class="method-intro"
 methods/index.html: !definition-callout
 methods/index.html: href="#bp-rice-bowls"
-methods/index.html: <div class="rgrid build-grid">
+methods/index.html: <div class="bp-builds-inline">
+methods/index.html: !build-card
 methods/index.html: !bp-rail
 methods/index.html: !builds-rail
 methods/index.html: Techniques and ratios

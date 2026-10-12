@@ -105,8 +105,13 @@ essays/methods/rice-bowls/index.html: class="timeline"
 essays/methods/rice-bowls/index.html: href="/essays/methods/rice-bowls/builds/patty-bowl/" title="1990">Patty rice bowl<span class="tl-detail"> · 1990
 essays/methods/rice-bowls/index.html: <li class="tl-mark todo" style="left:83.3%"><a class="tl-name" href="/essays/methods/rice-bowls/builds/poke-bowl/"
 essays/methods/rice-bowls/index.html: !builds-compared
-essays/methods/rice-bowls/index.html: <span class="opt-pill">Short grain</span>
-essays/methods/rice-bowls/index.html: <span class="opt-pill">Plain rice leftovers</span>
+essays/methods/rice-bowls/index.html: <section class="bp bp-parts-only">
+essays/methods/rice-bowls/index.html: class="part-row" href="/essays/methods/rice-bowls/parts/toppings/">Bowl toppings
+essays/methods/rice-bowls/index.html: !opt-pill
+tags/method/index.html: <div class="bp-builds-inline">
+tags/method/index.html: <a class="opt-pill" href="/essays/methods/rice-bowls/builds/patty-bowl/">Patty rice<span class="y">1990</span></a>
+tags/method/index.html: <a class="opt-pill todo" href="/essays/methods/rice-bowls/builds/poke-bowl/">
+tags/method/index.html: !build-card
 essays/methods/rice-bowls/index.html: rs-label">Further reading <span class="n">2
 essays/methods/rice-bowls/index.html: <a href="/reference/rice-ratios/">Rice ratios <span class="n">Reference
 essays/methods/rice-bowls/index.html: !broken-link

@@ -1,0 +1,19 @@
+{{/*
+  A build's name without its blueprint's: the title with a last word
+  dropped when it's the blueprint title's last word, or that word without
+  a plural "s" (case aside). "Drive-in deluxe burger" in Burgers is
+  "Drive-in deluxe"; "American bolognese pasta" in One-pan pasta is
+  "American bolognese". A title that would be left empty is kept whole.
+  Takes a dict: page (the build), blueprint (its section page); returns
+  a string.
+*/}}
+{{ $title := .page.Title }}
+{{ $words := split (lower .blueprint.Title) " " }}
+{{ $last := index $words (sub (len $words) 1) }}
+{{ $out := $title }}
+{{ with findRESubmatch `^(.*\S)\s+(\S+)$` $title 1 }}
+  {{ $m := index . 0 }}
+  {{ $w := lower (index $m 2) }}
+  {{ if or (eq $w $last) (eq $w (strings.TrimSuffix "s" $last)) }}{{ $out = index $m 1 }}{{ end }}
+{{ end }}
+{{ return $out }}
