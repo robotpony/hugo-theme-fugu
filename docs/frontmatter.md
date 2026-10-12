@@ -90,7 +90,7 @@ Win the fridge is the practice of using what you have before it goes to waste.
 
 ## Methods and blueprints
 
-A method is a page in the essay section's methods folder (`content/essays/methods/`, [configuration.md](configuration.md#methods-and-blueprints)). It takes the essay fields, and shows a method chip on its card and page. A method can belong to a blueprint, a dish type made of parts, through the blueprint taxonomy:
+A method is a page in the methods section (`content/methods/`, when the site has one) or the essay section's methods folder (`content/essays/methods/`, [configuration.md](configuration.md#methods-and-blueprints)). It takes the essay fields, and shows a method chip on its card and page. A method can belong to a blueprint, a dish type made of parts, through the blueprint taxonomy:
 
 | Field | On | What it does |
 | --- | --- | --- |
@@ -148,7 +148,7 @@ picks:
 ---
 ```
 
-The methods list is the method tag's own page, `content/tags/method/_index.md` with `kind: method`; its body is the definition at the top.
+The methods list is the methods section's page (`content/methods/_index.md`) when the site has one, else the method tag's own page, `content/tags/method/_index.md` with `kind: method`; either way, its body is the definition at the top.
 
 ## Pages at the site's root
 

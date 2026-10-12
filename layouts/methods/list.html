@@ -1,0 +1,10 @@
+{{ define "main" }}
+{{/*
+  The methods section's page (params.fugu.methodSection, e.g. /methods/):
+  the methods list, laid out by partials/method/list.html as the methods
+  tag's page is when methods live in the essay section. A renamed section
+  sets `type: methods` in its _index.md so Hugo finds this layout.
+*/}}
+{{ .Scratch.Set "scope" "list" }}
+{{ partial "method/list.html" . }}
+{{ end }}

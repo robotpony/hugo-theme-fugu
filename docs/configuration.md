@@ -38,9 +38,10 @@ These Blowfish and Hugo settings also matter:
   essaySection = "essays"
   referenceSection = "reference"
   logSection = "the-food-log"
+  methodSection = ""
 ```
 
-Each is a folder under `content/`. Only recipes is required. A section with no pages already shows nothing, so a site without essays doesn't have to set anything; set a section to `""` when the folder exists but isn't meant as that section.
+Each is a folder under `content/`. Only recipes is required. `methodSection` is off by default: methods live in a folder of the essay section unless it names their own section ([Methods and blueprints](#methods-and-blueprints)). A section with no pages already shows nothing, so a site without essays doesn't have to set anything; set a section to `""` when the folder exists but isn't meant as that section.
 
 To rename a section, set its folder here and also set `type` in that section's `_index.md` to the default name, so Hugo finds Fugu's list layout for it:
 
@@ -121,12 +122,32 @@ Methods are pages that explain how a kind of food or a process works in general,
 | Key | What it is |
 | --- | --- |
 | `folder` | A folder in the essay section (`content/essays/methods/`). A page in it, at any depth, is a method; the folder decides, not the page's tags. |
-| `tag` | The tag whose term page is the methods list, when its `content/tags/<tag>/_index.md` sets `kind: method`. The method chip links there. |
+| `tag` | Without a methods section, the tag whose term page is the methods list, when its `content/tags/<tag>/_index.md` sets `kind: method`. The method chip links there. With one, the tag's pages that aren't methods are the list's further reading. |
 | `taxonomy` | The taxonomy that holds blueprints. The site has to declare it under `[taxonomies]` (`blueprint = "blueprint"`). |
 | `label` | The method chip's words. |
 | `icon` | An SVG in `assets/` (the site's, else Fugu's fan-out), inlined so it takes the text colour. `""` leaves the chip without one. |
 
 Set any of `folder`, `tag`, or `taxonomy` to `""` to turn that part off.
+
+Methods can also be their own section, `content/methods/`, instead of a folder of essays:
+
+```toml
+[params.fugu]
+  methodSection = "methods"
+```
+
+```yaml
+# content/methods/_index.md
+---
+title: Methods
+description: How a kind of food works in general.
+cascade:
+  tags: [method]
+---
+A method is the pattern behind many dishes. (This body is the definition at the top of the list.)
+```
+
+Every regular page in the section, at any depth, is a method, and reads like an essay: the reading sidebar, reading time on its card. The section's page (`/methods/`) is the methods list, and the method chip and blueprint pages link there. Methods left in the essay section's `folder` still count, so a site can move them over a few at a time. A renamed methods section sets `type: methods` in its `_index.md`.
 
 ## Recipe headings
 

@@ -53,7 +53,8 @@
   the intro can give up a line and the card keeps its height.
 */}}
 {{ $role := partialCached "section/role.html" .Section .Section }}
-{{ $isEssay := eq $role "essay" }}
+{{/* A method in its own section reads like an essay on its card. */}}
+{{ $isEssay := in (slice "essay" "method") $role }}
 {{ $isLog := eq $role "log" }}
 {{ $isRef := eq $role "reference" }}
 {{ $title := .Title }}

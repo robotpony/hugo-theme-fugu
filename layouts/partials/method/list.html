@@ -1,6 +1,7 @@
 {{/*
-  The methods list: the methods tag's term page, when its _index.md sets
-  `kind: method` (called from term.html). Laid out as a map, not a feed:
+  The methods list: the methods section's page (layouts/methods/
+  list.html), or the methods tag's term page when its _index.md sets
+  `kind: method` (term.html). Laid out as a map, not a feed:
 
   - the header, with a count of methods and blueprints
   - the definition callout (concept/callout.html) from the _index.md body
@@ -13,7 +14,9 @@
 
   Methods are found by folder (method/all.html), not by the tag, so a
   method that forgot the tag still shows. No pagination: a site has tens
-  of methods, not hundreds. Takes the term page.
+  of methods, not hundreds. Further reading comes from the methods tag:
+  the term's own pages, or on the section page, the tag's term page's.
+  Takes the section or term page.
 */}}
 {{ $taxonomy := site.Params.fugu.methods.taxonomy | default "" }}
 {{ $methods := partialCached "method/all.html" "all" "all" }}
@@ -25,9 +28,18 @@
 {{ range $methods }}
   {{ if not (and $taxonomy (index .Params $taxonomy)) }}{{ $standalone = $standalone | append . }}{{ end }}
 {{ end }}
+{{ $tagged := .Pages }}
+{{ if not .Data.Term }}
+  {{ $tagged = slice }}
+  {{ with site.Params.fugu.methods.tag }}
+    {{ with site.GetPage (printf "/tags/%s" (. | urlize)) }}{{ $tagged = .Pages }}{{ end }}
+  {{ end }}
+{{ end }}
 {{ $further := slice }}
-{{ range .Pages }}
-  {{ if not (partial "method/is.html" .) }}{{ $further = $further | append . }}{{ end }}
+{{ $list := . }}
+{{ range $tagged }}
+  {{/* Not the list itself: a methods section that cascades the tag tags its own page too. */}}
+  {{ if and (not (partial "method/is.html" .)) (ne . $list) }}{{ $further = $further | append . }}{{ end }}
 {{ end }}
 <section class="listing method-list">
   <header class="listing-head">

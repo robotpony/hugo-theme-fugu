@@ -1,7 +1,7 @@
 {{/*
   Which sidebar a page gets: "recipe" (single.html's recipe sidebar),
-  "reading" (partials/reading-sidebar.html: essays, reference guides, the
-  Food Log, About), or "" (everything else, including the home page, which
+  "reading" (partials/reading-sidebar.html: essays, methods, reference
+  guides, the Food Log, About), or "" (everything else, including the home page, which
   doesn't render through single.html at all). Shared by single.html and
   render-heading.html so the heading marks and the slots they target
   always agree on which pages have a sidebar.
@@ -10,7 +10,7 @@
 {{ $role := partialCached "section/role.html" .Section .Section }}
 {{ if eq $role "recipe" }}
   {{ $kind = "recipe" }}
-{{ else if or (in (slice "essay" "reference" "log") $role) (and (eq .Section "") (eq .Kind "page")) }}
+{{ else if or (in (slice "essay" "reference" "log" "method") $role) (and (eq .Section "") (eq .Kind "page")) }}
   {{ $kind = "reading" }}
 {{ end }}
 {{ return $kind }}

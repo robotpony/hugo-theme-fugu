@@ -1,6 +1,6 @@
 {{/*
-  Reading sidebar for essays, reference
-  guides, the Food Log, and About. Rendered by _default/single.html after
+  Reading sidebar for essays (and methods, in their own section or the
+  essay section's folder), reference guides, the Food Log, and About. Rendered by _default/single.html after
   the main column, so it sits level with the top of the body on desktop
   (the title block is above both columns) and falls below the article on
   mobile. Search is on every page; the other modules are scoped to the
@@ -10,6 +10,9 @@
 */}}
 {{ $page := . }}
 {{ $section := partialCached "section/role.html" .Section .Section }}
+{{/* Methods in their own section get the essay modules. */}}
+{{ $sectionTitle := "" }}
+{{ if eq $section "method" }}{{ $section = "essay" }}{{ $sectionTitle = .CurrentSection.Title }}{{ end }}
 {{ $isAbout := and (eq .Section "") (eq .Kind "page") }}
 {{ $recipes := where site.RegularPages "Section" (partial "section/name.html" "recipe") }}
 {{/* Sections automagic-sidebar.js moves into the slots below (Notes,
@@ -155,7 +158,7 @@
     {{ if gt (len $siblings) 1 }}
       {{ $folder := path.Base (strings.TrimSuffix "/" $dir) }}
       <div class="rs-section">
-        <h2 class="rs-label">{{ if eq $folder $page.Section }}Essays{{ else }}{{ $folder | humanize }}{{ end }} <span class="n">{{ len $siblings }}</span></h2>
+        <h2 class="rs-label">{{ if eq $folder $page.Section }}{{ $sectionTitle | default "Essays" }}{{ else }}{{ $folder | humanize }}{{ end }} <span class="n">{{ len $siblings }}</span></h2>
         <div class="browse-list">
           {{ range (sort $siblings "Title") }}
             <a href="{{ .RelPermalink }}"{{ if eq . $page }} aria-current="page"{{ end }}>{{ .Title }}</a>
@@ -195,7 +198,7 @@
       <div class="rs-numbers">
         <div class="rs-number">Recipes <b>{{ len $recipes }}</b></div>
         {{ with site.Taxonomies.cuisine }}<div class="rs-number">Cuisines <b>{{ len . }}</b></div>{{ end }}
-        {{ range slice (slice "essay" "Essays") (slice "reference" "Reference guides") }}
+        {{ range slice (slice "essay" "Essays") (slice "method" "Methods") (slice "reference" "Reference guides") }}
           {{ $label := index . 1 }}
           {{ with partial "section/name.html" (index . 0) }}
             {{ with where site.RegularPages "Section" . }}<div class="rs-number">{{ $label }} <b>{{ len . }}</b></div>{{ end }}
@@ -217,7 +220,7 @@
               {{ end }}
             {{ end }}
             {{ with $hit }}
-              {{ $kind := dict "recipe" "recipe" "essay" "essay" "reference" "guide" }}
+              {{ $kind := dict "recipe" "recipe" "essay" "essay" "method" "method" "reference" "guide" }}
               <a href="{{ .RelPermalink }}">{{ .Title }} <span class="n">{{ index $kind (partialCached "section/role.html" .Section .Section) | default "" }}</span></a>
             {{ end }}
           {{ end }}

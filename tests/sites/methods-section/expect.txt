@@ -1,0 +1,23 @@
+# Methods in their own section (params.fugu.methodSection = "methods"):
+# the section's page is the methods list, every chip links there, and the
+# methods read like essays (reading sidebar, siblings, card stats).
+methods/index.html: method-list
+methods/index.html: 4 methods · 1 blueprint
+methods/index.html: Techniques and ratios
+methods/index.html: href="/methods/thinking-in-ratios/"
+methods/index.html: !ref-kind
+methods/patty-bowl/index.html: class="method-chip" href="/methods/"
+methods/patty-bowl/index.html: build-picks not-prose has-diagram
+methods/patty-bowl/index.html: part-nav-up
+methods/patty-bowl/index.html: reading-sidebar
+methods/cooking-rice/index.html: rs-label">Methods <span class="n">4
+blueprint/rice-bowls/index.html: class="method-chip" href="/methods/"
+blueprint/rice-bowls/index.html: build-card
+recipes/plain-rice/index.html: href="/methods/plain-bowl/">Rice bowls
+
+# The essay section no longer holds them.
+essays/index.html: 2 essays
+essays/index.html: !/methods/
+
+# The About numbers count them.
+about/index.html: Methods <b>4

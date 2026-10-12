@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
 frontmatter.py — Review and edit frontmatter across a Fugu site's recipes,
-essays, reference pages, and log. The section folders come from the
-site's [params.fugu] (recipeSection, essaySection, referenceSection,
-logSection), defaulting to content/recipes, content/essays,
-content/reference, and content/the-food-log.
+essays, reference pages, log, and methods. The section folders come from
+the site's [params.fugu] (recipeSection, essaySection, referenceSection,
+logSection, methodSection), defaulting to content/recipes, content/essays,
+content/reference, and content/the-food-log, with no methods section.
 
 No third-party dependencies. Frontmatter on these sites is a flat YAML
 mapping (scalars, flow lists `[a, b, c]`, occasional block lists, one
@@ -52,12 +52,14 @@ DEFAULT_SECTIONS = {
     "essay": "essays",
     "reference": "reference",
     "log": "the-food-log",
+    "method": "",
 }
 SECTION_PARAMS = {
     "recipe": "recipesection",
     "essay": "essaysection",
     "reference": "referencesection",
     "log": "logsection",
+    "method": "methodsection",
 }
 
 
@@ -107,6 +109,7 @@ REQUIRED_FIELDS = {
     "essay": ["title", "date"],
     "reference": ["title", "date"],
     "log": ["title", "date"],
+    "method": ["title", "date"],
 }
 
 RECOMMENDED_FIELDS = {
@@ -114,6 +117,7 @@ RECOMMENDED_FIELDS = {
     "essay": ["tags", "draft"],
     "reference": ["source", "tags", "draft"],
     "log": [],
+    "method": ["tags", "draft"],
 }
 
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")

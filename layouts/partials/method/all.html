@@ -1,12 +1,16 @@
 {{/*
-  Every method on the site (method/is.html), by weight, then date, then
-  title. Takes anything (call it with partialCached, keyed "all");
-  returns Pages, empty when the essay section or methods folder is off.
+  Every method on the site (method/is.html), from the methods section and
+  the essay section's methods folder, by weight, then date, then title.
+  Takes anything (call it with partialCached, keyed "all"); returns Pages,
+  empty when neither is set up.
 */}}
+{{ $sections := slice }}
+{{ range slice "method" "essay" }}
+  {{ with partial "section/name.html" . }}{{ $sections = $sections | append . }}{{ end }}
+{{ end }}
 {{ $out := slice }}
-{{ with partial "section/name.html" "essay" }}
-  {{ $pages := where site.RegularPages "Section" . }}
-  {{ range $pages.ByWeight }}
+{{ with $sections }}
+  {{ range (where site.RegularPages "Section" "in" .).ByWeight }}
     {{ if partial "method/is.html" . }}{{ $out = $out | append . }}{{ end }}
   {{ end }}
 {{ end }}

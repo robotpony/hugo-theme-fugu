@@ -1,11 +1,18 @@
 {{/*
-  The methods list: the term page of params.fugu.methods.tag (e.g.
-  content/tags/method/_index.md, which sets `kind: method` so term.html
-  lays it out as the list). Takes anything (call it with partialCached);
-  returns the page, or false when the tag is "" or has no page.
+  The methods list: the methods section's page (params.fugu.methodSection,
+  laid out by layouts/methods/list.html) when the site has one, else the
+  term page of params.fugu.methods.tag (e.g. content/tags/method/
+  _index.md, which sets `kind: method` so term.html lays it out as the
+  list). Takes anything (call it with partialCached); returns the page,
+  or false when there's neither.
 */}}
 {{ $page := false }}
-{{ with site.Params.fugu.methods.tag }}
-  {{ with site.GetPage (printf "/tags/%s" (. | urlize)) }}{{ $page = . }}{{ end }}
+{{ with partial "section/name.html" "method" }}
+  {{ with site.GetPage (printf "/%s" .) }}{{ $page = . }}{{ end }}
+{{ end }}
+{{ if not $page }}
+  {{ with site.Params.fugu.methods.tag }}
+    {{ with site.GetPage (printf "/tags/%s" (. | urlize)) }}{{ $page = . }}{{ end }}
+  {{ end }}
 {{ end }}
 {{ return $page }}

@@ -1,0 +1,42 @@
+# The everything site with methods in their own section, content/methods/
+# (params.fugu.methodSection), instead of the essay section. See ../README.md.
+baseURL = "https://example.org/"
+title = "Methods section"
+theme = ["fugu", "blowfish"]
+themesDir = "../../../.."
+buildDrafts = true  # drafts publish as pages in development
+
+[taxonomies]
+  tag = "tags"
+  cuisine = "cuisine"
+  blueprint = "blueprint"  # methods' blueprints (params.fugu.methods)
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[related]
+  threshold = 50
+  toLower = true
+  [[related.indices]]
+    name = "tags"
+    weight = 100
+  [[related.indices]]
+    name = "cuisine"
+    weight = 80
+
+[params]
+  mainSections = ["recipes"]
+  enableSearch = true
+
+  [params.article]
+    showTableOfContents = true
+    showRelatedContent = true
+    relatedContentLimit = 3  # Blowfish errors without it when related content is on
+    showTaxonomies = true
+    showBreadcrumbs = true
+
+  [params.fugu]
+    methodSection = "methods"
+
+  [params.recipe]
+    enableKelvin = false
