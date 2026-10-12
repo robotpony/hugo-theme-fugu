@@ -2,7 +2,12 @@
 # the section's page is the methods list, every chip links there, and the
 # methods read like essays (reading sidebar, siblings, card stats).
 methods/index.html: method-list
-methods/index.html: 4 methods · 1 blueprint
+methods/index.html: recipe-meta-label">Methods</span><span class="recipe-meta-value">4
+methods/index.html: reading-sidebar-wrap
+methods/index.html: class="method-intro"
+methods/index.html: !definition-callout
+methods/index.html: href="#bp-rice-bowls"
+methods/index.html: bp-rail-next
 methods/index.html: Techniques and ratios
 methods/index.html: href="/methods/thinking-in-ratios/"
 methods/index.html: !ref-kind

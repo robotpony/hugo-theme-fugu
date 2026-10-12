@@ -564,6 +564,7 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
 .reading-sidebar .rs-toc a { color: var(--fugu-ink); text-decoration: none; }
 .reading-sidebar .rs-toc a:hover { color: var(--fugu-accent-strong); }
 .reading-sidebar .rs-toc-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 3px 0; font-size: .9rem; font-weight: 600; }
+.reading-sidebar .rs-toc-top .n { font-family: var(--fugu-font-mono); font-size: .72rem; font-weight: 500; color: var(--fugu-ink-faint); }
 .reading-sidebar .rs-toc-toggle {
   flex-shrink: 0; padding: 0 0 0 8px; border: 0; background: none; cursor: pointer;
   font-family: var(--fugu-font-mono); font-variant-numeric: tabular-nums; font-size: .7rem; color: var(--fugu-ink-faint);
@@ -722,12 +723,14 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
  * methods list, a blueprint's page, and a build page's picks.
  * ------------------------------------------------------------------- */
 
+/* The methods list's intro: its definition as plain body text. */
+.method-intro { max-width: 65ch; font-size: 1.08rem; margin-bottom: 8px; }
+
 /* Blueprint rows on the methods list: the block, then its build tiles
- * beside it (one column under 820px). The block holds links but isn't
- * one, so it doesn't light up; its name and part rows do. */
-.bp-list { display: flex; flex-direction: column; gap: 24px; }
-.bp-row { display: grid; grid-template-columns: minmax(300px, 360px) minmax(0, 1fr); gap: 16px; align-items: stretch; }
-@media (max-width: 820px) { .bp-row { grid-template-columns: minmax(0, 1fr); } }
+ * under it. The block holds links but isn't one, so it doesn't light up;
+ * its name and part rows do. */
+.bp-list { display: flex; flex-direction: column; gap: 32px; }
+.bp-row { display: flex; flex-direction: column; gap: 14px; }
 .bp { display: flex; flex-direction: column; gap: 10px; min-width: 0; background: var(--fugu-surface); border: 1px solid var(--fugu-border); border-radius: var(--fugu-radius); padding: 16px 18px 14px; }
 .bp-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
 .bp-name { display: inline-flex; align-items: center; gap: 8px; font-size: 1.15rem; font-weight: 700; color: var(--fugu-ink); text-decoration: none; }
@@ -765,20 +768,39 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
 .parts-compact li.todo .part-row { font-weight: 500; color: var(--fugu-ink-faint); }
 .parts-compact li.todo .part-row::before { color: var(--fugu-ink-faint); }
 .parts-compact li.todo .part-row::after { content: "to come"; font-family: var(--fugu-font-mono); font-size: .64rem; font-weight: 400; color: var(--fugu-ink-faint); }
+/* Two columns, numbered down then across: the list sets --rows, half its
+ * length rounded up. One column on phones. */
+@media (min-width: 640px) {
+  .parts-compact[style*="--rows"] { display: grid; grid-auto-flow: column; grid-template-rows: repeat(var(--rows), auto); column-gap: 28px; }
+}
 
-/* Build tiles beside a blueprint: three across, a sideways scroll-snap
- * row under 820px. Each tile is a whole-card link (.rcard-link's ::after),
+/* Build tiles under a blueprint, as a rail: three fill the column; with
+ * more, they shrink so the next one peeks under a fade, and ‹ › buttons
+ * and dots show (assets/js/builds-rail.js sets .is-overflowing and
+ * .at-end). 72% tiles on phones. Each tile is a whole-card link (.rcard-link's ::after),
  * its draft chip above it. Every stack is drawn at one width, bottom-
  * aligned on a shelf, so the heights compare: don't fix their height. */
 .bp-builds { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .bp-builds-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--fugu-ink-faint); }
 .bp-builds-head a { font-size: .76rem; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--fugu-accent-strong); text-decoration: none; }
 .bp-builds-head a:hover { text-decoration: underline; }
-.build-tiles { flex: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-@media (max-width: 820px) {
-  .build-tiles { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; }
-  .build-tile { flex: 0 0 72%; scroll-snap-align: start; }
+.bp-builds-head > span { margin-right: auto; }
+.bp-rail-prev, .bp-rail-next { display: none; align-self: center; width: 26px; height: 26px; border: 1px solid var(--fugu-border-strong); border-radius: 50%; background: var(--fugu-surface); color: var(--fugu-ink); font-size: .9rem; line-height: 1; cursor: pointer; }
+.bp-rail-prev:hover:not(:disabled), .bp-rail-next:hover:not(:disabled) { border-color: var(--fugu-accent); color: var(--fugu-accent-strong); }
+.bp-rail-prev:disabled, .bp-rail-next:disabled { opacity: .35; cursor: default; }
+.bp-builds.is-overflowing .bp-rail-prev, .bp-builds.is-overflowing .bp-rail-next { display: inline-flex; align-items: center; justify-content: center; }
+.build-tiles { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.build-tiles::-webkit-scrollbar { display: none; }
+.build-tile { flex: 0 0 calc((100% - 24px) / 3); scroll-snap-align: start; }
+.bp-builds.is-overflowing .build-tile { flex-basis: calc((100% - 36px) / 3.3); }
+.bp-builds.is-overflowing:not(.at-end) .build-tiles { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent); }
+@media (max-width: 640px) {
+  .build-tile, .bp-builds.is-overflowing .build-tile { flex-basis: 72%; }
 }
+.bp-rail-dots { display: none; justify-content: center; gap: 6px; }
+.bp-builds.is-overflowing .bp-rail-dots { display: flex; }
+.bp-rail-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--fugu-border-strong); }
+.bp-rail-dots i.on { background: var(--fugu-accent); }
 .build-tile { position: relative; display: flex; flex-direction: column; gap: 6px; min-width: 0; background: var(--fugu-surface); border: 1px solid var(--fugu-border); border-radius: var(--fugu-radius); padding: 14px 14px 12px; transition: border-color .12s; }
 .build-tile:hover, .build-tile:focus-within { border-color: var(--fugu-accent); }
 .build-tile .rcard-top { position: relative; z-index: 1; }

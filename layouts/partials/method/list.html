@@ -1,21 +1,32 @@
 {{/*
   The methods list: the methods section's page (layouts/methods/
   list.html), or the methods tag's term page when its _index.md sets
-  `kind: method` (term.html). Laid out as a map, not a feed:
+  `kind: method` (term.html). Laid out as a map, not a feed, on the
+  reading layout: a body column and the reading sidebar's wrap beside it
+  (.reading-sidebar-wrap, below the page under 1024px).
 
-  - the header, with a count of methods and blueprints
-  - the definition callout (concept/callout.html) from the _index.md body
+  The body:
+  - the title alone (the counts are in the sidebar)
+  - the definition, the _index.md body, as the page's intro
+    (.method-intro), plain text rather than a callout
   - "Blueprints": one row per blueprint (params.fugu.methods.taxonomy).
     The block (.bp) holds links but isn't one: its name links to the
     blueprint, and its parts are a compact numbered list whose rows are
     whole-row links to the part's first method (unwritten parts are faint,
-    marked "to come"). Beside it, when the blueprint has builds, a tile per
-    build (.build-tile) in info.html's order: its stack drawn at one scale
-    so heights compare, name, origin and profile, plus a link to the
-    blueprint page's picks comparison (#compare). A blueprint with no
-    builds is the block alone.
+    marked "to come"). The list carries --rows, half its length rounded
+    up, so CSS can run it in two columns numbered down then across. Under
+    the block, when the blueprint has builds, a rail of tiles (.build-tile)
+    in info.html's order: its stack drawn at one scale so heights compare,
+    name, origin and profile, plus a link to the blueprint page's picks
+    comparison (#compare). assets/js/builds-rail.js adds the rail's
+    buttons and dots; without it the tiles are a plain sideways scroll.
+    A blueprint with no builds is the block alone.
   - "Techniques and ratios": methods in no blueprint, as cards
-  - anything else carrying the tag that isn't a method, as further reading
+
+  The sidebar: search; counts in the date-rows style (methods,
+  blueprints, builds, parts written); "On this page", desktop only, as on
+  reading pages; and anything else carrying the tag that isn't a method,
+  as further reading, when there is any.
 
   Methods are found by folder (method/all.html), not by the tag, so a
   method that forgot the tag still shows. No pagination: a site has tens
@@ -46,20 +57,29 @@
   {{/* Not the list itself: a methods section that cascades the tag tags its own page too. */}}
   {{ if and (not (partial "method/is.html" .)) (ne . $list) }}{{ $further = $further | append . }}{{ end }}
 {{ end }}
-<section class="listing method-list">
+{{ $nBuilds := 0 }}
+{{ $nParts := 0 }}
+{{ $nWritten := 0 }}
+{{ range $blueprints }}
+  {{ $info := partialCached "blueprint/info.html" . .Path }}
+  {{ $nBuilds = add $nBuilds (len $info.builds) }}
+  {{ $nParts = add $nParts (len $info.parts) }}
+  {{ $nWritten = add $nWritten $info.written }}
+{{ end }}
+<div class="method-list-layout flex flex-col lg:flex-row">
+<section class="listing method-list min-w-0 flex-1">
   <header class="listing-head">
     <h1 class="ltitle">{{ .Title }}</h1>
-    <span class="listing-count">{{ len $methods }} {{ cond (eq (len $methods) 1) "method" "methods" }}{{ with $blueprints }} · {{ len . }} {{ cond (eq (len .) 1) "blueprint" "blueprints" }}{{ end }}</span>
   </header>
-  {{ partial "concept/callout.html" (dict "kind" "method" "label" (site.Params.fugu.methods.label | default "Method") "content" .Content) }}
+  {{ with .Content }}<div class="method-intro">{{ . }}</div>{{ end }}
 
   {{ with $blueprints }}
-    <h3 class="subsection-title">Blueprints<span class="subsection-count">{{ len . }}</span></h3>
+    <h3 class="subsection-title" id="blueprints">Blueprints<span class="subsection-count">{{ len . }}</span></h3>
     <div class="bp-list">
       {{ range . }}
         {{ $bp := . }}
         {{ $info := partialCached "blueprint/info.html" . .Path }}
-        <div class="bp-row">
+        <div class="bp-row" id="bp-{{ .Title | urlize }}">
           <section class="bp">
             <div class="bp-head">
               <a class="bp-name" href="{{ .RelPermalink }}">{{ partialCached "method/icon.html" . "icon" | safeHTML }}<span>{{ .Title }}</span><span class="go" aria-hidden="true">→</span></a>
@@ -67,7 +87,7 @@
             </div>
             {{ with .Description }}<p class="bp-desc">{{ . }}</p>{{ end }}
             {{ with $info.parts }}
-              <ol class="parts parts-compact">
+              <ol class="parts parts-compact" style="--rows:{{ div (add (len .) 1) 2 }}">
                 {{ range . }}
                   {{ $part := . }}
                   {{ with .methods }}
@@ -81,7 +101,7 @@
           </section>
           {{ with $info.builds }}
             <div class="bp-builds">
-              <div class="bp-builds-head"><span>Builds · {{ len . }}</span>{{ if ge (len .) 2 }}<a href="{{ $bp.RelPermalink }}#compare">Compare picks →</a>{{ end }}</div>
+              <div class="bp-builds-head"><span>Builds · {{ len . }}</span>{{ if ge (len .) 2 }}<a href="{{ $bp.RelPermalink }}#compare">Compare picks →</a>{{ end }}<button type="button" class="bp-rail-prev" aria-label="Previous builds">‹</button><button type="button" class="bp-rail-next" aria-label="Next builds">›</button></div>
               <div class="build-tiles">
                 {{ range . }}
                   <article class="build-tile">
@@ -93,6 +113,7 @@
                   </article>
                 {{ end }}
               </div>
+              <div class="bp-rail-dots"></div>
             </div>
           {{ end }}
         </div>
@@ -101,11 +122,67 @@
   {{ end }}
 
   {{ with $standalone }}
-    <h3 class="subsection-title{{ if $blueprints }} subsection-gap{{ end }}">Techniques and ratios<span class="subsection-count">{{ len . }}</span></h3>
+    <h3 class="subsection-title{{ if $blueprints }} subsection-gap{{ end }}" id="techniques">Techniques and ratios<span class="subsection-count">{{ len . }}</span></h3>
     <div class="rgrid">
       {{ range . }}{{ partial "recipe-card.html" . }}{{ end }}
     </div>
   {{ end }}
-
-  {{ partial "concept/further.html" (dict "pages" $further) }}
 </section>
+
+{{/* The reading sidebar's wrap and pin (_default/single.html), with this
+  page's own modules. */}}
+<div class="reading-sidebar-wrap lg:ms-auto px-0 lg:ps-8 print:hidden">
+  <div class="reading-sidebar-pin lg:sticky lg:top-10">
+    <div class="reading-sidebar not-prose">
+      <div class="rs-section">
+        {{ partial "search-box.html" "site" }}
+      </div>
+
+      <div class="recipe-meta">
+        <div class="recipe-meta-row"><span class="recipe-meta-label">Methods</span><span class="recipe-meta-value">{{ len $methods }}</span></div>
+        {{ with $blueprints }}
+          <div class="recipe-meta-row"><span class="recipe-meta-label">Blueprints</span><span class="recipe-meta-value">{{ len . }}</span></div>
+          {{ if $nBuilds }}<div class="recipe-meta-row"><span class="recipe-meta-label">Builds</span><span class="recipe-meta-value">{{ $nBuilds }}</span></div>{{ end }}
+          {{ if $nParts }}<div class="recipe-meta-row"><span class="recipe-meta-label">Parts</span><span class="recipe-meta-value">{{ $nWritten }} of {{ $nParts }} written</span></div>{{ end }}
+        {{ end }}
+      </div>
+
+      {{ if or $blueprints $standalone }}
+        <div class="rs-section hidden lg:block">
+          <h2 class="rs-label">On this page</h2>
+          <div class="rs-toc">
+            {{ with $blueprints }}
+              <div class="rs-toc-top"><a href="#blueprints">Blueprints</a><span class="n">{{ len . }}</span></div>
+              <div class="rs-toc-group">
+                {{ range . }}<a href="#bp-{{ .Title | urlize }}">{{ .Title }}</a>{{ end }}
+              </div>
+            {{ end }}
+            {{ with $standalone }}
+              <div class="rs-toc-top"><a href="#techniques">Techniques and ratios</a><span class="n">{{ len . }}</span></div>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+
+      {{/* Further reading, labelled as concept/further.html labels it. */}}
+      {{ with $further }}
+        <div class="rs-section">
+          <h2 class="rs-label">Reference &amp; further reading <span class="n">{{ len . }}</span></h2>
+          <div class="browse-list">
+            {{ range . }}
+              {{ $label := "Essay" }}
+              {{ if eq (partialCached "section/role.html" .Section .Section) "reference" }}{{ $label = "Reference" }}
+              {{ else if partial "method/is.html" . }}{{ $label = "Method" }}{{ end }}
+              <a href="{{ .RelPermalink }}">{{ .Title }} <span class="n">{{ $label }}</span></a>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+</div>
+</div>
+{{ if $nBuilds }}
+  {{ $railJS := resources.Get "js/builds-rail.js" | resources.Minify | resources.Fingerprint "sha256" }}
+  <script src="{{ $railJS.RelPermalink }}" integrity="{{ $railJS.Data.Integrity }}" defer></script>
+{{ end }}
