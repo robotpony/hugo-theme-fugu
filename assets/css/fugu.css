@@ -703,6 +703,26 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
 .recipe-sidebar-section .formula-ratio :is(.f-num, .f-op) { font-size: 1.1rem; }
 
 /* ---------------------------------------------------------------------
+ * Stack diagrams (partials/stack/draw.html): a build drawn as an exploded
+ * view, labels on the right. The layer drawings carry their own ink and
+ * fills; these set the labels, leaders and bracket. Full size in the body,
+ * beside the picks on a build page, unlabelled and narrow on a build card.
+ * ------------------------------------------------------------------- */
+
+.stack { margin: 1.75rem auto; max-width: 420px; font-style: normal; color: var(--fugu-ink); }
+.stack-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.stack-label { fill: var(--fugu-ink); }
+.stack-role { fill: var(--fugu-ink-muted); fill-opacity: 1; }
+.stack-lead { stroke: var(--fugu-ink-faint); stroke-opacity: 1; }
+.stack-dot { fill: var(--fugu-ink-faint); fill-opacity: 1; }
+.stack-bracket { stroke: var(--fugu-accent); }
+.stack-times { font-family: var(--fugu-font-mono); fill: var(--fugu-accent-strong); }
+.stack-missing { stroke: var(--fugu-ink-faint); }
+.stack-cap { margin-top: 12px; font-size: .76rem; text-align: center; color: var(--fugu-ink-faint); }
+.build-diagram .stack { margin: 0; max-width: none; }
+.build-card .stack { width: 150px; margin: 4px auto 0; }
+
+/* ---------------------------------------------------------------------
  * Methods and blueprints (partials/method/, partials/blueprint/): the
  * methods list, a blueprint's page, and a build page's picks.
  * ------------------------------------------------------------------- */

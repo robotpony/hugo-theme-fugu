@@ -48,6 +48,10 @@ The build warns about an icon name it doesn't know (and draws a dashed circle fo
 
 The icons are SVGs in `assets/icons/formula/`, one per name: bowl, butter, can, carrot, cheese, clock, crumbs, cup, egg, flame, flour, oil, onion, pan, patty, pot, potato, salt, water. A site adds icons, or replaces Fugu's, by putting SVGs with those names in its own `assets/icons/formula/`. Icons are drawn in `currentColor`, so they follow the text colour in light and dark mode.
 
+## Stack diagrams
+
+A ```` ```stack ```` block draws a build as an exploded view: each layer from the side, pulled apart top to bottom, with a dotted leader to its label and role, and a `× n` bracket for repeated layers ([recipe-format.md](recipe-format.md#stack-diagrams)). It appears where it's written, beside a build page's picks, and small and unlabelled on the build's card. The layers are SVGs in `assets/icons/layers/` (bun-top, bun-base, bread, lettuce, tomato, onion-raw, onion-fried, pickle, cheese, cheese-top, bacon, patty-thin, patty-thick, patty-smash, sauce-ketchup-mustard, sauce-burger, mustard, mayo, pasta, ragu, bechamel), drawn in `currentColor` with the theme's soft accent and surface fills, so they follow light and dark mode. The build warns about a layer it doesn't know.
+
 ## Wiki links and the glossary
 
 `[[Title]]` links any page to any other by its title, as in Obsidian, so a recipe's ingredient list can link to the recipe for its sauce ([recipe-format.md](recipe-format.md#wiki-links)).

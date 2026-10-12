@@ -171,6 +171,28 @@ The diagram illustrates a sentence; it doesn't replace one. In Obsidian it reads
 
 The icons in the kit today: bowl, butter, can, carrot, cheese, clock, crumbs, cup, egg, flame, flour, oil, onion, pan, patty, pot, potato, salt, water. A site can add its own by putting SVGs in its own `assets/icons/formula/`.
 
+## Stack diagrams
+
+A build that's made of layers (a burger, a sandwich, a lasagne) can be drawn as an exploded view: each layer as the thing itself, top to bottom, pulled apart, with its label and its role on the right. Use a `stack` code block, one layer per line, top first, `layer | label | role`:
+
+````markdown
+```stack
+bun-top    | Toasted bun       | soft, toasted
+lettuce    | Shredded lettuce  | cold crunch
+patty-thin | Thin patty, 140 g | salt, fat, savoury
+bun-base   | Toasted bun       | barrier
+caption: Drive-in deluxe
+```
+````
+
+- Layers are file names from `assets/icons/layers/`, without `.svg`. An unknown name draws a dashed placeholder and warns during the build.
+- The label is what the layer is; the role is what it does for the whole. Both are short.
+- Optional lines: `caption: <text>`, and `repeat: 3-5 x3` to mark layers 3 to 5 as repeated three times (a `× 3` bracket on the left; `x` or `×`, and a single layer works too: `repeat: 4 x2`).
+
+On a build page (a method with `build_name` and `picks`), the first `stack` block is drawn beside the picks instead of where it was written, and a smaller copy without labels goes on the build's card on its blueprint page. In Obsidian it reads as plain text.
+
+The layers in the kit today: bun-top, bun-base, bread, lettuce, tomato, onion-raw, onion-fried, pickle, cheese, cheese-top, bacon, patty-thin, patty-thick, patty-smash, sauce-ketchup-mustard, sauce-burger, mustard, mayo, pasta, ragu, bechamel. A site can add its own, or replace Fugu's, by putting SVGs with those names in its own `assets/icons/layers/`: a 210-wide `viewBox` centred on x=105, its own height, and a `data-edge` attribute saying how far right of centre the drawing reaches (where the leader line starts).
+
 ## Photos
 
 Embed photos with standard Markdown where they belong in the text:

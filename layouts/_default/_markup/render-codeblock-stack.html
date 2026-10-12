@@ -1,0 +1,30 @@
+{{/*
+  Stack diagrams: a ```stack fenced block drawn as an exploded view of a
+  build (a burger, a sandwich, a lasagne), top to bottom, with a leader
+  line from each layer to its label and role on the right.
+
+    bun-top    | Toasted bun       | soft, toasted
+    lettuce    | Shredded lettuce  | cold crunch
+    patty-thin | Thin patty, 140 g | salt, fat, savoury
+    bun-base   | Toasted bun       | barrier
+    caption: Deluxe griddle
+    repeat: 2-3 x2
+
+  Layers are assets/icons/layers/<key>.svg. An unknown key draws a dashed
+  placeholder and warns, like the formula block. partials/stack/draw.html
+  does the work; stack-strip.html draws the same block on cards. Obsidian
+  shows the block as plain text.
+
+  On a build page (method/build-picks.html), the first block is already
+  drawn beside the picks, so it isn't drawn again here.
+*/}}
+{{- $p := .Page }}
+{{- $shown := false }}
+{{- if and $p.Params.build_name $p.Params.picks (partial "method/is.html" $p) }}
+  {{- with findRESubmatch "(?s)```stack[^\\n]*\\n(.*?)\\n```" $p.RawContent 1 }}
+    {{- $shown = eq (trim (index (index . 0) 1) " \t\r\n") (trim $.Inner " \t\r\n") }}
+  {{- end }}
+{{- end }}
+{{- if not $shown }}
+  {{- partial "stack/draw.html" (dict "inner" .Inner "labels" true "caption" true "pos" .Position) }}
+{{- end }}

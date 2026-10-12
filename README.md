@@ -20,7 +20,7 @@ Every section can be renamed in config (`dishes`, `writing`, …), and a part th
 
 ## What it adds
 
-Recipe pages with a sidebar for the Mechanic, To serve, Notes, and photos; ingredient check-off, scaling, and metric/imperial conversion; formula diagrams drawn from a ```` ```formula ```` block; `[[wiki links]]` as written in Obsidian; recipe cards; drafts published as "in development"; methods and blueprint pages; search; and a JSON index of every recipe. All the JavaScript is plain and dependency-free, and pages still read and print with it off. The full tour is [docs/features.md](docs/features.md).
+Recipe pages with a sidebar for the Mechanic, To serve, Notes, and photos; ingredient check-off, scaling, and metric/imperial conversion; formula diagrams drawn from a ```` ```formula ```` block; exploded build diagrams from a ```` ```stack ```` block; `[[wiki links]]` as written in Obsidian; recipe cards; drafts published as "in development"; methods and blueprint pages; search; and a JSON index of every recipe. All the JavaScript is plain and dependency-free, and pages still read and print with it off. The full tour is [docs/features.md](docs/features.md).
 
 Content tools live in `tools/`: `frontmatter.py` (check and edit frontmatter), `drafts.py` (list drafts), `add-image.sh` (prepare photos), and `compare-builds.py` (check a theme change doesn't alter a site's pages). The Python tools use the standard library only; every tool explains itself with `--help`.
 
@@ -47,7 +47,7 @@ Hugo modules will become the recommended install before the first release, with 
 ## Docs
 
 - [Getting started](docs/getting-started.md): an empty site to one working recipe page
-- [Recipe format](docs/recipe-format.md): sections, multi-component recipes, wiki links, formula diagrams, photos
+- [Recipe format](docs/recipe-format.md): sections, multi-component recipes, wiki links, formula and stack diagrams, photos
 - [Frontmatter](docs/frontmatter.md): every field Fugu reads
 - [Configuration](docs/configuration.md): every `[params.fugu]` setting, and the Blowfish settings that matter
 - [Features](docs/features.md): what Fugu adds, as a reader sees it

@@ -1,0 +1,118 @@
+{{/*
+  Draws a ```stack block as an exploded view: each layer from
+  assets/icons/layers/<key>.svg, top to bottom, pulled apart, the upper
+  layers drawn over the lower. Shared by render-codeblock-stack.html (the
+  page) and stack-strip.html (cards and the build page's diagram).
+
+  One layer per line, `key | label | role`, plus optional lines:
+
+    caption: Drive-in deluxe
+    repeat: 3-5 x3     (layers 3 to 5, three times: a "× 3" bracket)
+
+  The layer files share a 210-wide viewBox centred on x=105, each with its
+  own height; data-edge is how far the drawing reaches right of centre, so
+  a leader line starts just past it. They're inlined, so currentColor and
+  the theme tokens (--accent-soft, --surface) follow dark mode. Labels,
+  leaders and the bracket carry plain defaults in currentColor; a site's
+  CSS restyles them by class (.stack-label, .stack-role, .stack-lead,
+  .stack-dot, .stack-bracket, .stack-times, .stack-cap).
+
+  Takes a dict: inner (the block's text), labels (draw leaders, labels and
+  roles on the right), compact (tighter gaps, for cards), caption (show
+  the caption), pos (the block's .Position; when set, an unknown key or a
+  bad repeat line warns, as the formula block does).
+*/}}
+{{- $cx := 105.0 }}
+{{- $rx := 70.0 }}
+{{- $gap := cond (.compact | default false) 6.0 16.0 }}
+{{- $labels := .labels | default false }}
+{{- $pos := .pos }}
+{{- $caption := "" }}
+{{- $repeats := slice }}
+{{- $layers := slice }}
+{{- range split .inner "\n" }}
+  {{- $line := trim . " \t\r" }}
+  {{- if not $line }}{{ continue }}{{ end }}
+  {{- if hasPrefix $line "caption:" }}
+    {{- $caption = trim (strings.TrimPrefix "caption:" $line) " " }}
+    {{- continue }}
+  {{- end }}
+  {{- if hasPrefix $line "repeat:" }}
+    {{- $spec := trim (strings.TrimPrefix "repeat:" $line) " " }}
+    {{- with findRESubmatch `^(\d+)(?:\s*-\s*(\d+))?\s*[x×]\s*(.+)$` $spec 1 }}
+      {{- $m := index . 0 }}
+      {{- $from := int (index $m 1) }}
+      {{- $to := cond (ne (index $m 2) "") (int (index $m 2)) $from }}
+      {{- $repeats = $repeats | append (dict "from" $from "to" $to "n" (index $m 3)) }}
+    {{- else }}
+      {{- with $pos }}{{ warnf "stack: can't read %q (try `repeat: 3-5 x3`) at %s" $line . }}{{ end }}
+    {{- end }}
+    {{- continue }}
+  {{- end }}
+  {{- $f := slice }}
+  {{- range split $line "|" }}{{ $f = $f | append (trim . " ") }}{{ end }}
+  {{- $key := index $f 0 }}
+  {{- $layer := dict "key" $key "label" "" "role" "" "svg" "" "h" 20.0 "edge" 40.0 }}
+  {{- if ge (len $f) 2 }}{{ $layer = merge $layer (dict "label" (index $f 1)) }}{{ end }}
+  {{- if ge (len $f) 3 }}{{ $layer = merge $layer (dict "role" (index $f 2)) }}{{ end }}
+  {{- with and (findRE `^[a-z0-9-]+$` $key) (resources.Get (printf "icons/layers/%s.svg" $key)) }}
+    {{- $c := .Content }}
+    {{- $h := index (index (findRESubmatch `viewBox="0 0 [0-9.]+ ([0-9.]+)"` $c 1) 0) 1 }}
+    {{- $edge := index (index (findRESubmatch `data-edge="([0-9.]+)"` $c 1) 0) 1 }}
+    {{- $layer = merge $layer (dict "svg" (replaceRE `(?s)^.*?<svg[^>]*>\s*|\s*</svg>\s*$` "" $c) "h" (float $h) "edge" (float $edge)) }}
+  {{- else }}
+    {{- with $pos }}{{ warnf "stack: no layer drawing %q (assets/icons/layers/) at %s" $key . }}{{ end }}
+    {{- $layer = merge $layer (dict "svg" (printf `<ellipse class="stack-missing" stroke="currentColor" stroke-dasharray="4 3" cx="%g" cy="10" rx="40" ry="9"/>` $cx)) }}
+  {{- end }}
+  {{- $layers = $layers | append $layer }}
+{{- end }}
+
+{{- with $layers }}
+  {{- /* Place each layer below the last; draw bottom first, so upper layers sit over lower ones. */}}
+  {{- $y := 8.0 }}
+  {{- $placed := slice }}
+  {{- $body := "" }}
+  {{- range . }}
+    {{- $placed = $placed | append (merge . (dict "y" $y "mid" (add $y (div .h 2)))) }}
+    {{- $body = printf `<g transform="translate(0 %.1f)">%s</g>%s` $y .svg $body }}
+    {{- $y = add $y (add .h $gap) }}
+  {{- end }}
+  {{- $height := add (sub $y $gap) 8 }}
+  {{- $labelX := add $cx (add (mul $rx 1.35) 16) }}
+  {{- $bracketX := sub $cx (mul $rx 1.55) }}
+  {{- $minX := cond (gt (len $repeats) 0) (sub $bracketX 34) 0.0 }}
+  {{- $width := cond $labels (add $labelX 160) (mul $cx 2) }}
+  {{- $names := slice }}
+  {{- range $placed }}{{ $names = $names | append (.label | default .key) }}{{ end }}
+<figure class="stack{{ if $.compact }} stack-compact{{ end }}{{ if $labels }} stack-labelled{{ end }}" role="img" aria-label="{{ with $caption }}{{ . }}, {{ end }}top to bottom: {{ delimit $names ", " }}">
+<svg class="stack-svg" xmlns="http://www.w3.org/2000/svg" viewBox="{{ printf "%.1f 0 %.1f %.1f" $minX (sub $width $minX) $height }}" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+  {{- safeHTML $body }}
+  {{- if $labels }}
+    {{- range $placed }}
+      {{- $ex := add $cx (add .edge 4) }}
+  <circle class="stack-dot" fill="currentColor" fill-opacity=".5" cx="{{ printf "%.1f" $ex }}" cy="{{ printf "%.1f" .mid }}" r="1.8"/>
+  <path class="stack-lead" stroke="currentColor" stroke-opacity=".5" stroke-width=".8" stroke-dasharray="2 2" d="{{ printf "M%.1f,%.1fH%.1f" $ex .mid (sub $labelX 6) }}"/>
+  <text class="stack-label" fill="currentColor" font-weight="600" x="{{ printf "%.1f" $labelX }}" y="{{ printf "%.1f" (sub .mid 1) }}" font-size="13">{{ .label | default .key }}</text>
+      {{- if .role }}
+  <text class="stack-role" fill="currentColor" fill-opacity=".7" font-style="italic" x="{{ printf "%.1f" $labelX }}" y="{{ printf "%.1f" (add .mid 13) }}" font-size="12">{{ .role }}</text>
+      {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- range $repeats }}
+    {{- $r := . }}
+    {{- if and (ge .from 1) (le .from .to) (le .to (len $placed)) }}
+      {{- $a := index $placed (sub .from 1) }}
+      {{- $b := index $placed (sub .to 1) }}
+      {{- $y2 := add $b.y $b.h }}
+  <path class="stack-bracket" stroke="currentColor" stroke-width="1.2" d="{{ printf "M%.1f,%.1fH%.1fV%.1fH%.1f" (add $bracketX 6) $a.y $bracketX $y2 (add $bracketX 6) }}"/>
+  <text class="stack-times" fill="currentColor" x="{{ printf "%.1f" (sub $bracketX 4) }}" y="{{ printf "%.1f" (add (div (add $a.y $y2) 2) 4) }}" font-size="12" text-anchor="end">× {{ .n }}</text>
+    {{- else }}
+      {{- with $pos }}{{ warnf "stack: repeat %d-%d is outside the %d layers at %s" $r.from $r.to (len $placed) . }}{{ end }}
+    {{- end }}
+  {{- end }}
+</svg>
+  {{- if and $caption $.caption }}
+<figcaption class="stack-cap">{{ $caption }}</figcaption>
+  {{- end }}
+</figure>
+{{- end }}

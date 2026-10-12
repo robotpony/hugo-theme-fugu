@@ -7,14 +7,16 @@
   used for pages: it cuts at summaryLength words and runs straight on into
   "Ingredients 2 tablespoons…" on recipes with a short intro.
 
-  The intro drops blockquotes (family backstory, hidden by default) and
-  shortcodes, and reduces [[wiki links]] to their text, since wiki links are
+  The intro drops blockquotes (family backstory, hidden by default),
+  fenced code blocks (a formula or stack diagram would render, and warn,
+  a second time), and shortcodes, and reduces [[wiki links]] to their text, since wiki links are
   only converted when single.html renders the body.
 */}}
 {{ $d := .Description }}
 {{ if and (not $d) .IsPage }}
   {{ $intro := replaceRE `(?ms)^#{1,6}\s.*` "" .RawContent }}
   {{ $intro = replaceRE `(?m)^>.*$` "" $intro }}
+  {{ $intro = replaceRE "(?ms)^```.*?^```[ \t]*$" "" $intro }}
   {{ $intro = replaceRE `(?s)\{\{[<%].*?[%>]\}\}` "" $intro }}
   {{ $intro = replaceRE `\[\[(?:[^\]|]*\|)?([^\]]+)\]\]` "$1" $intro }}
   {{ $intro = $intro | markdownify | plainify | htmlUnescape }}

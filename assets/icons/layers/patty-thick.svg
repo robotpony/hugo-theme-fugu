@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 64.3" data-edge="61.6" fill="none" stroke-linecap="round" stroke-linejoin="round" overflow="visible">
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.8" d="M43.4,20.9L43.4,43.3A61.6,20.9 0 0 0 166.6,43.3L166.6,20.9Z"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1.8" cx="105" cy="20.9" rx="61.6" ry="20.9"/>
+  <path stroke="currentColor" stroke-width="1.8" d="M74.2,23l13.6,-8M97.6,29.7l20.9,-12.6M123.5,25.1l12.3,-7.5"/>
+</svg>

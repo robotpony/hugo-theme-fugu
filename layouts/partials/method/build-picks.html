@@ -34,7 +34,7 @@
     {{ end }}
   {{ end }}
   {{ $diagram := "" }}
-  {{ if templates.Exists "partials/stack-strip.html" }}{{ $diagram = partial "stack-strip.html" (dict "page" $page "labels" true) }}{{ end }}
+  {{ if templates.Exists "partials/stack-strip.html" }}{{ $diagram = partial "stack-strip.html" (dict "page" $page "labels" true) | strings.TrimSpace | safeHTML }}{{ end }}
   <div class="build-picks not-prose{{ if $diagram }} has-diagram{{ end }}">
     <div>
       <h2 class="subsection-title">Picks</h2>

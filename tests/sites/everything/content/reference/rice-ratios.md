@@ -12,3 +12,12 @@ Used by [[Plain rice]].
 | Long-grain | 1½ cups |
 | Short-grain | 1¼ cups |
 | Brown | 2 cups |
+
+A rice casserole, layered:
+
+```stack
+cheese-top | Cheese        | browned crust
+pasta      | Rice          | structure
+ragu       | Beans         | savoury
+caption: Rice bake
+```

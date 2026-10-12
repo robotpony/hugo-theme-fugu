@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 31.8" data-edge="67.9" fill="none" stroke-linecap="round" stroke-linejoin="round" overflow="visible">
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.8" d="M37.1,12.4L37.1,16.4A36.4,12.4 0 0 0 109.9,16.4L109.9,12.4Z"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1.8" cx="73.5" cy="12.4" rx="36.4" ry="12.4"/>
+  <ellipse stroke="currentColor" stroke-width="1.1" cx="73.5" cy="12.4" rx="25.5" ry="8.7"/>
+  <path stroke="currentColor" stroke-width="1" d="M73.5,12.4L97,15.7"/>
+  <path stroke="currentColor" stroke-width="1" d="M73.5,12.4L53.1,17.6"/>
+  <path stroke="currentColor" stroke-width="1" d="M73.5,12.4L70.6,3.8"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.8" cx="75.8" cy="16.3" rx="1.4" ry=".8"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.8" cx="73.9" cy="18.6" rx="1.4" ry=".8"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.8" cx="62.5" cy="11.1" rx="1.4" ry=".8"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.8" cx="57.6" cy="9.4" rx="1.4" ry=".8"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.8" cx="82.3" cy="9.8" rx="1.4" ry=".8"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.8" cx="89.2" cy="9.2" rx="1.4" ry=".8"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.8" d="M100.1,15.4L100.1,19.4A36.4,12.4 0 0 0 172.9,19.4L172.9,15.4Z"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1.8" cx="136.5" cy="15.4" rx="36.4" ry="12.4"/>
+  <ellipse stroke="currentColor" stroke-width="1.1" cx="136.5" cy="15.4" rx="25.5" ry="8.7"/>
+  <path stroke="currentColor" stroke-width="1" d="M136.5,15.4L160,18.7"/>
+  <path stroke="currentColor" stroke-width="1" d="M136.5,15.4L116.1,20.6"/>
+  <path stroke="currentColor" stroke-width="1" d="M136.5,15.4L133.6,6.8"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.8" cx="138.8" cy="19.3" rx="1.4" ry=".8"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.8" cx="136.9" cy="21.6" rx="1.4" ry=".8"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.8" cx="125.5" cy="14.1" rx="1.4" ry=".8"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.8" cx="120.6" cy="12.4" rx="1.4" ry=".8"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.8" cx="145.3" cy="12.8" rx="1.4" ry=".8"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.8" cx="152.2" cy="12.2" rx="1.4" ry=".8"/>
+</svg>

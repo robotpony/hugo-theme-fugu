@@ -112,3 +112,12 @@ recipes/plain-rice/index.html: !class="method-chip
 essays/index.html: class="method-chip
 recipes/index.json: "build_name": "Plain bowl"
 
+# Stack diagrams: the render hook on a page, the build page's diagram
+# beside its picks (and not again in its body), and the compact one on
+# the build card.
+reference/rice-ratios/index.html: <figure class="stack stack-labelled" role="img" aria-label="Rice bake, top to bottom: Cheese, Rice, Beans">
+reference/rice-ratios/index.html: <figcaption class="stack-cap">Rice bake</figcaption>
+essays/methods/patty-bowl/index.html: build-picks not-prose has-diagram
+essays/methods/patty-bowl/index.html: class="stack-times"
+essays/methods/patty-bowl/index.html: !stack-cap
+blueprint/rice-bowls/index.html: <figure class="stack stack-compact"

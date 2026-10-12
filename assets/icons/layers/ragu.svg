@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 37.4" data-edge="100" fill="none" stroke-linecap="round" stroke-linejoin="round" overflow="visible">
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.8" d="M5,29.4L152,29.4L205,0L205,8L152,37.4L5,37.4Z"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.8" d="M58,0L205,0L152,29.4L145.9,29.4L139.8,29.4L133.7,29.4L127.5,29.4L121.4,29.4L115.3,29.4L109.2,29.4L103,29.4L96.9,29.4L90.8,29.4L84.7,29.4L78.5,29.4L72.4,29.4L66.3,29.4L60.2,29.4L54,29.4L47.9,29.4L41.8,29.4L35.7,29.4L29.5,29.4L23.4,29.4L17.3,29.4L11.2,29.4L5,29.4Z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M89.7,16q1.3,-3.2 4.5,-1q2.6,1.9 -0.6,2.9z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M83.7,18.8q1,-2.6 3.6,-0.8q2.1,1.6 -0.5,2.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M134.9,21.9q1,-2.4 3.4,-0.7q1.9,1.5 -0.5,2.2z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M115.4,5.7q1.2,-2.9 4.1,-0.9q2.3,1.7 -0.6,2.6z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M85,7.1q1.3,-3.3 4.6,-1q2.6,2 -0.7,3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M115.4,24.9q1.2,-2.9 4.1,-0.9q2.3,1.7 -0.6,2.6z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M66.5,15.2q1.4,-3.4 4.8,-1q2.7,2 -0.7,3.1z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M109.4,24.1q1,-2.6 3.6,-0.8q2.1,1.5 -0.5,2.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M56.1,8.4q1.1,-2.8 3.9,-0.8q2.2,1.7 -0.6,2.5z"/>
+</svg>

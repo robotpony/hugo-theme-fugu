@@ -12,3 +12,12 @@ picks:
   - "Topping: a veg patty"
 ---
 Leftover patties, crisped, on rice.
+
+```stack
+patty-thin | Veg patty  | crisp edges
+pickle     | Pickles    | sour
+tomato     | Tomato     | acid
+bun-base   | Rice       | soft
+repeat: 1-2 x2
+caption: Patty bowl
+```

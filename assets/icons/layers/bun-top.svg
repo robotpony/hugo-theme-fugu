@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 62.3" data-edge="70" fill="none" stroke-linecap="round" stroke-linejoin="round" overflow="visible">
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.8" d="M35,38.5C35,-12.7 175,-12.7 175,38.5A70,23.8 0 0 1 35,38.5Z"/>
+  <path stroke="currentColor" stroke-width="1" d="M39.9,30Q105,51.6 170.1,30"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1" cx="52.5" cy="29.1" rx="2.2" ry="1.1" transform="rotate(-12.6 52.5 29.1)"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1" cx="74.6" cy="25.1" rx="2.2" ry="1.1" transform="rotate(2 74.6 25.1)"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1" cx="87.1" cy="25.5" rx="2.2" ry="1.1" transform="rotate(15.3 87.1 25.5)"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1" cx="109.5" cy="24.1" rx="2.2" ry="1.1" transform="rotate(8.2 109.5 24.1)"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1" cx="138.3" cy="14.7" rx="2.2" ry="1.1" transform="rotate(-7.5 138.3 14.7)"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1" cx="126.8" cy="24.4" rx="2.2" ry="1.1" transform="rotate(-26.8 126.8 24.4)"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1" cx="124.3" cy="19.5" rx="2.2" ry="1.1" transform="rotate(25.3 124.3 19.5)"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1" cx="137.3" cy="12.2" rx="2.2" ry="1.1" transform="rotate(0.8 137.3 12.2)"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1" cx="149.4" cy="24.2" rx="2.2" ry="1.1" transform="rotate(8.6 149.4 24.2)"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1" cx="113.1" cy="28.9" rx="2.2" ry="1.1" transform="rotate(24.5 113.1 28.9)"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1" cx="91.6" cy="16.7" rx="2.2" ry="1.1" transform="rotate(20.2 91.6 16.7)"/>
+</svg>

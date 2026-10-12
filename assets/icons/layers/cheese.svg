@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 50.6" data-edge="70" fill="none" stroke-linecap="round" stroke-linejoin="round" overflow="visible">
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.8" d="M35,30.8L105,47.6L175,30.8L175,33.3L105,50.1L35,33.3Z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1.8" d="M105,0Q147,13.1 175,30.8L105,47.6L35,30.8Q63,13.1 105,0Z"/>
+</svg>
