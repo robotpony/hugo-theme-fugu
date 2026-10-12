@@ -18,7 +18,9 @@
   .stack-dot, .stack-bracket, .stack-times, .stack-cap).
 
   Takes a dict: inner (the block's text), labels (draw leaders, labels and
-  roles on the right), compact (for cards: tighter gaps, tighter still for
+  roles on the right; layers 10 apart, but each label's middle at least
+  31 below the one before when that has a role, 18 when it hasn't, so
+  the labels never crowd), compact (for cards: tighter gaps, tighter still for
   tall stacks, 6 for up to six layers and 0.75 less for each layer
   after, down to 2.5; a `repeat:` draws its layers once, so it doesn't
   count), caption (show
@@ -28,7 +30,7 @@
 {{- $cx := 105.0 }}
 {{- $rx := 70.0 }}
 {{- $compact := .compact | default false }}
-{{- $gap := 16.0 }}
+{{- $gap := 10.0 }}
 {{- $labels := .labels | default false }}
 {{- $pos := .pos }}
 {{- $caption := "" }}
@@ -77,8 +79,16 @@
   {{- $y := 8.0 }}
   {{- $placed := slice }}
   {{- $body := "" }}
+  {{- $prev := false }}
   {{- range . }}
-    {{- $placed = $placed | append (merge . (dict "y" $y "mid" (add $y (div .h 2)))) }}
+    {{- if and $labels $prev }}
+      {{- /* Push the layer down so its label clears the one above. */}}
+      {{- $step := cond (ne $prev.role "") 31.0 18.0 }}
+      {{- $y = math.Max $y (sub (add $prev.mid $step) (div .h 2)) }}
+    {{- end }}
+    {{- $here := merge . (dict "y" $y "mid" (add $y (div .h 2))) }}
+    {{- $placed = $placed | append $here }}
+    {{- $prev = $here }}
     {{- $body = printf `<g transform="translate(0 %.1f)">%s</g>%s` $y .svg $body }}
     {{- $y = add $y (add .h $gap) }}
   {{- end }}
@@ -94,7 +104,9 @@
   {{- safeHTML $body }}
   {{- if $labels }}
     {{- range $placed }}
-      {{- $ex := add $cx (add .edge 4) }}
+      {{- /* 10 clear of the layer's edge: drawings with a frill or a
+        stroke reach a little past it. */}}
+      {{- $ex := add $cx (add .edge 10) }}
   <circle class="stack-dot" fill="currentColor" fill-opacity=".5" cx="{{ printf "%.1f" $ex }}" cy="{{ printf "%.1f" .mid }}" r="1.8"/>
   <path class="stack-lead" stroke="currentColor" stroke-opacity=".5" stroke-width=".8" stroke-dasharray="2 2" d="{{ printf "M%.1f,%.1fH%.1f" $ex .mid (sub $labelX 6) }}"/>
   <text class="stack-label" fill="currentColor" font-weight="600" x="{{ printf "%.1f" $labelX }}" y="{{ printf "%.1f" (sub .mid 1) }}" font-size="13">{{ .label | default .key }}</text>
