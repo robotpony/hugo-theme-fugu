@@ -14,11 +14,12 @@
   article-meta/term row, and the "no articles" message are all dropped.
 
   A term whose own _index.md sets `principle: true` (e.g. content/tags/
-  win-the-fridge/_index.md) is a principle: the
-  tagline becomes a definition callout (the _index.md body) with a link to
-  the full essay, the grid lists only recipes, and anything else on the
-  tag that isn't a recipe or that essay follows in a "Reference & further
-  reading" list. The essay is the one principle/term.html finds: the
+  win-the-fridge/_index.md) is a principle, on the reading layout: a
+  body column and the reading sidebar's wrap, like the methods list. The
+  body is the _index.md body as the page's intro (.principle-intro) with
+  a link to the full essay, then only the recipes. The sidebar has search,
+  counts, the chip as cards show it, and everything on the tag that isn't
+  a recipe, the essay first, as "Reference & further reading". The essay is the one principle/term.html finds: the
   _index.md's `essay`, else the reference essay carrying the tag.
   `kind: principle` there means the same as `principle: true`.
 
@@ -51,21 +52,83 @@
 {{ else }}
   {{ $pager = .Paginate $allPages 16 }}
 {{ end }}
+{{ if $isPrinciple }}
+{{/* A principle: the reading layout, the methods list's wrapper with its
+  own class. The body is the definition as the page's intro with a link
+  to the full essay, then the recipes; the sidebar has search, counts, the
+  chip as it renders on cards, and everything else on the tag (the essay
+  first) as further reading. No "On this page": the page is short. */}}
+{{ $further := slice }}
+{{ with $essay }}{{ $further = $further | append . }}{{ end }}
+{{ range $allPages }}
+  {{ if and (ne .Section $recipeSection) (not (and $essay (eq .RelPermalink $essay.RelPermalink))) }}
+    {{ $further = $further | append . }}
+  {{ end }}
+{{ end }}
+<div class="principle-layout flex flex-col lg:flex-row">
+<section class="listing principle-page min-w-0 flex-1">
+  <header class="listing-head">
+    <h1 class="ltitle">{{ .Title }} <span class="ltitle-kind ltitle-kind-principle">principle</span></h1>
+  </header>
+  <div class="principle-intro">
+    {{ .Content }}
+    {{ with $essay }}<a class="read-essay" href="{{ .RelPermalink }}">Read the full essay →</a>{{ end }}
+  </div>
+  <h3 class="subsection-title">Recipes that follow this principle</h3>
+  <div class="rgrid">
+    {{ range $pager.Pages }}
+      {{ partial "recipe-card.html" . }}
+    {{ end }}
+  </div>
+  {{ partial "pagination.html" . }}
+</section>
+
+<div class="reading-sidebar-wrap lg:ms-auto px-0 lg:ps-8 print:hidden">
+  <div class="reading-sidebar-pin lg:sticky lg:top-10">
+    <div class="reading-sidebar not-prose">
+      <div class="rs-section">
+        {{ partial "search-box.html" "site" }}
+      </div>
+
+      {{/* "On cards": the chip as a card draws it (principle-chip.html
+        reads only the page's tags, so it's handed this term alone). */}}
+      <div class="recipe-meta">
+        <div class="recipe-meta-row"><span class="recipe-meta-label">Recipes</span><span class="recipe-meta-value">{{ len $recipePages }}</span></div>
+        {{ with $further }}<div class="recipe-meta-row"><span class="recipe-meta-label">Essays</span><span class="recipe-meta-value">{{ len . }}</span></div>{{ end }}
+        {{ with partial "principle-chip.html" (dict "page" (dict "Params" (dict "tags" (slice .Data.Term))) "compact" true) }}
+          <div class="recipe-meta-row"><span class="recipe-meta-label">On cards</span><span class="recipe-meta-value">{{ . | strings.TrimSpace | safeHTML }}</span></div>
+        {{ end }}
+      </div>
+
+      {{/* Further reading, labelled as concept/further.html labels it. */}}
+      {{ with $further }}
+        <div class="rs-section">
+          <h2 class="rs-label">Reference &amp; further reading <span class="n">{{ len . }}</span></h2>
+          <div class="browse-list">
+            {{ range . }}
+              {{ $label := "Essay" }}
+              {{ if eq (partialCached "section/role.html" .Section .Section) "reference" }}{{ $label = "Reference" }}
+              {{ else if partial "method/is.html" . }}{{ $label = "Method" }}{{ end }}
+              <a href="{{ .RelPermalink }}">{{ .Title }} <span class="n">{{ $label }}</span></a>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+</div>
+</div>
+{{ else }}
 <section class="listing">
   <header class="listing-head">
     {{/* Cuisine pages read "Canadian cuisine", the suffix in the accent red. */}}
-    <h1 class="ltitle">{{ .Title }}{{ if eq .Data.Plural "cuisine" }} <span class="ltitle-kind">cuisine</span>{{ end }}{{ if $isPrinciple }} <span class="ltitle-kind ltitle-kind-principle">principle</span>{{ end }}</h1>
-    <span class="listing-count">{{ if $isPrinciple }}{{ len $recipePages }} recipes{{ else }}{{ len .Pages }} {{ cond $allRecipes "recipes" "entries" }}{{ end }}{{ if gt $pager.TotalPages 1 }} · page {{ $pager.PageNumber }} of {{ $pager.TotalPages }}{{ end }}</span>
+    <h1 class="ltitle">{{ .Title }}{{ if eq .Data.Plural "cuisine" }} <span class="ltitle-kind">cuisine</span>{{ end }}</h1>
+    <span class="listing-count">{{ len .Pages }} {{ cond $allRecipes "recipes" "entries" }}{{ if gt $pager.TotalPages 1 }} · page {{ $pager.PageNumber }} of {{ $pager.TotalPages }}{{ end }}</span>
   </header>
-  {{ if $isPrinciple }}
-    {{ partial "concept/callout.html" (dict "kind" "principle" "label" "Definition" "content" .Content "link" $essay "more" "Read the full essay") }}
-    <h3 class="subsection-title">Recipes that follow this principle</h3>
-  {{ else }}
-    {{/* Tagline: the term's own description (content/cuisine/<name>/_index.md)
-      if one exists, else the recipe section's (content/recipes/_index.md by default),
-      so the header lines up with the recipes list. */}}
-    {{ with .Description | default (site.GetPage (printf "/%s" $recipeSection)).Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
-  {{ end }}
+  {{/* Tagline: the term's own description (content/cuisine/<name>/_index.md)
+    if one exists, else the recipe section's (content/recipes/_index.md by default),
+    so the header lines up with the recipes list. */}}
+  {{ with .Description | default (site.GetPage (printf "/%s" $recipeSection)).Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
   <div class="listing-search">{{ partial "search-box.html" (len (where site.RegularPages "Section" $recipeSection)) }}</div>
   <div class="rgrid">
     {{ range $pager.Pages }}
@@ -73,17 +136,7 @@
     {{ end }}
   </div>
   {{ partial "pagination.html" . }}
-  {{ if $isPrinciple }}
-    {{ $further := slice }}
-    {{ range $allPages }}
-      {{ if ne .Section $recipeSection }}
-        {{ if not (and $essay (eq .RelPermalink $essay.RelPermalink)) }}
-          {{ $further = $further | append . }}
-        {{ end }}
-      {{ end }}
-    {{ end }}
-    {{ partial "concept/further.html" (dict "pages" $further) }}
-  {{ end }}
 </section>
+{{ end }}
 {{ end }}
 {{ end }}
