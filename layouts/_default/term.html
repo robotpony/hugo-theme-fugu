@@ -23,17 +23,12 @@
   _index.md's `essay`, else the reference essay carrying the tag.
   `kind: principle` there means the same as `principle: true`.
 
-  Two other concept kinds get their own layouts: the methods list (a term
-  whose _index.md sets `kind: method`, partials/method/list.html) and a
-  blueprint (a term in params.fugu.methods.taxonomy,
-  partials/blueprint/page.html).
+  The methods list gets its own layout when the term's _index.md sets
+  `kind: method` (partials/method/list.html).
 */}}
 {{ .Scratch.Set "scope" "term" }}
-{{ $blueprints := site.Params.fugu.methods.taxonomy | default "" }}
 {{ if eq .Params.kind "method" }}
   {{ partial "method/list.html" . }}
-{{ else if and $blueprints (eq .Data.Plural $blueprints) }}
-  {{ partial "blueprint/page.html" . }}
 {{ else }}
 {{ $isPrinciple := or .Params.principle (eq .Params.kind "principle") }}
 {{ $essay := false }}

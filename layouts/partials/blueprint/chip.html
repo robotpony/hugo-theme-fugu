@@ -1,19 +1,17 @@
 {{/*
-  The blueprint chip in a page's tags row (article-meta/basic.html), one
-  per blueprint the page is in, in place of Blowfish's plain badge. Not on
-  cards. It names the blueprint, then where the page sits in it, in
-  lighter text (method/place.html):
+  The blueprint chip in a page's tags row (article-meta/basic.html), on a
+  page in a blueprint's folder (blueprint/of.html), in place of Blowfish's
+  plain badge. Not on cards. It names the blueprint and links to it, then
+  says where the page sits in it, in lighter text:
 
-    a part's method     Burgers · Patty construction
-    a build page        Burgers · Build
-    a recipe of a build Burgers · Deluxe griddle   (links to the build page)
-    anything else       Burgers
+    a part       Burgers · Burger patties
+    a build      Burgers · Build
+    anything else  Burgers
 
-  Takes a dict: page, term (the blueprint's term page).
+  Takes the page; outputs nothing for a page in no blueprint.
 */}}
-{{ $place := partial "method/place.html" . }}
-{{ $href := .term.RelPermalink }}
-{{ $suffix := $place.name }}
-{{ if eq $place.kind "build" }}{{ $suffix = "Build" }}{{ end }}
-{{ with $place.build }}{{ $href = .RelPermalink }}{{ end }}
-<a class="blueprint-chip" href="{{ $href }}">{{ .term.LinkTitle }}{{ with $suffix }}<span class="blueprint-chip-part"> · {{ . }}</span>{{ end }}</a>
+{{ with partial "blueprint/of.html" . }}
+  {{ $suffix := "" }}
+  {{ if eq .role "part" }}{{ $suffix = $.Title }}{{ else if eq .role "build" }}{{ $suffix = "Build" }}{{ end }}
+  <a class="blueprint-chip" href="{{ .blueprint.RelPermalink }}">{{ .blueprint.LinkTitle }}{{ with $suffix }}<span class="blueprint-chip-part"> · {{ . }}</span>{{ end }}</a>
+{{ end }}

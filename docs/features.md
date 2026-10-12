@@ -95,17 +95,17 @@ Setting one up is in [frontmatter.md](frontmatter.md#principle-tags).
 
 ## Methods and blueprints
 
-Methods explain how a kind of food or a process works in general. Any page in the methods section, or in the essay section's methods folder, is one, and shows a method chip on its card and page (on the page, with a popover giving the definition). The methods section's page, or without one the method tag's page, is the methods list: the definition, then each blueprint with its parts in order (each written part a whole-row link, the rest faint and marked "to come"), with its builds as tiles beside it (each build's stack drawn at one scale so their heights compare, its name, origin and profile, and a link to the blueprint page's comparison of picks), then the methods that belong to no blueprint, as cards.
+Methods explain how a kind of food or a process works in general. Any page in the methods section, or in the essay section's methods folder, is one, and shows a method chip on its card and page (on the page, with a popover giving the definition). The methods section's page, or without one the method tag's page, is the methods list: the definition, then each blueprint with its parts in order as whole-row links, with its builds as tiles beside it (each build's stack drawn at one scale so their heights compare, its title, era, and description), then the methods that belong to no blueprint, as cards.
 
-A blueprint is a dish type made of parts, such as a burger: patty, seasoning, cooking, assembly, sauces. Its page shows:
+A blueprint is a dish type made of parts, such as a burger: patty, seasoning, cooking, assembly, sauces. It's a folder under the methods, with its parts and builds in subfolders. Its page shows:
 
-- A lineage timeline: the builds placed by era on a track of decades, with planned ones faint.
-- Its builds, the named combinations, as cards with their origin and profile, oldest first, and a table comparing their picks part by part, the builds in equal columns.
-- Its parts in order, each with its method and the method's options as pills, or "Not written yet", and beside them the recipes for that part (a recipe's `part`), with their times, or "No recipes for this part yet."
-- Its recipes, grouped by the build they're made from, then "No build yet" for those with neither a build nor a part.
-- The stories and reference pages that carry it.
+- Its definition, from the folder's `_index.md`.
+- Its parts in order, each with its description and its options as pills.
+- A lineage timeline: the builds placed by era on a track of decades, with drafts faint.
+- Its builds, the named combinations, as cards with their era, description, and stack diagram, oldest first.
+- The `## Further reading` from the end of its definition.
 
-A page in a blueprint gets a chip in its header that says where it sits: "Burgers · Patty construction" on a part's method, "Burgers · Build" on a build, and "Burgers · Deluxe griddle" on a recipe made from a build, linking to the build. A build page shows its profile and origin under the title, its picks before the body, and the recipes made from it after. A part's method and a build end with navigation back to the blueprint and on to the next part or build, in place of the date-ordered previous and next.
+A part or build gets a chip in its header that says where it sits: "Burgers · Burger patties" on a part, "Burgers · Build" on a build, linking to the blueprint. A part and a build end with navigation back to the blueprint and on to the next part or build, in place of the date-ordered previous and next.
 
 The fields are in [frontmatter.md](frontmatter.md#methods-and-blueprints) and the settings in [configuration.md](configuration.md#methods-and-blueprints).
 

@@ -189,7 +189,7 @@ caption: Drive-in deluxe
 - The label is what the layer is; the role is what it does for the whole. Both are short.
 - Optional lines: `caption: <text>`, and `repeat: 3-5 x3` to mark layers 3 to 5 as repeated three times (a `× 3` bracket on the left; `x` or `×`, and a single layer works too: `repeat: 4 x2`).
 
-On a build page (a method with `build_name` and `picks`), the first `stack` block is drawn beside the picks instead of where it was written, and a smaller copy without labels goes on the build's card on its blueprint page. In Obsidian it reads as plain text.
+A build's first `stack` block is also drawn smaller, without labels, on its card on the blueprint's page and its tile on the methods list. In Obsidian it reads as plain text.
 
 The layers in the kit today: bun-top, bun-base, bread, lettuce, tomato, onion-raw, onion-fried, onion-minced, pickle, cheese, cheese-top, bacon, patty-thin, patty-thick (griddled), patty-thin-grilled, patty-thick-grilled, patty-smash, sauce-ketchup-mustard, sauce-burger, mustard, mayo, pasta, ragu, bechamel. A site can add its own, or replace Fugu's, by putting SVGs with those names in its own `assets/icons/layers/`: a 210-wide `viewBox` centred on x=105, its own height, and a `data-edge` attribute saying how far right of centre the drawing reaches (where the leader line starts).
 

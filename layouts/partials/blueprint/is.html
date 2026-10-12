@@ -1,0 +1,14 @@
+{{/*
+  Whether a page is a blueprint: a section page whose folder sits directly
+  in a methods folder (blueprint/bases.html), e.g. content/methods/burgers/
+  _index.md. Its parts are the pages in its parts/ folder and its builds
+  the pages in builds/ (blueprint/info.html). Takes a page; returns a bool.
+*/}}
+{{ $is := false }}
+{{ if and (eq .Kind "section") .File }}
+  {{ $dir := replace .File.Dir "\\" "/" }}
+  {{ range partialCached "blueprint/bases.html" "bases" "bases" }}
+    {{ if and (hasPrefix $dir .) (findRE `^[^/]+/$` (strings.TrimPrefix . $dir)) }}{{ $is = true }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ return $is }}

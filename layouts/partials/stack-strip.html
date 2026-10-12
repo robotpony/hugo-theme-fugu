@@ -1,10 +1,9 @@
 {{/*
-  A page's first ```stack block, drawn for its build card (labels off,
-  compact) or beside a build page's picks (labels on). Takes a dict: page,
-  labels. Cards don't render the body, so this finds the block in
-  .RawContent, as formula-strip.html does. Outputs nothing when the page
-  has none. With labels on (a build page, where the render hook skips the
-  block shown here) it warns about unknown keys, naming the page's file.
+  A page's first ```stack block, drawn for its build card or tile (labels
+  off, compact). Takes a dict: page, labels. Cards don't render the body,
+  so this finds the block in .RawContent, as formula-strip.html does.
+  Outputs nothing when the page has none. With labels on it warns about
+  unknown keys, naming the page's file.
 */}}
 {{- with findRESubmatch "(?s)```stack[^\\n]*\\n(.*?)\\n```" .page.RawContent 1 }}
   {{- partial "stack/draw.html" (dict "inner" (index (index . 0) 1) "labels" $.labels "compact" (not $.labels) "pos" (cond $.labels (path.Join "content" $.page.File.Path) false)) }}

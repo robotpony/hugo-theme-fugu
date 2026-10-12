@@ -11,9 +11,9 @@
      - A method (partials/method/is.html) leads the row with the method
        chip (partials/method/chip.html); the methods tag itself is skipped
        from the plain tags.
-     - The blueprint taxonomy (params.fugu.methods.taxonomy) gets the
-       blueprint chip (partials/blueprint/chip.html), which says where the
-       page sits in the blueprint, instead of Blowfish's badge.
+     - A page in a blueprint's folder gets the blueprint chip (partials/
+       blueprint/chip.html) after the principle chip, which says where the
+       page sits in the blueprint.
      - Cuisine is skipped in the taxonomy loop that follows (Blowfish
        would otherwise add it as a second, plain badge for any taxonomy
        besides tags and categories).
@@ -124,7 +124,6 @@
   {{ if .Params.showTaxonomies | default (.Site.Params.article.showTaxonomies | default false) }}
     {{ $isMethod := partial "method/is.html" $context }}
     {{ $methodTag := site.Params.fugu.methods.tag | default "" | urlize }}
-    {{ $blueprints := site.Params.fugu.methods.taxonomy | default "" }}
     <div class="flex flex-row flex-wrap items-center tags-row">
         {{ if $isMethod }}<span>{{ partial "method/chip.html" (dict "card" false) }}</span>{{ end }}
         {{/* Cuisine leads the row as the same yellow chip the recipe cards
@@ -137,6 +136,7 @@
           Skipped below in the plain-tags loop so it isn't shown twice. */}}
         {{ $principle := partial "principle-chip.html" (dict "page" $context "compact" false) }}
         {{ if ne (len (trim $principle " \n\t")) 0 }}<span>{{ $principle | safeHTML }}</span>{{ end }}
+        {{ partial "blueprint/chip.html" $context }}
         {{ range $taxonomy, $terms := .Site.Taxonomies }}
           {{ if (gt (len ($context.GetTerms $taxonomy)) 0) }}
             {{ range $context.GetTerms $taxonomy }}
@@ -156,8 +156,6 @@
                 {{ if and (.Params.showTags | default (.Site.Params.article.showTags | default true)) (not .Params.principle) }}
                   <a class="tag" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
                 {{ end }}
-              {{ else if and $blueprints (eq $taxonomy $blueprints) }}
-                {{ partial "blueprint/chip.html" (dict "page" $context "term" .) }}
               {{ else }}
                 {{/* Any other taxonomy a site adds gets a plain badge. */}}
                 <a class="relative" href="{{ .RelPermalink }}">

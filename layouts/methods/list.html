@@ -1,10 +1,17 @@
 {{ define "main" }}
 {{/*
-  The methods section's page (params.fugu.methodSection, e.g. /methods/):
-  the methods list, laid out by partials/method/list.html as the methods
-  tag's page is when methods live in the essay section. A renamed section
-  sets `type: methods` in its _index.md so Hugo finds this layout.
+  The methods section's pages (params.fugu.methodSection, e.g. /methods/).
+  The section's own page is the methods list, laid out by partials/method/
+  list.html as the methods tag's page is when methods live in the essay
+  section. A folder under it with an _index.md is a blueprint (blueprint/
+  is.html, e.g. /methods/burgers/), laid out by partials/blueprint/
+  page.html. A renamed section sets `type: methods` in its _index.md so
+  Hugo finds this layout.
 */}}
 {{ .Scratch.Set "scope" "list" }}
-{{ partial "method/list.html" . }}
+{{ if partial "blueprint/is.html" . }}
+  {{ partial "blueprint/page.html" . }}
+{{ else }}
+  {{ partial "method/list.html" . }}
+{{ end }}
 {{ end }}

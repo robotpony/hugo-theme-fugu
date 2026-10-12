@@ -1,0 +1,13 @@
+{{/*
+  The folders blueprints live in: the methods section (params.fugu.
+  methodSection, "methods/") and the essay section's methods folder
+  (params.fugu.methods.folder, "essays/methods/"), each with a trailing
+  slash. A blueprint is a folder with an _index.md directly inside one
+  (blueprint/is.html). Takes anything (call it with partialCached, keyed
+  "bases"); returns a slice of strings, empty when neither is set up.
+*/}}
+{{ $out := slice }}
+{{ with partial "section/name.html" "method" }}{{ $out = $out | append (printf "%s/" .) }}{{ end }}
+{{ $essays := partial "section/name.html" "essay" }}
+{{ with and $essays (site.Params.fugu.methods.folder | default "") }}{{ $out = $out | append (printf "%s/%s/" $essays .) }}{{ end }}
+{{ return $out }}

@@ -2,7 +2,7 @@
 # the section's page is the methods list, every chip links there, and the
 # methods read like essays (reading sidebar, siblings, card stats).
 methods/index.html: method-list
-methods/index.html: recipe-meta-label">Methods</span><span class="recipe-meta-value">4
+methods/index.html: recipe-meta-label">Methods</span><span class="recipe-meta-value">6
 methods/index.html: reading-sidebar-wrap
 methods/index.html: class="method-intro"
 methods/index.html: !definition-callout
@@ -11,22 +11,33 @@ methods/index.html: bp-rail-next
 methods/index.html: Techniques and ratios
 methods/index.html: href="/methods/thinking-in-ratios/"
 methods/index.html: !ref-kind
-methods/patty-bowl/index.html: class="method-chip" href="/methods/"
-methods/patty-bowl/index.html: build-picks not-prose has-diagram
-methods/patty-bowl/index.html: part-nav-up
-methods/patty-bowl/index.html: reading-sidebar
-methods/cooking-rice/index.html: rs-label">Methods <span class="n">4
-blueprint/rice-bowls/index.html: class="method-chip" href="/methods/"
-blueprint/rice-bowls/index.html: build-card
-recipes/plain-rice/index.html: href="/methods/plain-bowl/">Rice bowls
+methods/rice-bowls/builds/patty-bowl/index.html: class="method-chip" href="/methods/"
+methods/rice-bowls/builds/patty-bowl/index.html: <figure class="stack stack-labelled"
+methods/rice-bowls/builds/patty-bowl/index.html: part-nav-up
+methods/rice-bowls/builds/patty-bowl/index.html: reading-sidebar
+methods/rice-bowls/parts/cooking-rice/index.html: <a class="blueprint-chip" href="/methods/rice-bowls/">Rice bowls
+methods/rice-bowls/parts/cooking-rice/index.html: rs-label">Parts <span class="n">2
+
+# A folder under the methods section is a blueprint, laid out by
+# blueprint/page.html; its builds aren't techniques, and it isn't further
+# reading on the methods list.
+methods/rice-bowls/index.html: blueprint-page
+methods/rice-bowls/index.html: class="method-chip" href="/methods/"
+methods/rice-bowls/index.html: build-card
+methods/rice-bowls/index.html: !method-list
+methods/index.html: href="/methods/rice-bowls/"
+methods/index.html: Techniques and ratios<span class="subsection-count">1<
+methods/index.html: !further reading
+recipes/plain-rice/index.html: !blueprint-chip
 
 # The essay section no longer holds them.
 essays/index.html: 2 essays
 essays/index.html: !/methods/
 
 # The About numbers count them.
-about/index.html: Methods <b>4
+about/index.html: Methods <b>6
 
 # The targeted cascade tags the methods, not the section page.
-tags/method/index.html: href="/methods/cooking-rice/"
+tags/method/index.html: href="/methods/rice-bowls/parts/cooking-rice/"
+tags/method/index.html: !rcard-link" href="/methods/rice-bowls/"
 tags/method/index.html: !rcard-link" href="/methods/"

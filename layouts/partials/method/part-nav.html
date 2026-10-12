@@ -1,27 +1,39 @@
 {{/*
-  Part navigation at the foot of a method in a blueprint, in place of the
-  date-ordered previous/next (article-pagination.html): back to the
-  blueprint on the left, and on the right the next written part in the
-  blueprint's `parts` order (for a part's method) or the next build (for
-  a build page). Returns the HTML, or "" when the page isn't a part or a
-  build, so the caller can fall back. Takes the page.
+  Part navigation at the foot of a blueprint's part or build, in place of
+  the date-ordered previous/next (article-pagination.html): back to the
+  blueprint on the left, and on the right the next part in weight order
+  (for a part) or the next build in era order (for a build), from
+  blueprint/info.html. Returns the HTML, or "" when the page isn't a part
+  or a build, so the caller can fall back. Takes the page.
 */}}
 {{ $out := "" }}
-{{ $taxonomy := site.Params.fugu.methods.taxonomy | default "" }}
-{{ if and $taxonomy (or .Params.part .Params.build_name) (partial "method/is.html" .) }}
-  {{ with .GetTerms $taxonomy }}
-    {{ $term := index . 0 }}
-    {{ $place := partial "method/place.html" (dict "page" $ "term" $term) }}
-    {{ if in (slice "part" "build") $place.kind }}
-      {{ $isBuild := eq $place.kind "build" }}
-      {{ $next := "" }}
-      {{ with $place.next }}
-        {{ $label := cond $isBuild "Next build" (printf "Part %d" $place.nextN) }}
-        {{ $title := cond $isBuild (string .Params.build_name) (string .Params.part) }}
-        {{ $next = printf `<a class="article-pagination-link article-pagination-next part-nav-next" href="%s"><span class="article-pagination-label">%s &rarr;</span><span class="article-pagination-title">%s</span></a>` .RelPermalink $label ($title | htmlEscape) }}
+{{ $page := . }}
+{{ with partial "blueprint/of.html" . }}
+  {{ if in (slice "part" "build") .role }}
+    {{ $bp := .blueprint }}
+    {{ $isBuild := eq .role "build" }}
+    {{ $info := partialCached "blueprint/info.html" $bp $bp.Path }}
+    {{ $next := false }}
+    {{ $nextN := 0 }}
+    {{ $seen := false }}
+    {{ if $isBuild }}
+      {{ range $info.builds }}
+        {{ if and $seen (not $next) }}{{ $next = . }}{{ end }}
+        {{ if eq . $page }}{{ $seen = true }}{{ end }}
       {{ end }}
-      {{ $out = printf `<nav class="article-pagination part-nav" aria-label="%s"><a class="article-pagination-link part-nav-up" href="%s"><span class="article-pagination-label">&larr; %s</span><span class="article-pagination-title">%s</span></a>%s</nav>` (printf "%s blueprint" $term.LinkTitle | htmlEscape) $term.RelPermalink (printf "%s blueprint" $term.LinkTitle | htmlEscape) (cond $isBuild "All builds" "All parts") $next }}
+    {{ else }}
+      {{ range $info.parts }}
+        {{ if and $seen (not $next) }}{{ $next = .page }}{{ $nextN = .n }}{{ end }}
+        {{ if eq .page $page }}{{ $seen = true }}{{ end }}
+      {{ end }}
     {{ end }}
+    {{ $up := printf "%s blueprint" $bp.LinkTitle | htmlEscape }}
+    {{ $nextHTML := "" }}
+    {{ with $next }}
+      {{ $label := cond $isBuild "Next build" (printf "Part %d" $nextN) }}
+      {{ $nextHTML = printf `<a class="article-pagination-link article-pagination-next part-nav-next" href="%s"><span class="article-pagination-label">%s &rarr;</span><span class="article-pagination-title">%s</span></a>` .RelPermalink $label (.Title | htmlEscape) }}
+    {{ end }}
+    {{ $out = printf `<nav class="article-pagination part-nav" aria-label="%s"><a class="article-pagination-link part-nav-up" href="%s"><span class="article-pagination-label">&larr; %s</span><span class="article-pagination-title">%s</span></a>%s</nav>` $up $bp.RelPermalink $up (cond $isBuild "All builds" "All parts") $nextHTML }}
   {{ end }}
 {{ end }}
 {{ return (safeHTML $out) }}

@@ -76,16 +76,13 @@
   # section's `folder` (at any depth) is a method; the folder decides, not
   # its tags. The methods list is the methods section's page when there is
   # one, else the `tag`'s term page (content/tags/<tag>/_index.md with
-  # `kind: method`). A method can
-  # belong to a blueprint, a dish type made of parts, through the
-  # `taxonomy` (e.g. `blueprint: [burgers]`, with content/blueprint/
-  # burgers/_index.md listing its `parts`), and say which part it covers
-  # (`part`) or which named combination it is (`build`, `profile`,
-  # `picks`). "" turns any of them off.
+  # `kind: method`). A blueprint, a dish type made of parts, is a folder
+  # with an _index.md in either place (content/methods/burgers/), its
+  # parts the pages in its parts/ folder and its builds the pages in
+  # builds/. "" turns either key off.
   [params.fugu.methods]
     folder   = "methods"
     tag      = "method"
-    taxonomy = "blueprint"
     # The method chip's words, on a method's card and at the start of its
     # page's tags row.
     label    = "Method"

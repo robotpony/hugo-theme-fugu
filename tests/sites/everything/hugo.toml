@@ -8,7 +8,6 @@ buildDrafts = true  # drafts publish as pages in development
 [taxonomies]
   tag = "tags"
   cuisine = "cuisine"
-  blueprint = "blueprint"  # methods' blueprints (params.fugu.methods)
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]

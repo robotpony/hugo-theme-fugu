@@ -4,8 +4,15 @@
   listing header, tagline (_index.md description), search box, and the
   shared card grid. Essays use recipe-card.html too; it swaps the
   taxonomy row and stat line for the essay's format and reading time.
+
+  A blueprint in the essay section's methods folder (blueprint/is.html,
+  e.g. content/essays/methods/rice-bowls/_index.md) is laid out by
+  partials/blueprint/page.html instead.
 */}}
 {{ .Scratch.Set "scope" "list" }}
+{{ if partial "blueprint/is.html" . }}
+  {{ partial "blueprint/page.html" . }}
+{{ else }}
 {{/* Untitled pages (no frontmatter yet, e.g. edgar-wright-style-cookery.md)
   would render as blank cards, so they're left out until they get a title. */}}
 {{ $essays := where .Pages "Title" "!=" "" }}
@@ -28,4 +35,5 @@
   </div>
   {{ partial "pagination.html" . }}
 </section>
+{{ end }}
 {{ end }}

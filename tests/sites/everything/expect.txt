@@ -76,55 +76,54 @@ essays/cooking-reflections/why-ratios/index.html: type="application/rss+xml"
 recipes/index.xml: /recipes/veg-patties/
 
 # Methods: the methods list (the method tag's page, kind: method), a
-# blueprint's page (with its lineage: a dated build, a planned one, and a
-# planned one dropped because its page exists), a build page (with its
-# origin; dated builds come first, so Patty bowl leads to Plain bowl), a
-# part's method, and the chips.
+# blueprint (a folder in the essay section's methods folder, laid out by
+# the essays list), its parts (by weight) and builds (by era, then
+# undated), the lineage (a draft build faint), part navigation, and the
+# chips. Recipes carry no blueprint fields.
 tags/method/index.html: class="bp"
-tags/method/index.html: href="/blueprint/rice-bowls/"
-tags/method/index.html: class="todo"
+tags/method/index.html: href="/essays/methods/rice-bowls/"
+tags/method/index.html: class="part-row" href="/essays/methods/rice-bowls/parts/toppings/">Bowl toppings
+tags/method/index.html: recipe-meta-label">Builds</span><span class="recipe-meta-value">3
+tags/method/index.html: !Compare picks
 tags/method/index.html: Techniques and ratios
 tags/method/index.html: href="/essays/methods/thinking-in-ratios/"
-blueprint/rice-bowls/index.html: ltitle-kind-method
-blueprint/rice-bowls/index.html: definition-callout k-method
-blueprint/rice-bowls/index.html: build-card
-blueprint/rice-bowls/index.html: <p class="build-origin">Takeout, 1990s</p>
-blueprint/rice-bowls/index.html: class="timeline"
-blueprint/rice-bowls/index.html: href="/essays/methods/patty-bowl/" title="Takeout, 1990s">Patty bowl
-blueprint/rice-bowls/index.html: <li class="tl-mark todo" style="left:83.3%"><span class="tl-name" title="2005, not written yet">Poke bowl
-blueprint/rice-bowls/index.html: !1990, not written yet
-blueprint/rice-bowls/index.html: class="builds-compared
-blueprint/rice-bowls/index.html: <td>a veg patty</td>
-blueprint/rice-bowls/index.html: <span class="opt-pill">Short grain</span>
-blueprint/rice-bowls/index.html: <span class="opt-pill">Plain rice leftovers</span>
-blueprint/rice-bowls/index.html: Not written yet.
-blueprint/rice-bowls/index.html: href="/essays/methods/plain-bowl/">Plain bowl</a><span class="subsection-count">1
-essays/methods/plain-bowl/index.html: build-profile-lead
-essays/methods/patty-bowl/index.html: <p class="build-origin build-origin-lead">Takeout, 1990s</p>
-essays/methods/patty-bowl/index.html: class="article-pagination-link article-pagination-next part-nav-next" href="/essays/methods/plain-bowl/"
-essays/methods/plain-bowl/index.html: class="picks
-essays/methods/plain-bowl/index.html: href="/essays/methods/cooking-rice/">Rice</a>
-essays/methods/plain-bowl/index.html: <dt>Sauce</dt>
-essays/methods/plain-bowl/index.html: Recipes in this build
-essays/methods/plain-bowl/index.html: part-nav
-essays/methods/plain-bowl/index.html: · Build</span>
-essays/methods/cooking-rice/index.html: · Rice</span>
-essays/methods/cooking-rice/index.html: method-chip
+essays/methods/rice-bowls/index.html: ltitle-kind-method
+essays/methods/rice-bowls/index.html: 2 parts · 3 builds
+essays/methods/rice-bowls/index.html: definition-callout k-method
+essays/methods/rice-bowls/index.html: <p>A rice bowl is rice with something on it.
+essays/methods/rice-bowls/index.html: build-card
+essays/methods/rice-bowls/index.html: <p class="build-origin">1990</p>
+essays/methods/rice-bowls/index.html: class="timeline"
+essays/methods/rice-bowls/index.html: href="/essays/methods/rice-bowls/builds/patty-bowl/" title="1990">Patty rice bowl<span class="tl-detail"> · 1990
+essays/methods/rice-bowls/index.html: <li class="tl-mark todo" style="left:83.3%"><a class="tl-name" href="/essays/methods/rice-bowls/builds/poke-bowl/"
+essays/methods/rice-bowls/index.html: !builds-compared
+essays/methods/rice-bowls/index.html: <span class="opt-pill">Short grain</span>
+essays/methods/rice-bowls/index.html: <span class="opt-pill">Plain rice leftovers</span>
+essays/methods/rice-bowls/index.html: id="further-reading"
+essays/methods/rice-bowls/index.html: href="/reference/rice-ratios/" class="wikilink"
+essays/methods/rice-bowls/index.html: !broken-link
+essays/methods/rice-bowls/index.html: ![[
+essays/methods/rice-bowls/builds/patty-bowl/index.html: class="article-pagination-link article-pagination-next part-nav-next" href="/essays/methods/rice-bowls/builds/poke-bowl/"
+essays/methods/rice-bowls/builds/plain-bowl/index.html: part-nav
+essays/methods/rice-bowls/builds/plain-bowl/index.html: · Build</span>
+essays/methods/rice-bowls/builds/plain-bowl/index.html: !build-picks
+essays/methods/rice-bowls/parts/cooking-rice/index.html: · Cooking rice</span>
+essays/methods/rice-bowls/parts/cooking-rice/index.html: Part 2 &rarr;</span><span class="article-pagination-title">Bowl toppings
+essays/methods/rice-bowls/parts/cooking-rice/index.html: method-chip
 essays/methods/thinking-in-ratios/index.html: !part-nav
-recipes/plain-rice/index.html: href="/essays/methods/plain-bowl/">Rice bowls<span class="blueprint-chip-part"> · Plain bowl
+essays/methods/thinking-in-ratios/index.html: !blueprint-chip
+recipes/plain-rice/index.html: !blueprint-chip
 recipes/plain-rice/index.html: !class="method-chip
 essays/index.html: class="method-chip
-recipes/index.json: "build_name": "Plain bowl"
+recipes/index.json: !"build_name"
 
-# Stack diagrams: the render hook on a page, the build page's diagram
-# beside its picks (and not again in its body), and the compact one on
-# the build card.
+# Stack diagrams: the render hook on a page, a build page's diagram in
+# its body, where it's written, and the compact one on the build card.
 reference/rice-ratios/index.html: <figure class="stack stack-labelled" role="img" aria-label="Rice bake, top to bottom: Cheese, Rice, Beans">
 reference/rice-ratios/index.html: <figcaption class="stack-cap">Rice bake</figcaption>
-essays/methods/patty-bowl/index.html: build-picks not-prose has-diagram
-essays/methods/patty-bowl/index.html: class="stack-times"
-essays/methods/patty-bowl/index.html: !stack-cap
-blueprint/rice-bowls/index.html: <figure class="stack stack-compact"
+essays/methods/rice-bowls/builds/patty-bowl/index.html: <figure class="stack stack-labelled"
+essays/methods/rice-bowls/builds/patty-bowl/index.html: class="stack-times"
+essays/methods/rice-bowls/index.html: <figure class="stack stack-compact"
 
 # Cards have no popovers: their chips (principle, draft) are plain links.
 recipes/index.html: !class="pop-host

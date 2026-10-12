@@ -1,0 +1,23 @@
+{{/*
+  The blueprint a page belongs to, by folder: a page in a blueprint's
+  folder (blueprint/is.html), or in its parts/ or builds/ folder, which
+  have no _index.md, so the blueprint is the page's section. Takes a page;
+  returns a dict, or false when it's in none:
+
+    blueprint  the blueprint's section page
+    role       "part" (in parts/), "build" (in builds/), or ""
+*/}}
+{{ $out := false }}
+{{ if and .IsPage .File }}
+  {{ with .CurrentSection }}
+    {{ if partial "blueprint/is.html" . }}
+      {{ $bp := . }}
+      {{ $rest := strings.TrimPrefix (replace $bp.File.Dir "\\" "/") (replace $.File.Dir "\\" "/") }}
+      {{ $role := "" }}
+      {{ $first := index (split $rest "/") 0 }}
+      {{ if eq $first "parts" }}{{ $role = "part" }}{{ else if eq $first "builds" }}{{ $role = "build" }}{{ end }}
+      {{ $out = dict "blueprint" $bp "role" $role }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ return $out }}

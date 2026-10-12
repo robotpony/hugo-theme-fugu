@@ -9,24 +9,23 @@
   - the title alone (the counts are in the sidebar)
   - the definition, the _index.md body, as the page's intro
     (.method-intro), plain text rather than a callout
-  - "Blueprints": one row per blueprint (params.fugu.methods.taxonomy).
-    The block (.bp) holds links but isn't one: its name links to the
-    blueprint, and its parts are a compact numbered list whose rows are
-    whole-row links to the part's first method (unwritten parts are faint,
-    marked "to come"). The list carries --rows, half its length rounded
-    up, so CSS can run it in two columns numbered down then across. Under
-    the block, when the blueprint has builds, a rail of tiles (.build-tile)
-    in info.html's order: its stack drawn at one scale so heights compare,
-    name, origin and profile, plus a link to the blueprint page's picks
-    comparison (#compare). assets/js/builds-rail.js adds the rail's
-    buttons and dots; without it the tiles are a plain sideways scroll.
-    A blueprint with no builds is the block alone.
+  - "Blueprints": one row per blueprint, the folders under the methods
+    folder (blueprint/all.html). The block (.bp) holds links but isn't
+    one: its name links to the blueprint, and its parts are a compact
+    numbered list whose rows are whole-row links to the part. The list
+    carries --rows, half its length rounded up, so CSS can run it in two
+    columns numbered down then across. Under the block, when the blueprint
+    has builds, a rail of tiles (.build-tile) in info.html's order: its
+    stack drawn at one scale so heights compare, title, era, and
+    description. assets/js/builds-rail.js adds the rail's buttons and
+    dots; without it the tiles are a plain sideways scroll. A blueprint
+    with no builds is the block alone.
   - "Techniques and ratios": methods in no blueprint, as cards
 
   The sidebar: search; counts in the date-rows style (methods,
-  blueprints, builds, parts written); "On this page", desktop only, as on
-  reading pages; and anything else carrying the tag that isn't a method,
-  as further reading, when there is any.
+  blueprints, builds, parts); "On this page", desktop only, as on reading
+  pages; and anything else carrying the tag that isn't a method, as
+  further reading, when there is any.
 
   Methods are found by folder (method/all.html), not by the tag, so a
   method that forgot the tag still shows. No pagination: a site has tens
@@ -34,15 +33,11 @@
   the term's own pages, or on the section page, the tag's term page's.
   Takes the section or term page.
 */}}
-{{ $taxonomy := site.Params.fugu.methods.taxonomy | default "" }}
 {{ $methods := partialCached "method/all.html" "all" "all" }}
-{{ $blueprints := slice }}
-{{ with and $taxonomy (site.GetPage (printf "/%s" $taxonomy)) }}
-  {{ $blueprints = .Pages.ByTitle }}
-{{ end }}
+{{ $blueprints := partialCached "blueprint/all.html" "all" "all" }}
 {{ $standalone := slice }}
 {{ range $methods }}
-  {{ if not (and $taxonomy (index .Params $taxonomy)) }}{{ $standalone = $standalone | append . }}{{ end }}
+  {{ if not (partial "blueprint/of.html" .) }}{{ $standalone = $standalone | append . }}{{ end }}
 {{ end }}
 {{ $tagged := .Pages }}
 {{ if not .Data.Term }}
@@ -54,17 +49,15 @@
 {{ $further := slice }}
 {{ $list := . }}
 {{ range $tagged }}
-  {{/* Not the list itself: a methods section that cascades the tag tags its own page too. */}}
-  {{ if and (not (partial "method/is.html" .)) (ne . $list) }}{{ $further = $further | append . }}{{ end }}
+  {{/* Not the list itself or a blueprint: a methods section that cascades the tag tags its section pages too. */}}
+  {{ if and (not (partial "method/is.html" .)) (not (partial "blueprint/is.html" .)) (ne . $list) }}{{ $further = $further | append . }}{{ end }}
 {{ end }}
 {{ $nBuilds := 0 }}
 {{ $nParts := 0 }}
-{{ $nWritten := 0 }}
 {{ range $blueprints }}
   {{ $info := partialCached "blueprint/info.html" . .Path }}
   {{ $nBuilds = add $nBuilds (len $info.builds) }}
   {{ $nParts = add $nParts (len $info.parts) }}
-  {{ $nWritten = add $nWritten $info.written }}
 {{ end }}
 <div class="method-list-layout flex flex-col lg:flex-row">
 <section class="listing method-list min-w-0 flex-1">
@@ -77,39 +70,33 @@
     <h3 class="subsection-title" id="blueprints">Blueprints<span class="subsection-count">{{ len . }}</span></h3>
     <div class="bp-list">
       {{ range . }}
-        {{ $bp := . }}
         {{ $info := partialCached "blueprint/info.html" . .Path }}
         <div class="bp-row" id="bp-{{ .Title | urlize }}">
           <section class="bp">
             <div class="bp-head">
               <a class="bp-name" href="{{ .RelPermalink }}">{{ partialCached "method/icon.html" . "icon" | safeHTML }}<span>{{ .Title }}</span><span class="go" aria-hidden="true">→</span></a>
-              <span class="bp-count">{{ with $info.parts }}{{ $info.written }} of {{ len . }} parts{{ else }}{{ len $info.recipes }} recipes{{ end }}{{ with $info.builds }} · {{ len . }} {{ cond (eq (len .) 1) "build" "builds" }}{{ end }}</span>
+              <span class="bp-count">{{ delimit (slice (printf "%d %s" (len $info.parts) (cond (eq (len $info.parts) 1) "part" "parts")) (printf "%d %s" (len $info.builds) (cond (eq (len $info.builds) 1) "build" "builds"))) " · " }}</span>
             </div>
             {{ with .Description }}<p class="bp-desc">{{ . }}</p>{{ end }}
             {{ with $info.parts }}
               <ol class="parts parts-compact" style="--rows:{{ div (add (len .) 1) 2 }}">
                 {{ range . }}
-                  {{ $part := . }}
-                  {{ with .methods }}
-                    <li><a class="part-row" href="{{ (index . 0).RelPermalink }}">{{ $part.name }}</a></li>
-                  {{ else }}
-                    <li class="todo"><span class="part-row">{{ .name }}</span></li>
-                  {{ end }}
+                  <li><a class="part-row" href="{{ .page.RelPermalink }}">{{ .name }}</a></li>
                 {{ end }}
               </ol>
             {{ end }}
           </section>
           {{ with $info.builds }}
             <div class="bp-builds">
-              <div class="bp-builds-head"><span>Builds · {{ len . }}</span>{{ if ge (len .) 2 }}<a href="{{ $bp.RelPermalink }}#compare">Compare picks →</a>{{ end }}<button type="button" class="bp-rail-prev" aria-label="Previous builds">‹</button><button type="button" class="bp-rail-next" aria-label="Next builds">›</button></div>
+              <div class="bp-builds-head"><span>Builds · {{ len . }}</span><button type="button" class="bp-rail-prev" aria-label="Previous builds">‹</button><button type="button" class="bp-rail-next" aria-label="Next builds">›</button></div>
               <div class="build-tiles">
                 {{ range . }}
                   <article class="build-tile">
                     {{ if .Draft }}<div class="rcard-top">{{ partial "development/mark.html" . }}</div>{{ end }}
                     <div class="build-tile-art">{{ if templates.Exists "partials/stack-strip.html" }}{{ partial "stack-strip.html" (dict "page" . "labels" false) }}{{ end }}</div>
-                    <h3 class="build-tile-name"><a class="rcard-link" href="{{ .RelPermalink }}">{{ .Params.build_name }}</a></h3>
-                    {{ with .Params.origin }}<p class="build-origin">{{ . }}</p>{{ else }}<p class="build-origin is-missing">origin to come</p>{{ end }}
-                    {{ with .Params.profile }}<p class="build-tile-profile">{{ . }}</p>{{ end }}
+                    <h3 class="build-tile-name"><a class="rcard-link" href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+                    {{ with .Params.era }}<p class="build-origin">{{ . }}</p>{{ end }}
+                    {{ with .Description }}<p class="build-tile-profile">{{ . }}</p>{{ end }}
                   </article>
                 {{ end }}
               </div>
@@ -143,7 +130,7 @@
         {{ with $blueprints }}
           <div class="recipe-meta-row"><span class="recipe-meta-label">Blueprints</span><span class="recipe-meta-value">{{ len . }}</span></div>
           {{ if $nBuilds }}<div class="recipe-meta-row"><span class="recipe-meta-label">Builds</span><span class="recipe-meta-value">{{ $nBuilds }}</span></div>{{ end }}
-          {{ if $nParts }}<div class="recipe-meta-row"><span class="recipe-meta-label">Parts</span><span class="recipe-meta-value">{{ $nWritten }} of {{ $nParts }} written</span></div>{{ end }}
+          {{ if $nParts }}<div class="recipe-meta-row"><span class="recipe-meta-label">Parts</span><span class="recipe-meta-value">{{ $nParts }}</span></div>{{ end }}
         {{ end }}
       </div>
 

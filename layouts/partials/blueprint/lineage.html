@@ -1,39 +1,21 @@
 {{/*
-  A blueprint's lineage (blueprint/page.html, before "Builds"): its builds
+  A blueprint's lineage (blueprint/page.html, after "Parts"): its builds
   on a horizontal track of decades, each placed by its `era` (a year) as a
-  dot with its name, linking to its page. Builds with no `era` are left
-  off. The blueprint's _index.md can add builds nobody has written yet as
-  `planned: ["1985: Pub burger"]`; they show faint and unlinked, and drop
-  out once a build page of the same name exists. A label sits higher
-  (.alt) when its dot is close to the one before. Under 640px the CSS
-  turns the track into a vertical list with each build's origin.
+  dot labelled with its title and era, linking to its page. Builds with no
+  `era` are left off. A build that's still a draft (a test kitchen stub
+  with only its title and era) shows faint. A label sits higher (.alt)
+  when its dot is close to the one before. Under 640px the CSS turns the
+  track into a vertical list with each build's era.
 
-  The track runs from the first entry's decade to the end of the last's,
-  a decade more at an end whose entry sits within three years of it, and
-  at least three decades wide. Nothing renders with no dated entries.
+  The track runs from the first build's decade to the end of the last's,
+  a decade more at an end whose build sits within three years of it, and
+  at least three decades wide. Nothing renders with no dated builds.
 
-  Takes a dict: builds (the blueprint's builds, blueprint/info.html),
-  planned (the _index.md's `planned` list, or nil).
+  Takes the blueprint's builds (blueprint/info.html).
 */}}
 {{ $entries := slice }}
-{{ $names := slice }}
-{{ range .builds }}
-  {{ $names = $names | append (lower (string .Params.build_name)) }}
-  {{ if .Params.era }}
-    {{ $entries = $entries | append (dict "year" (int .Params.era) "name" (string .Params.build_name) "detail" (.Params.origin | default "") "page" .) }}
-  {{ end }}
-{{ end }}
-{{ range .planned }}
-  {{ $m := findRESubmatch `^\s*(\d{3,4})\s*:\s*(.+?)\s*$` (string .) 1 }}
-  {{ with $m }}
-    {{ $name := index (index . 0) 2 }}
-    {{ if not (in $names (lower $name)) }}
-      {{ $year := int (index (index . 0) 1) }}
-      {{ $entries = $entries | append (dict "year" $year "name" $name "detail" (printf "%d, not written yet" $year) "page" false) }}
-    {{ end }}
-  {{ else }}
-    {{ warnf "blueprint: planned build %q should read \"year: name\"" . }}
-  {{ end }}
+{{ range $b := . }}
+  {{ with $b.Params.era }}{{ $entries = $entries | append (dict "year" (int .) "page" $b) }}{{ end }}
 {{ end }}
 
 {{ with $entries }}
@@ -59,12 +41,10 @@
           {{ $alt := and (lt (sub $pos $prev) 18) (not $prevAlt) }}
           {{ $prev = $pos }}
           {{ $prevAlt = $alt }}
-          <li class="tl-mark{{ if $alt }} alt{{ end }}{{ if not .page }} todo{{ end }}" style="left:{{ printf "%.1f" $pos }}%">
-            {{- $detail := cond (ne .detail "") (printf " · %s" .detail) "" -}}
+          {{ $year := .year }}
+          <li class="tl-mark{{ if $alt }} alt{{ end }}{{ if .page.Draft }} todo{{ end }}" style="left:{{ printf "%.1f" $pos }}%">
             {{- with .page -}}
-              <a class="tl-name" href="{{ .RelPermalink }}"{{ with .Params.origin }} title="{{ . }}"{{ end }}>{{ .Params.build_name }}<span class="tl-detail">{{ $detail }}</span></a>
-            {{- else -}}
-              <span class="tl-name" title="{{ .detail }}">{{ .name }}<span class="tl-detail">{{ $detail }}</span></span>
+              <a class="tl-name" href="{{ .RelPermalink }}" title="{{ $year }}">{{ .Title }}<span class="tl-detail"> · {{ $year }}</span></a>
             {{- end -}}
             <span class="tl-dot" aria-hidden="true"></span>
           </li>

@@ -1,8 +1,7 @@
 {{/*
   A recipe time as a card shows it: the parenthetical dropped, minutes and
   hours shortened ("20 min (plus brine)" is "20m", "1 hr 10 min" is
-  "1h 10m"), ranges closed up. Used by recipe-card.html's stats and the
-  blueprint page's part recipes. Takes the value; returns a string.
+  "1h 10m"), ranges closed up. Used by recipe-card.html's stats. Takes the value; returns a string.
 */}}
 {{ $v := string . | replaceRE `\s*\([^)]*\)?` "" | strings.TrimSpace }}
 {{ $v = $v | replaceRE `(?i)\s*(minutes?|mins?)\b` "m" | replaceRE `(?i)\s*(hours?|hrs?)\b` "h" | replaceRE `\s*-\s*` "-" }}

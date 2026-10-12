@@ -6,6 +6,7 @@ description: How a kind of food works in general, for testing.
 cascade:
   - target:
       path: "/methods/**"
+      kind: page
     tags: [method]
 ---
 A method is the pattern behind many dishes.

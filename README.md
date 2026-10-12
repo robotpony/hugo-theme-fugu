@@ -14,7 +14,7 @@ Fugu is a general cookbook theme. The only thing a site needs is recipes: a `rec
 - A `cuisine` taxonomy, shown as a chip on recipe cards and pages
 - A glossary, which `[[Term]]` links fall back to when no page has that title
 - Principle tags: a tag with its own definition page and essay, gathering the recipes that follow it
-- Methods: general patterns in an essays folder, and blueprints (dish types made of parts, with named builds) that gather the methods, recipes, and stories for each
+- Methods: general patterns in their own section or an essays folder, and blueprints (dish types made of parts, with named builds), each a folder holding its parts and builds
 
 Every section can be renamed in config (`dishes`, `writing`, …), and a part that's left out leaves no empty blocks, dead links, or zero counts behind.
 

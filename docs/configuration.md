@@ -114,7 +114,6 @@ Methods are pages that explain how a kind of food or a process works in general,
 [params.fugu.methods]
   folder   = "methods"
   tag      = "method"
-  taxonomy = "blueprint"
   label    = "Method"
   icon     = "icons/methods/fan-out.svg"
 ```
@@ -123,11 +122,10 @@ Methods are pages that explain how a kind of food or a process works in general,
 | --- | --- |
 | `folder` | A folder in the essay section (`content/essays/methods/`). A page in it, at any depth, is a method; the folder decides, not the page's tags. |
 | `tag` | Without a methods section, the tag whose term page is the methods list, when its `content/tags/<tag>/_index.md` sets `kind: method`. The method chip links there. With one, the tag's pages that aren't methods are the list's further reading. |
-| `taxonomy` | The taxonomy that holds blueprints. The site has to declare it under `[taxonomies]` (`blueprint = "blueprint"`). |
 | `label` | The method chip's words. |
 | `icon` | An SVG in `assets/` (the site's, else Fugu's fan-out), inlined so it takes the text colour. `""` leaves the chip without one. |
 
-Set any of `folder`, `tag`, or `taxonomy` to `""` to turn that part off.
+Set `folder` or `tag` to `""` to turn that part off. Blueprints need no settings: a folder with an `_index.md` directly in the methods section or the methods folder is one ([frontmatter.md](frontmatter.md#methods-and-blueprints)).
 
 Methods can also be their own section, `content/methods/`, instead of a folder of essays:
 
@@ -144,12 +142,13 @@ description: How a kind of food works in general.
 cascade:
   - target:
       path: "/methods/**"
+      kind: page
     tags: [method]
 ---
 A method is the pattern behind many dishes. (This body is the definition at the top of the list.)
 ```
 
-Every regular page in the section, at any depth, is a method, and reads like an essay: the reading sidebar, reading time on its card. The section's page (`/methods/`) is the methods list, and the method chip and blueprint pages link there. Methods left in the essay section's `folder` still count, so a site can move them over a few at a time. A renamed methods section sets `type: methods` in its `_index.md`. The `target` keeps the tag off the section page itself, which a plain `cascade: {tags: [method]}` would also tag, putting it on the method tag's page.
+Every regular page in the section, at any depth, is a method, and reads like an essay: the reading sidebar, reading time on its card. The section's page (`/methods/`) is the methods list, and the method chip and blueprint pages link there. Methods left in the essay section's `folder` still count, so a site can move them over a few at a time. A renamed methods section sets `type: methods` in its `_index.md`. The `target` keeps the tag off the section pages (the list and each blueprint), which a plain `cascade: {tags: [method]}` would also tag, putting them on the method tag's page.
 
 ## Recipe headings
 

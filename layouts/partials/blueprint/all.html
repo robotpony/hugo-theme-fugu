@@ -1,0 +1,13 @@
+{{/*
+  Every blueprint on the site (blueprint/is.html): the methods section's
+  child sections, and those in the essay section's methods folder, by
+  weight, then title. Takes anything (call it with partialCached, keyed
+  "all"); returns Pages, empty when there are none.
+*/}}
+{{ $out := slice }}
+{{ with partialCached "blueprint/bases.html" "bases" "bases" }}
+  {{ range (where site.Pages "Kind" "section").ByWeight }}
+    {{ if partial "blueprint/is.html" . }}{{ $out = $out | append . }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ return $out }}

@@ -12,19 +12,7 @@
 
   Layers are assets/icons/layers/<key>.svg. An unknown key draws a dashed
   placeholder and warns, like the formula block. partials/stack/draw.html
-  does the work; stack-strip.html draws the same block on cards. Obsidian
-  shows the block as plain text.
-
-  On a build page (method/build-picks.html), the first block is already
-  drawn beside the picks, so it isn't drawn again here.
+  does the work; stack-strip.html draws a page's first block on its build
+  card. Obsidian shows the block as plain text.
 */}}
-{{- $p := .Page }}
-{{- $shown := false }}
-{{- if and $p.Params.build_name $p.Params.picks (partial "method/is.html" $p) }}
-  {{- with findRESubmatch "(?s)```stack[^\\n]*\\n(.*?)\\n```" $p.RawContent 1 }}
-    {{- $shown = eq (trim (index (index . 0) 1) " \t\r\n") (trim $.Inner " \t\r\n") }}
-  {{- end }}
-{{- end }}
-{{- if not $shown }}
-  {{- partial "stack/draw.html" (dict "inner" .Inner "labels" true "caption" true "pos" .Position) }}
-{{- end }}
+{{- partial "stack/draw.html" (dict "inner" .Inner "labels" true "caption" true "pos" .Position) }}

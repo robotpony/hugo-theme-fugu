@@ -24,10 +24,6 @@
     (partials/development/banner.html), and the page named by
     params.fugu.development.page lists every draft in place of related
     content (partials/related.html).
-  - Methods. A build page (a method with `build_name`) shows its profile
-    under the tags (partials/method/build-head.html), its picks before the
-    body (method/build-picks.html), and the recipes made from it after
-    (method/build-recipes.html).
   - Recipe page order. On recipes, the bottom author block, sharing links,
     and related content move below the two-column section, so on mobile
     they can't land between the method and the sidebar.
@@ -65,7 +61,6 @@
       <div class="mt-1 mb-6 text-base text-neutral-500 dark:text-neutral-400 print:hidden">
         {{ partial "article-meta/basic.html" (dict "context" . "scope" "single") }}
       </div>
-      {{ partial "method/build-head.html" . }}
       {{ partial "development/banner.html" . }}
       {{ if not (.Params.showAuthorBottom | default (site.Params.article.showAuthorBottom | default false)) }}
         {{ template "SingleAuthor" . }}
@@ -97,7 +92,6 @@
 
       <div class="min-w-0 min-h-0 max-w-fit">
         {{ partial "series/series.html" . }}
-        {{ partial "method/build-picks.html" . }}
         <div class="article-content max-w-prose mb-20"{{ if eq (partialCached "section/role.html" .Section .Section) "recipe" }} data-page-key="{{ .RelPermalink }}" data-enable-kelvin="{{ site.Params.recipe.enableKelvin | default false }}"{{ if eq site.Params.fugu.hideIntroQuotes false }} data-show-intro-quotes="true"{{ end }}{{ end }}>
           {{/* Reset before every render pass through this content — Hugo's
             own automatic .Summary/.Description generation also runs the
@@ -156,7 +150,6 @@
           {{ if (.Params.showAuthorBottom | default (site.Params.article.showAuthorBottom | default false)) }}
             {{ template "SingleAuthor" . }}
           {{ end }}
-          {{ partial "method/build-recipes.html" . }}
           {{ partial "series/series-closed.html" . }}
           {{ partial "sharing-links.html" . }}
           {{ partial "related.html" . }}
