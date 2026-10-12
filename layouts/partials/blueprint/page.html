@@ -12,15 +12,18 @@
   - the definition, the _index.md body up to its `## Further reading`, as
     the page's intro (.method-intro.blueprint-intro), plain text rather
     than a callout, with a link to the methods list (.read-essay)
-  - "Lineage" (#lineage): the builds with an `era` on a timeline
-    (blueprint/lineage.html)
+  - "Lineage" (#lineage, in .blueprint-lineage): the builds with an
+    `era` on a timeline (blueprint/lineage.html), below 1024px only; at
+    desktop widths it's in the sidebar
   - "Parts" (#parts), in weight order: each part's title, description,
     and the options from its ## Options table as pills
   - "Builds" (#builds), oldest era first: a card per build
     (blueprint/build-card.html)
 
   The sidebar: search; counts in the date-rows style (parts, builds);
-  "On this page", desktop only, as on reading pages; and the pages linked
+  "Lineage", desktop only, a vertical timeline to scale
+  (blueprint/lineage-side.html); "On this page" (parts and builds),
+  desktop only, as on reading pages; and the pages linked
   under `## Further reading`, in order, labelled by kind. A link to
   anything that isn't a page on the site is left out.
 
@@ -69,8 +72,10 @@
   {{ $lineage := partial "blueprint/lineage.html" $info.builds }}
   {{ $hasLineage := ne (trim $lineage " \n\t") "" }}
   {{ if $hasLineage }}
-    <h3 class="subsection-title" id="lineage">Lineage</h3>
-    {{ $lineage | safeHTML }}
+    <div class="blueprint-lineage lg:hidden">
+      <h3 class="subsection-title" id="lineage">Lineage</h3>
+      {{ $lineage | safeHTML }}
+    </div>
   {{ end }}
 
   {{ with $info.parts }}
@@ -113,11 +118,17 @@
         </div>
       {{ end }}
 
-      {{ if or $hasLineage $info.parts $info.builds }}
+      {{ with trim (partial "blueprint/lineage-side.html" $info.builds) " \n\t" }}
+        <div class="rs-section hidden lg:block">
+          <h2 class="rs-label">Lineage</h2>
+          {{ . | safeHTML }}
+        </div>
+      {{ end }}
+
+      {{ if or $info.parts $info.builds }}
         <div class="rs-section hidden lg:block">
           <h2 class="rs-label">On this page</h2>
           <div class="rs-toc">
-            {{ if $hasLineage }}<div class="rs-toc-top"><a href="#lineage">Lineage</a></div>{{ end }}
             {{ with $info.parts }}<div class="rs-toc-top"><a href="#parts">Parts</a><span class="n">{{ len . }}</span></div>{{ end }}
             {{ with $info.builds }}<div class="rs-toc-top"><a href="#builds">Builds</a><span class="n">{{ len . }}</span></div>{{ end }}
           </div>

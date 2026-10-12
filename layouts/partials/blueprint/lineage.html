@@ -1,42 +1,27 @@
 {{/*
-  A blueprint's lineage (blueprint/page.html, after "Parts"): its builds
-  on a horizontal track of decades, each placed by its `era` (a year) as a
-  dot labelled with its title and era, linking to its page. Builds with no
-  `era` are left off. A build that's still a draft (a test kitchen stub
-  with only its title and era) shows faint. A label sits higher (.alt)
-  when its dot is close to the one before. Under 640px the CSS turns the
-  track into a vertical list with each build's era.
+  A blueprint's lineage in its page's body (blueprint/page.html), shown
+  below 1024px; at desktop widths the sidebar has it instead
+  (blueprint/lineage-side.html). Its builds on a horizontal track of
+  decades, each placed by its `era` (a year) as a dot labelled with its
+  title and era, linking to its page. Builds with no `era` are left off.
+  A build that's still a draft (a test kitchen stub with only its title
+  and era) shows faint. A label sits higher (.alt) when its dot is close
+  to the one before. Under 640px the CSS turns the track into a vertical
+  list with each build's era.
 
-  The track runs from the first build's decade to the end of the last's,
-  a decade more at an end whose build sits within three years of it, and
-  at least three decades wide. Nothing renders with no dated builds.
-
-  Takes the blueprint's builds (blueprint/info.html).
+  The years it covers are blueprint/lineage-span.html's. Nothing renders
+  with no dated builds. Takes the blueprint's builds (blueprint/info.html).
 */}}
-{{ $entries := slice }}
-{{ range $b := . }}
-  {{ with $b.Params.era }}{{ $entries = $entries | append (dict "year" (int .) "page" $b) }}{{ end }}
-{{ end }}
-
-{{ with $entries }}
-  {{ $entries = sort . "year" }}
-  {{ $first := (index $entries 0).year }}
-  {{ $last := (index $entries (sub (len $entries) 1)).year }}
-  {{ $start := mul (div $first 10) 10 }}
-  {{ $end := add (mul (div $last 10) 10) 10 }}
-  {{/* A year in the first or last few of its decade would sit at the very
-    end of the track, its label hanging off the page: add a decade there. */}}
-  {{ if lt (sub $first $start) 3 }}{{ $start = sub $start 10 }}{{ end }}
-  {{ if lt (sub $end $last) 3 }}{{ $end = add $end 10 }}{{ end }}
-  {{ if eq (sub $end $start) 10 }}{{ $start = sub $start 10 }}{{ $end = add $end 10 }}
-  {{ else if eq (sub $end $start) 20 }}{{ $end = add $end 10 }}{{ end }}
+{{ with partial "blueprint/lineage-span.html" . }}
+  {{ $start := .start }}
+  {{ $end := .end }}
   {{ $span := float (sub $end $start) }}
   <div class="timeline">
     <div class="tl-track">
       <ol class="tl-list">
         {{ $prev := -100.0 }}
         {{ $prevAlt := false }}
-        {{ range $entries }}
+        {{ range .entries }}
           {{ $pos := div (mul (float (sub .year $start)) 100) $span }}
           {{ $alt := and (lt (sub $pos $prev) 18) (not $prevAlt) }}
           {{ $prev = $pos }}

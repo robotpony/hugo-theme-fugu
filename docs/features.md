@@ -100,10 +100,10 @@ Methods explain how a kind of food or a process works in general. Any page in th
 A blueprint is a dish type made of parts, such as a burger: patty, seasoning, cooking, assembly, sauces. It's a folder under the methods, with its parts and builds in subfolders. Its page is on the reading layout, like the methods list, and shows:
 
 - Its definition, from the folder's `_index.md`, with a link to the methods list.
-- A lineage timeline: the builds placed by era on a track of decades, with drafts faint.
+- A lineage timeline: the builds placed by era, with drafts faint. At desktop widths it's in the sidebar, a vertical spine drawn to scale; narrower, a track of decades in the body (a list on a phone).
 - Its parts in order, each with its description and its options as pills.
 - Its builds, the named combinations, as cards with their era, description, and stack diagram, oldest first.
-- In the sidebar: search, counts of parts and builds, "On this page", and the pages linked from the `## Further reading` at the end of its definition.
+- In the sidebar: search, counts of parts and builds, the lineage, "On this page", and the pages linked from the `## Further reading` at the end of its definition.
 
 A part or build gets a chip in its header that says where it sits: "Burgers · Burger patties" on a part, "Burgers · Build" on a build, linking to the blueprint. A part and a build end with navigation back to the blueprint and on to the next part or build, in place of the date-ordered previous and next.
 

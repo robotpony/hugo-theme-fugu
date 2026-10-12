@@ -91,7 +91,11 @@ essays/methods/rice-bowls/index.html: ltitle-kind-method
 essays/methods/rice-bowls/index.html: blueprint-layout
 essays/methods/rice-bowls/index.html: reading-sidebar-wrap
 essays/methods/rice-bowls/index.html: recipe-meta-label">Builds</span><span class="recipe-meta-value">3
-essays/methods/rice-bowls/index.html: <a href="#lineage">Lineage</a>
+essays/methods/rice-bowls/index.html: !<a href="#lineage">Lineage</a>
+essays/methods/rice-bowls/index.html: class="blueprint-lineage lg:hidden"
+essays/methods/rice-bowls/index.html: rs-label">Lineage</h2>
+essays/methods/rice-bowls/index.html: <a class="vt-name" href="/essays/methods/rice-bowls/builds/patty-bowl/"
+essays/methods/rice-bowls/index.html: <a class="vt-name todo" href="/essays/methods/rice-bowls/builds/poke-bowl/"
 essays/methods/rice-bowls/index.html: class="method-intro blueprint-intro"
 essays/methods/rice-bowls/index.html: !definition-callout
 essays/methods/rice-bowls/index.html: <p>A rice bowl is rice with something on it.

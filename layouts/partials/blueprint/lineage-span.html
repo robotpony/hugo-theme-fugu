@@ -1,0 +1,32 @@
+{{/*
+  The years a blueprint's lineage covers, shared by the body's track
+  (blueprint/lineage.html) and the sidebar's (blueprint/lineage-side.html).
+  The span runs from the first dated build's decade to the end of the
+  last's, a decade more at an end whose build sits within three years of
+  it, and at least three decades wide. Takes the blueprint's builds
+  (blueprint/info.html); returns a dict, or false with no dated builds:
+
+    entries  one dict per build with an `era`, oldest first: year, page
+    start    the first year of the first decade
+    end      the first year after the last decade
+*/}}
+{{ $entries := slice }}
+{{ range $b := . }}
+  {{ with $b.Params.era }}{{ $entries = $entries | append (dict "year" (int .) "page" $b) }}{{ end }}
+{{ end }}
+{{ $out := false }}
+{{ with $entries }}
+  {{ $entries = sort . "year" }}
+  {{ $first := (index $entries 0).year }}
+  {{ $last := (index $entries (sub (len $entries) 1)).year }}
+  {{ $start := mul (div $first 10) 10 }}
+  {{ $end := add (mul (div $last 10) 10) 10 }}
+  {{/* A year in the first or last few of its decade would sit at the very
+    end of the track, its label hanging off it: add a decade there. */}}
+  {{ if lt (sub $first $start) 3 }}{{ $start = sub $start 10 }}{{ end }}
+  {{ if lt (sub $end $last) 3 }}{{ $end = add $end 10 }}{{ end }}
+  {{ if eq (sub $end $start) 10 }}{{ $start = sub $start 10 }}{{ $end = add $end 10 }}
+  {{ else if eq (sub $end $start) 20 }}{{ $end = add $end 10 }}{{ end }}
+  {{ $out = dict "entries" $entries "start" $start "end" $end }}
+{{ end }}
+{{ return $out }}
