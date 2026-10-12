@@ -18,13 +18,17 @@
   .stack-dot, .stack-bracket, .stack-times, .stack-cap).
 
   Takes a dict: inner (the block's text), labels (draw leaders, labels and
-  roles on the right), compact (tighter gaps, for cards), caption (show
+  roles on the right), compact (for cards: tighter gaps, tighter still for
+  tall stacks, 6 for up to six layers and 0.75 less for each layer
+  after, down to 2.5; a `repeat:` draws its layers once, so it doesn't
+  count), caption (show
   the caption), pos (the block's .Position; when set, an unknown key or a
   bad repeat line warns, as the formula block does).
 */}}
 {{- $cx := 105.0 }}
 {{- $rx := 70.0 }}
-{{- $gap := cond (.compact | default false) 6.0 16.0 }}
+{{- $compact := .compact | default false }}
+{{- $gap := 16.0 }}
 {{- $labels := .labels | default false }}
 {{- $pos := .pos }}
 {{- $caption := "" }}
@@ -68,6 +72,7 @@
 {{- end }}
 
 {{- with $layers }}
+  {{- if $compact }}{{ $gap = math.Max 2.5 (sub 6.0 (mul 0.75 (math.Max 0 (sub (len .) 6)))) }}{{ end }}
   {{- /* Place each layer below the last; draw bottom first, so upper layers sit over lower ones. */}}
   {{- $y := 8.0 }}
   {{- $placed := slice }}
