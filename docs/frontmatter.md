@@ -44,8 +44,8 @@ The sidebar shows each row only when its field is set; nothing is filled in for 
 `draft: true` normally keeps a page out of the build. Fugu treats a draft as published but still changing, for sites that build drafts (`buildDrafts = true` in the config, or `hugo server -D`):
 
 - A banner under the title saying the recipe is still changing, when the site sets `showDraftLabel = true` under `[params.article]`.
-- A mark on its card, with a popover explaining it.
-- `working_on: Less cumin, more tadka` adds that line to the banner and the popover.
+- A mark on its card, linking to the page that explains drafts when the site has one (`page` in `[params.fugu.development]`).
+- `working_on: Less cumin, more tadka` adds that line under the banner.
 
 The words come from `[params.fugu.development]` ([configuration.md](configuration.md)). New recipes from the archetype start as drafts; delete `draft` when a recipe is done.
 

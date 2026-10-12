@@ -99,7 +99,7 @@ Open <http://localhost:1313/recipes/plain-rice/>. You should see:
 
 The recipes list at `/recipes/` shows it as a card.
 
-> **Fugu has no default look yet.** The CSS that lays these pages out still lives in the site Fugu was split from, so on a new site everything above is on the page and works, but isn't styled or placed as intended. PLAN.md §5 and §10 track Fugu's own stylesheet.
+> Fugu's basic styles colour all of this from your Blowfish `colorScheme`, in light and dark mode ([configuration.md](configuration.md#styles)). A designed look of Fugu's own comes later (PLAN.md §5).
 
 ## 6. Search (optional)
 
@@ -117,7 +117,8 @@ Fugu replaces Blowfish's search script with its own (Fuse.js, with pinned pages 
 
 ## Where to go next
 
-- [recipe-format.md](recipe-format.md): every section a recipe can have, multi-component recipes, wiki links, and formula diagrams.
+- [recipe-format.md](recipe-format.md): every section a recipe can have, multi-component recipes, wiki links, and formula and stack diagrams.
+- [features.md](features.md): a tour of everything Fugu adds, as a reader sees it.
 - [frontmatter.md](frontmatter.md): every frontmatter field Fugu reads, and what it changes on the page.
 - [configuration.md](configuration.md): `[params.fugu]`, renaming sections and headings, and the optional parts (essays, reference pages, a log, `cuisine`, a glossary).
 - `tests/sites/everything/` in this repo: a small site with every optional part turned on, to copy from.

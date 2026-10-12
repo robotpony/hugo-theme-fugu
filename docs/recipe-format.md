@@ -177,10 +177,10 @@ A build that's made of layers (a burger, a sandwich, a lasagne) can be drawn as 
 
 ````markdown
 ```stack
-bun-top    | Toasted bun       | soft, toasted
-lettuce    | Shredded lettuce  | cold crunch
-patty-thin | Thin patty, 140 g | salt, fat, savoury
-bun-base   | Toasted bun       | barrier
+bun-top          | Toasted bun       | soft, toasted
+lettuce-shredded | Shredded lettuce  | cold crunch
+patty-thin       | Thin patty, 140 g | salt, fat, savoury
+bun-base         | Toasted bun       | barrier
 caption: Drive-in deluxe
 ```
 ````
@@ -189,7 +189,7 @@ caption: Drive-in deluxe
 - The label is what the layer is; the role is what it does for the whole. Both are short.
 - Optional lines: `caption: <text>`, and `repeat: 3-5 x3` to mark layers 3 to 5 as repeated three times (a `× 3` bracket on the left; `x` or `×`, and a single layer works too: `repeat: 4 x2`).
 
-A build's first `stack` block is also drawn smaller, without labels, on its card on the blueprint's page and the methods list. In Obsidian it reads as plain text.
+A build's first `stack` block is also drawn smaller, without labels, on its card on the blueprint's page. In Obsidian it reads as plain text.
 
 The layers in the kit today: bun-top, bun-base, bread, lettuce (leaf), lettuce-shredded, tomato, onion-raw, onion-fried, onion-minced, pickle, cheese, cheese-top, bacon, patty-thin, patty-thick (griddled), patty-thin-grilled, patty-thick-grilled, patty-smash, sauce-ketchup-mustard, sauce-burger, mustard, mayo, pasta, ragu, bechamel. A site can add its own, or replace Fugu's, by putting SVGs with those names in its own `assets/icons/layers/`: a 210-wide `viewBox` centred on x=105, its own height, and a `data-edge` attribute saying how far right of centre the drawing reaches (where the leader line starts).
 
@@ -203,7 +203,7 @@ Embed photos with standard Markdown where they belong in the text:
 
 The alt text describes the photo; the optional title in quotes is its caption, and the alt text stands in when there's no title. On the page, photos move into the sidebar as thumbnails that open a viewer, leaving a small "Photo 1" marker in the text. With JavaScript off they stay inline, and in print they always do.
 
-A photo in the page's bundle (a recipe written as `plain-rice/index.md` with the photo beside it) or under `assets/` gets a thumbnail and a resized display copy. One under `static/` is used as it is. `tools/add-image.sh` prepares photos for the site ([tools.md](tools.md)).
+A photo in the page's bundle (a recipe written as `plain-rice/index.md` with the photo beside it) or under `assets/` gets a thumbnail and a resized display copy. One under `static/` is used as it is. `tools/add-image.sh` prepares photos for the site; run it with `--help` for its options.
 
 ## Files
 

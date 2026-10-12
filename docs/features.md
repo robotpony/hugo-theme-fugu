@@ -50,7 +50,7 @@ The icons are SVGs in `assets/icons/formula/`, one per name: bowl, butter, can, 
 
 ## Stack diagrams
 
-A ```` ```stack ```` block draws a build as an exploded view: each layer from the side, pulled apart top to bottom, with a dotted leader to its label and role, and a `× n` bracket for repeated layers ([recipe-format.md](recipe-format.md#stack-diagrams)). It appears where it's written, beside a build page's picks, and small and unlabelled on the build's card. The layers are SVGs in `assets/icons/layers/` (bun-top, bun-base, bread, lettuce, tomato, onion-raw, onion-fried, onion-minced, pickle, cheese, cheese-top, bacon, patty-thin, patty-thick (griddled), patty-thin-grilled, patty-thick-grilled, patty-smash, sauce-ketchup-mustard, sauce-burger, mustard, mayo, pasta, ragu, bechamel), drawn in `currentColor` with the theme's soft accent and surface fills, so they follow light and dark mode. The build warns about a layer it doesn't know.
+A ```` ```stack ```` block draws a build as an exploded view: each layer from the side, pulled apart top to bottom, with a dotted leader to its label and role, and a `× n` bracket for repeated layers ([recipe-format.md](recipe-format.md#stack-diagrams)). It appears full size where it's written, and the first one in a build also appears small and unlabelled on that build's card on its blueprint's page. The layers are SVGs in `assets/icons/layers/` (bun-top, bun-base, bread, lettuce, lettuce-shredded, tomato, onion-raw, onion-fried, onion-minced, pickle, cheese, cheese-top, bacon, patty-thin, patty-thick (griddled), patty-thin-grilled, patty-thick-grilled, patty-smash, sauce-ketchup-mustard, sauce-burger, mustard, mayo, pasta, ragu, bechamel), drawn in `currentColor` with the theme's soft accent and surface fills (and fixed browns for a patty's seared top), so they follow light and dark mode. The build warns about a layer it doesn't know.
 
 ## Wiki links and the glossary
 
@@ -95,7 +95,7 @@ Setting one up is in [frontmatter.md](frontmatter.md#principle-tags).
 
 ## Methods and blueprints
 
-Methods explain how a kind of food or a process works in general. Any page in the methods section, or in the essay section's methods folder, is one, and shows a method chip on its card and page (on the page, with a popover giving the definition). The methods section's page, or without one the method tag's page, is the methods list: the definition, then each blueprint with its parts in order as whole-row links, with its builds as a line of named pills under its parts (drafts dashed), then the methods that belong to no blueprint, as cards.
+Methods explain how a kind of food or a process works in general. Any page in the methods section, or in the essay section's methods folder, is one, and shows a method chip on its card and page (on the page, with a popover giving the definition). The methods section's page, or without one the method tag's page, is the methods list: the definition, then each blueprint with its parts in order as whole-row links, with its builds as a line of named pills under its parts (drafts dashed), then the methods that belong to no blueprint, as cards. Its sidebar has search, counts of methods, blueprints, builds and parts, "On this page", and anything else on the method tag as further reading.
 
 A blueprint is a dish type made of parts, such as a burger: patty, seasoning, cooking, assembly, sauces. It's a folder under the methods, with its parts and builds in subfolders. Its page is on the reading layout, like the methods list, and shows:
 
@@ -121,7 +121,7 @@ These get a reading sidebar in place of the recipe one. It shows only what a pag
 - Notes and photos, moved out of the article as on recipes.
 - "On this page": the page's headings, grouped, on desktop. On a phone, Blowfish's own table of contents is used instead.
 - The recipes the page links to.
-- For an essay, the other essays in its folder.
+- For an essay, the other essays in its folder. For a blueprint's part or build, the other parts or builds, in the blueprint's order.
 - For a log month, its days, and the other months, newest first, with a day count for each.
 
 A page at the site's root, such as About, can add "The cookbook in numbers" (counts of recipes, cuisines, essays, and reference guides) and a hand-picked "Start here" list ([frontmatter.md](frontmatter.md#pages-at-the-sites-root)).
