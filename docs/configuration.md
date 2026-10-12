@@ -142,12 +142,14 @@ Methods can also be their own section, `content/methods/`, instead of a folder o
 title: Methods
 description: How a kind of food works in general.
 cascade:
-  tags: [method]
+  - target:
+      path: "/methods/**"
+    tags: [method]
 ---
 A method is the pattern behind many dishes. (This body is the definition at the top of the list.)
 ```
 
-Every regular page in the section, at any depth, is a method, and reads like an essay: the reading sidebar, reading time on its card. The section's page (`/methods/`) is the methods list, and the method chip and blueprint pages link there. Methods left in the essay section's `folder` still count, so a site can move them over a few at a time. A renamed methods section sets `type: methods` in its `_index.md`.
+Every regular page in the section, at any depth, is a method, and reads like an essay: the reading sidebar, reading time on its card. The section's page (`/methods/`) is the methods list, and the method chip and blueprint pages link there. Methods left in the essay section's `folder` still count, so a site can move them over a few at a time. A renamed methods section sets `type: methods` in its `_index.md`. The `target` keeps the tag off the section page itself, which a plain `cascade: {tags: [method]}` would also tag, putting it on the method tag's page.
 
 ## Recipe headings
 

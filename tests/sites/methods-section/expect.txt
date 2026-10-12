@@ -21,3 +21,7 @@ essays/index.html: !/methods/
 
 # The About numbers count them.
 about/index.html: Methods <b>4
+
+# The targeted cascade tags the methods, not the section page.
+tags/method/index.html: href="/methods/cooking-rice/"
+tags/method/index.html: !rcard-link" href="/methods/"
