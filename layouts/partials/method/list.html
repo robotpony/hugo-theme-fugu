@@ -15,11 +15,9 @@
     numbered list whose rows are whole-row links to the part. The list
     carries --rows, half its length rounded up, so CSS can run it in two
     columns numbered down then across. Under the block, when the blueprint
-    has builds, a rail of tiles (.build-tile) in info.html's order: its
-    stack drawn at one scale so heights compare, title, era, and
-    description. assets/js/builds-rail.js adds the rail's buttons and
-    dots; without it the tiles are a plain sideways scroll. A blueprint
-    with no builds is the block alone.
+    has builds, "Builds · N" and their cards in info.html's order, the
+    same cards as on the blueprint's page (blueprint/build-card.html),
+    wrapping down the page. A blueprint with no builds is the block alone.
   - "Techniques and ratios": methods in no blueprint, as cards
 
   The sidebar: search; counts in the date-rows style (methods,
@@ -88,19 +86,10 @@
           </section>
           {{ with $info.builds }}
             <div class="bp-builds">
-              <div class="bp-builds-head"><span>Builds · {{ len . }}</span><button type="button" class="bp-rail-prev" aria-label="Previous builds">‹</button><button type="button" class="bp-rail-next" aria-label="Next builds">›</button></div>
-              <div class="build-tiles">
-                {{ range . }}
-                  <article class="build-tile">
-                    {{ if .Draft }}<div class="rcard-top">{{ partial "development/mark.html" . }}</div>{{ end }}
-                    <div class="build-tile-art">{{ if templates.Exists "partials/stack-strip.html" }}{{ partial "stack-strip.html" (dict "page" . "labels" false) }}{{ end }}</div>
-                    <h3 class="build-tile-name"><a class="rcard-link" href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-                    {{ with .Params.era }}<p class="build-origin">{{ . }}</p>{{ end }}
-                    {{ with .Description }}<p class="build-tile-profile">{{ . }}</p>{{ end }}
-                  </article>
-                {{ end }}
+              <div class="bp-builds-head"><span>Builds · {{ len . }}</span></div>
+              <div class="rgrid build-grid">
+                {{ range . }}{{ partial "blueprint/build-card.html" . }}{{ end }}
               </div>
-              <div class="bp-rail-dots"></div>
             </div>
           {{ end }}
         </div>
@@ -169,7 +158,3 @@
   </div>
 </div>
 </div>
-{{ if $nBuilds }}
-  {{ $railJS := resources.Get "js/builds-rail.js" | resources.Minify | resources.Fingerprint "sha256" }}
-  <script src="{{ $railJS.RelPermalink }}" integrity="{{ $railJS.Data.Integrity }}" defer></script>
-{{ end }}

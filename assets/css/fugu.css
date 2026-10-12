@@ -771,44 +771,12 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
   .parts-compact[style*="--rows"] { display: grid; grid-auto-flow: column; grid-template-rows: repeat(var(--rows), auto); column-gap: 28px; }
 }
 
-/* Build tiles under a blueprint, as a rail: three fill the column; with
- * more, they shrink so the next one peeks under a fade, and ‹ › buttons
- * and dots show (assets/js/builds-rail.js sets .is-overflowing and
- * .at-end). 72% tiles on phones. Each tile is a whole-card link (.rcard-link's ::after),
- * its draft chip above it. Every stack is drawn at one width, bottom-
- * aligned on a shelf, so the heights compare: don't fix their height. */
+/* Builds under a blueprint: a small heading, then the build cards
+ * (blueprint/build-card.html) in the shared card grid. */
 .bp-builds { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.bp-builds-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--fugu-ink-faint); }
-.bp-builds-head > span { margin-right: auto; }
-.bp-rail-prev, .bp-rail-next { display: none; align-self: center; width: 26px; height: 26px; border: 1px solid var(--fugu-border-strong); border-radius: 50%; background: var(--fugu-surface); color: var(--fugu-ink); font-size: .9rem; line-height: 1; cursor: pointer; }
-.bp-rail-prev:hover:not(:disabled), .bp-rail-next:hover:not(:disabled) { border-color: var(--fugu-accent); color: var(--fugu-accent-strong); }
-.bp-rail-prev:disabled, .bp-rail-next:disabled { opacity: .35; cursor: default; }
-.bp-builds.is-overflowing .bp-rail-prev, .bp-builds.is-overflowing .bp-rail-next { display: inline-flex; align-items: center; justify-content: center; }
-.build-tiles { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
-.build-tiles::-webkit-scrollbar { display: none; }
-.build-tile { flex: 0 0 calc((100% - 24px) / 3); scroll-snap-align: start; }
-.bp-builds.is-overflowing .build-tile { flex-basis: calc((100% - 36px) / 3.3); }
-.bp-builds.is-overflowing:not(.at-end) .build-tiles { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent); }
-@media (max-width: 640px) {
-  .build-tile, .bp-builds.is-overflowing .build-tile { flex-basis: 72%; }
-}
-.bp-rail-dots { display: none; justify-content: center; gap: 6px; }
-.bp-builds.is-overflowing .bp-rail-dots { display: flex; }
-.bp-rail-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--fugu-border-strong); }
-.bp-rail-dots i.on { background: var(--fugu-accent); }
-.build-tile { position: relative; display: flex; flex-direction: column; gap: 6px; min-width: 0; background: var(--fugu-surface); border: 1px solid var(--fugu-border); border-radius: var(--fugu-radius); padding: 14px 14px 12px; transition: border-color .12s; }
-.build-tile:hover, .build-tile:focus-within { border-color: var(--fugu-accent); }
-.build-tile .rcard-top { position: relative; z-index: 1; }
-.build-tile-art { display: flex; align-items: flex-end; justify-content: center; height: 150px; margin-bottom: 4px; padding-bottom: 8px; border-bottom: 1px solid var(--fugu-border); overflow: hidden; }
-.build-tile-art .stack { width: 58px; max-width: none; margin: 0; }
-.build-tile-name { display: flex; justify-content: space-between; gap: 6px; margin: 0; font-size: .98rem; font-weight: 700; line-height: 1.25; color: var(--fugu-ink); }
-.build-tile-name::after { content: "→"; font-weight: 500; color: var(--fugu-accent-strong); opacity: 0; transition: opacity .12s; }
-.build-tile:hover .build-tile-name, .build-tile:focus-within .build-tile-name { color: var(--fugu-accent-strong); }
-.build-tile:hover .build-tile-name::after, .build-tile:focus-within .build-tile-name::after { opacity: 1; }
-.build-tile .build-origin { font-size: .66rem; }
-.build-tile-profile { margin: 0; font-size: .82rem; line-height: 1.45; color: var(--fugu-ink-muted); }
+.bp-builds-head { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--fugu-ink-faint); }
 @media (prefers-reduced-motion: reduce) {
-  .bp-name .go, .parts-compact .part-row, .parts-compact a.part-row::after, .build-tile, .build-tile-name::after { transition: none; }
+  .bp-name .go, .parts-compact .part-row, .parts-compact a.part-row::after { transition: none; }
 }
 .parts-full .part-name { font-size: 1rem; }
 .parts-full li { grid-template-columns: 36px minmax(0, 1fr); column-gap: 24px; padding: 14px 0; }
