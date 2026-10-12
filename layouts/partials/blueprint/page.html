@@ -9,12 +9,17 @@
     ones, on a timeline (blueprint/lineage.html)
   - "Builds", oldest era first: a card per build page (blueprint/build-card.html), then, with
     two or more, a table comparing their profiles and picks part by part
-    (rows no build fills are left out)
+    (#compare; fixed layout, a set label column and the builds sharing the
+    rest evenly; rows no build fills are left out)
   - "Parts", in the _index.md's `parts` order: each part's methods with
     their descriptions and the options from their ## Options table as
-    pills, or "Not written yet"
-  - "Recipes", grouped by `build_name` (blueprint/info.html), then those
-    with none; one plain grid when no recipe names a build
+    pills, or "Not written yet", and beside them (under them on a phone)
+    the recipes whose `part` names it, with their time, or "No recipes
+    for this part yet."
+  - "Recipes", grouped by `build_name` (blueprint/info.html), then "No
+    build yet" for those with neither a build name nor a part (recipes
+    with only a part are listed under their part instead); one plain grid
+    when no recipe names a build
   - stories, reference pages, and methods with neither a part nor a build
     name, as further reading (concept/further.html)
 
@@ -64,7 +69,8 @@
       <h3 class="subsection-title subsection-gap" id="compare">Builds compared</h3>
       <div class="table-scroll">
         <table class="builds-compared">
-          <thead><tr><th></th>{{ range $builds }}<th scope="col"><a href="{{ .RelPermalink }}">{{ .Params.build_name }}</a></th>{{ end }}</tr></thead>
+          <colgroup><col class="bc-label">{{ range $builds }}<col>{{ end }}</colgroup>
+          <thead><tr><th><span class="bc-corner">Part</span></th>{{ range $builds }}<th scope="col"><a href="{{ .RelPermalink }}">{{ .Params.build_name }}</a></th>{{ end }}</tr></thead>
           <tbody>
             <tr class="profile-row"><th scope="row">Profile</th>{{ range $builds }}<td>{{ with .Params.profile }}<span class="build-profile">{{ . }}</span>{{ end }}</td>{{ end }}</tr>
             {{ range $info.parts }}
@@ -91,6 +97,7 @@
     <ol class="parts parts-full">
       {{ range . }}
         {{ $part := . }}
+        {{ $recipes := index $info.byPart (lower .name) | default slice }}
         <li{{ if not .methods }} class="todo"{{ end }}>
           <span class="part-name">{{ with .methods }}<a href="{{ (index . 0).RelPermalink }}">{{ $part.name }}</a>{{ else }}{{ .name }}{{ end }}</span>
           <span class="part-methods">
@@ -101,15 +108,26 @@
               Not written yet.
             {{- end -}}
           </span>
+          {{ with $recipes }}
+            <div class="part-recipes">
+              <span class="part-recipes-head">Recipes · {{ len . }}</span>
+              {{ range . }}
+                {{ $time := .Params.total_time | default .Params.prep_time | default .Params.cook_time }}
+                <a class="part-recipe" href="{{ .RelPermalink }}">{{ .Title }}{{ with $time }}<span class="part-recipe-time">{{ partial "short-time.html" . }}</span>{{ end }}</a>
+              {{ end }}
+            </div>
+          {{ else }}
+            <div class="part-recipes is-empty"><span class="part-recipes-head">No recipes for this part yet.</span></div>
+          {{ end }}
         </li>
       {{ end }}
     </ol>
   {{ end }}
 
-  {{ with $info.recipes }}
-    <h3 class="subsection-title{{ if or $info.builds $info.parts }} subsection-gap{{ end }}">Recipes<span class="subsection-count">{{ len . }}</span></h3>
-    {{ $named := 0 }}
-    {{ range $info.groups }}{{ $named = add $named (len .recipes) }}{{ end }}
+  {{ $named := 0 }}
+  {{ range $info.groups }}{{ $named = add $named (len .recipes) }}{{ end }}
+  {{ with add $named (len $info.loose) }}
+    <h3 class="subsection-title{{ if or $info.builds $info.parts }} subsection-gap{{ end }}">Recipes<span class="subsection-count">{{ . }}</span></h3>
     {{ if $named }}
       {{ range $info.groups }}
         {{ $g := . }}
@@ -123,7 +141,7 @@
         <div class="rgrid">{{ range . }}{{ partial "recipe-card.html" . }}{{ end }}</div>
       {{ end }}
     {{ else }}
-      <div class="rgrid">{{ range . }}{{ partial "recipe-card.html" . }}{{ end }}</div>
+      <div class="rgrid">{{ range $info.loose }}{{ partial "recipe-card.html" . }}{{ end }}</div>
     {{ end }}
   {{ end }}
 

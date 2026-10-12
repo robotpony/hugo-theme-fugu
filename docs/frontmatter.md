@@ -97,6 +97,7 @@ A method is a page in the methods section (`content/methods/`, when the site has
 | `blueprint` | any page | The blueprints it belongs to: `[burgers]`. Methods, recipes, and essays all carry it, so the blueprint's page collects all of them. |
 | `part` | method | The part of the blueprint it covers, as written in the blueprint's `parts`: `Patty construction`. |
 | `build_name` | method | Makes the method a build: a named combination with one pick per part (`Deluxe griddle`), unique in its blueprint. Not `build`, which Hugo keeps for its own build options. |
+| `part` | recipe | The part the recipe makes, as written in the blueprint's `parts` (`Sauces`), or a list for a recipe that serves several. The recipe also needs the blueprint's `blueprint`. It's listed beside that part on the blueprint's page, and not under "No build yet" there. |
 | `build_name` | recipe | The build the recipe is made from, the same name as the build page's. |
 | `profile` | build | One line on what the build tastes and feels like, shown in italics under its title, on its card, and in the blueprint's comparison table. |
 | `picks` | build | One pick per part, as a list of `"Part: pick"` strings. |

@@ -112,9 +112,10 @@
 {{ range slice (slice "Prep" .Params.prep_time) (slice "Cook" .Params.cook_time) (slice "Serves" .Params.servings) }}
   {{ $v := index . 1 }}
   {{ if $v }}
-    {{ $v = string $v | replaceRE `\s*\([^)]*\)?` "" | strings.TrimSpace }}
-    {{ if ne (index . 0) "Serves" }}
-      {{ $v = $v | replaceRE `(?i)\s*(minutes?|mins?)\b` "m" | replaceRE `(?i)\s*(hours?|hrs?)\b` "h" | replaceRE `\s*-\s*` "-" }}
+    {{ if eq (index . 0) "Serves" }}
+      {{ $v = string $v | replaceRE `\s*\([^)]*\)?` "" | strings.TrimSpace }}
+    {{ else }}
+      {{ $v = partial "short-time.html" $v }}
     {{ end }}
     {{ $stats = $stats | append (dict "label" (index . 0) "value" $v "full" (string (index . 1))) }}
   {{ end }}

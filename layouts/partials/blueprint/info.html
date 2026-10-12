@@ -17,8 +17,13 @@
     recipes  the recipes on the blueprint
     groups   the recipes by `build_name`: one dict per build name (name,
              page: its build page or false, recipes), build pages' order
-             first, then names with no page yet; recipes with no build
-             name are in `loose`
+             first, then names with no page yet
+    loose    recipes with neither a build name nor a part
+    byPart   recipes by their `part` (a name, or a list for a recipe that
+             serves several), keyed by the part's lowercased name and
+             matched case-insensitively, like a method's `part`; one key
+             per name in `parts`, empty when none. A recipe with a part
+             and a build name is in both byPart and its group
     others   everything else on the blueprint: stories, reference pages,
              and methods with neither a part nor a build name
 */}}
@@ -87,6 +92,21 @@
   {{ $groups = $groups | append (dict "name" $name "page" $page "recipes" $mine) }}
 {{ end }}
 {{ $loose := slice }}
-{{ range $recipes }}{{ if not .Params.build_name }}{{ $loose = $loose | append . }}{{ end }}{{ end }}
+{{ range $recipes }}{{ if not (or .Params.build_name .Params.part) }}{{ $loose = $loose | append . }}{{ end }}{{ end }}
 
-{{ return dict "term" $term "parts" $parts "written" $written "builds" $builds "recipes" $recipes "groups" $groups "loose" $loose "others" $others }}
+{{/* Recipes by part, in the blueprint's recipe order. */}}
+{{ $byPart := dict }}
+{{ range $term.Params.parts | default slice }}
+  {{ $key := lower . }}
+  {{ $mine := slice }}
+  {{ range $recipes }}
+    {{ $p := .Params.part }}
+    {{ $names := cond (reflect.IsSlice $p) $p (cond (ne (string ($p | default "")) "") (slice $p) slice) }}
+    {{ $hit := false }}
+    {{ range $names }}{{ if eq (lower (string .)) $key }}{{ $hit = true }}{{ end }}{{ end }}
+    {{ if $hit }}{{ $mine = $mine | append . }}{{ end }}
+  {{ end }}
+  {{ $byPart = merge $byPart (dict $key $mine) }}
+{{ end }}
+
+{{ return dict "term" $term "parts" $parts "written" $written "builds" $builds "recipes" $recipes "groups" $groups "loose" $loose "byPart" $byPart "others" $others }}
