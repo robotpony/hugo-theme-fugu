@@ -850,7 +850,7 @@ a.tl-name:hover { color: var(--fugu-accent-strong); }
 .vt { position: relative; }
 .vt-spine { position: absolute; left: 52px; top: 0; bottom: 0; width: 2px; background: var(--fugu-border-strong); }
 .vt-dec { position: absolute; left: 0; width: 58px; display: flex; align-items: center; gap: 6px; transform: translateY(-50%); font-family: var(--fugu-font-mono); font-size: .64rem; color: var(--fugu-ink-faint); }
-.vt-dec::after { content: ""; width: 8px; height: 1px; margin-left: auto; margin-right: 3px; background: var(--fugu-border-strong); }
+.vt-dec::after { content: ""; width: 8px; height: 1px; margin-left: auto; margin-right: 1px; background: var(--fugu-border-strong); }
 .vt-name { position: absolute; left: 72px; right: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 2px 8px; border-radius: 4px; transform: translateY(-50%); font-size: .86rem; font-weight: 600; line-height: 1.2; white-space: nowrap; color: var(--fugu-ink); text-decoration: none; }
 .vt-name > span:not(.ln-dot) { overflow: hidden; text-overflow: ellipsis; }
 .vt-name .y { flex: none; font-family: var(--fugu-font-mono); font-size: .7rem; font-weight: 400; color: var(--fugu-ink-faint); }
