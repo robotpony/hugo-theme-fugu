@@ -100,7 +100,7 @@ content/methods/burgers/
   builds/drive-in-deluxe.md a build
 ```
 
-`parts/` and `builds/` are plain folders, with no `_index.md`. The blueprint's `_index.md` gives its title, description, and definition (the body), which may end with a `## Further reading` section of links; its page shows the definition first and the further reading last.
+`parts/` and `builds/` are plain folders, with no `_index.md`. The blueprint's `_index.md` gives its title, description, and definition (the body), which may end with a `## Further reading` section of links; its page shows the definition at the top and the pages the further reading links to in the sidebar.
 
 ```markdown
 ---

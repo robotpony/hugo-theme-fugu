@@ -2,17 +2,27 @@
   A blueprint's page (/methods/burgers/, the section page of a folder
   under a methods folder; layouts/methods/list.html or essays/list.html
   call it): a dish type made of parts, with the builds that combine them.
-  In order:
+  On the reading layout, like the methods list (method/list.html) and a
+  principle: a body column and the reading sidebar's wrap beside it
+  (.reading-sidebar-wrap, below the page under 1024px), in
+  .blueprint-layout.
 
-  - the header, "Burgers blueprint", with counts of parts and builds
-  - the definition callout (concept/callout.html): the _index.md body up
-    to its `## Further reading`, linking to the methods list
-  - "Parts", in weight order: each part's title, description, and the
-    options from its ## Options table as pills
-  - "Lineage": the builds with an `era` on a timeline
+  The body:
+  - the title, "Burgers blueprint", alone (the counts are in the sidebar)
+  - the definition, the _index.md body up to its `## Further reading`, as
+    the page's intro (.method-intro.blueprint-intro), plain text rather
+    than a callout, with a link to the methods list (.read-essay)
+  - "Lineage" (#lineage): the builds with an `era` on a timeline
     (blueprint/lineage.html)
-  - "Builds", oldest era first: a card per build (blueprint/build-card.html)
-  - "Further reading": the body under `## Further reading`, as written
+  - "Parts" (#parts), in weight order: each part's title, description,
+    and the options from its ## Options table as pills
+  - "Builds" (#builds), oldest era first: a card per build
+    (blueprint/build-card.html)
+
+  The sidebar: search; counts in the date-rows style (parts, builds);
+  "On this page", desktop only, as on reading pages; and the pages linked
+  under `## Further reading`, in order, labelled by kind. A link to
+  anything that isn't a page on the site is left out.
 
   The body is rendered from .RawContent with [[wiki links]] rewritten to
   standard links first, as _default/single.html does, so they go through
@@ -23,36 +33,48 @@
 {{ $md := .RawContent }}
 {{ $md = replaceRE `\[\[([^\]|]+)\|([^\]]+)\]\]` `[$2](<$1>)` $md }}
 {{ $md = replaceRE `\[\[([^\]]+)\]\]` `[$1](<$1>)` $md }}
-{{ $bits := split $md "\n" }}
 {{ $definition := slice }}
-{{ $further := slice }}
+{{ $furtherMD := slice }}
 {{ $inFurther := false }}
-{{ range $bits }}
+{{ range split $md "\n" }}
   {{ if findRE `^##[ \t]+[^#]` . }}{{ $inFurther = findRE `(?i)^##[ \t]+further reading[ \t:]*$` . }}{{ if $inFurther }}{{ continue }}{{ end }}{{ end }}
-  {{ if $inFurther }}{{ $further = $further | append . }}{{ else }}{{ $definition = $definition | append . }}{{ end }}
+  {{ if $inFurther }}{{ $furtherMD = $furtherMD | append . }}{{ else }}{{ $definition = $definition | append . }}{{ end }}
 {{ end }}
 {{ $definition = delimit $definition "\n" | strings.TrimSpace }}
-{{ $further = delimit $further "\n" | strings.TrimSpace }}
-<section class="listing blueprint-page">
+{{ $furtherMD = delimit $furtherMD "\n" | strings.TrimSpace }}
+
+{{/* Further reading: the pages the section links to, in order, once each. */}}
+{{ $further := slice }}
+{{ with $furtherMD }}
+  {{ range findRESubmatch `<a href="([^"]+)"` ($.RenderString (dict "display" "block") .) -1 }}
+    {{ with where site.Pages "RelPermalink" (index . 1) }}
+      {{ $p := index . 0 }}
+      {{ if not (in $further $p) }}{{ $further = $further | append $p }}{{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+<div class="blueprint-layout flex flex-col lg:flex-row">
+<section class="listing blueprint-page min-w-0 flex-1">
   <header class="listing-head">
     <h1 class="ltitle">{{ .Title }} <span class="ltitle-kind ltitle-kind-method">blueprint</span></h1>
-    <span class="listing-count">
-      {{- $counts := slice -}}
-      {{- with $info.parts }}{{ $counts = $counts | append (printf "%d %s" (len .) (cond (eq (len .) 1) "part" "parts")) }}{{ end -}}
-      {{- with $info.builds }}{{ $counts = $counts | append (printf "%d %s" (len .) (cond (eq (len .) 1) "build" "builds")) }}{{ end -}}
-      {{- delimit $counts " · " -}}
-    </span>
   </header>
-  {{ with $definition }}
-    {{ $more := "" }}
-    {{ with $list }}{{ $more = printf "All %s" (lower .Title) }}{{ end }}
-    {{ partial "concept/callout.html" (dict "kind" "method" "label" "Blueprint" "content" ($.RenderString (dict "display" "block") .) "link" $list "more" $more) }}
-  {{ else }}
-    {{ with .Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
+  {{ if or $definition .Description }}
+    <div class="method-intro blueprint-intro">
+      {{ with $definition }}{{ $.RenderString (dict "display" "block") . }}{{ else }}<p>{{ $.Description }}</p>{{ end }}
+      {{ with $list }}<a class="read-essay" href="{{ .RelPermalink }}">All {{ lower .Title }} →</a>{{ end }}
+    </div>
+  {{ end }}
+
+  {{ $lineage := partial "blueprint/lineage.html" $info.builds }}
+  {{ $hasLineage := ne (trim $lineage " \n\t") "" }}
+  {{ if $hasLineage }}
+    <h3 class="subsection-title" id="lineage">Lineage</h3>
+    {{ $lineage | safeHTML }}
   {{ end }}
 
   {{ with $info.parts }}
-    <h3 class="subsection-title">Parts<span class="subsection-count">{{ len . }}</span></h3>
+    <h3 class="subsection-title{{ if $hasLineage }} subsection-gap{{ end }}" id="parts">Parts<span class="subsection-count">{{ len . }}</span></h3>
     <ol class="parts parts-full">
       {{ range . }}
         {{ $part := . }}
@@ -67,21 +89,57 @@
     </ol>
   {{ end }}
 
-  {{ $lineage := partial "blueprint/lineage.html" $info.builds }}
-  {{ with trim $lineage " \n\t" }}
-    <h3 class="subsection-title{{ if $info.parts }} subsection-gap{{ end }}">Lineage</h3>
-    {{ . | safeHTML }}
-  {{ end }}
-
   {{ with $info.builds }}
-    <h3 class="subsection-title{{ if $info.parts }} subsection-gap{{ end }}">Builds<span class="subsection-count">{{ len . }}</span></h3>
+    <h3 class="subsection-title{{ if or $hasLineage $info.parts }} subsection-gap{{ end }}" id="builds">Builds<span class="subsection-count">{{ len . }}</span></h3>
     <div class="rgrid build-grid">
       {{ range . }}{{ partial "blueprint/build-card.html" . }}{{ end }}
     </div>
   {{ end }}
-
-  {{ with $further }}
-    <h3 class="subsection-title subsection-gap" id="further-reading">Further reading</h3>
-    <div class="blueprint-further prose dark:prose-invert max-w-prose">{{ $.RenderString (dict "display" "block") . }}</div>
-  {{ end }}
 </section>
+
+{{/* The reading sidebar's wrap and pin (_default/single.html), with this
+  page's own modules, as on the methods list. */}}
+<div class="reading-sidebar-wrap lg:ms-auto px-0 lg:ps-8 print:hidden">
+  <div class="reading-sidebar-pin lg:sticky lg:top-10">
+    <div class="reading-sidebar not-prose">
+      <div class="rs-section">
+        {{ partial "search-box.html" "site" }}
+      </div>
+
+      {{ if or $info.parts $info.builds }}
+        <div class="recipe-meta">
+          {{ with $info.parts }}<div class="recipe-meta-row"><span class="recipe-meta-label">Parts</span><span class="recipe-meta-value">{{ len . }}</span></div>{{ end }}
+          {{ with $info.builds }}<div class="recipe-meta-row"><span class="recipe-meta-label">Builds</span><span class="recipe-meta-value">{{ len . }}</span></div>{{ end }}
+        </div>
+      {{ end }}
+
+      {{ if or $hasLineage $info.parts $info.builds }}
+        <div class="rs-section hidden lg:block">
+          <h2 class="rs-label">On this page</h2>
+          <div class="rs-toc">
+            {{ if $hasLineage }}<div class="rs-toc-top"><a href="#lineage">Lineage</a></div>{{ end }}
+            {{ with $info.parts }}<div class="rs-toc-top"><a href="#parts">Parts</a><span class="n">{{ len . }}</span></div>{{ end }}
+            {{ with $info.builds }}<div class="rs-toc-top"><a href="#builds">Builds</a><span class="n">{{ len . }}</span></div>{{ end }}
+          </div>
+        </div>
+      {{ end }}
+
+      {{ with $further }}
+        <div class="rs-section">
+          <h2 class="rs-label">Further reading <span class="n">{{ len . }}</span></h2>
+          <div class="browse-list">
+            {{ range . }}
+              {{ $role := partialCached "section/role.html" .Section .Section }}
+              {{ $label := "Essay" }}
+              {{ if eq $role "reference" }}{{ $label = "Reference" }}
+              {{ else if eq $role "recipe" }}{{ $label = "Recipe" }}
+              {{ else if partial "method/is.html" . }}{{ $label = "Method" }}{{ end }}
+              <a href="{{ .RelPermalink }}">{{ .Title }} <span class="n">{{ $label }}</span></a>
+            {{ end }}
+          </div>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+</div>
+</div>

@@ -88,8 +88,12 @@ tags/method/index.html: !Compare picks
 tags/method/index.html: Techniques and ratios
 tags/method/index.html: href="/essays/methods/thinking-in-ratios/"
 essays/methods/rice-bowls/index.html: ltitle-kind-method
-essays/methods/rice-bowls/index.html: 2 parts · 3 builds
-essays/methods/rice-bowls/index.html: definition-callout k-method
+essays/methods/rice-bowls/index.html: blueprint-layout
+essays/methods/rice-bowls/index.html: reading-sidebar-wrap
+essays/methods/rice-bowls/index.html: recipe-meta-label">Builds</span><span class="recipe-meta-value">3
+essays/methods/rice-bowls/index.html: <a href="#lineage">Lineage</a>
+essays/methods/rice-bowls/index.html: class="method-intro blueprint-intro"
+essays/methods/rice-bowls/index.html: !definition-callout
 essays/methods/rice-bowls/index.html: <p>A rice bowl is rice with something on it.
 essays/methods/rice-bowls/index.html: build-card
 essays/methods/rice-bowls/index.html: <p class="build-origin">1990</p>
@@ -99,8 +103,8 @@ essays/methods/rice-bowls/index.html: <li class="tl-mark todo" style="left:83.3%
 essays/methods/rice-bowls/index.html: !builds-compared
 essays/methods/rice-bowls/index.html: <span class="opt-pill">Short grain</span>
 essays/methods/rice-bowls/index.html: <span class="opt-pill">Plain rice leftovers</span>
-essays/methods/rice-bowls/index.html: id="further-reading"
-essays/methods/rice-bowls/index.html: href="/reference/rice-ratios/" class="wikilink"
+essays/methods/rice-bowls/index.html: rs-label">Further reading <span class="n">2
+essays/methods/rice-bowls/index.html: <a href="/reference/rice-ratios/">Rice ratios <span class="n">Reference
 essays/methods/rice-bowls/index.html: !broken-link
 essays/methods/rice-bowls/index.html: ![[
 essays/methods/rice-bowls/builds/patty-bowl/index.html: class="article-pagination-link article-pagination-next part-nav-next" href="/essays/methods/rice-bowls/builds/poke-bowl/"

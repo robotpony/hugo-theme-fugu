@@ -742,8 +742,8 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
 /* The methods list's and a principle's intro: the definition as plain
  * body text, a principle's with its essay link after. */
 .method-intro, .principle-intro { max-width: 65ch; font-size: 1.08rem; margin-bottom: 8px; }
-.principle-intro .read-essay { display: inline-block; margin-top: 4px; font-size: .9rem; font-weight: 600; color: var(--fugu-accent-strong); text-decoration: none; }
-.principle-intro .read-essay:hover { text-decoration: underline; }
+.principle-intro .read-essay, .blueprint-intro .read-essay { display: inline-block; margin-top: 4px; font-size: .9rem; font-weight: 600; color: var(--fugu-accent-strong); text-decoration: none; }
+.principle-intro .read-essay:hover, .blueprint-intro .read-essay:hover { text-decoration: underline; }
 
 /* Blueprint rows on the methods list: the block, then its build tiles
  * under it. The block holds links but isn't one, so it doesn't light up;
