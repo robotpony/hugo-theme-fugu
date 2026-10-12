@@ -728,7 +728,11 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
 .stack-times { font-family: var(--fugu-font-mono); fill: var(--fugu-accent-strong); }
 .stack-missing { stroke: var(--fugu-ink-faint); }
 .stack-cap { margin-top: 12px; font-size: .76rem; text-align: center; color: var(--fugu-ink-faint); }
-.build-card .stack { width: 150px; margin: 4px auto 0; }
+/* A build card's stack sits centred between its intro and its stats: the
+ * cards in a row stretch to the tallest, and the stack's auto margins take
+ * the free space that .rcard-stats' margin-top would otherwise. */
+.build-card .stack { width: 150px; margin: auto; padding: 4px 0; }
+.build-card .rcard-stats { margin-top: 0; }
 
 /* ---------------------------------------------------------------------
  * Methods and blueprints (partials/method/, partials/blueprint/): the
