@@ -89,6 +89,9 @@
     # An SVG in assets/ (the site's, else Fugu's), inlined so it takes
     # currentColor. "" leaves the chip without an icon.
     icon     = "icons/methods/fan-out.svg"
+    # A line above a blueprint page's parts, in its parts box (markdown).
+    # "" leaves it out.
+    partsLead = "Each part is its own method. A build picks one option from each."
 
   # What each ## heading means, by its whole title (any case, trailing ":"
   # ignored). method: prose whose quantities and temperatures get marked.

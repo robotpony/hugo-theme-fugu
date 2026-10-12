@@ -106,6 +106,7 @@ essays/methods/rice-bowls/index.html: href="/essays/methods/rice-bowls/builds/pa
 essays/methods/rice-bowls/index.html: <li class="tl-mark todo" style="left:83.3%"><a class="tl-name" href="/essays/methods/rice-bowls/builds/poke-bowl/"
 essays/methods/rice-bowls/index.html: !builds-compared
 essays/methods/rice-bowls/index.html: <section class="bp bp-parts-only">
+essays/methods/rice-bowls/index.html: <p class="bp-desc">Each part is its own method. A build picks one option from each.</p>
 essays/methods/rice-bowls/index.html: class="part-row" href="/essays/methods/rice-bowls/parts/toppings/">Bowl toppings
 essays/methods/rice-bowls/index.html: !opt-pill
 tags/method/index.html: <div class="bp-builds-inline">

@@ -6,6 +6,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Added
 
+- `params.fugu.methods.partsLead`: a line at the top of a blueprint page's parts box (`.bp-desc` in `section.bp.bp-parts-only`), in Markdown, by default "Each part is its own method. A build picks one option from each." `""` leaves it out.
 - A `lettuce-shredded` stack layer: a heap of flat, pale ribbons on a soft pad, for builds with shredded lettuce. The leaf `lettuce` layer's edge (`data-edge`) now reaches its frill (85.5, was 78.4), and `mayo` and `sauce-burger` reach their spread (64.7, was 60.2), so leader dots clear them.
 - Recipes per part: a recipe's `part` (a name from its blueprint's `parts`, or a list, matched case-insensitively) lists it beside that part on the blueprint's page, with its time (`.part-recipes`, `.part-recipes-head`, `.part-recipe`, `.part-recipe-time`; `.part-recipes.is-empty` reads "No recipes for this part yet."). The full parts list is three columns (the recipes under the method below 820px). `blueprint/info.html` returns `byPart`, and its `loose` ("No build yet") now leaves out recipes with a part. The time is `total_time`, else `prep_time`, else `cook_time`, shortened as on a card (`partials/short-time.html`, which the card now uses too).
 - The builds comparison has equal columns: a fixed layout, a `<colgroup>` with a set label column (`col.bc-label`), a "Part" corner (`.bc-corner`), wrapping row labels, and the heavier rule under the profile row running under its label too.

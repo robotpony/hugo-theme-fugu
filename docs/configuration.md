@@ -116,6 +116,7 @@ Methods are pages that explain how a kind of food or a process works in general,
   tag      = "method"
   label    = "Method"
   icon     = "icons/methods/fan-out.svg"
+  partsLead = "Each part is its own method. A build picks one option from each."
 ```
 
 | Key | What it is |
@@ -124,6 +125,7 @@ Methods are pages that explain how a kind of food or a process works in general,
 | `tag` | Without a methods section, the tag whose term page is the methods list, when its `content/tags/<tag>/_index.md` sets `kind: method`. The method chip links there. With one, the tag's pages that aren't methods are the list's further reading. |
 | `label` | The method chip's words. |
 | `icon` | An SVG in `assets/` (the site's, else Fugu's fan-out), inlined so it takes the text colour. `""` leaves the chip without one. |
+| `partsLead` | A line at the top of a blueprint page's parts box, in Markdown. `""` leaves it out. |
 
 Set `folder` or `tag` to `""` to turn that part off. Blueprints need no settings: a folder with an `_index.md` directly in the methods section or the methods folder is one ([frontmatter.md](frontmatter.md#methods-and-blueprints)).
 
