@@ -37,6 +37,14 @@
   --fugu-cuisine: rgb(var(--color-secondary-800));
   --fugu-cuisine-soft: rgb(var(--color-secondary-100));
 
+  /* A patty's seared top in the stack layers (assets/icons/layers/patty-*):
+   * the crust, its flecks, and grill char. Fixed browns, not the scheme's:
+   * they're the colour of cooked meat. A site's --sear, --sear-fleck and
+   * --sear-char win over these. */
+  --fugu-sear: #8E5E3D;
+  --fugu-sear-fleck: #D9B48C;
+  --fugu-sear-char: #23241E;
+
   --fugu-shadow: 0 8px 24px rgba(0, 0, 0, .12);
   --fugu-radius: 6px;
   --fugu-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -56,6 +64,11 @@
   --fugu-accent-strong: rgb(var(--color-primary-300));
   --fugu-accent-soft: rgba(var(--color-primary-500), .2);
   --fugu-accent-wash: rgba(var(--color-primary-400), .2);
+
+  /* Char stays dark in dark mode; the crust and flecks go darker. */
+  --fugu-sear: #5C3A26;
+  --fugu-sear-fleck: #24170F;
+  --fugu-sear-char: #121310;
 
   --fugu-cuisine: rgb(var(--color-secondary-300));
   --fugu-cuisine-soft: rgba(var(--color-secondary-500), .18);

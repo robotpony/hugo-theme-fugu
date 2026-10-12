@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 59.3" data-edge="75.7" fill="none" stroke-linecap="round" stroke-linejoin="round" overflow="visible">
   <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.8" d="M176,26.2L178.3,27.5L179,28.9L175.9,30L173,31.1L173.4,32.4L174.7,33.9L176.3,35.5L175.6,36.9L171,37.7L166.4,38.3L163.5,39.1L161.1,40.1L159.9,41.3L158.2,42.5L154.5,43.1L151.3,43.7L148.3,44.4L145.3,45.1L143.5,46.4L141.3,47.6L137.8,48.1L133.9,48.3L129.7,48.1L125.8,48L123,49.1L120.2,50.6L116.8,51.5L112.9,51.8L108.8,51.1L105,50.4L101.2,50.9L97.2,51.5L93.3,51.4L89.7,50.7L87,49L84.3,47.8L80.4,48L76,48.4L71.9,48.3L68.5,47.7L66.8,46.2L65,44.9L61.9,44.3L58.8,43.7L55.3,43.1L51.9,42.5L50.3,41.3L48.6,40.2L45.8,39.3L43,38.4L38.7,37.7L34.7,36.9L34.2,35.5L35.3,33.9L36.7,32.4L37.3,31.1L34.5,30L31.3,28.9L31.5,27.5L33.2,26.2L33.2,31.3L31.5,32.7L31.3,34L34.5,35.1L37.3,35.9L36.7,37L35.3,38.7L34.2,40.2L34.7,41.6L38.7,42.6L43,43.2L45.8,44.1L48.6,45.1L50.3,46.4L51.9,47.6L55.3,48.4L58.8,48.8L61.9,49.1L65,49.8L66.8,51L68.5,52.5L71.9,53.2L76,53.2L80.4,52.7L84.3,52.5L87,53.9L89.7,55.6L93.3,56.6L97.2,56.9L101.2,55.9L105,55.4L108.8,55.9L112.9,56.6L116.8,56.4L120.2,55.5L123,53.8L125.8,52.5L129.7,52.8L133.9,53L137.8,53L141.3,52.9L143.5,51.5L145.3,50.2L148.3,49.4L151.3,48.6L154.5,48L158.2,47.6L159.9,46.3L161.1,44.7L163.5,43.8L166.4,42.8L171,42.3L175.6,41.9L176.3,40.5L174.7,39L173.4,37.5L173,36.2L175.9,34.9L179,34L178.3,32.7L176,31.1Z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1.8" d="M176,26.2L178.3,27.5L179,28.9L175.9,30L173,31.1L173.4,32.4L174.7,33.9L176.3,35.5L175.6,36.9L171,37.7L166.4,38.3L163.5,39.1L161.1,40.1L159.9,41.3L158.2,42.5L154.5,43.1L151.3,43.7L148.3,44.4L145.3,45.1L143.5,46.4L141.3,47.6L137.8,48.1L133.9,48.3L129.7,48.1L125.8,48L123,49.1L120.2,50.6L116.8,51.5L112.9,51.8L108.8,51.1L105,50.4L101.2,50.9L97.2,51.5L93.3,51.4L89.7,50.7L87,49L84.3,47.8L80.4,48L76,48.4L71.9,48.3L68.5,47.7L66.8,46.2L65,44.9L61.9,44.3L58.8,43.7L55.3,43.1L51.9,42.5L50.3,41.3L48.6,40.2L45.8,39.3L43,38.4L38.7,37.7L34.7,36.9L34.2,35.5L35.3,33.9L36.7,32.4L37.3,31.1L34.5,30L31.3,28.9L31.5,27.5L33.2,26.2L35.7,25L37,23.8L34.8,22.4L33.3,21L35.4,19.9L38.9,18.9L42.9,18.1L45.2,17.2L43.8,15.6L42.7,14L43.7,12.7L45.5,11.5L48.9,10.8L52,10L53.6,8.7L55.7,7.6L58.4,6.7L61.4,5.8L65.7,5.7L69.9,5.6L73,4.8L75.8,4L78.5,2.8L81.6,1.8L86.1,2.2L90.6,3.1L94.4,3.5L98,3.5L101.4,2.6L105,1.8L108.7,2.4L112.1,3.2L115.6,3.5L119.4,3.2L124,2.1L128.5,1.7L131.5,2.7L134.1,4L136.7,5L139.9,5.7L144.5,5.5L148.9,5.7L151.7,6.6L154.3,7.6L156.3,8.8L158,10L161.3,10.7L164.1,11.6L165.6,12.8L166.7,14.1L165.9,15.7L165.2,17.1L167.5,18.1L171.1,18.9L174.6,19.9L177,21L175.6,22.4L173.3,23.8L174.1,25L176,26.2Z"/>
+  <path style="fill:var(--sear, var(--fugu-sear))" stroke="currentColor" stroke-width="1.8" d="M176,26.2L178.3,27.5L179,28.9L175.9,30L173,31.1L173.4,32.4L174.7,33.9L176.3,35.5L175.6,36.9L171,37.7L166.4,38.3L163.5,39.1L161.1,40.1L159.9,41.3L158.2,42.5L154.5,43.1L151.3,43.7L148.3,44.4L145.3,45.1L143.5,46.4L141.3,47.6L137.8,48.1L133.9,48.3L129.7,48.1L125.8,48L123,49.1L120.2,50.6L116.8,51.5L112.9,51.8L108.8,51.1L105,50.4L101.2,50.9L97.2,51.5L93.3,51.4L89.7,50.7L87,49L84.3,47.8L80.4,48L76,48.4L71.9,48.3L68.5,47.7L66.8,46.2L65,44.9L61.9,44.3L58.8,43.7L55.3,43.1L51.9,42.5L50.3,41.3L48.6,40.2L45.8,39.3L43,38.4L38.7,37.7L34.7,36.9L34.2,35.5L35.3,33.9L36.7,32.4L37.3,31.1L34.5,30L31.3,28.9L31.5,27.5L33.2,26.2L35.7,25L37,23.8L34.8,22.4L33.3,21L35.4,19.9L38.9,18.9L42.9,18.1L45.2,17.2L43.8,15.6L42.7,14L43.7,12.7L45.5,11.5L48.9,10.8L52,10L53.6,8.7L55.7,7.6L58.4,6.7L61.4,5.8L65.7,5.7L69.9,5.6L73,4.8L75.8,4L78.5,2.8L81.6,1.8L86.1,2.2L90.6,3.1L94.4,3.5L98,3.5L101.4,2.6L105,1.8L108.7,2.4L112.1,3.2L115.6,3.5L119.4,3.2L124,2.1L128.5,1.7L131.5,2.7L134.1,4L136.7,5L139.9,5.7L144.5,5.5L148.9,5.7L151.7,6.6L154.3,7.6L156.3,8.8L158,10L161.3,10.7L164.1,11.6L165.6,12.8L166.7,14.1L165.9,15.7L165.2,17.1L167.5,18.1L171.1,18.9L174.6,19.9L177,21L175.6,22.4L173.3,23.8L174.1,25L176,26.2Z"/>
   <circle fill="currentColor" cx="179.2" cy="32.3" r="0.5"/>
   <circle fill="currentColor" cx="89.1" cy="53.8" r="0.5"/>
   <circle fill="currentColor" cx="57.3" cy="46.9" r="0.5"/>
@@ -22,37 +22,127 @@
   <circle fill="currentColor" cx="173.2" cy="33.6" r="0.7"/>
   <circle fill="currentColor" cx="158.2" cy="46.2" r="0.4"/>
   <circle fill="currentColor" cx="96.9" cy="53.8" r="0.5"/>
-  <circle fill="currentColor" cx="165.1" cy="27" r="0.5"/>
-  <circle fill="currentColor" cx="146.6" cy="16.6" r="0.6"/>
-  <circle fill="currentColor" cx="72.9" cy="36.8" r="0.7"/>
-  <circle fill="currentColor" cx="135.2" cy="17.6" r="0.6"/>
-  <circle fill="currentColor" cx="152.3" cy="12.2" r="0.5"/>
-  <circle fill="currentColor" cx="78.3" cy="41.7" r="0.7"/>
-  <circle fill="currentColor" cx="89.7" cy="35.9" r="0.7"/>
-  <circle fill="currentColor" cx="47.6" cy="32.1" r="0.6"/>
-  <circle fill="currentColor" cx="92.1" cy="36" r="0.5"/>
-  <circle fill="currentColor" cx="103.9" cy="6.7" r="0.5"/>
-  <circle fill="currentColor" cx="80.8" cy="22.9" r="0.5"/>
-  <circle fill="currentColor" cx="89" cy="11.6" r="0.7"/>
-  <circle fill="currentColor" cx="102.9" cy="6.9" r="0.5"/>
-  <circle fill="currentColor" cx="99.7" cy="7.5" r="0.7"/>
-  <circle fill="currentColor" cx="62.7" cy="31.9" r="0.7"/>
-  <circle fill="currentColor" cx="71.4" cy="8.3" r="0.5"/>
-  <circle fill="currentColor" cx="128.6" cy="30.5" r="0.5"/>
-  <circle fill="currentColor" cx="103.5" cy="45.4" r="0.7"/>
-  <circle fill="currentColor" cx="119.4" cy="34.8" r="0.7"/>
-  <circle fill="currentColor" cx="157" cy="30.5" r="0.6"/>
-  <circle fill="currentColor" cx="92.9" cy="39.1" r="0.5"/>
-  <circle fill="currentColor" cx="157.4" cy="15.3" r="0.6"/>
-  <circle fill="currentColor" cx="124.2" cy="34.2" r="0.7"/>
-  <circle fill="currentColor" cx="60.7" cy="30.2" r="0.7"/>
-  <circle fill="currentColor" cx="86.8" cy="33.2" r="0.5"/>
-  <circle fill="currentColor" cx="100.9" cy="42.9" r="0.6"/>
-  <circle fill="currentColor" cx="90" cy="18.3" r="0.6"/>
-  <circle fill="currentColor" cx="95.6" cy="46.6" r="0.7"/>
-  <circle fill="currentColor" cx="140.8" cy="19.7" r="0.6"/>
-  <circle fill="currentColor" cx="56.7" cy="25.2" r="0.5"/>
-  <path stroke="currentColor" stroke-width="0.6" d="M57.3,29.7q1.5,1 3,0M79.9,30.5q1.5,1 3,0M130.7,23.7q1.5,1 3,0M139.4,30.1q1.5,1 3,0M140.7,21.9q1.5,1 3,0M63.4,26.1q1.5,1 3,0M122.9,25.3q1.5,1 3,0M144.5,32.1q1.5,1 3,0M91.6,31.4q1.5,1 3,0M101.3,30.4q1.5,1 3,0M110.7,42.3q1.5,1 3,0M67.7,29.9q1.5,1 3,0M88.3,38.6q1.5,1 3,0M93.8,33.9q1.5,1 3,0"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="165.1" cy="27" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="146.6" cy="16.6" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="72.9" cy="36.8" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="135.2" cy="17.6" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="152.3" cy="12.2" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="78.3" cy="41.7" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="89.7" cy="35.9" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="47.6" cy="32.1" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="92.1" cy="36" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="103.9" cy="6.7" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="80.8" cy="22.9" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="89" cy="11.6" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="102.9" cy="6.9" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="99.7" cy="7.5" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="62.7" cy="31.9" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="71.4" cy="8.3" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="128.6" cy="30.5" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="103.5" cy="45.4" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="119.4" cy="34.8" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="157" cy="30.5" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="92.9" cy="39.1" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="157.4" cy="15.3" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="124.2" cy="34.2" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="60.7" cy="30.2" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="86.8" cy="33.2" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="100.9" cy="42.9" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="90" cy="18.3" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="95.6" cy="46.6" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="140.8" cy="19.7" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="56.7" cy="25.2" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="80.7" cy="35.9" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="149.9" cy="24.5" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="147.5" cy="13.4" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="94.7" cy="29.6" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="125" cy="25.5" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="135" cy="17.1" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="153.4" cy="15.2" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="102.1" cy="21.7" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="127" cy="19.8" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="147.6" cy="25.2" r="0.4"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="65.8" cy="33" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="77.5" cy="23.3" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="92.8" cy="39.3" r="0.4"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="107" cy="23.5" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="141.3" cy="30.4" r="0.4"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="53.9" cy="18.1" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="51" cy="18.4" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="76" cy="28.3" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="67.9" cy="30.7" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="121.1" cy="10.6" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="156.6" cy="20.6" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="108.5" cy="32" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="92.3" cy="44.1" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="137.7" cy="19.3" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="110.2" cy="6.7" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="155" cy="32.8" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="58.3" cy="25.2" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="140.2" cy="26.8" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="54.9" cy="33" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="56.5" cy="13.9" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="117.4" cy="19.8" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="96" cy="23.4" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="147.3" cy="31.2" r="0.4"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="78.8" cy="36.1" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="48.6" cy="26.7" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="73" cy="17.4" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="86.4" cy="32.4" r="0.4"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="138.8" cy="30.7" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="131.6" cy="39.5" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="139" cy="11.3" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="95.4" cy="17.8" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="111.6" cy="8.7" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="127.2" cy="35.5" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="83.7" cy="35.3" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="96.2" cy="27.9" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="97.4" cy="20.2" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="137" cy="30.9" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="101.2" cy="30.8" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="104.2" cy="25.8" r="0.4"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="70.2" cy="33.8" r="0.4"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="145" cy="15.1" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="65.8" cy="16.4" r="0.4"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="82" cy="39.3" r="0.4"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="63" cy="26.6" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="48" cy="18.4" r="0.4"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="126.1" cy="33.7" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="66.1" cy="42.8" r="0.4"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="112.5" cy="32.5" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="64.2" cy="23.4" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="52.5" cy="15.3" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="151.2" cy="28.6" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="62.3" cy="31" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="117.5" cy="40.2" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="129.5" cy="44.2" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="104.6" cy="39.6" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="59.9" cy="33" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="112.2" cy="25.6" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="59.3" cy="12.7" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="84.4" cy="14.1" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="91" cy="38.8" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="79.2" cy="21.8" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="82.7" cy="38.3" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="91.7" cy="8.7" r="0.5"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="88.8" cy="39.5" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="80.1" cy="24" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="76.6" cy="13.3" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="162.8" cy="21.8" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="101.8" cy="8.1" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="110.3" cy="11.7" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="100.2" cy="42.7" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="81.3" cy="15.2" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="161.6" cy="31.6" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="162.1" cy="29.7" r="0.4"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="130.4" cy="23.4" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="45.4" cy="28.8" r="0.4"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="64.8" cy="30.3" r="0.4"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="117.1" cy="16.4" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="90.9" cy="33.9" r="0.6"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="116.5" cy="20.9" r="0.7"/>
+  <circle style="fill:var(--sear-fleck, var(--fugu-sear-fleck))" cx="68.9" cy="22.2" r="0.5"/>
+  <path style="stroke:var(--sear-fleck, var(--fugu-sear-fleck))" stroke-width="0.6" d="M57.3,29.7q1.5,1 3,0M79.9,30.5q1.5,1 3,0M130.7,23.7q1.5,1 3,0M139.4,30.1q1.5,1 3,0M140.7,21.9q1.5,1 3,0M63.4,26.1q1.5,1 3,0M122.9,25.3q1.5,1 3,0M144.5,32.1q1.5,1 3,0M91.6,31.4q1.5,1 3,0M101.3,30.4q1.5,1 3,0M110.7,42.3q1.5,1 3,0M67.7,29.9q1.5,1 3,0M88.3,38.6q1.5,1 3,0M93.8,33.9q1.5,1 3,0"/>
   <ellipse style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="0.7" cx="126.8" cy="5.5" rx="1.3" ry="0.7"/>
   <ellipse style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="0.7" cx="106.5" cy="48.5" rx="1.5" ry="0.8"/>
   <ellipse style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="0.7" cx="43.6" cy="19.7" rx="2.2" ry="1.2"/>
