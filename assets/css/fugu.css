@@ -81,7 +81,6 @@
 .recipe-meta-label,
 .rcard-stat b,
 .reading-sidebar .rs-label,
-.definition-callout-label,
 .ing-config-label,
 .toc-jump-label,
 .pop-head,
@@ -358,34 +357,14 @@ a.dev-chip:hover, a.dev-chip:focus-visible { border-color: var(--fugu-ink-faint)
 .browse-list a { display: flex; justify-content: space-between; gap: 14px; font-size: .9rem; color: var(--fugu-ink); text-decoration: none; padding: 6px 8px; border-radius: 4px; }
 .browse-list a:hover { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); }
 .browse-list a .n { font-family: var(--fugu-font-mono); font-size: .72rem; color: var(--fugu-ink-faint); flex-shrink: 0; }
-.browse-more { font-weight: 600; color: var(--fugu-accent-strong); }
 .block-title { font-size: 1.35rem; font-weight: 700; margin-bottom: 12px; }
 .section-caveat { font-size: .8rem; color: var(--fugu-ink-faint); padding: 8px 12px; background: var(--fugu-surface-2); border-radius: 4px; }
 .section-caveat strong { color: var(--fugu-ink-muted); }
 
-/* Principle tag page (term.html with principle: true) */
-.definition-callout {
-  position: relative; display: flex; flex-direction: column; gap: 10px; margin: 18px 0 32px; padding: 20px 22px;
-  background: var(--fugu-surface); border: 1px solid var(--fugu-border); border-left: 3px solid var(--fugu-accent);
-  border-radius: 0 var(--fugu-radius) var(--fugu-radius) 0;
-}
-.definition-callout:hover, .definition-callout:focus-within { border-color: var(--fugu-accent); }
-.definition-callout-label { display: inline-flex; align-items: center; gap: 6px; color: var(--fugu-accent-strong); }
-.definition-callout-label svg { width: 14px; height: 14px; flex: none; }
-.definition-callout p { max-width: 72ch; margin: 0; line-height: 1.55; }
-.definition-callout p + p { margin-top: 10px; }
-.definition-callout p a { position: relative; z-index: 1; }
-.definition-callout .read-essay { display: inline-block; margin-top: 4px; font-size: .85rem; font-weight: 600; color: var(--fugu-accent-strong); text-decoration: none; }
-.definition-callout .read-essay::after { content: ""; position: absolute; inset: 0; }
-.definition-callout .read-essay:hover { text-decoration: underline; }
+/* Subsection headings on list and concept pages */
 .subsection-title { font-size: 1rem; font-weight: 700; margin: 0 0 12px; }
 .subsection-count { margin-left: 6px; font-family: var(--fugu-font-mono); font-size: .74rem; font-weight: 500; color: var(--fugu-ink-faint); }
 .subsection-gap { margin-top: 36px; }
-.ref-list { display: flex; flex-direction: column; gap: 2px; margin-top: 4px; }
-.ref-row { display: flex; align-items: baseline; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--fugu-border); font-size: .9rem; }
-.ref-row a { color: var(--fugu-ink); text-decoration: none; font-weight: 600; }
-.ref-row a:hover { color: var(--fugu-accent-strong); }
-.ref-row .ref-kind { flex: none; width: 6.5em; font-family: var(--fugu-font-mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .04em; color: var(--fugu-ink-faint); }
 
 /* List pagination (partials/pagination.html) */
 .list-pagination-spacer { padding-top: 40px; }
