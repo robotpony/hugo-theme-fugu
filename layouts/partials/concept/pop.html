@@ -5,12 +5,15 @@
   read the same way. Takes a dict:
 
     kind     the popover's kind class: "principle", "dev", "method"
-    card     true on a card: .pop-card spans the card's top row instead of
-             a fixed width, which would bleed into the next card
-    trigger  the chip itself, as HTML (a link, or a button on a card)
+    card     true on a card: just the trigger, no popover. Hovering across
+             a grid of cards kept opening them, and each chip already
+             links to the page that explains it.
+    trigger  the chip itself, as HTML (a link)
     head     the popover's heading, as HTML
     text     its sentence (plain text)
     note     an optional italic line under it (plain text)
     link     an optional page to link to, and more, the link's words
 */}}
-<span class="pop-host pop-{{ .kind }}{{ if .card }} pop-card{{ end }}">{{ .trigger | safeHTML }}<span class="pop" role="tooltip"><span class="pop-head">{{ .head | safeHTML }}</span><span class="pop-text">{{ .text }}</span>{{ with .note }}<span class="pop-note">{{ . }}</span>{{ end }}{{ with .link }}<a class="pop-link" href="{{ .RelPermalink }}">{{ $.more }}</a>{{ end }}</span></span>
+{{- if .card }}{{ .trigger | safeHTML }}{{ else -}}
+<span class="pop-host pop-{{ .kind }}">{{ .trigger | safeHTML }}<span class="pop" role="tooltip"><span class="pop-head">{{ .head | safeHTML }}</span><span class="pop-text">{{ .text }}</span>{{ with .note }}<span class="pop-note">{{ . }}</span>{{ end }}{{ with .link }}<a class="pop-link" href="{{ .RelPermalink }}">{{ $.more }}</a>{{ end }}</span></span>
+{{- end }}

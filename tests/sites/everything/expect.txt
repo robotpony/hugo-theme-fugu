@@ -121,3 +121,8 @@ essays/methods/patty-bowl/index.html: build-picks not-prose has-diagram
 essays/methods/patty-bowl/index.html: class="stack-times"
 essays/methods/patty-bowl/index.html: !stack-cap
 blueprint/rice-bowls/index.html: <figure class="stack stack-compact"
+
+# Cards have no popovers: their chips (principle, draft) are plain links.
+recipes/index.html: !class="pop-host
+recipes/index.html: class="dev-chip"
+recipes/veg-patties/index.html: pop-principle

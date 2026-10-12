@@ -1,10 +1,10 @@
 {{/*
   The method chip: the method icon and params.fugu.methods.label
-  ("Method"), linked to the methods list (method/list-page.html), with a
-  popover that gives the list's definition. Shown on a method's card, in
-  place of its folder name, and at the start of its page's tags row.
-  Takes a dict: card (true on a card, where the popover spans the card's
-  top row), label (optional, in place of the param, e.g. "Build" on a
+  ("Method"), linked to the methods list (method/list-page.html). Shown
+  on a method's card, in place of its folder name, and at the start of
+  its page's tags row, where it also has a popover giving the list's
+  definition. Takes a dict: card (true on a card: no popover, see
+  concept/pop.html), label (optional, in place of the param, e.g. "Build" on a
   blueprint's build cards).
 */}}
 {{ $m := site.Params.fugu.methods | default dict }}

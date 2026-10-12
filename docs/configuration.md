@@ -180,7 +180,6 @@ For a site that builds drafts, Fugu publishes them as pages still in development
   label   = "In development"
   short   = ""
   message = "This recipe is still changing. Cook it, change it, and expect it to move before it becomes canon."
-  hover   = "Published while it's still being worked out. It works, but the next version will be a little different."
   note    = "Working on"
   page    = ""
   more    = "How this works"
@@ -191,10 +190,9 @@ For a site that builds drafts, Fugu publishes them as pages still in development
 
 | Key | What it is |
 | --- | --- |
-| `label` | The name for a draft, in the banner and the card's popover. |
+| `label` | The name for a draft, in the banner and on its card. |
 | `short` | The card chip's label, when `label` is too long for a card. `""` uses `label`. |
 | `message` | The banner's sentence. |
-| `hover` | The card popover's text. |
 | `note` | The label before a page's `working_on` line. |
 | `page` | A page that explains drafts, as a content path (`essays/test-kitchen`). The banner and card mark link to it, and it lists every draft under `heading`, in place of its related content. `""` means no link and no list. |
 | `more` | The link text to that page. |

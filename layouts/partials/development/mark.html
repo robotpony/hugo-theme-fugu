@@ -1,17 +1,16 @@
 {{/*
-  A draft's mark on its card (recipe-card.html): the label (or `short`,
-  for a card's tight top row; the popover heading has the full label) as a chip that
-  opens a popover with the longer hover text, the page's `working_on`
-  line, and the link to the explainer page. A button, lifted above the
-  card's stretched link, so hovering, focusing, or tapping it opens the
-  popover instead of following the card. The popover is the shared
-  .pop-host/.pop component (assets/js/popover.js), spanning the card's
-  top row (.pop-card), through concept/pop.html, which every concept
-  chip shares. Takes the page.
+  A draft's mark on its card (recipe-card.html, blueprint/build-card.html):
+  the label (or `short`, for a card's tight top row) as a chip linking to
+  the page that explains drafts, like the other chips on a card, lifted
+  above the card's stretched link. A plain span when there's no such
+  page. No popover: cards don't have them (concept/pop.html). Takes the
+  page.
 */}}
 {{ $d := site.Params.fugu.development | default dict }}
 {{ $icon := partialCached "development/icon.html" . "icon" }}
-{{ $trigger := printf `<button type="button" class="dev-chip">%s%s</button>` $icon ($d.short | default $d.label | htmlEscape) }}
-{{ $note := "" }}
-{{ with .Params.working_on }}{{ $note = printf "%s: %s" $d.note . }}{{ end }}
-{{ partial "concept/pop.html" (dict "kind" "dev" "card" true "trigger" $trigger "head" (printf "%s%s" $icon ($d.label | htmlEscape)) "text" $d.hover "note" $note "link" (partial "development/page.html" .) "more" $d.more) }}
+{{ $label := $d.short | default $d.label }}
+{{ with partial "development/page.html" . -}}
+<a class="dev-chip" href="{{ .RelPermalink }}">{{ $icon | safeHTML }}{{ $label }}</a>
+{{- else -}}
+<span class="dev-chip">{{ $icon | safeHTML }}{{ $label }}</span>
+{{- end }}

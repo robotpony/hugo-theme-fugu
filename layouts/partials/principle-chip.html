@@ -7,12 +7,13 @@
   label, e.g. "WTF", for the recipe card's tight top row; full pages use
   the tag's title, e.g. "Win the fridge").
 
-  Also carries a popover (the shared .pop-host/.pop component, see
-  assets/js/popover.js) with the term's definition from the tag's essay,
-  so hovering or focusing the chip explains it without a trip to the tag
-  page. It opens downward, since the chip sits at the top of a card or a
-  page's tags row. The chip and popover are the shared concept ones
-  (concept/pop.html, concept/icon.html).
+  On a page (not compact) it also carries a popover (the shared
+  .pop-host/.pop component, see assets/js/popover.js) with the term's
+  definition from the tag's essay, so hovering or focusing the chip
+  explains it without a trip to the tag page. It opens downward, since
+  the chip sits at the start of the page's tags row. On a card there's no
+  popover, just the link (concept/pop.html). The chip and popover are the
+  shared concept ones (concept/pop.html, concept/icon.html).
 */}}
 {{ $page := .page }}
 {{ $compact := .compact }}

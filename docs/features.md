@@ -89,13 +89,13 @@ A tag can name an idea that several recipes follow, such as cooking from what's 
 
 - Shows its definition in a callout at the top of its page, with a link to the essay that explains it.
 - Lists only recipes in its grid, and everything else on the tag (essays, reference pages) under "Reference & further reading".
-- Shows as a chip on recipe cards and pages, with a popover that gives the definition.
+- Shows as a chip on recipe cards and pages. On a page, the chip has a popover that gives the definition.
 
 Setting one up is in [frontmatter.md](frontmatter.md#principle-tags).
 
 ## Methods and blueprints
 
-Methods explain how a kind of food or a process works in general. Any page in the essay section's methods folder is one, and shows a method chip on its card and page, with a popover giving the definition. The method tag's page becomes the methods list: the definition, then each blueprint with its parts in order (written parts linked, the rest faint) and its builds, then the methods that belong to no blueprint, as cards.
+Methods explain how a kind of food or a process works in general. Any page in the essay section's methods folder is one, and shows a method chip on its card and page (on the page, with a popover giving the definition). The method tag's page becomes the methods list: the definition, then each blueprint with its parts in order (written parts linked, the rest faint) and its builds, then the methods that belong to no blueprint, as cards.
 
 A blueprint is a dish type made of parts, such as a burger: patty, seasoning, cooking, assembly, sauces. Its page shows:
 
@@ -111,7 +111,7 @@ The fields are in [frontmatter.md](frontmatter.md#methods-and-blueprints) and th
 
 ## Drafts
 
-For a site that builds drafts, a draft is published as a page still in development, not hidden: a banner under its title, a mark on its card with a popover explaining it, and an optional one-line note on what's being worked on. One page can explain how drafts work and list every current draft. The words are all settings ([configuration.md](configuration.md#drafts)).
+For a site that builds drafts, a draft is published as a page still in development, not hidden: a banner under its title, a mark on its card linking to the page that explains drafts, and an optional one-line note on what's being worked on. One page can explain how drafts work and list every current draft. The words are all settings ([configuration.md](configuration.md#drafts)).
 
 ## Essays, reference pages, and the log
 

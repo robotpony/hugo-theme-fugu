@@ -40,15 +40,14 @@
   # Drafts (`draft: true`) as pages that are published but still
   # changing, when the site builds drafts (buildDrafts). A draft gets a
   # banner under its title and tags (partials/development/banner.html) and a mark
-  # on its card with the hover text (partials/recipe-card.html). A page can
+  # on its card linking to `page` (partials/development/mark.html). A page can
   # add its own `working_on` line, shown under the banner's sentence.
   [params.fugu.development]
     label   = "In development"
     # The card chip's label, when `label` is too long for a card's top
-    # row; "" uses `label`. The popover and banner always use `label`.
+    # row; "" uses `label`. The banner always uses `label`.
     short   = ""
     message = "This recipe is still changing. Cook it, change it, and expect it to move before it becomes canon."
-    hover   = "Published while it's still being worked out. It works, but the next version will be a little different."
     note    = "Working on"
     # A page that explains drafts: the banner and card mark link to it,
     # and it lists every draft, under `heading`, in place of related

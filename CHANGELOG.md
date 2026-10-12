@@ -36,6 +36,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Changed
 
+- Cards have no popovers. Hovering across a grid of cards kept opening them, and every chip already links to the page that explains it. The principle and method chips on a card are plain links (`concept/pop.html` with `card` emits just the trigger), and a draft's card chip is a link to the drafts page (`<a class="dev-chip">`, a `<span>` when there's no `page`) instead of a button with a popover. `.pop-card` is gone, and `.rcard-top` clips with `overflow: hidden` instead of the `clip-path` that let a popover out. `[params.fugu.development].hover` is removed; a site that sets it can drop it. Pages keep their popovers (glossary links, the chips in a page's tags row).
 - Drafts are left out of every RSS feed (site, section, and term), through Fugu's copy of Blowfish's `rss.xml`. `services.rss.limit` counts what's left. The docs now give the recipes section `outputs: [HTML, RSS, JSON]`; `[HTML, JSON]`, as they said before, drops the recipes feed.
 - Header tags (`article-meta/basic.html`) are `<a class="tag">` links, the class recipe cards use, instead of Blowfish's badge. Categories and other taxonomies keep the badge. A site styling `.tag` may want an `a.tag:hover` rule.
 
