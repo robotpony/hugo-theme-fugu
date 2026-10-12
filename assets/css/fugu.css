@@ -845,7 +845,8 @@ a.tl-name:hover { color: var(--fugu-accent-strong); }
 /* A blueprint's lineage in the sidebar: a vertical spine to scale, decade
  * labels on the left, each build's title and era on the right as a link
  * whose dot and leader sit inside it (placed by --off), so hovering the
- * row lights its dot. Drafts are faint, as on the track. */
+ * row lights its dot. The leader runs from the dot's centre, under it, to
+ * the text. Drafts are faint, as on the track. */
 .vt { position: relative; }
 .vt-spine { position: absolute; left: 52px; top: 0; bottom: 0; width: 2px; background: var(--fugu-border-strong); }
 .vt-dec { position: absolute; left: 0; width: 58px; display: flex; align-items: center; gap: 6px; transform: translateY(-50%); font-family: var(--fugu-font-mono); font-size: .64rem; color: var(--fugu-ink-faint); }
@@ -854,9 +855,9 @@ a.tl-name:hover { color: var(--fugu-accent-strong); }
 .vt-name > span:not(.ln-dot) { overflow: hidden; text-overflow: ellipsis; }
 .vt-name .y { flex: none; font-family: var(--fugu-font-mono); font-size: .7rem; font-weight: 400; color: var(--fugu-ink-faint); }
 .vt-name:hover, .vt-name:focus-visible { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); outline: none; }
-.vt-name .ln-dot { position: absolute; left: -25px; top: calc(50% + var(--off, 0px)); width: 12px; height: 12px; border-radius: 50%; background: var(--fugu-accent); border: 2px solid var(--fugu-bg); box-shadow: 0 0 0 1px var(--fugu-accent); transform: translateY(-50%); transition: transform .12s, background .12s; }
+.vt-name .ln-dot { position: absolute; z-index: 1; left: -25px; top: calc(50% + var(--off, 0px)); width: 12px; height: 12px; border-radius: 50%; background: var(--fugu-accent); border: 2px solid var(--fugu-bg); box-shadow: 0 0 0 1px var(--fugu-accent); transform: translateY(-50%); transition: transform .12s, background .12s; }
 .vt-name:hover .ln-dot, .vt-name:focus-visible .ln-dot { transform: translateY(-50%) scale(1.35); background: var(--fugu-accent-strong); box-shadow: 0 0 0 1px var(--fugu-accent-strong); }
-.vt-lead { position: absolute; left: -12px; top: calc(50% + var(--off, 0px)); width: 14px; overflow: visible; stroke: var(--fugu-border-strong); stroke-width: 1; }
+.vt-lead { position: absolute; left: -19px; top: calc(50% + var(--off, 0px)); width: 21px; overflow: visible; stroke: var(--fugu-border-strong); stroke-width: 1; }
 .vt-name.todo { font-weight: 500; color: var(--fugu-ink-faint); }
 .vt-name.todo .ln-dot { background: var(--fugu-bg); box-shadow: 0 0 0 1px var(--fugu-ink-faint); }
 @media (prefers-reduced-motion: reduce) { .vt-name .ln-dot { transition: none; } }
