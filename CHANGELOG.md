@@ -67,7 +67,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Fixed
 
-- A blueprint page's further reading is readable in dark mode (`dark:prose-invert`), and a method's reading sidebar labels its linked recipes "Recipes on this page" rather than "Recipes in this essay".
+- A blueprint page's further reading is readable in dark mode (`dark:prose-invert`), and a method's reading sidebar labels its linked recipes "Recipes" rather than "Recipes in this essay", since its sidebar already says "On this page". A blueprint part's or build's sidebar lists the other parts in weight order, or builds in era order, as the blueprint page does, rather than alphabetically.
 - A page's meta description no longer renders fenced code blocks in its intro, so a formula or stack block before the first heading isn't drawn (and warned about) a second time or read into the description.
 - A draft recipe card with both a cuisine and a principle tag no longer fails the build (`recipe-card.html` ran out of tag slots and called `first` with a negative count).
 - `cuisine` can be a list (`cuisine: [Thai]`) as well as a string; it used to fail the build on recipe cards. The card shows the first and skips tags repeating any of them.

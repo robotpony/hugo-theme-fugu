@@ -130,9 +130,10 @@
     {{ $linked = sort ($linked | uniq) "Title" }}
     {{ with $linked }}
       <div class="rs-section">
-        {{ $where := cond (eq $section "reference") "in this guide" "in this essay" }}
-        {{ if partial "method/is.html" $page }}{{ $where = "on this page" }}{{ end }}
-        <h2 class="rs-label">Recipes {{ $where }} <span class="n">{{ len . }}</span></h2>
+        {{/* Just "Recipes" on a method, whose sidebar already says "On this page". */}}
+        {{ $label := cond (eq $section "reference") "Recipes in this guide" "Recipes in this essay" }}
+        {{ if partial "method/is.html" $page }}{{ $label = "Recipes" }}{{ end }}
+        <h2 class="rs-label">{{ $label }} <span class="n">{{ len . }}</span></h2>
         <div class="browse-list">
           {{ range first 8 . }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
         </div>
@@ -150,19 +151,31 @@
 
   {{/* Other essays in the same folder (food-memories/, technique-essays/,
     ...). The folders aren't Hugo sections (no _index.md), so this groups
-    by file path rather than .CurrentSection. */}}
+    by file path rather than .CurrentSection. Alphabetical, except a
+    blueprint's parts and builds, which keep its order (blueprint/info.html:
+    parts by weight, builds by era). */}}
   {{ if eq $section "essay" }}
     {{ $dir := .File.Dir }}
     {{ $siblings := slice }}
     {{ range where site.RegularPages "Section" .Section }}
       {{ if eq .File.Dir $dir }}{{ $siblings = $siblings | append . }}{{ end }}
     {{ end }}
+    {{ $siblings = sort $siblings "Title" }}
+    {{ with partial "blueprint/of.html" $page }}
+      {{ $info := partialCached "blueprint/info.html" .blueprint .blueprint.Path }}
+      {{ if eq .role "part" }}
+        {{ $siblings = slice }}
+        {{ range $info.parts }}{{ $siblings = $siblings | append .page }}{{ end }}
+      {{ else if eq .role "build" }}
+        {{ $siblings = $info.builds }}
+      {{ end }}
+    {{ end }}
     {{ if gt (len $siblings) 1 }}
       {{ $folder := path.Base (strings.TrimSuffix "/" $dir) }}
       <div class="rs-section">
         <h2 class="rs-label">{{ if eq $folder $page.Section }}{{ $sectionTitle | default "Essays" }}{{ else }}{{ $folder | humanize }}{{ end }} <span class="n">{{ len $siblings }}</span></h2>
         <div class="browse-list">
-          {{ range (sort $siblings "Title") }}
+          {{ range $siblings }}
             <a href="{{ .RelPermalink }}"{{ if eq . $page }} aria-current="page"{{ end }}>{{ .Title }}</a>
           {{ end }}
         </div>
