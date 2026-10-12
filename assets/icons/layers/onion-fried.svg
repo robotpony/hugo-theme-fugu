@@ -1,25 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 45.5" data-edge="59.5" fill="none" stroke-linecap="round" stroke-linejoin="round" overflow="visible">
   <ellipse style="fill:var(--accent-soft, var(--fugu-accent-soft))" cx="105" cy="22.2" rx="59.5" ry="20.2"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M128.7,21.8Q136.8,19.2 144.9,22.6"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M123.5,11Q124.5,11.3 125.4,17.5"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M84.8,21.7Q80.1,20.7 75.4,25.7"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M132.3,28.2Q123.6,26.9 115,31.7"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M99.8,23.5Q94.7,22.4 89.7,27.3"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M68.4,13.5Q75.4,12.6 82.3,17.8"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M84.9,34.5Q89.9,32.7 94.9,36.9"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M67.1,14Q69.3,12.9 71.5,17.9"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M133.4,12.5Q131.1,11.6 128.8,16.7"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M118.8,19.7Q131.1,16.9 143.3,20.1"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M88.5,4.6Q96.3,5 104.2,11.4"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M134.7,31.6Q126.3,31.8 117.9,38"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M141.3,20Q147.6,19.2 153.9,24.4"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M110.4,18.4Q99.5,17.6 88.6,22.7"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M81.5,32.6Q78.5,31.4 75.5,36.1"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M139,15Q138.6,15.6 138.3,22.3"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M136.4,13.7Q123.9,10.7 111.4,13.8"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M59.5,26.7Q66.8,25.8 74,30.9"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M104.3,22Q115.4,20.3 126.5,24.7"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M83.3,29Q84.1,28.9 84.8,34.8"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M129.7,26Q128,25.4 126.4,30.8"/>
-  <path stroke="currentColor" stroke-width="1.5" d="M68.2,17.2Q61.5,14.4 54.8,17.5"/>
+  <path stroke="currentColor" stroke-width="3.4" d="M127.9,21.8C133.6,19.1 138.5,25.4 144.1,22.6M123,11.2C123.7,10.5 124.3,18.5 125,17.7M85.4,21.7C82.1,20.1 79.3,27.3 76.1,25.7M131.8,28C125.8,26.2 120.6,33.3 114.5,31.5M100.1,23.4C96.5,21.8 93.5,28.9 89.9,27.2M69.2,13.7C74,12.1 78.2,19.4 83,17.9M85.3,34.2C88.8,32 91.8,38.7 95.3,36.6M68,14.2C69.5,12.5 70.8,19.7 72.4,18M132.7,12.7C131.1,11.2 129.7,18.4 128.2,16.9M118.1,19.7C126.7,16.9 134.1,23 142.7,20.2M88.7,5C94.2,4.3 98.9,12.4 104.4,11.7M134.1,31.2C128.3,30.5 123.2,38.4 117.3,37.7M140.2,20C144.6,18.6 148.4,25.9 152.8,24.4M110.6,18.4C102.9,17 96.3,24.3 88.7,22.8M82.1,32.3C80,30.5 78.2,37.6 76.1,35.8M138.1,15C137.9,14.6 137.7,22.8 137.5,22.4M135.9,13.9C127.2,10.9 119.7,16.9 110.9,14M60.5,26.5C65.5,25 69.9,32.3 75,30.8M104,22C111.8,19.9 118.4,26.7 126.2,24.6M83.9,28.7C84.4,27.8 84.8,35.5 85.4,34.6"/>
+  <path style="stroke:var(--accent-soft, var(--fugu-accent-soft))" stroke-width="1.6" d="M127.9,21.8C133.6,19.1 138.5,25.4 144.1,22.6M123,11.2C123.7,10.5 124.3,18.5 125,17.7M85.4,21.7C82.1,20.1 79.3,27.3 76.1,25.7M131.8,28C125.8,26.2 120.6,33.3 114.5,31.5M100.1,23.4C96.5,21.8 93.5,28.9 89.9,27.2M69.2,13.7C74,12.1 78.2,19.4 83,17.9M85.3,34.2C88.8,32 91.8,38.7 95.3,36.6M68,14.2C69.5,12.5 70.8,19.7 72.4,18M132.7,12.7C131.1,11.2 129.7,18.4 128.2,16.9M118.1,19.7C126.7,16.9 134.1,23 142.7,20.2M88.7,5C94.2,4.3 98.9,12.4 104.4,11.7M134.1,31.2C128.3,30.5 123.2,38.4 117.3,37.7M140.2,20C144.6,18.6 148.4,25.9 152.8,24.4M110.6,18.4C102.9,17 96.3,24.3 88.7,22.8M82.1,32.3C80,30.5 78.2,37.6 76.1,35.8M138.1,15C137.9,14.6 137.7,22.8 137.5,22.4M135.9,13.9C127.2,10.9 119.7,16.9 110.9,14M60.5,26.5C65.5,25 69.9,32.3 75,30.8M104,22C111.8,19.9 118.4,26.7 126.2,24.6M83.9,28.7C84.4,27.8 84.8,35.5 85.4,34.6"/>
+  <circle fill="currentColor" cx="118.3" cy="22.2" r="0.5"/>
+  <circle fill="currentColor" cx="111.8" cy="33.6" r="0.7"/>
+  <circle fill="currentColor" cx="95.3" cy="23.1" r="0.4"/>
+  <circle fill="currentColor" cx="149.3" cy="19.9" r="0.4"/>
+  <circle fill="currentColor" cx="105.8" cy="17.9" r="0.6"/>
+  <circle fill="currentColor" cx="67.5" cy="29.2" r="0.5"/>
+  <circle fill="currentColor" cx="114.6" cy="19.4" r="0.7"/>
+  <circle fill="currentColor" cx="99" cy="30.2" r="0.7"/>
+  <circle fill="currentColor" cx="108.3" cy="31.5" r="0.7"/>
+  <circle fill="currentColor" cx="98.9" cy="37.4" r="0.7"/>
+  <circle fill="currentColor" cx="112.1" cy="34.8" r="0.4"/>
+  <circle fill="currentColor" cx="62.6" cy="24.8" r="0.5"/>
+  <circle fill="currentColor" cx="80.7" cy="15.2" r="0.7"/>
+  <circle fill="currentColor" cx="87.4" cy="33.9" r="0.6"/>
+  <circle fill="currentColor" cx="81.8" cy="27.8" r="0.5"/>
+  <circle fill="currentColor" cx="104.3" cy="34.6" r="0.5"/>
+  <circle fill="currentColor" cx="71.8" cy="25.6" r="0.7"/>
+  <circle fill="currentColor" cx="115.6" cy="13.1" r="0.6"/>
+  <circle fill="currentColor" cx="117.5" cy="27.2" r="0.4"/>
+  <circle fill="currentColor" cx="114.6" cy="16.1" r="0.7"/>
+  <circle fill="currentColor" cx="141.6" cy="25.8" r="0.4"/>
+  <circle fill="currentColor" cx="133.1" cy="14.3" r="0.5"/>
+  <circle fill="currentColor" cx="104.9" cy="36.8" r="0.5"/>
+  <circle fill="currentColor" cx="97.2" cy="33.6" r="0.7"/>
+  <circle fill="currentColor" cx="81.9" cy="17.3" r="0.5"/>
+  <circle fill="currentColor" cx="89.3" cy="26.2" r="0.6"/>
 </svg>

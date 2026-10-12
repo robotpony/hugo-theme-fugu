@@ -191,7 +191,7 @@ caption: Drive-in deluxe
 
 On a build page (a method with `build_name` and `picks`), the first `stack` block is drawn beside the picks instead of where it was written, and a smaller copy without labels goes on the build's card on its blueprint page. In Obsidian it reads as plain text.
 
-The layers in the kit today: bun-top, bun-base, bread, lettuce, tomato, onion-raw, onion-fried, pickle, cheese, cheese-top, bacon, patty-thin, patty-thick, patty-smash, sauce-ketchup-mustard, sauce-burger, mustard, mayo, pasta, ragu, bechamel. A site can add its own, or replace Fugu's, by putting SVGs with those names in its own `assets/icons/layers/`: a 210-wide `viewBox` centred on x=105, its own height, and a `data-edge` attribute saying how far right of centre the drawing reaches (where the leader line starts).
+The layers in the kit today: bun-top, bun-base, bread, lettuce, tomato, onion-raw, onion-fried, pickle, cheese, cheese-top, bacon, patty-thin, patty-thick (griddled), patty-thin-grilled, patty-thick-grilled, patty-smash, sauce-ketchup-mustard, sauce-burger, mustard, mayo, pasta, ragu, bechamel. A site can add its own, or replace Fugu's, by putting SVGs with those names in its own `assets/icons/layers/`: a 210-wide `viewBox` centred on x=105, its own height, and a `data-edge` attribute saying how far right of centre the drawing reaches (where the leader line starts).
 
 ## Photos
 

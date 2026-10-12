@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 32.4" data-edge="100" fill="none" stroke-linecap="round" stroke-linejoin="round" overflow="visible">
   <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1.8" d="M5,29.4L152,29.4L205,0L205,3L152,32.4L5,32.4Z"/>
   <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1.8" d="M58,0L205,0L152,29.4L145.9,30.5L139.8,31L133.7,30.5L127.5,29.4L121.4,28.3L115.3,27.8L109.2,28.3L103,29.4L96.9,30.5L90.8,31L84.7,30.5L78.5,29.4L72.4,28.3L66.3,27.8L60.2,28.3L54,29.4L47.9,30.5L41.8,31L35.7,30.5L29.5,29.4L23.4,28.3L17.3,27.8L11.2,28.3L5,29.4Z"/>
+  <path stroke="currentColor" stroke-width="0.6" d="M137.5,27.9L131.3,27.6L125.2,26.8L119.1,26L113,25.7L106.8,26L100.7,26.8L94.6,27.6L88.4,27.9L82.3,27.6L76.2,26.8L70.1,26L63.9,25.7L57.8,26L51.7,26.8L45.6,27.6L39.4,27.9L33.3,27.6L27.2,26.8L21.1,26L14.9,25.7M135.3,25L129.2,24.8L123,24.4L116.9,24L110.8,23.8L104.7,24L98.5,24.4L92.4,24.8L86.3,25L80.2,24.8L74,24.4L67.9,24L61.8,23.8L55.7,24L49.5,24.4L43.4,24.8L37.3,25L31.2,24.8L25,24.4L18.9,24L12.8,23.8"/>
 </svg>

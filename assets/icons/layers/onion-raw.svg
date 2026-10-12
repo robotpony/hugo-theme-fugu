@@ -1,8 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 32.2" data-edge="57.2" fill="none" stroke-linecap="round" stroke-linejoin="round" overflow="visible">
-  <ellipse stroke="currentColor" stroke-width="1.8" cx="84" cy="15.1" rx="38.5" ry="13.1"/>
-  <ellipse stroke="currentColor" stroke-width="1.8" cx="84" cy="15.1" rx="27.7" ry="9.4"/>
-  <ellipse stroke="currentColor" stroke-width="1.8" cx="84" cy="15.1" rx="17.7" ry="6"/>
-  <ellipse stroke="currentColor" stroke-width="1.8" cx="129.5" cy="18.1" rx="32.7" ry="11.1"/>
-  <ellipse stroke="currentColor" stroke-width="1.8" cx="129.5" cy="18.1" rx="23.6" ry="8"/>
-  <ellipse stroke="currentColor" stroke-width="1.8" cx="129.5" cy="18.1" rx="15.1" ry="5.1"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 36.2" data-edge="58.3" fill="none" stroke-linecap="round" stroke-linejoin="round" overflow="visible">
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" fill-rule="evenodd" d="M90,9.5a19.3,6.5 0 1 0 38.5,0a19.3,6.5 0 1 0 -38.5,0ZM92.8,9.5a16.4,5.6 0 1 0 32.7,0a16.4,5.6 0 1 0 -32.7,0Z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1.2" fill-rule="evenodd" d="M90,7.5a19.3,6.5 0 1 0 38.5,0a19.3,6.5 0 1 0 -38.5,0ZM92.8,7.5a16.4,5.6 0 1 0 32.7,0a16.4,5.6 0 1 0 -32.7,0Z"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" fill-rule="evenodd" d="M44.1,18.1a38.5,13.1 0 1 0 77,0a38.5,13.1 0 1 0 -77,0ZM49.9,18.1a32.7,11.1 0 1 0 65.5,0a32.7,11.1 0 1 0 -65.4,0Z"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" fill-rule="evenodd" d="M54.9,18.1a27.7,9.4 0 1 0 55.4,0a27.7,9.4 0 1 0 -55.4,0ZM60.7,18.1a21.9,7.5 0 1 0 43.9,0a21.9,7.5 0 1 0 -43.9,0Z"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" fill-rule="evenodd" d="M65.7,18.1a16.9,5.8 0 1 0 33.9,0a16.9,5.8 0 1 0 -33.9,0ZM71.4,18.1a11.2,3.8 0 1 0 22.3,0a11.2,3.8 0 1 0 -22.3,0Z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1.2" fill-rule="evenodd" d="M44.1,16.1a38.5,13.1 0 1 0 77,0a38.5,13.1 0 1 0 -77,0ZM49.9,16.1a32.7,11.1 0 1 0 65.5,0a32.7,11.1 0 1 0 -65.4,0Z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1.2" fill-rule="evenodd" d="M54.9,16.1a27.7,9.4 0 1 0 55.4,0a27.7,9.4 0 1 0 -55.4,0ZM60.7,16.1a21.9,7.5 0 1 0 43.9,0a21.9,7.5 0 1 0 -43.9,0Z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1.2" fill-rule="evenodd" d="M65.7,16.1a16.9,5.8 0 1 0 33.9,0a16.9,5.8 0 1 0 -33.9,0ZM71.4,16.1a11.2,3.8 0 1 0 22.3,0a11.2,3.8 0 1 0 -22.3,0Z"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" fill-rule="evenodd" d="M97.1,22.1a33.1,11.3 0 1 0 66.2,0a33.1,11.3 0 1 0 -66.2,0ZM102.1,22.1a28.1,9.6 0 1 0 56.3,0a28.1,9.6 0 1 0 -56.3,0Z"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" fill-rule="evenodd" d="M107,22.1a23.2,7.9 0 1 0 46.4,0a23.2,7.9 0 1 0 -46.4,0ZM112,22.1a18.2,6.2 0 1 0 36.4,0a18.2,6.2 0 1 0 -36.4,0Z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1.2" fill-rule="evenodd" d="M97.1,20.1a33.1,11.3 0 1 0 66.2,0a33.1,11.3 0 1 0 -66.2,0ZM102.1,20.1a28.1,9.6 0 1 0 56.3,0a28.1,9.6 0 1 0 -56.3,0Z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1.2" fill-rule="evenodd" d="M107,20.1a23.2,7.9 0 1 0 46.4,0a23.2,7.9 0 1 0 -46.4,0ZM112,20.1a18.2,6.2 0 1 0 36.4,0a18.2,6.2 0 1 0 -36.4,0Z"/>
 </svg>
