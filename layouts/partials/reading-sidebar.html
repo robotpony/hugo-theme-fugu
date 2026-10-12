@@ -130,7 +130,9 @@
     {{ $linked = sort ($linked | uniq) "Title" }}
     {{ with $linked }}
       <div class="rs-section">
-        <h2 class="rs-label">Recipes in this {{ cond (eq $section "reference") "guide" "essay" }} <span class="n">{{ len . }}</span></h2>
+        {{ $where := cond (eq $section "reference") "in this guide" "in this essay" }}
+        {{ if partial "method/is.html" $page }}{{ $where = "on this page" }}{{ end }}
+        <h2 class="rs-label">Recipes {{ $where }} <span class="n">{{ len . }}</span></h2>
         <div class="browse-list">
           {{ range first 8 . }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
         </div>
