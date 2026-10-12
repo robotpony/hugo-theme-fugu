@@ -5,10 +5,15 @@
 
   - the header, with a count of methods and blueprints
   - the definition callout (concept/callout.html) from the _index.md body
-  - "Blueprints": one block per blueprint (params.fugu.methods.taxonomy),
-    with its description, how many parts are written, its parts as a
-    compact numbered list (written parts link to their method, unwritten
-    ones are faint), and its builds as pills
+  - "Blueprints": one row per blueprint (params.fugu.methods.taxonomy).
+    The block (.bp) holds links but isn't one: its name links to the
+    blueprint, and its parts are a compact numbered list whose rows are
+    whole-row links to the part's first method (unwritten parts are faint,
+    marked "to come"). Beside it, when the blueprint has builds, a tile per
+    build (.build-tile) in info.html's order: its stack drawn at one scale
+    so heights compare, name, origin and profile, plus a link to the
+    blueprint page's picks comparison (#compare). A blueprint with no
+    builds is the block alone.
   - "Techniques and ratios": methods in no blueprint, as cards
   - anything else carrying the tag that isn't a method, as further reading
 
@@ -52,25 +57,45 @@
     <h3 class="subsection-title">Blueprints<span class="subsection-count">{{ len . }}</span></h3>
     <div class="bp-list">
       {{ range . }}
+        {{ $bp := . }}
         {{ $info := partialCached "blueprint/info.html" . .Path }}
-        <section class="bp">
-          <div class="bp-head">
-            <a class="bp-name" href="{{ .RelPermalink }}">{{ partialCached "method/icon.html" . "icon" | safeHTML }}{{ .Title }}</a>
-            <span class="bp-count">{{ with $info.parts }}{{ $info.written }} of {{ len . }} parts{{ else }}{{ len $info.recipes }} recipes{{ end }}{{ with $info.builds }} · {{ len . }} {{ cond (eq (len .) 1) "build" "builds" }}{{ end }}</span>
-          </div>
-          {{ with .Description }}<p class="bp-desc">{{ . }}</p>{{ end }}
-          {{ with $info.parts }}
-            <ol class="parts parts-compact">
-              {{ range . }}
-                {{ $part := . }}
-                <li{{ if not .methods }} class="todo"{{ end }}><span class="part-name">{{ with .methods }}<a href="{{ (index . 0).RelPermalink }}">{{ $part.name }}</a>{{ else }}{{ .name }}{{ end }}</span></li>
-              {{ end }}
-            </ol>
-          {{ end }}
+        <div class="bp-row">
+          <section class="bp">
+            <div class="bp-head">
+              <a class="bp-name" href="{{ .RelPermalink }}">{{ partialCached "method/icon.html" . "icon" | safeHTML }}<span>{{ .Title }}</span><span class="go" aria-hidden="true">→</span></a>
+              <span class="bp-count">{{ with $info.parts }}{{ $info.written }} of {{ len . }} parts{{ else }}{{ len $info.recipes }} recipes{{ end }}{{ with $info.builds }} · {{ len . }} {{ cond (eq (len .) 1) "build" "builds" }}{{ end }}</span>
+            </div>
+            {{ with .Description }}<p class="bp-desc">{{ . }}</p>{{ end }}
+            {{ with $info.parts }}
+              <ol class="parts parts-compact">
+                {{ range . }}
+                  {{ $part := . }}
+                  {{ with .methods }}
+                    <li><a class="part-row" href="{{ (index . 0).RelPermalink }}">{{ $part.name }}</a></li>
+                  {{ else }}
+                    <li class="todo"><span class="part-row">{{ .name }}</span></li>
+                  {{ end }}
+                {{ end }}
+              </ol>
+            {{ end }}
+          </section>
           {{ with $info.builds }}
-            <div class="opts"><span class="opt-pill"><b>Builds</b></span>{{ range . }}<a class="opt-pill" href="{{ .RelPermalink }}">{{ .Params.build_name }}</a>{{ end }}</div>
+            <div class="bp-builds">
+              <div class="bp-builds-head"><span>Builds · {{ len . }}</span>{{ if ge (len .) 2 }}<a href="{{ $bp.RelPermalink }}#compare">Compare picks →</a>{{ end }}</div>
+              <div class="build-tiles">
+                {{ range . }}
+                  <article class="build-tile">
+                    {{ if .Draft }}<div class="rcard-top">{{ partial "development/mark.html" . }}</div>{{ end }}
+                    <div class="build-tile-art">{{ if templates.Exists "partials/stack-strip.html" }}{{ partial "stack-strip.html" (dict "page" . "labels" false) }}{{ end }}</div>
+                    <h3 class="build-tile-name"><a class="rcard-link" href="{{ .RelPermalink }}">{{ .Params.build_name }}</a></h3>
+                    {{ with .Params.origin }}<p class="build-origin">{{ . }}</p>{{ else }}<p class="build-origin is-missing">origin to come</p>{{ end }}
+                    {{ with .Params.profile }}<p class="build-tile-profile">{{ . }}</p>{{ end }}
+                  </article>
+                {{ end }}
+              </div>
+            </div>
           {{ end }}
-        </section>
+        </div>
       {{ end }}
     </div>
   {{ end }}

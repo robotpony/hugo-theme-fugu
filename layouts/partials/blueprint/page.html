@@ -61,7 +61,7 @@
       {{ $builds := . }}
       {{ $picks := slice }}
       {{ range $builds }}{{ $picks = $picks | append (partial "method/picks.html" .) }}{{ end }}
-      <h3 class="subsection-title subsection-gap">Builds compared</h3>
+      <h3 class="subsection-title subsection-gap" id="compare">Builds compared</h3>
       <div class="table-scroll">
         <table class="builds-compared">
           <thead><tr><th></th>{{ range $builds }}<th scope="col"><a href="{{ .RelPermalink }}">{{ .Params.build_name }}</a></th>{{ end }}</tr></thead>
