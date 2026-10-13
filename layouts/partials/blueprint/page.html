@@ -18,11 +18,13 @@
   - "Parts" (#parts), in weight order: the methods list's compact block,
     a numbered list of whole-row links (ol.parts.parts-compact, with
     --rows for two columns), in the .bp box without its head
-    (section.bp.bp-parts-only), led by params.fugu.methods.partsLead as
-    its description (.bp-desc; none when it's ""). Descriptions and
-    options are on each part's own page
-  - "Builds" (#builds), oldest era first: a card per build
-    (blueprint/build-card.html)
+    (section.bp.bp-parts-only), led by a description (.bp-desc): the
+    body of parts/lead.md when the blueprint has one (blueprint/lead.html),
+    else params.fugu.methods.partsLead (none when it's ""). Descriptions
+    and options are on each part's own page
+  - "Builds" (#builds), oldest era first: the body of builds/lead.md when
+    the blueprint has one (div.bp-desc.bp-builds-lead), then a card per
+    build (blueprint/build-card.html)
 
   The sidebar: search; counts in the date-rows style (parts, builds);
   "Lineage", desktop only, a vertical timeline to scale
@@ -85,7 +87,11 @@
   {{ with $info.parts }}
     <h3 class="subsection-title{{ if $hasLineage }} subsection-gap{{ end }}" id="parts">Parts<span class="subsection-count">{{ len . }}</span></h3>
     <section class="bp bp-parts-only">
-      {{ with site.Params.fugu.methods.partsLead }}<p class="bp-desc">{{ . | markdownify }}</p>{{ end }}
+      {{ with partial "blueprint/lead.html" (dict "blueprint" $ "folder" "parts") }}
+        <div class="bp-desc">{{ . }}</div>
+      {{ else }}
+        {{ with site.Params.fugu.methods.partsLead }}<p class="bp-desc">{{ . | markdownify }}</p>{{ end }}
+      {{ end }}
       <ol class="parts parts-compact" style="--rows:{{ div (add (len .) 1) 2 }}">
         {{ range . }}
           <li><a class="part-row" href="{{ .page.RelPermalink }}">{{ .name }}</a></li>
@@ -96,6 +102,9 @@
 
   {{ with $info.builds }}
     <h3 class="subsection-title{{ if or $hasLineage $info.parts }} subsection-gap{{ end }}" id="builds">Builds<span class="subsection-count">{{ len . }}</span></h3>
+    {{ with partial "blueprint/lead.html" (dict "blueprint" $ "folder" "builds") }}
+      <div class="bp-desc bp-builds-lead">{{ . }}</div>
+    {{ end }}
     <div class="rgrid build-grid">
       {{ range . }}{{ partial "blueprint/build-card.html" . }}{{ end }}
     </div>

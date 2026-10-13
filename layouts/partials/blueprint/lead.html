@@ -1,0 +1,19 @@
+{{/*
+  A blueprint's lead for its parts or builds: the body of lead.md in its
+  parts/ or builds/ folder (content/methods/burgers/builds/lead.md), a
+  headless page (`build: {render: never, list: never}`), so it has no
+  page of its own and isn't a part or a build. Its folder can't have an
+  _index.md instead, which would make it a section and take its parts or
+  builds out of the blueprint (blueprint/of.html). [[Wiki links]] are
+  rewritten to standard links first, as on the blueprint page. Takes a
+  dict: blueprint (its section page), folder ("parts" or "builds");
+  returns the rendered HTML, or "" when there's no lead.md or it's empty.
+*/}}
+{{ $out := "" }}
+{{ with site.GetPage (path.Join .blueprint.Path .folder "lead") }}
+  {{ $md := .RawContent }}
+  {{ $md = replaceRE `\[\[([^\]|]+)\|([^\]]+)\]\]` `[$2](<$1>)` $md }}
+  {{ $md = replaceRE `\[\[([^\]]+)\]\]` `[$1](<$1>)` $md }}
+  {{ with strings.TrimSpace $md }}{{ $out = $.blueprint.RenderString (dict "display" "block") . }}{{ end }}
+{{ end }}
+{{ return $out }}

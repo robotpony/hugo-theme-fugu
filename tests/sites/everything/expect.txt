@@ -106,7 +106,16 @@ essays/methods/rice-bowls/index.html: href="/essays/methods/rice-bowls/builds/pa
 essays/methods/rice-bowls/index.html: <li class="tl-mark todo" style="left:83.3%"><a class="tl-name" href="/essays/methods/rice-bowls/builds/poke-bowl/"
 essays/methods/rice-bowls/index.html: !builds-compared
 essays/methods/rice-bowls/index.html: <section class="bp bp-parts-only">
-essays/methods/rice-bowls/index.html: <p class="bp-desc">Each part is its own method. A build picks one option from each.</p>
+# A folder's headless lead.md leads its parts box (in place of the
+# partsLead param, with wiki links) and the build cards, and is never a
+# part, a build, or a page.
+essays/methods/rice-bowls/index.html: <div class="bp-desc"><p>Start with the rice;
+essays/methods/rice-bowls/index.html: <a href="/recipes/plain-rice/" class="wikilink">Plain rice</a>
+essays/methods/rice-bowls/index.html: !Each part is its own method.
+essays/methods/rice-bowls/index.html: <div class="bp-desc bp-builds-lead"><p>Three bowls we make, not the only ones.</p>
+essays/methods/rice-bowls/index.html: Builds<span class="subsection-count">3<
+essays/methods/rice-bowls/index.html: Parts<span class="subsection-count">2<
+!essays/methods/rice-bowls/builds/lead/index.html
 essays/methods/rice-bowls/index.html: class="part-row" href="/essays/methods/rice-bowls/parts/toppings/">Bowl toppings
 essays/methods/rice-bowls/index.html: !opt-pill
 tags/method/index.html: <div class="bp-builds-inline">

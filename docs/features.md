@@ -101,8 +101,8 @@ A blueprint is a dish type made of parts, such as a burger: patty, seasoning, co
 
 - Its definition, from the folder's `_index.md`, with a link to the methods list.
 - A lineage timeline: the builds placed by era, with drafts faint. At desktop widths it's in the sidebar, a vertical spine drawn to scale; narrower, a track of decades in the body (a list on a phone).
-- Its parts in order, as numbered links, as on the methods list. Each part's description and options are on its own page.
-- Its builds, the named combinations, as cards with their era, description, and stack diagram, oldest first.
+- Its parts in order, as numbered links, as on the methods list, under a line of lead text. Each part's description and options are on its own page.
+- Its builds, the named combinations, as cards with their era, description, and stack diagram, oldest first, under an optional lead.
 - In the sidebar: search, counts of parts and builds, the lineage, "On this page", and the pages linked from the `## Further reading` at the end of its definition.
 
 A part or build gets a chip in its header that says where it sits: "Burgers · Burger patties" on a part, "Burgers · Build" on a build, linking to the blueprint. A part and a build end with navigation back to the blueprint and on to the next part or build, in place of the date-ordered previous and next.
