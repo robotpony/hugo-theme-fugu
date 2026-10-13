@@ -191,7 +191,7 @@ caption: Drive-in deluxe
 
 A build's first `stack` block is also drawn smaller, without labels, on its card on the blueprint's page. In Obsidian it reads as plain text.
 
-The layers in the kit today: bun-top, bun-base, bread, lettuce (leaf), lettuce-shredded, tomato, onion-raw, onion-fried, onion-minced, pickle, cheese, cheese-top, bacon, patty-thin, patty-thick (griddled), patty-thin-grilled, patty-thick-grilled, patty-smash, sauce-ketchup-mustard, ketchup, sauce-burger, mustard, mayo, pasta, ragu, bechamel. A site can add its own, or replace Fugu's, by putting SVGs with those names in its own `assets/icons/layers/`: a 210-wide `viewBox` centred on x=105, its own height, and a `data-edge` attribute saying how far right of centre the drawing reaches (where the leader line starts).
+The layers in the kit today: bun-top, bun-base, bread, lettuce (leaf), lettuce-shredded, lettuce-chunks (torn or chopped), tomato, onion-raw, onion-fried, onion-minced, pickle, cheese, cheese-top, bacon, patty-thin, patty-thick (griddled), patty-thin-grilled, patty-thick-grilled, patty-smash, sauce-ketchup-mustard, ketchup, sauce-burger, mustard, mayo, pasta, ragu, bechamel. A site can add its own, or replace Fugu's, by putting SVGs with those names in its own `assets/icons/layers/`: a 210-wide `viewBox` centred on x=105, its own height, and a `data-edge` attribute saying how far right of centre the drawing reaches (where the leader line starts).
 
 ## Photos
 
