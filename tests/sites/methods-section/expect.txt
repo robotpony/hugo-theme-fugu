@@ -27,7 +27,8 @@ methods/rice-bowls/parts/cooking-rice/index.html: rs-label">Parts <span class="n
 methods/rice-bowls/index.html: blueprint-page
 methods/rice-bowls/index.html: class="method-chip" href="/methods/"
 methods/rice-bowls/index.html: build-card
-# No lead.md here, so the parts box takes the partsLead param.
+# No _index.md in parts/ or builds/ here (plain folders), so the parts
+# box takes the partsLead param.
 methods/rice-bowls/index.html: <p class="bp-desc">Each part is its own method.
 methods/rice-bowls/index.html: !bp-builds-lead
 methods/rice-bowls/index.html: !method-list

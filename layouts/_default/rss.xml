@@ -1,6 +1,6 @@
 {{- /*
   Full override of themes/blowfish/layouts/_default/rss.xml (Blowfish
-  295dae3). Two changes:
+  295dae3). Three changes:
 
   - Drafts are left out of every feed (home, section, and term), so a
     site that publishes drafts (buildDrafts) doesn't send half-finished
@@ -8,12 +8,16 @@
     are gone.
   - No lastBuildDate when that leaves a feed empty (a term whose pages
     are all drafts); it read the first page, which failed the build.
+  - A blueprint's feed (blueprint/is.html) takes its pages recursively,
+    so its parts and builds are in it when their folders are headless
+    sections with an _index.md (blueprint/lead.html).
 */ -}}
 {{- $pctx := . -}}
 {{- if .IsHome -}}{{ $pctx = .Site }}{{- end -}}
 {{- $pages := slice -}}
 {{- if or $.IsHome $.IsSection -}}
 {{- $pages = $pctx.RegularPages -}}
+{{- if and $.IsSection (partial "blueprint/is.html" $) -}}{{ $pages = $pctx.RegularPagesRecursive }}{{- end -}}
 {{- else -}}
 {{- $pages = $pctx.Pages -}}
 {{- end -}}

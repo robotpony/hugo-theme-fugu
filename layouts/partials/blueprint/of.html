@@ -1,10 +1,11 @@
 {{/*
   The blueprint a page belongs to, by folder: a page in a blueprint's
-  folder (blueprint/is.html), or in its parts/ or builds/ folder, which
-  have no _index.md, so the blueprint is the page's section. A folder's
-  lead.md (blueprint/lead.html) is never a part or a build, even if it's
-  built as a page. Takes a page;
-  returns a dict, or false when it's in none:
+  folder (blueprint/is.html), or in its parts/ or builds/ folder. That
+  folder is a plain folder, so the blueprint is the page's section, or,
+  with an _index.md (the folder's lead, blueprint/lead.html), a headless
+  section of its own, so the blueprint is that section's parent. The role
+  comes from the folder name either way. Takes a page; returns a dict, or
+  false when it's in none:
 
     blueprint  the blueprint's section page
     role       "part" (in parts/), "build" (in builds/), or ""
@@ -12,14 +13,18 @@
 {{ $out := false }}
 {{ if and .IsPage .File }}
   {{ with .CurrentSection }}
+    {{ $bp := false }}
     {{ if partial "blueprint/is.html" . }}
-      {{ $bp := . }}
-      {{ $rest := strings.TrimPrefix (replace $bp.File.Dir "\\" "/") (replace $.File.Dir "\\" "/") }}
+      {{ $bp = . }}
+    {{ else if and .File (in (slice "parts" "builds") (path.Base (strings.TrimSuffix "/" (replace .File.Dir "\\" "/")))) }}
+      {{ with .Parent }}{{ if partial "blueprint/is.html" . }}{{ $bp = . }}{{ end }}{{ end }}
+    {{ end }}
+    {{ with $bp }}
+      {{ $rest := strings.TrimPrefix (replace .File.Dir "\\" "/") (replace $.File.Dir "\\" "/") }}
       {{ $role := "" }}
       {{ $first := index (split $rest "/") 0 }}
-      {{ if eq $.File.ContentBaseName "lead" }}{{ $first = "" }}{{ end }}
       {{ if eq $first "parts" }}{{ $role = "part" }}{{ else if eq $first "builds" }}{{ $role = "build" }}{{ end }}
-      {{ $out = dict "blueprint" $bp "role" $role }}
+      {{ $out = dict "blueprint" . "role" $role }}
     {{ end }}
   {{ end }}
 {{ end }}

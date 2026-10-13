@@ -3,7 +3,10 @@
   its page, the methods list, the blueprint chip, and part navigation. A
   blueprint is a folder under a methods folder (blueprint/is.html, e.g.
   content/methods/burgers/_index.md); its parts are the pages in its parts/
-  folder and its builds the pages in builds/ (blueprint/of.html). Takes the
+  folder and its builds the pages in builds/ (blueprint/of.html), whether
+  those are plain folders or headless sections with an _index.md (the
+  folder's lead, blueprint/lead.html), so it ranges over the blueprint's
+  pages recursively. Takes the
   blueprint's section page (call it with partialCached, keyed by its
   path); returns a dict:
 
@@ -18,7 +21,7 @@
 {{ $parts := slice }}
 {{ $dated := slice }}
 {{ $undated := slice }}
-{{ range $bp.RegularPages.ByWeight }}
+{{ range $bp.RegularPagesRecursive.ByWeight }}
   {{ $page := . }}
   {{ with partial "blueprint/of.html" $page }}
     {{ if eq .role "part" }}

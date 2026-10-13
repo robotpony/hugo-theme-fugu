@@ -745,7 +745,7 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
 .parts li { counter-increment: part; display: grid; grid-template-columns: 28px 1fr; gap: 2px 10px; align-items: baseline; padding: 9px 0; border-top: 1px solid var(--fugu-border); margin: 0; }
 .parts li::before { content: counter(part, decimal-leading-zero); grid-row: span 2; font-family: var(--fugu-font-mono); font-size: .72rem; color: var(--fugu-accent); }
 .bp.bp-parts-only { padding: 6px 18px 8px; }
-/* A lead.md's text: in the parts box like the default lead, and above
+/* A parts/ or builds/ _index.md's text: in the parts box like the default lead, and above
  * the build cards (blueprint/lead.html). */
 .bp-desc p { margin: 0; }
 .bp-desc p + p { margin-top: 6px; }

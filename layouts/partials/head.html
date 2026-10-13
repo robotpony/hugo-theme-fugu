@@ -2,9 +2,10 @@
   Full override of themes/blowfish/layouts/partials/head.html. Six
   changes, everything else as Blowfish has it:
 
-  - Feed link on pages: a regular page links its section's RSS feed
-    (else the first section's, else the site's), since it has none of
-    its own.
+  - Feed link on pages: a regular page links its nearest section's RSS
+    feed (else the site's), since it has none of its own. A headless
+    section (a blueprint's parts/ or builds/ _index.md) has no feed, so
+    its pages link the blueprint's.
 
   - Styles: bundles assets/css/fugu.css after Blowfish's main.css and
     before the site's custom.css, unless params.fugu.styles is false.
@@ -71,12 +72,12 @@
       safeHTML
     }}
   {{ end }}
-  {{/* A page has no feed of its own: point at its section's, else the
-    first section's, else the site's, so a reader given a recipe link can
+  {{/* A page has no feed of its own: point at its nearest section's
+    that has one, else the site's, so a reader given a recipe link can
     find the recipes feed. */}}
   {{ if .IsPage }}
     {{ $feedPage := false }}
-    {{ range slice .CurrentSection .FirstSection site.Home }}
+    {{ range .Ancestors }}
       {{ if and (not $feedPage) (.OutputFormats.Get "RSS") }}{{ $feedPage = . }}{{ end }}
     {{ end }}
     {{ with $feedPage }}

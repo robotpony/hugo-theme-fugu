@@ -1,5 +1,5 @@
 ---
-title: Rice bowl parts lead
+title: Rice bowl parts
 build:
   render: never
   list: never

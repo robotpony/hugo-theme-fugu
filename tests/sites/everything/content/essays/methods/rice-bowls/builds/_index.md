@@ -1,5 +1,5 @@
 ---
-title: Rice bowl builds lead
+title: Rice bowl builds
 build:
   render: never
   list: never

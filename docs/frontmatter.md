@@ -95,26 +95,26 @@ A blueprint is a dish type made of parts, and it's a folder: one with an `_index
 ```
 content/methods/burgers/
   _index.md                 the blueprint: /methods/burgers/
+  parts/_index.md           optional: the parts' lead
   parts/patties.md          a part
   parts/seasoning.md
+  builds/_index.md          optional: the builds' lead
   builds/drive-in-deluxe.md a build
 ```
 
-`parts/` and `builds/` are plain folders, with no `_index.md`. The blueprint's `_index.md` gives its title, description, and definition (the body), which may end with a `## Further reading` section of links; its page shows the definition at the top and the pages the further reading links to in the sidebar.
+The blueprint's `_index.md` gives its title, description, and definition (the body), which may end with a `## Further reading` section of links; its page shows the definition at the top and the pages the further reading links to in the sidebar.
 
-Either folder can hold a `lead.md`, a sentence or two shown above that folder's list on the blueprint's page: `parts/lead.md` at the top of the parts box (in place of the `partsLead` setting, [configuration.md](configuration.md#methods-and-blueprints)), and `builds/lead.md` above the build cards. Make it headless, so it has no page of its own and isn't counted as a part or a build. `[[Wiki links]]` work in it.
+`parts/` and `builds/` can each have an `_index.md`, whose body is a sentence or two shown above that folder's list on the blueprint's page: `parts/_index.md` at the top of the parts box (in place of the `partsLead` setting, [configuration.md](configuration.md#methods-and-blueprints)), and `builds/_index.md` above the build cards. Make it headless, so the folder has no page of its own (no `/methods/burgers/builds/`) and stays out of lists, search, and the sitemap. `[[Wiki links]]` work in it. Without one, the folder is a plain folder, and works the same apart from the lead. Either way the pages' URLs are the same.
 
 ```markdown
 ---
-title: Burger builds lead
+title: Burger builds
 build:
   render: never
   list: never
 ---
 These are the burgers I know and love, not a complete list.
 ```
-
-Don't give `parts/` or `builds/` an `_index.md` for this: that makes the folder a section of its own, and the blueprint loses its parts or builds.
 
 ```markdown
 ---

@@ -1,0 +1,30 @@
+{{/*
+  Full override of themes/blowfish/layouts/partials/breadcrumbs.html
+  (Blowfish 295dae3). One change: a section with no page of its own
+  (`build: {render: never}`, so an empty .RelPermalink) gets no crumb,
+  where Blowfish linked it with an empty href. A blueprint's parts/ and
+  builds/ folders are such sections when they have an _index.md (their
+  lead, blueprint/lead.html), so a part's crumbs go straight from the
+  blueprint to the part.
+*/}}
+<ol class="text-sm text-neutral-500 dark:text-neutral-400 print:hidden">
+  {{ template "crumb" (dict "p1" . "p2" .) }}
+</ol>
+{{ define "crumb" }}
+  {{ if .p1.Parent }}
+    {{ template "crumb" (dict "p1" .p1.Parent "p2" .p2 ) }}
+  {{ else if not .p1.IsHome }}
+    {{ template "crumb" (dict "p1" .p1.Site.Home "p2" .p2 ) }}
+  {{ end }}
+  {{ if .p1.RelPermalink }}
+  <li class="{{ if or (eq .p1 .p2) (.p1.IsHome) }}hidden{{ else }}inline{{ end }}">
+    <a class="hover:underline decoration-neutral-300 dark:underline-neutral-600" href="{{ .p1.RelPermalink }}"
+      >{{ if .p1.Title }}
+        {{- .p1.Title -}}
+      {{ else }}
+        {{- .p1.Section -}}
+      {{ end }}</a
+    ><span class="px-1 text-primary-500">/</span>
+  </li>
+  {{ end }}
+{{ end }}
