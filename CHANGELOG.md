@@ -6,7 +6,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Added
 
-- A `lettuce-chunks` stack layer: torn or chopped iceberg on the same pad as `lettuce-shredded`, in fewer, wider pieces, for builds that don't use a whole leaf.
+- A `lettuce-chunks` stack layer: torn or chopped iceberg on the same pad as `lettuce-shredded`, in fewer, wider pieces, for builds that don't use a whole leaf. Its edge, and `lettuce-shredded`'s, reach their pieces (76.4 and 74.3, were 70), so leader dots clear them.
 - A `ketchup` stack layer: the ketchup swirl from `sauce-ketchup-mustard` without the mustard, for builds that skip it.
 - A blueprint's `parts/lead.md` and `builds/lead.md`, headless pages (`build: {render: never, list: never}`), lead its page's parts box (in place of `partsLead`) and its build cards (`div.bp-desc.bp-builds-lead`), with wiki links (`blueprint/lead.html`). `blueprint/of.html` never counts a `lead.md` as a part or a build.
 - `params.fugu.methods.partsLead`: a line at the top of a blueprint page's parts box (`.bp-desc` in `section.bp.bp-parts-only`), in Markdown, by default "Each part is its own method. A build picks one option from each." `""` leaves it out.
