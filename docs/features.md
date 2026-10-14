@@ -81,7 +81,7 @@ Tag and cuisine pages list 16 recipes to a page. A cuisine page is titled "Thai 
 
 ## Pinned pages
 
-`pinned: true` puts a page first: at the top of its section's list, of its tag and cuisine pages, and of search results, with a pin on its card. It's meant for a few pages that a reader should find first, not as a general way to sort ([frontmatter.md](frontmatter.md#pinned)).
+`pinned: true` puts a page first: at the top of its section's list, of its tag and cuisine pages, and of search results, with a pin on its card. A pinned build leads its blueprint's builds everywhere but the lineage timeline, which stays in order of era. It's meant for a few pages that a reader should find first, not as a general way to sort ([frontmatter.md](frontmatter.md#pinned)).
 
 ## Principle tags
 

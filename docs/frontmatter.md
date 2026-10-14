@@ -53,7 +53,7 @@ Without `buildDrafts`, drafts behave as Hugo normally treats them: they aren't b
 
 ### `pinned`
 
-`pinned: true` floats a page to the top of its section's list, of its tag and cuisine pages, and of search results, and puts a pin on its card. It works on recipes and on any other page. Keep it rare: it's for the two or three pages a reader should find first, not a general sort order.
+`pinned: true` floats a page to the top of its section's list, of its tag and cuisine pages, and of search results, and puts a pin on its card. A pinned build goes first among its blueprint's builds (the methods list, the build cards, and part navigation), but keeps its place by `era` on the lineage timeline. It works on recipes and on any other page. Keep it rare: it's for the two or three pages a reader should find first, not a general sort order.
 
 ## Taxonomy terms
 

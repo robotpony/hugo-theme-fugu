@@ -14,8 +14,11 @@
     parts    one dict per page in parts/, by weight, then date, then
              title: page, name (its title), n (1-based), and options
              (from its ## Options table, method/options.html)
-    builds   the pages in builds/: those with an `era` (a year) oldest
-             first, then the rest, each by weight, date, then title
+    builds   the pages in builds/: pinned ones (`pinned: true`) first,
+             then those with an `era` (a year) oldest first, then the
+             rest, each by weight, date, then title. The lineage sorts
+             by era itself (blueprint/lineage-span.html), so a pinned
+             build keeps its place in history there.
 */}}
 {{ $bp := . }}
 {{ $parts := slice }}
@@ -33,4 +36,5 @@
 {{ end }}
 {{/* sort is stable, so builds of the same era keep their weight order. */}}
 {{ $builds := (sort $dated "Params.era") | append $undated }}
+{{ $builds = (where $builds "Params.pinned" true) | append (where $builds "Params.pinned" "!=" true) }}
 {{ return dict "page" $bp "parts" $parts "builds" $builds }}
