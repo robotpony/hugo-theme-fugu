@@ -79,6 +79,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Fixed
 
+- The link render hook emits only its element, without the template's whitespace around it, so punctuation right after a link ("(see [[Seasoning burgers]]).") no longer wraps onto its own line or reads as a separate word. Word counts, reading times, and auto summaries change slightly to match.
 - A build card's stack diagram is centred between its intro and its stats when a taller card in the row stretches it, rather than sitting under the text with a gap below.
 - A method's reading sidebar labels its linked recipes "Recipes" rather than "Recipes in this essay", since its sidebar already says "On this page". A blueprint part's or build's sidebar lists the other parts in weight order, or builds in era order, as the blueprint page does, rather than alphabetically.
 - A page's meta description no longer renders fenced code blocks in its intro, so a formula or stack block before the first heading isn't drawn (and warned about) a second time or read into the description.

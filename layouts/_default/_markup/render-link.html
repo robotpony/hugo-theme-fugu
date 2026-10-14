@@ -1,4 +1,4 @@
-{{/*
+{{- /*
   Wiki link render hook. Full override of themes/blowfish/layouts/
   _default/_markup/render-link.html.
 
@@ -22,82 +22,82 @@
   reference section, by default content/reference/glossary.md), the
   "doesn't get its own page" tier, before giving up as a .broken-link.
   Either tier is off when its param or section is "".
-*/}}
+*/ -}}
 
-{{ $destination := .Destination }}
-{{ $text := .Text | safeHTML }}
-{{ $isWikiLink := and
+{{- $destination := .Destination -}}
+{{- $text := .Text | safeHTML -}}
+{{- $isWikiLink := and
   (not (strings.HasPrefix $destination "http"))
   (not (strings.HasPrefix $destination "/"))
   (not (strings.HasPrefix $destination "#"))
   (not (strings.HasPrefix $destination "mailto"))
   (not (strings.HasPrefix $destination "./"))
   (not (strings.HasPrefix $destination "../"))
-}}
+-}}
 
-{{ if $isWikiLink }}
-  {{/* Normalize both sides before matching: lowercase, and collapse any
+{{- if $isWikiLink -}}
+  {{- /* Normalize both sides before matching: lowercase, and collapse any
     run of non-alphanumeric characters (apostrophes, slashes, hyphens, ...)
     to a single space. This makes matching case-insensitive and punctuation-
     agnostic, so `[[rich veg mushroom stock]]` matches a title of
     "Rich veg/mushroom stock", and curly vs. straight apostrophes
     (content/recipes/chef-johns-hamburger-buns.md's title uses a curly ',
     a wiki link to it might be typed with a straight ') no longer matter —
-    exact-match can't do either, so normalize by hand instead. */}}
-  {{ $normDest := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower $destination)) }}
-  {{ $matches := slice }}
-  {{ range site.RegularPages }}
-    {{ $normTitle := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower .Title)) }}
-    {{ if eq $normTitle $normDest }}
-      {{ $matches = $matches | append . }}
-    {{ end }}
-  {{ end }}
-  {{ if gt (len $matches) 0 }}
-    {{ $target := index $matches 0 }}
-    {{ $refFolder := site.Params.fugu.referenceEssays | default "" }}
-    {{ $isRefEssay := and $refFolder (eq (partialCached "section/role.html" $target.Section $target.Section) "essay") (eq (path.Base (strings.TrimSuffix "/" $target.File.Dir)) $refFolder) }}
-    {{ if $isRefEssay }}
-      {{ $def := $target.Params.summary | default $target.Description }}
-      {{ if not $def }}
-        {{ $head := index (split $target.RawContent "\n## ") 0 | strings.TrimSpace }}
-        {{ if and $head (not (hasPrefix $head "#")) }}
-          {{ $def = index (split $head "\n\n") 0 }}
-        {{ end }}
-      {{ end }}
-      {{ $def = $def | markdownify | plainify | htmlUnescape | truncate 200 }}
+    exact-match can't do either, so normalize by hand instead. */ -}}
+  {{- $normDest := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower $destination)) -}}
+  {{- $matches := slice -}}
+  {{- range site.RegularPages -}}
+    {{- $normTitle := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower .Title)) -}}
+    {{- if eq $normTitle $normDest -}}
+      {{- $matches = $matches | append . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if gt (len $matches) 0 -}}
+    {{- $target := index $matches 0 -}}
+    {{- $refFolder := site.Params.fugu.referenceEssays | default "" -}}
+    {{- $isRefEssay := and $refFolder (eq (partialCached "section/role.html" $target.Section $target.Section) "essay") (eq (path.Base (strings.TrimSuffix "/" $target.File.Dir)) $refFolder) -}}
+    {{- if $isRefEssay -}}
+      {{- $def := $target.Params.summary | default $target.Description -}}
+      {{- if not $def -}}
+        {{- $head := index (split $target.RawContent "\n## ") 0 | strings.TrimSpace -}}
+        {{- if and $head (not (hasPrefix $head "#")) -}}
+          {{- $def = index (split $head "\n\n") 0 -}}
+        {{- end -}}
+      {{- end -}}
+      {{- $def = $def | markdownify | plainify | htmlUnescape | truncate 200 -}}
       <span class="pop-host pop-glossary"><a href="{{ $target.RelPermalink }}" class="glossary-link">{{ $text }}</a><span class="pop pop-up" role="tooltip"><span class="pop-head">{{ $target.Title }}</span><span class="pop-text">{{ $def }}</span><a class="pop-link" href="{{ $target.RelPermalink }}">Read the full essay</a></span></span>
-    {{ else }}
+    {{- else -}}
       <a href="{{ $target.RelPermalink }}" class="wikilink">{{ $text }}</a>
-    {{ end }}
-  {{ else }}
-    {{ $glossary := "" }}
-    {{ $refSection := partial "section/name.html" "reference" }}
-    {{ with and $refSection site.Params.fugu.glossaryPage }}
-      {{ $glossary = site.GetPage (printf "/%s/%s" $refSection .) }}
-    {{ end }}
-    {{ $entry := "" }}
-    {{ with $glossary }}
-      {{ $chunks := split .RawContent "\n## " }}
-      {{ range after 1 $chunks }}
-        {{ $lines := split . "\n" }}
-        {{ $term := strings.TrimSpace (index $lines 0) }}
-        {{ $normTerm := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower $term)) }}
-        {{ if eq $normTerm $normDest }}
-          {{ $def := strings.TrimSpace (index (split . "\n\n") 1) }}
-          {{ $entry = dict "term" $term "def" ($def | markdownify | plainify | htmlUnescape | truncate 200) "slug" (anchorize $term) }}
-        {{ end }}
-      {{ end }}
-    {{ end }}
-    {{ if $entry }}
+    {{- end -}}
+  {{- else -}}
+    {{- $glossary := "" -}}
+    {{- $refSection := partial "section/name.html" "reference" -}}
+    {{- with and $refSection site.Params.fugu.glossaryPage -}}
+      {{- $glossary = site.GetPage (printf "/%s/%s" $refSection .) -}}
+    {{- end -}}
+    {{- $entry := "" -}}
+    {{- with $glossary -}}
+      {{- $chunks := split .RawContent "\n## " -}}
+      {{- range after 1 $chunks -}}
+        {{- $lines := split . "\n" -}}
+        {{- $term := strings.TrimSpace (index $lines 0) -}}
+        {{- $normTerm := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower $term)) -}}
+        {{- if eq $normTerm $normDest -}}
+          {{- $def := strings.TrimSpace (index (split . "\n\n") 1) -}}
+          {{- $entry = dict "term" $term "def" ($def | markdownify | plainify | htmlUnescape | truncate 200) "slug" (anchorize $term) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if $entry -}}
       <span class="pop-host pop-glossary"><a href="{{ $glossary.RelPermalink }}#{{ $entry.slug }}" class="glossary-link">{{ $text }}</a><span class="pop pop-up" role="tooltip"><span class="pop-head">{{ $entry.term }}</span><span class="pop-text">{{ $entry.def }}</span><a class="pop-link" href="{{ $glossary.RelPermalink }}#{{ $entry.slug }}">Full entry in the glossary</a></span></span>
-    {{ else }}
+    {{- else -}}
       <span class="broken-link" title="Not found: {{ $destination }}">{{ $text }}</span>
-    {{ end }}
-  {{ end }}
-{{ else }}
-  {{ $isExternal := strings.HasPrefix $destination "http" }}
+    {{- end -}}
+  {{- end -}}
+{{- else -}}
+  {{- $isExternal := strings.HasPrefix $destination "http" -}}
   <a href="{{ $destination }}"
     {{- with .Title }} title="{{ . }}"{{ end }}
     {{- if $isExternal }} class="extlink" rel="noopener noreferrer" target="_blank"{{ end -}}
   >{{ $text }}</a>
-{{ end }}
+{{- end -}}
