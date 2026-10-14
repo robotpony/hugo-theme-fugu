@@ -48,6 +48,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Changed
 
+- The `cheese` and `cheese-american` stack layers have a plain top face, without hatching: sliced cheese isn't textured. The edges and the drape line stay.
 - Each row of the About page's "cookbook in numbers" (`stats: true`) links to its section or the cuisine list: `a.rs-number` in place of `div.rs-number`, which stays for a row whose page can't be found. A site styling `.rs-number` itself may want `text-decoration: none` and a hover state on `a.rs-number`.
 - A build with `pinned: true` comes first among its blueprint's builds, before the `era` order: the methods list's pills, the blueprint page's build cards, and part navigation and the reading sidebar's build list (`blueprint/info.html`). The lineage timeline stays in order of era.
 - Removes code nothing used any more: `concept/callout.html` and `concept/further.html` (no page has opened with a definition callout or ended with a further-reading list since principle, methods and blueprint pages moved to the reading layout), and their styles (`.definition-callout*`, `.ref-list`, `.ref-row`, `.ref-kind`), and `.browse-more`, which nothing emitted.
