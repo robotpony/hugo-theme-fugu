@@ -578,6 +578,8 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
 .reading-sidebar .rs-numbers { display: flex; flex-direction: column; }
 .reading-sidebar .rs-number { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--fugu-border); font-size: .84rem; color: var(--fugu-ink-muted); }
 .reading-sidebar .rs-number:last-child { border-bottom: none; }
+.reading-sidebar a.rs-number { text-decoration: none; }
+.reading-sidebar a.rs-number:hover { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); }
 .reading-sidebar .rs-number b { font-family: var(--fugu-font-mono); font-variant-numeric: tabular-nums; font-weight: 600; color: var(--fugu-accent-strong); }
 
 /* ---------------------------------------------------------------------

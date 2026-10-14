@@ -211,13 +211,26 @@
     <div class="rs-section">
       <h2 class="rs-label">The cookbook in numbers</h2>
       <div class="rs-numbers">
-        <div class="rs-number">Recipes <b>{{ len $recipes }}</b></div>
-        {{ with site.Taxonomies.cuisine }}<div class="rs-number">Cuisines <b>{{ len . }}</b></div>{{ end }}
+        {{ $recipeSection := partial "section/name.html" "recipe" }}
+        {{ $rows := slice (dict "label" "Recipes" "n" (len $recipes) "to" (cond (ne $recipeSection "") (site.GetPage $recipeSection) nil)) }}
+        {{ with site.Taxonomies.cuisine }}
+          {{ $rows = $rows | append (dict "label" "Cuisines" "n" (len .) "to" (site.GetPage "/cuisine")) }}
+        {{ end }}
         {{ range slice (slice "essay" "Essays") (slice "method" "Methods") (slice "reference" "Reference guides") }}
           {{ $label := index . 1 }}
           {{ with partial "section/name.html" (index . 0) }}
-            {{ with where site.RegularPages "Section" . }}<div class="rs-number">{{ $label }} <b>{{ len . }}</b></div>{{ end }}
+            {{ $to := site.GetPage . }}
+            {{ with where site.RegularPages "Section" . }}
+              {{ $rows = $rows | append (dict "label" $label "n" (len .) "to" $to) }}
+            {{ end }}
           {{ end }}
+        {{ end }}
+        {{/* Each row links to its section or taxonomy list; one whose page
+          can't be found stays a plain row. */}}
+        {{ range $rows }}
+          {{ with .to }}<a class="rs-number" href="{{ .RelPermalink }}">{{ else }}<div class="rs-number">{{ end }}
+          {{- .label }} <b>{{ .n }}</b>
+          {{- if .to }}</a>{{ else }}</div>{{ end }}
         {{ end }}
       </div>
     </div>
