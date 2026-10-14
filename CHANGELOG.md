@@ -6,7 +6,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Added
 
-- A `lettuce-chunks` stack layer: torn or chopped iceberg on a soft pad, in wide pieces, for builds that don't use a whole leaf. Its edge reaches its pieces (76.4, was 70), so leader dots clear them.
+- A `lettuce-chunks` stack layer: torn or chopped iceberg in a heap of wide pieces, with no pad under them, for builds that don't use a whole leaf. Its edge reaches its pieces (76.4, was 70), so leader dots clear them.
 - A `ketchup` stack layer: the ketchup swirl from `sauce-ketchup-mustard` without the mustard, for builds that skip it.
 - A blueprint's `parts/_index.md` and `builds/_index.md`, headless sections (`build: {render: never, list: never}`), lead its page's parts box (in place of `partsLead`) and its build cards (`div.bp-desc.bp-builds-lead`), with wiki links (`blueprint/lead.html`). Its parts and builds are the same with or without them (`blueprint/of.html` finds the blueprint from the folder's parent section, `blueprint/info.html` and the blueprint's feed take its pages recursively), and their URLs don't change. Replaces `lead.md` in those folders, which is no longer read: rename it to `_index.md`. A headless section gets no breadcrumb (a new override of Blowfish's `partials/breadcrumbs.html`), and a page's feed link is its nearest section's that has one (`head.html`).
 - `params.fugu.methods.partsLead`: a line at the top of a blueprint page's parts box (`.bp-desc` in `section.bp.bp-parts-only`), in Markdown, by default "Each part is its own method. A build picks one option from each." `""` leaves it out.
