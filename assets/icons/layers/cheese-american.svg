@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 59.8" data-edge="71.4" fill="none" stroke-linecap="round" stroke-linejoin="round" overflow="visible">
+  <path style="fill:var(--kit-yellow, var(--fugu-kit-yellow))" stroke="currentColor" stroke-width="1.8" d="M33.6,34.3Q70.3,38.9 107,55.6Q141.7,38.4 176.4,33.3L176.4,36.5Q141.7,41.6 107,58.8Q70.3,42.1 33.6,37.5Z"/>
+  <path style="fill:var(--kit-yellow-top, var(--fugu-kit-yellow-top))" stroke="currentColor" stroke-width="1.8" d="M105,1Q140.7,12.1 176.4,33.3Q141.7,38.4 107,55.6Q70.3,38.9 33.6,34.3Q69.3,12.6 105,1Z"/>
+  <path stroke="currentColor" stroke-width="0.5" stroke-opacity=".55" d="M109,2.5L172.4,31.1M101.6,3L169.5,33.7M96.7,4.8L163.4,34.9M91.9,6.5L157.5,36.2M87.2,8.4L151.9,37.6M82.6,10.2L146.5,39.1M78.1,12.2L141.3,40.7M73.7,14.1L136.2,42.4M69.4,16.1L131.3,44.1M65.1,18.2L126.6,45.9M61,20.2L121.9,47.8M56.9,22.3L117.4,49.7M52.8,24.4L113.1,51.7M48.9,26.6L108.8,53.7M44.9,28.8L81.6,45.4M41.1,31L57.1,38.3M37.3,33.2L41.5,35.1"/>
+  <path stroke="currentColor" stroke-width="0.6" d="M148.7,39.8L145.3,41L141.7,42.2L137.7,43.2L133.5,44.1L129.1,44.9L124.5,45.5L119.8,46L114.9,46.4L110,46.6L105,46.7L100,46.6L95.1,46.4L90.2,46L85.5,45.5L80.9,44.9L76.5,44.1L72.3,43.2L68.3,42.2L64.7,41L61.3,39.8"/>
+</svg>
