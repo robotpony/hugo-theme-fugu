@@ -124,7 +124,7 @@ These get a reading sidebar in place of the recipe one. It shows only what a pag
 - For an essay, the other essays in its folder. For a blueprint's part or build, the other parts or builds, in the blueprint's order.
 - For a log month, its days, and the other months, newest first, with a day count for each.
 
-A page at the site's root, such as About, can add "The cookbook in numbers" (counts of recipes, cuisines, essays, and reference guides) and a hand-picked "Start here" list ([frontmatter.md](frontmatter.md#pages-at-the-sites-root)).
+A page at the site's root, such as About, can add "The cookbook in numbers" (counts of recipes, cuisines, essays, methods, and reference guides, each linking to its list) and a hand-picked "Start here" list ([frontmatter.md](frontmatter.md#pages-at-the-sites-root)).
 
 ## Search
 

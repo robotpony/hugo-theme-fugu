@@ -175,7 +175,7 @@ A page directly in `content/`, such as `content/about.md`, gets the reading side
 
 | Field | Type | What it does |
 | --- | --- | --- |
-| `stats` | boolean | `true` adds "The cookbook in numbers": counts of recipes, and of cuisines, essays, and reference guides when the site has any. |
+| `stats` | boolean | `true` adds "The cookbook in numbers": counts of recipes, and of cuisines, essays, methods, and reference guides when the site has any. Each row links to its section, or to the cuisine list. |
 | `start_here` | list of strings | A "Start here" list of hand-picked pages, by title, matched the same way as wiki links. |
 
 ```yaml
