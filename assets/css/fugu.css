@@ -47,8 +47,8 @@
 
   /* Food colours for the other stack layers: green (lettuce, pickle; -ink
    * for shredded lettuce's strands), red (tomato, ketchup) and yellow
-   * (mustard), green and red with a paler -top face (yellow-top is unused
-   * so far). Fixed and soft, and only for the kit. A site's --kit-* win
+   * (mustard), green and red with a paler -top (a leaf's top face,
+   * tomato's seeds; yellow-top is unused so far). Fixed and soft, and only for the kit. A site's --kit-* win
    * over these. */
   --fugu-kit-green: #A3DABD;
   --fugu-kit-green-top: #CDEEDC;
