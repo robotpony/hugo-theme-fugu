@@ -48,6 +48,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Changed
 
+- The `bun-top` stack layer is drawn opened toward the reader with bare crumb, the same shape as `bun-top+mayo` without the spread, so every build's top bun matches. It's taller (77.6, was 62.3), so stacks with it grow by 15.3; its edge is still 70.
 - The `cheese` and `cheese-american` stack layers have a plain top face, without hatching: sliced cheese isn't textured. The edges and the drape line stay.
 - Each row of the About page's "cookbook in numbers" (`stats: true`) links to its section or the cuisine list: `a.rs-number` in place of `div.rs-number`, which stays for a row whose page can't be found. A site styling `.rs-number` itself may want `text-decoration: none` and a hover state on `a.rs-number`.
 - A build with `pinned: true` comes first among its blueprint's builds, before the `era` order: the methods list's pills, the blueprint page's build cards, and part navigation and the reading sidebar's build list (`blueprint/info.html`). The lineage timeline stays in order of era.
