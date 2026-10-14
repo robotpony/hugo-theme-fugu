@@ -186,12 +186,13 @@ caption: Drive-in deluxe
 ````
 
 - Layers are file names from `assets/icons/layers/`, without `.svg`. An unknown name draws a dashed placeholder and warns during the build.
+- A spread on its bun is one layer, written as a pair: `bun-base + mayo | Sesame bun, with mayo | barrier` (the spaces are optional). It draws `bun-base+mayo.svg`, its own drawing (the top bun opened toward you, its cut face showing the spread), not two layers stacked. A pair with no file warns like an unknown name.
 - The label is what the layer is; the role is what it does for the whole. Both are short.
 - Optional lines: `caption: <text>`, and `repeat: 3-5 x3` to mark layers 3 to 5 as repeated three times (a `× 3` bracket on the left; `x` or `×`, and a single layer works too: `repeat: 4 x2`).
 
 A build's first `stack` block is also drawn smaller, without labels, on its card on the blueprint's page. In Obsidian it reads as plain text.
 
-The layers in the kit today: bun-top, bun-base, bread, lettuce (leaf), lettuce-shredded, lettuce-chunks (torn or chopped), tomato, onion-raw, onion-fried, onion-minced, pickle, cheese, cheese-top, bacon, patty-thin, patty-thick (griddled), patty-thin-grilled, patty-thick-grilled, patty-smash, sauce-ketchup-mustard, ketchup, sauce-burger, mustard, mayo, pasta, ragu, bechamel. A site can add its own, or replace Fugu's, by putting SVGs with those names in its own `assets/icons/layers/`: a 210-wide `viewBox` centred on x=105, its own height, and a `data-edge` attribute saying how far right of centre the drawing reaches (where the leader line starts).
+The layers in the kit today: bun-top, bun-base, bread, lettuce (leaf), lettuce-shredded, lettuce-chunks (torn or chopped), tomato, onion-raw, onion-fried, onion-minced, pickle, cheese, cheese-top, bacon, patty-thin, patty-thick (griddled), patty-thin-grilled, patty-thick-grilled, patty-smash, sauce-ketchup-mustard, ketchup, sauce-burger, mustard, mayo, pasta, ragu, bechamel; and the pairs bun-top + mayo, bun-base + mayo, bun-top + sauce-burger, bun-base + sauce-burger. A site can add its own, or replace Fugu's, by putting SVGs with those names in its own `assets/icons/layers/`: a 210-wide `viewBox` centred on x=105, its own height, and a `data-edge` attribute saying how far right of centre the drawing reaches (where the leader line starts). A pair's file is named with a `+`, `bun-base+mayo.svg`.
 
 ## Photos
 

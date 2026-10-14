@@ -234,7 +234,7 @@ Drafts never appear in RSS feeds (the site's, a section's, or a tag's), so subsc
   styles = true
 ```
 
-Fugu's stylesheet, `assets/css/fugu.css`, styles everything Fugu adds, coloured from your Blowfish `colorScheme`, light and dark. It loads after Blowfish's CSS and before your `assets/css/custom.css`, so your rules win. To change the colours alone, set the `--fugu-*` custom properties at the top of the file in your `custom.css` (under `:root`, and `.dark` for dark mode). `false` leaves it out, for a site that styles every class itself.
+Fugu's stylesheet, `assets/css/fugu.css`, styles everything Fugu adds, coloured from your Blowfish `colorScheme`, light and dark. It loads after Blowfish's CSS and before your `assets/css/custom.css`, so your rules win. To change the colours alone, set the `--fugu-*` custom properties at the top of the file in your `custom.css` (under `:root`, and `.dark` for dark mode). The stack layers' fixed colours, `--fugu-sear*` and `--fugu-kit-*` (green, red and yellow, each with a `-top`, and `--fugu-kit-green-ink`), give way to `--sear*` and `--kit-*` if your CSS sets those. `false` leaves it out, for a site that styles every class itself.
 
 ## Fonts
 

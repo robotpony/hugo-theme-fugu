@@ -45,6 +45,19 @@
   --fugu-sear-fleck: #D9B48C;
   --fugu-sear-char: #23241E;
 
+  /* Food colours for the other stack layers: green (lettuce, pickle; -ink
+   * for shredded lettuce's strands), red (tomato, ketchup) and yellow
+   * (mustard), green and red with a paler -top face (yellow-top is unused
+   * so far). Fixed and soft, and only for the kit. A site's --kit-* win
+   * over these. */
+  --fugu-kit-green: #A3DABD;
+  --fugu-kit-green-top: #CDEEDC;
+  --fugu-kit-green-ink: #4E9873;
+  --fugu-kit-red: #E9A994;
+  --fugu-kit-red-top: #F4CDC1;
+  --fugu-kit-yellow: #E3CC6C;
+  --fugu-kit-yellow-top: #F1E5B4;
+
   --fugu-shadow: 0 8px 24px rgba(0, 0, 0, .12);
   --fugu-radius: 6px;
   --fugu-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -69,6 +82,15 @@
   --fugu-sear: #5C3A26;
   --fugu-sear-fleck: #24170F;
   --fugu-sear-char: #121310;
+
+  /* The food colours go dark and muted; the ink lightens to stay legible. */
+  --fugu-kit-green: #25432F;
+  --fugu-kit-green-top: #1C2F23;
+  --fugu-kit-green-ink: #5FA982;
+  --fugu-kit-red: #4A2A21;
+  --fugu-kit-red-top: #33201A;
+  --fugu-kit-yellow: #45391A;
+  --fugu-kit-yellow-top: #2F2918;
 
   --fugu-cuisine: rgb(var(--color-secondary-300));
   --fugu-cuisine-soft: rgba(var(--color-secondary-500), .18);

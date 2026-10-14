@@ -4,7 +4,11 @@
   layers drawn over the lower. Shared by render-codeblock-stack.html (the
   page) and stack-strip.html (cards and the build page's diagram).
 
-  One layer per line, `key | label | role`, plus optional lines:
+  One layer per line, `key | label | role`, plus optional lines. A key
+  can be a pair, `bun-base + mayo` (spaces optional), drawn from
+  bun-base+mayo.svg: a spread on its bun is its own drawing, not two
+  layers on top of each other, so a pair with no file warns like any
+  unknown key.
 
     caption: Drive-in deluxe
     repeat: 3-5 x3     (layers 3 to 5, three times: a "× 3" bracket)
@@ -57,11 +61,12 @@
   {{- end }}
   {{- $f := slice }}
   {{- range split $line "|" }}{{ $f = $f | append (trim . " ") }}{{ end }}
-  {{- $key := index $f 0 }}
+  {{- /* `a + b` is a pre-drawn pair (a spread on the bun), a+b.svg. */}}
+  {{- $key := replaceRE `\s*\+\s*` "+" (index $f 0) }}
   {{- $layer := dict "key" $key "label" "" "role" "" "svg" "" "h" 20.0 "edge" 40.0 }}
   {{- if ge (len $f) 2 }}{{ $layer = merge $layer (dict "label" (index $f 1)) }}{{ end }}
   {{- if ge (len $f) 3 }}{{ $layer = merge $layer (dict "role" (index $f 2)) }}{{ end }}
-  {{- with and (findRE `^[a-z0-9-]+$` $key) (resources.Get (printf "icons/layers/%s.svg" $key)) }}
+  {{- with and (findRE `^[a-z0-9-]+(\+[a-z0-9-]+)*$` $key) (resources.Get (printf "icons/layers/%s.svg" $key)) }}
     {{- $c := .Content }}
     {{- $h := index (index (findRESubmatch `viewBox="0 0 [0-9.]+ ([0-9.]+)"` $c 1) 0) 1 }}
     {{- $edge := index (index (findRESubmatch `data-edge="([0-9.]+)"` $c 1) 0) 1 }}

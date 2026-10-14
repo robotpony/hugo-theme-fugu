@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 58.8" data-edge="70" fill="none" stroke-linecap="round" stroke-linejoin="round" overflow="visible">
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.8" d="M35,23.8L35,35A70,23.8 0 0 0 175,35L175,23.8Z"/>
+  <ellipse style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="1.8" cx="105" cy="23.8" rx="70" ry="23.8"/>
+  <path stroke="currentColor" stroke-width="0.6" d="M171.5,33V40.8M166.3,37.1V44.9M161,39.9V47.7M155.8,42V49.8M150.5,43.7V51.5M145.3,45.1V52.9M140,46.2V54M134.8,47.1V54.9"/>
+  <ellipse stroke="currentColor" stroke-width="0.9" cx="105" cy="23.8" rx="63" ry="20.5"/>
+  <circle fill="currentColor" cx="159.6" cy="23.8" r="0.5"/>
+  <circle fill="currentColor" cx="64.7" cy="36.7" r="0.6"/>
+  <circle fill="currentColor" cx="137.3" cy="36.7" r="0.4"/>
+  <circle fill="currentColor" cx="122.4" cy="7.8" r="0.6"/>
+  <circle fill="currentColor" cx="53.2" cy="24.6" r="0.5"/>
+  <circle fill="currentColor" cx="61.8" cy="15" r="0.4"/>
+  <circle fill="currentColor" cx="135.9" cy="37.7" r="0.5"/>
+  <circle fill="currentColor" cx="159.1" cy="30.8" r="0.7"/>
+  <circle fill="currentColor" cx="50.2" cy="19.4" r="0.5"/>
+  <circle fill="currentColor" cx="156.7" cy="19.7" r="0.4"/>
+  <circle fill="currentColor" cx="98.6" cy="6.5" r="0.7"/>
+  <circle fill="currentColor" cx="138.1" cy="37.2" r="0.7"/>
+  <circle fill="currentColor" cx="147.8" cy="13.4" r="0.7"/>
+  <circle fill="currentColor" cx="152.7" cy="34.5" r="0.7"/>
+  <circle fill="currentColor" cx="131.3" cy="38.9" r="0.7"/>
+  <circle fill="currentColor" cx="116.9" cy="42.7" r="0.6"/>
+  <circle fill="currentColor" cx="127.3" cy="7.9" r="0.5"/>
+  <circle fill="currentColor" cx="52.3" cy="31.4" r="0.7"/>
+  <circle fill="currentColor" cx="154.1" cy="32.3" r="0.6"/>
+  <circle fill="currentColor" cx="84.7" cy="6.2" r="0.5"/>
+  <circle fill="currentColor" cx="92.5" cy="6.1" r="0.6"/>
+  <circle fill="currentColor" cx="162.9" cy="18.6" r="0.6"/>
+  <circle fill="currentColor" cx="121" cy="7.2" r="0.7"/>
+  <circle fill="currentColor" cx="115" cy="41.6" r="0.5"/>
+  <circle fill="currentColor" cx="133.3" cy="7.4" r="0.6"/>
+  <circle fill="currentColor" cx="58.9" cy="35.7" r="0.5"/>
+  <circle fill="currentColor" cx="93.4" cy="40.9" r="0.6"/>
+  <circle fill="currentColor" cx="68.5" cy="35.5" r="0.4"/>
+  <circle fill="currentColor" cx="58" cy="12" r="0.5"/>
+  <circle fill="currentColor" cx="132" cy="41.4" r="0.6"/>
+  <circle fill="currentColor" cx="86.4" cy="5.4" r="0.4"/>
+  <circle fill="currentColor" cx="48.5" cy="19.1" r="0.6"/>
+  <circle fill="currentColor" cx="109.8" cy="41.9" r="0.7"/>
+  <circle fill="currentColor" cx="106.4" cy="42.2" r="0.5"/>
+  <circle fill="currentColor" cx="141.1" cy="9.9" r="0.6"/>
+  <circle fill="currentColor" cx="93" cy="6.4" r="0.4"/>
+  <circle fill="currentColor" cx="60.7" cy="12.9" r="0.7"/>
+  <circle fill="currentColor" cx="106.8" cy="42.4" r="0.6"/>
+  <circle fill="currentColor" cx="144.4" cy="10.9" r="0.6"/>
+  <circle fill="currentColor" cx="71.3" cy="10.9" r="0.5"/>
+  <circle fill="currentColor" cx="96.5" cy="42.7" r="0.4"/>
+  <circle fill="currentColor" cx="107.3" cy="40.5" r="0.4"/>
+  <circle fill="currentColor" cx="127.5" cy="6.5" r="0.6"/>
+  <circle fill="currentColor" cx="159.7" cy="18.3" r="0.7"/>
+  <circle fill="currentColor" cx="56.2" cy="28.8" r="0.5"/>
+  <circle fill="currentColor" cx="133.9" cy="39.3" r="0.6"/>
+  <circle fill="currentColor" cx="109.1" cy="5.7" r="0.7"/>
+  <circle fill="currentColor" cx="143.2" cy="9.9" r="0.6"/>
+  <circle fill="currentColor" cx="155.4" cy="18.5" r="0.5"/>
+  <circle fill="currentColor" cx="85.2" cy="6" r="0.6"/>
+  <circle fill="currentColor" cx="58.8" cy="35.9" r="0.5"/>
+  <circle fill="currentColor" cx="57" cy="12.6" r="0.7"/>
+  <circle fill="currentColor" cx="61.9" cy="36.9" r="0.7"/>
+  <circle fill="currentColor" cx="61.1" cy="32.9" r="0.6"/>
+  <circle fill="currentColor" cx="128.3" cy="37.1" r="0.4"/>
+  <circle fill="currentColor" cx="96.1" cy="13.8" r="0.5"/>
+  <circle fill="currentColor" cx="121" cy="15.9" r="0.5"/>
+  <circle fill="currentColor" cx="87.4" cy="15.2" r="0.6"/>
+  <circle fill="currentColor" cx="109.3" cy="29.7" r="0.7"/>
+  <circle fill="currentColor" cx="75.4" cy="30.3" r="0.5"/>
+  <circle fill="currentColor" cx="139.5" cy="27.3" r="0.5"/>
+  <circle fill="currentColor" cx="121.5" cy="5.4" r="0.6"/>
+  <circle fill="currentColor" cx="155" cy="27.8" r="0.7"/>
+  <circle fill="currentColor" cx="71.2" cy="17.5" r="0.6"/>
+  <circle fill="currentColor" cx="117.9" cy="11.3" r="0.5"/>
+  <circle fill="currentColor" cx="62.7" cy="35.7" r="0.7"/>
+  <circle fill="currentColor" cx="87.7" cy="36.1" r="0.4"/>
+  <circle fill="currentColor" cx="151.5" cy="35.8" r="0.7"/>
+  <circle fill="currentColor" cx="51.8" cy="17.7" r="0.6"/>
+  <circle fill="currentColor" cx="72.5" cy="20.9" r="0.5"/>
+  <circle fill="currentColor" cx="99" cy="8.3" r="0.5"/>
+  <circle fill="currentColor" cx="122.6" cy="38" r="0.5"/>
+  <circle fill="currentColor" cx="87.9" cy="27.7" r="0.5"/>
+  <circle fill="currentColor" cx="150.9" cy="29.4" r="0.6"/>
+  <circle fill="currentColor" cx="84.4" cy="29.3" r="0.4"/>
+  <circle fill="currentColor" cx="101.7" cy="24" r="0.4"/>
+  <circle fill="currentColor" cx="62.4" cy="13.9" r="0.6"/>
+  <circle fill="currentColor" cx="81.9" cy="10.1" r="0.5"/>
+  <circle fill="currentColor" cx="69.7" cy="39.4" r="0.6"/>
+  <circle fill="currentColor" cx="74.1" cy="40.1" r="0.6"/>
+  <circle fill="currentColor" cx="84" cy="15" r="0.5"/>
+  <circle fill="currentColor" cx="88.6" cy="26.7" r="0.6"/>
+  <circle fill="currentColor" cx="146.1" cy="23.6" r="0.7"/>
+  <circle fill="currentColor" cx="106.5" cy="23.1" r="0.4"/>
+  <circle fill="currentColor" cx="94" cy="31.4" r="0.7"/>
+  <circle fill="currentColor" cx="104.7" cy="28.1" r="0.4"/>
+  <circle fill="currentColor" cx="72.8" cy="14.5" r="0.4"/>
+  <circle fill="currentColor" cx="72.9" cy="24.7" r="0.5"/>
+  <circle fill="currentColor" cx="90.1" cy="41.7" r="0.6"/>
+  <circle fill="currentColor" cx="86.1" cy="16.3" r="0.5"/>
+  <circle fill="currentColor" cx="139.4" cy="9.7" r="0.5"/>
+  <circle fill="currentColor" cx="110.9" cy="18.7" r="0.7"/>
+  <circle fill="currentColor" cx="87.6" cy="34" r="0.5"/>
+  <circle fill="currentColor" cx="131.3" cy="11.5" r="0.4"/>
+  <circle fill="currentColor" cx="52.6" cy="15.1" r="0.7"/>
+  <circle fill="currentColor" cx="67.6" cy="27" r="0.5"/>
+  <circle fill="currentColor" cx="119.4" cy="10.3" r="0.6"/>
+  <circle fill="currentColor" cx="46.5" cy="27" r="0.7"/>
+  <circle fill="currentColor" cx="94.8" cy="13.5" r="0.6"/>
+  <circle fill="currentColor" cx="119.8" cy="20.5" r="0.5"/>
+  <circle fill="currentColor" cx="131.1" cy="29.1" r="0.4"/>
+  <circle fill="currentColor" cx="125.2" cy="19.1" r="0.7"/>
+  <circle fill="currentColor" cx="80.2" cy="6.4" r="0.4"/>
+  <circle fill="currentColor" cx="85.6" cy="32.2" r="0.6"/>
+  <circle fill="currentColor" cx="77.2" cy="9.2" r="0.7"/>
+  <circle fill="currentColor" cx="135.7" cy="31.9" r="0.6"/>
+  <circle fill="currentColor" cx="60.7" cy="27.9" r="0.6"/>
+  <circle fill="currentColor" cx="91.5" cy="15.8" r="0.7"/>
+  <circle fill="currentColor" cx="66.6" cy="32.2" r="0.7"/>
+  <circle fill="currentColor" cx="109.1" cy="9.2" r="0.5"/>
+  <circle fill="currentColor" cx="108.3" cy="17.4" r="0.5"/>
+  <circle fill="currentColor" cx="83.7" cy="34.6" r="0.5"/>
+  <circle fill="currentColor" cx="120.4" cy="15.7" r="0.4"/>
+  <circle fill="currentColor" cx="105.6" cy="21.4" r="0.4"/>
+  <circle fill="currentColor" cx="79.8" cy="21.6" r="0.5"/>
+  <circle fill="currentColor" cx="123.9" cy="13.3" r="0.7"/>
+  <circle fill="currentColor" cx="141.4" cy="21.1" r="0.6"/>
+  <circle fill="currentColor" cx="132.3" cy="22.9" r="0.7"/>
+  <circle fill="currentColor" cx="144.3" cy="20.5" r="0.4"/>
+  <circle fill="currentColor" cx="151.9" cy="26.9" r="0.6"/>
+  <circle fill="currentColor" cx="92.2" cy="24.1" r="0.7"/>
+  <circle fill="currentColor" cx="148.6" cy="17" r="0.7"/>
+  <circle fill="currentColor" cx="122.8" cy="6" r="0.7"/>
+  <circle fill="currentColor" cx="88" cy="22.7" r="0.5"/>
+  <circle fill="currentColor" cx="90.2" cy="25.3" r="0.6"/>
+  <circle fill="currentColor" cx="120.4" cy="28.6" r="0.5"/>
+  <circle fill="currentColor" cx="104.5" cy="13.9" r="0.7"/>
+  <circle fill="currentColor" cx="152.3" cy="33.2" r="0.5"/>
+  <circle fill="currentColor" cx="98.2" cy="23.6" r="0.6"/>
+  <circle fill="currentColor" cx="107.7" cy="37.5" r="0.6"/>
+  <circle fill="currentColor" cx="87.7" cy="31.6" r="0.5"/>
+  <circle fill="currentColor" cx="157.2" cy="25.8" r="0.6"/>
+  <circle fill="currentColor" cx="119.7" cy="38.7" r="0.5"/>
+  <circle fill="currentColor" cx="90.6" cy="17.6" r="0.7"/>
+  <circle fill="currentColor" cx="126.4" cy="22.8" r="0.6"/>
+  <circle fill="currentColor" cx="126.9" cy="12.7" r="0.4"/>
+  <circle fill="currentColor" cx="159.5" cy="30.6" r="0.4"/>
+  <circle fill="currentColor" cx="87.9" cy="37.5" r="0.5"/>
+  <circle fill="currentColor" cx="92.1" cy="17" r="0.5"/>
+  <circle fill="currentColor" cx="80.2" cy="24.8" r="0.7"/>
+  <circle fill="currentColor" cx="128" cy="34.4" r="0.5"/>
+  <circle fill="currentColor" cx="72.2" cy="19.6" r="0.6"/>
+  <circle fill="currentColor" cx="131.8" cy="13" r="0.4"/>
+  <circle fill="currentColor" cx="103.7" cy="19.7" r="0.7"/>
+  <circle fill="currentColor" cx="132.8" cy="40.8" r="0.6"/>
+  <circle fill="currentColor" cx="150.6" cy="24.3" r="0.4"/>
+  <circle fill="currentColor" cx="132.8" cy="33.8" r="0.7"/>
+  <circle fill="currentColor" cx="107.4" cy="27.5" r="0.6"/>
+  <circle fill="currentColor" cx="133.7" cy="31.2" r="0.7"/>
+  <circle fill="currentColor" cx="92.1" cy="22" r="0.7"/>
+  <circle fill="currentColor" cx="121.4" cy="13" r="0.6"/>
+  <circle fill="currentColor" cx="115.4" cy="19.8" r="0.6"/>
+  <circle fill="currentColor" cx="152.2" cy="15.7" r="0.7"/>
+  <circle fill="currentColor" cx="99.2" cy="36.7" r="0.6"/>
+  <circle fill="currentColor" cx="101.7" cy="13.4" r="0.4"/>
+  <circle fill="currentColor" cx="71.9" cy="37.6" r="0.7"/>
+  <circle fill="currentColor" cx="76.9" cy="36.4" r="0.5"/>
+  <circle fill="currentColor" cx="99.8" cy="21.7" r="0.6"/>
+  <circle fill="currentColor" cx="114.8" cy="13.6" r="0.5"/>
+  <circle fill="currentColor" cx="124.8" cy="26.5" r="0.6"/>
+  <circle fill="currentColor" cx="65" cy="37.5" r="0.4"/>
+  <circle fill="currentColor" cx="107.4" cy="37.4" r="0.5"/>
+  <circle fill="currentColor" cx="121.8" cy="7.7" r="0.4"/>
+  <circle fill="currentColor" cx="89.9" cy="36.8" r="0.5"/>
+  <circle fill="currentColor" cx="117.8" cy="24.2" r="0.5"/>
+  <circle fill="currentColor" cx="143.9" cy="34.1" r="0.6"/>
+  <circle fill="currentColor" cx="82.5" cy="6" r="0.7"/>
+  <circle fill="currentColor" cx="142.4" cy="34.4" r="0.6"/>
+  <circle fill="currentColor" cx="146.3" cy="20.3" r="0.5"/>
+  <circle fill="currentColor" cx="82.3" cy="24.8" r="0.7"/>
+  <ellipse style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="0.7" cx="142.9" cy="23.8" rx="2.9" ry="1.9"/>
+  <ellipse style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="0.7" cx="96.1" cy="32.9" rx="2" ry="1.3"/>
+  <ellipse style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="0.7" cx="82.1" cy="32.7" rx="2.5" ry="1.6"/>
+  <ellipse style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="0.7" cx="116.5" cy="26.9" rx="1.5" ry="1"/>
+  <ellipse style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="0.7" cx="106.7" cy="24.2" rx="2.3" ry="1.5"/>
+  <ellipse style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="0.7" cx="86.6" cy="31.2" rx="1.8" ry="1.1"/>
+  <ellipse style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="0.7" cx="134.8" cy="33.2" rx="1.6" ry="1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M166.9,23.8L167.4,24.9L167.2,26L166,27.1L164,28.1L161.4,28.9L158.8,29.7L156.5,30.5L154.9,31.3L153.7,32.2L152.9,33.2L152,34.2L150.9,35.1L149.5,36.1L148,37L146.5,37.9L145.2,39L144,40.2L142.6,41.4L141,42.6L138.7,43.7L135.9,44.4L132.5,44.8L128.9,44.9L125.2,44.9L121.7,44.9L118.3,45.1L115,45.3L111.8,45.7L108.4,46.1L105,46.3L101.5,46.3L98.1,46.1L94.7,45.8L91.4,45.5L88.2,45.2L84.9,44.9L81.6,44.5L78.6,43.9L76,43.1L74,42.1L72.5,40.8L71.3,39.6L70.2,38.4L68.8,37.5L67,36.7L64.6,36.2L61.9,35.7L59.2,35.1L56.7,34.5L54.6,33.7L52.8,32.9L51.1,32L49.3,31.1L47.3,30.2L45.3,29.2L43.5,28.2L42.3,27.2L41.9,26.1L42.2,24.9L42.9,23.8L43.6,22.7L43.9,21.6L43.6,20.5L42.7,19.3L41.6,18L40.9,16.7L41,15.5L42.4,14.3L44,13.2L45.7,12.2L48,11.2L50.6,10.4L53.2,9.5L55.9,8.8L58.9,8.1L62.3,7.7L66,7.4L69.8,7.3L73.5,7.3L76.7,7.2L79.6,6.8L82.1,6.3L84.4,5.6L86.9,4.9L89.6,4.2L92.5,3.8L95.6,3.7L98.8,3.8L101.9,4L105,4.1L108,4.2L111.1,4.2L114.1,4.2L117.2,4.3L120.2,4.5L123.2,4.8L126.1,5.2L129,5.4L132.3,5.6L135.9,5.6L140,5.5L144.2,5.5L148.1,5.7L150.8,6.5L153.4,7.3L155.9,8.2L158.2,9.1L159.5,10.3L160.7,11.5L161.9,12.6L163.2,13.7L164.3,14.8L165,16L165.2,17.2L165,18.3L164.7,19.5L164.7,20.6L165.1,21.7L166,22.7L166.9,23.8Z"/>
+  <path fill="currentColor" d="M49,22.7L51.4,21L53.8,19.6L56.2,18.6L58.5,17.8L60.8,17.4L63.1,17.1L65.4,17.1L67.7,17.3L70,17.6L72.4,18.1L74.7,18.7L77.1,19.3L79.5,20.1L81.9,20.8L84.4,21.6L86.9,22.3L89.5,23L92.1,23.6L94.7,24.1L97.4,24.5L100.1,24.7L102.9,24.7L105.7,24.5L108.5,24L111.4,23.3L114.3,22.3L117.2,20.9L120.1,19.2L123,17.1L125.8,14.5L125.8,14.5L122.6,16.5L119.5,18.2L116.6,19.5L113.7,20.6L110.9,21.4L108.1,21.9L105.5,22.2L102.8,22.3L100.2,22.2L97.7,21.9L95.1,21.6L92.6,21.1L90.1,20.5L87.6,19.9L85.1,19.3L82.6,18.6L80.1,18L77.6,17.3L75.2,16.8L72.7,16.4L70.3,16L67.8,15.8L65.4,15.8L63,16L60.6,16.4L58.3,17.1L55.9,18L53.6,19.2L51.3,20.8L49,22.7ZM64.6,34.4L67.1,33L69.6,31.7L72.1,30.8L74.6,30.1L77.1,29.6L79.7,29.3L82.2,29.2L84.8,29.3L87.5,29.5L90.2,29.8L92.9,30.2L95.6,30.6L98.5,31.1L101.3,31.6L104.2,32.2L107.2,32.7L110.2,33.2L113.3,33.6L116.5,33.9L119.7,34.2L123,34.3L126.3,34.2L129.7,34L133.1,33.6L136.6,32.9L140.1,32.1L143.7,30.9L147.3,29.5L150.9,27.7L154.5,25.6L154.5,25.6L150.6,27.1L146.8,28.4L143.2,29.5L139.7,30.3L136.2,31L132.8,31.4L129.5,31.7L126.2,31.8L123,31.7L119.8,31.6L116.7,31.4L113.6,31L110.6,30.7L107.6,30.3L104.6,29.8L101.7,29.4L98.8,28.9L95.9,28.6L93.1,28.2L90.3,28L87.6,27.9L84.9,27.8L82.2,27.9L79.5,28.2L76.9,28.7L74.4,29.4L71.9,30.2L69.4,31.4L67,32.7L64.6,34.4ZM106.3,6.5L108.1,6.3L109.9,6.2L111.6,6.2L113.2,6.3L114.8,6.5L116.4,6.9L117.9,7.3L119.4,7.8L120.9,8.3L122.3,9L123.8,9.6L125.3,10.3L126.7,11.1L128.2,11.8L129.7,12.6L131.3,13.3L132.8,14L134.4,14.7L136.1,15.3L137.7,15.9L139.5,16.4L141.2,16.8L143,17.1L144.9,17.3L146.8,17.4L148.8,17.4L150.8,17.2L152.9,16.8L155,16.2L157.1,15.4L157.1,15.4L154.8,15.5L152.7,15.6L150.7,15.7L148.8,15.6L147,15.4L145.2,15.2L143.5,14.8L141.8,14.4L140.1,14L138.5,13.5L136.9,12.9L135.4,12.3L133.8,11.7L132.3,11L130.7,10.4L129.2,9.7L127.6,9.1L126.1,8.5L124.5,7.9L123,7.3L121.4,6.8L119.8,6.4L118.2,6L116.6,5.8L114.9,5.6L113.2,5.5L111.6,5.6L109.8,5.7L108.1,6L106.3,6.5ZM79,41.1L81.1,40.5L83.2,39.9L85.3,39.5L87.5,39.2L89.6,39.1L91.7,39L93.9,38.9L96,39L98.1,39.1L100.2,39.3L102.3,39.5L104.5,39.7L106.6,40L108.7,40.2L110.7,40.5L112.8,40.7L114.9,41L116.9,41.2L118.9,41.4L120.9,41.5L122.9,41.6L124.9,41.5L126.8,41.5L128.7,41.3L130.6,41L132.4,40.6L134.1,40.1L135.8,39.4L137.4,38.6L138.9,37.5L138.9,37.5L137.1,37.9L135.4,38.3L133.8,38.6L132,38.8L130.3,39L128.5,39.1L126.7,39.1L124.9,39.1L123,39L121.1,38.9L119.1,38.8L117.1,38.6L115.1,38.5L113.1,38.3L111,38.1L108.9,37.9L106.8,37.8L104.6,37.6L102.5,37.5L100.3,37.5L98.2,37.5L96,37.5L93.8,37.7L91.7,37.8L89.5,38.1L87.3,38.5L85.2,39L83.1,39.5L81,40.2L79,41.1Z"/>
+  <path stroke="currentColor" stroke-width="0.5" stroke-opacity=".7" d="M61.3,19.9L63.3,19.7L65.4,19.7L67.5,19.9L69.7,20.2L71.9,20.7L74.1,21.2L76.4,21.9L78.8,22.6L81.2,23.3L83.7,24.1L86.2,24.8L88.9,25.5L91.5,26.2L94.3,26.7L97.1,27.1L100,27.3L102.9,27.3L105.9,27.1L109,26.6L112.1,25.8L115.2,24.7L118.3,23.3M77.6,32.2L79.9,31.9L82.4,31.8L84.8,31.9L87.3,32.1L89.9,32.4L92.5,32.7L95.3,33.2L98,33.7L100.9,34.2L103.8,34.7L106.8,35.3L109.9,35.8L113,36.2L116.2,36.5L119.5,36.8L122.9,36.9L126.3,36.8L129.9,36.6L133.4,36.2L137,35.5L140.7,34.6L144.4,33.4M114.5,9.1L115.9,9.4L117.3,9.8L118.6,10.3L120,10.8L121.4,11.4L122.8,12L124.2,12.7L125.7,13.4L127.1,14.2L128.7,14.9L130.2,15.7L131.8,16.4L133.5,17.1L135.2,17.8L136.9,18.4L138.7,18.9L140.6,19.3L142.6,19.7L144.6,19.9L146.7,20L148.8,20L151,19.8M89.9,41.6L91.9,41.6L93.9,41.5L96,41.6L98,41.7L100.1,41.9L102.2,42.1L104.2,42.3L106.3,42.5L108.4,42.8L110.5,43.1L112.5,43.3L114.6,43.6L116.7,43.8L118.7,44L120.8,44.1L122.8,44.2L124.9,44.1L126.9,44.1L128.9,43.9L130.9,43.6L132.9,43.2L134.8,42.6"/>
+  <rect style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" x="110.9" y="22.8" width="3.2" height="1.9" rx=".5" transform="rotate(2.4 112.5 23.8)"/>
+  <rect style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" x="103.4" y="26" width="2.7" height="1.6" rx=".5" transform="rotate(5.7 104.8 26.8)"/>
+  <rect style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" x="79.5" y="14.7" width="3.9" height="2.3" rx=".5" transform="rotate(22.3 81.4 15.9)"/>
+  <rect style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" x="135.3" y="32.1" width="3" height="1.8" rx=".5" transform="rotate(-15.8 136.8 33)"/>
+  <rect style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" x="84.9" y="25.2" width="3.9" height="2.3" rx=".5" transform="rotate(1.9 86.8 26.4)"/>
+  <rect style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" x="69.8" y="14.2" width="3.5" height="2.1" rx=".5" transform="rotate(-5 71.5 15.3)"/>
+  <rect style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" x="87.9" y="24.3" width="2.8" height="1.7" rx=".5" transform="rotate(-23 89.3 25.1)"/>
+  <rect style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" x="87.7" y="20.2" width="4.1" height="2.5" rx=".5" transform="rotate(1.5 89.8 21.4)"/>
+  <rect style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" x="116.8" y="23.7" width="4.1" height="2.5" rx=".5" transform="rotate(2.5 118.8 24.9)"/>
+  <rect style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" x="75" y="19.5" width="3.9" height="2.3" rx=".5" transform="rotate(-4.9 76.9 20.7)"/>
+</svg>
