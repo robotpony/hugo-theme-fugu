@@ -2,13 +2,13 @@
 
 Fugu is a cookbook theme for Blowfish, split out of Not a Chef (https://github.com/robotpony/not-a-chef) on 2026-10-06. This plan takes it to a theme other Blowfish users can install. Each item says what it is, why, and roughly how, so it can be picked up cold.
 
-Finished items are removed as they land; their notes are in git history (the last full plan is `75a3a89`). Done so far: §1 housekeeping (the build-compare script, fixture sites and CI, header comments, tool help, CHANGELOG), §2 configuration (`[params.fugu]`: section names, sidebar order, principle tags, hidden notes, glossary, heading names), §3 optional parts (a recipes-only site builds clean), the basic styles (`assets/css/fugu.css`), most of the docs, and the formula strip, stack diagrams, and concept pages (methods, blueprints, builds) from Features. Section numbers are kept, since other files cite them.
+Finished items are removed as they land; their notes are in git history (the last full plan is `75a3a89`; the last squash is `d2bfb40`). Done so far: §1 housekeeping (the build-compare script, fixture sites and CI, header comments, tool help, CHANGELOG), §2 configuration (`[params.fugu]`: section names, sidebar order, principle tags, hidden notes, glossary, heading names), §3 optional parts (a recipes-only site builds clean), the basic styles (`assets/css/fugu.css`), most of the docs, and the formula strip, stack diagrams, and concept pages (methods, blueprints, builds) from Features, the example site (`exampleSite/`, built and link-checked by `tests/check.py`), the screenshot export (`tools/screenshots.py`, shown in the README and `docs/features.md`), and per-principle icons and slug classes. Section numbers are kept, since other files cite them.
 
 **The one rule while doing any of this:** Not a Chef must keep rendering exactly as it does now, unless a change is meant to alter it. See CLAUDE.md for how to check. Compare builds on one Hugo version only: Hugo's word count changes between releases, which shifts reading times on cards.
 
 ## 4. Translation
 
-- [ ] Move English text in templates to `i18n/en.yaml`. Found so far: `single.html` ("Recipe notes"), `term.html` ("Definition", "Recipes that follow this principle", the "N recipes" count, "Reference"/"Essay"), `reading-sidebar.html` ("On this page", "Months", "The cookbook in numbers", "Start here", "Recipes in this guide/essay", "Essays", "Reference guides"), `toc.html` ("Jump to"), `essays/list.html` (the "essay/essays" count). Use Hugo's plural forms for counts.
+- [ ] Move English text in templates to `i18n/en.yaml`. Found so far: `single.html` ("Recipe notes"), `term.html` ("Definition", "On cards", "Recipes that follow this principle", the "N recipes" count, "Reference"/"Essay"), `reading-sidebar.html` ("On this page", "Months", "The cookbook in numbers", "Start here", "Recipes in this guide/essay", "Essays", "Reference guides"), `toc.html` ("Jump to"), `essays/list.html` (the "essay/essays" count). Use Hugo's plural forms for counts.
 - [ ] JS strings: `ingredients.js` ("Scale recipe", "As written", "Metric", "Imperial", aria labels) and `automagic-sidebar.js` (photo viewer labels, "Jump to it in the text →"). Pass them in from the template (a `data-` attribute or a small JSON block built from `i18n`) rather than translating in JS.
 - [ ] Unit conversion assumes English unit words (cups, tbsp, "about"). Note that in the docs; supporting other languages' units is out of scope for 1.0.
 
@@ -47,7 +47,6 @@ Written so far: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `con
 - [ ] `docs/essay-format.md` from Not a Chef's `FORMAT-ESSAYS.md`, if essays stay a supported section.
 - [ ] `docs/customizing.md`: the three layers (site → Fugu → Blowfish), overriding partials, the CSS custom properties (§5), fonts.
 - [ ] `docs/tools.md`: the content tools, documented properly. Today they get one paragraph in the README's Customizing section. Give them a table (tool, what it does, example command, what it needs): `frontmatter.py` (check, get, set, unset), `drafts.py`, `add-image.sh` (needs ImageMagick 7's `magick` and `exiftool`), and `compare-builds.py` for theme work; then `$FUGU_SITE_ROOT`, and a short example for each. Add an "Editing" section on the workflow around them: Fugu's content is plain Markdown with `[[wiki links]]`, so a site's `content/` folder works as an Obsidian vault, and Warped Command shows a Hugo site's posts in a way that suits recipes. Link it from the README in place of the paragraph.
-- [ ] README: still needs the Hugo modules install (§6).
 
 ## 8. Tooling
 
@@ -58,8 +57,6 @@ Written so far: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `con
 
 ## 9. Example site and CI
 
-`exampleSite/` landed 2026-10-14: nine Not a Chef recipes, essays, reference pages, a Food Log month, and the burger blueprint (five parts, three builds), with its own CC BY-SA `LICENSE`. `tests/check.py` builds it with the fixtures and checks every site's links, so CI covers both.
-
 - [ ] Run the tool tests (§8) in `.github/workflows/build.yml`.
 - [ ] Move the example site to Hugo modules once §6's `go.mod` lands (today it finds the themes through `themesDir = "../.."`).
 - [ ] An install job: CI starts from `hugo new site`, installs Fugu and Blowfish the way `docs/getting-started.md` says (Fugu from the commit under test, by both methods in §6), adds the getting-started recipe, builds with `--panicOnWarning`, and checks the recipe page has its ingredients, method, and sidebar facts. This catches the install steps and docs drifting from the theme, which the fixtures can't, since they find the themes through `themesDir`.
@@ -67,10 +64,9 @@ Written so far: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `con
 ## 10. Release
 
 - [ ] Finish checking the basic styles: in interactive Chrome for hover states (popovers, card hover). Schemes with a very light `primary-100` (autumn) make the principle chip's fill faint. Found in the screenshots (2026-10-14): the principle tag page's sidebar label "On cards" wraps onto two lines.
-Screenshots landed 2026-10-14: `tools/screenshots.py` takes nine shots of the example site into `docs/images/` (recipe light, dark and phone, scaling, cards, build, blueprint, methods list, principle tag) and the listing's `images/screenshot.png` and `tn.png`; the README opens with one and a gallery, and `docs/features.md` shows each part. `docs/images/README.md` says how to retake them.
 
 - [ ] Check the README's images in GitHub's rendering, light and dark, once pushed.
-- [ ] Retake the screenshots for `v1.0.0` after §5's designed look lands (`python3 tools/screenshots.py`).
+- [ ] Retake the screenshots for `v1.0.0` after §5's designed look lands (`python3 tools/screenshots.py`; `docs/images/README.md` says how).
 - [ ] Code review, in three passes, each its own commit series: the templates (`layouts/`, including render hooks and partials), the JS (`assets/js/`), and the tools (`tools/`). Look for bugs, dead code, leftover Not a Chef assumptions, and comments that no longer match the code. `/code-review` on each folder is a starting point; for templates and JS, check every fix with `compare-builds.py`.
 - [ ] `v0.1.0` once the install method (§6) is in place; `v1.0.0` after §5–§7.
 - [ ] Optional: list it on themes.gohugo.io (PR to `gohugoio/hugoThemesSiteBuilder`). Their rules may need the theme to build on its own; check how they handle themes that need a parent theme.
