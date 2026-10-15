@@ -1,10 +1,6 @@
 # Plan
 
-Fugu is a cookbook theme for Blowfish, split out of Not a Chef (https://github.com/robotpony/not-a-chef) on 2026-10-06. This plan takes it to a theme other Blowfish users can install. Each item says what it is, why, and roughly how, so it can be picked up cold.
-
-Finished items are removed as they land; their notes are in git history (the last full plan is `75a3a89`; the last squash is `d2bfb40`). Done so far: §1 housekeeping (the build-compare script, fixture sites and CI, header comments, tool help, CHANGELOG), §2 configuration (`[params.fugu]`: section names, sidebar order, principle tags, hidden notes, glossary, heading names), §3 optional parts (a recipes-only site builds clean), the basic styles (`assets/css/fugu.css`), most of the docs, and the formula strip, stack diagrams, and concept pages (methods, blueprints, builds) from Features, the example site (`exampleSite/`, built and link-checked by `tests/check.py`), the screenshot export (`tools/screenshots.py`, shown in the README and `docs/features.md`), and per-principle icons and slug classes. Section numbers are kept, since other files cite them.
-
-**The one rule while doing any of this:** Not a Chef must keep rendering exactly as it does now, unless a change is meant to alter it. See CLAUDE.md for how to check. Compare builds on one Hugo version only: Hugo's word count changes between releases, which shifts reading times on cards.
+The work list for taking Fugu to a theme other Blowfish users can install. Each item says what it is, why, and roughly how, so it can be picked up cold. Finished items are removed as they land; `CHANGELOG.md` and git history record what landed (the last full plan is `75a3a89`). Section numbers are kept, since other files cite them.
 
 ## 4. Translation
 
@@ -26,7 +22,7 @@ Every class Fugu's templates use is still styled by Not a Chef's `assets/css/cus
 
 ## 6. Blowfish compatibility
 
-Fugu overrides 14 Blowfish files: `_default/single.html`, `_default/term.html`, `_default/terms.html`, `_default/index.json`, `_default/_markup/render-heading.html`, `render-image.html`, `render-link.html`, `partials/head.html`, `partials/article-meta/basic.html`, `partials/article-pagination.html`, `partials/breadcrumbs.html`, `partials/pagination.html`, `partials/related.html`, `partials/toc.html`. Each is a full copy, so a Blowfish update can break it without any error. Fugu also replaces one Blowfish asset, `assets/js/search.js`, with the same risk; count it with the templates in everything below. Blowfish is at `295dae3` (2026-09-13, declaring Hugo 0.163.0–0.166.0); `theme.toml`'s `min_version` is 0.163.0 and CI runs 0.166.0. Move Hugo and Blowfish together.
+The overridden files and pinned versions are listed in CLAUDE.md ("Blowfish overrides"); count `search.js` with the templates in everything below.
 
 - [ ] `archetypes/default.md` is Hugo's stock TOML archetype, shadowing Blowfish's YAML one, so `hugo new` writes TOML on a Fugu site while every format Fugu documents is YAML. Delete it (Blowfish's applies) or make it a YAML archetype of Fugu's own.
 - [ ] Write `docs/blowfish.md`: for each overridden file, what Fugu changes and why (each file's header comment, checked against a real diff on 2026-10-07), and the Blowfish version it was copied from.
@@ -41,9 +37,9 @@ Fugu overrides 14 Blowfish files: `_default/single.html`, `_default/term.html`, 
 
 ## 7. Docs
 
-Written so far: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configuration.md`, `features.md`, indexed in `docs/README.md`. Add each new doc to that index and the README's Docs list.
+Written so far: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configuration.md`, `features.md`, indexed in `docs/README.md`.
 
-- [ ] Comments that point at Not a Chef docs (`FORMAT.md`, `SPEC.md`, `DESIGN.md`; 17, `git grep -e SPEC.md -e DESIGN.md -e FORMAT -- layouts assets tools`) should point at Fugu's docs, now that most exist. CLAUDE.md's "Content the theme expects" still says `FORMAT.md` lives in Not a Chef until this section; point it at `docs/recipe-format.md`.
+- [ ] Comments that point at Not a Chef docs (`FORMAT.md`, `SPEC.md`, `DESIGN.md`; 17, `git grep -e SPEC.md -e DESIGN.md -e FORMAT -- layouts assets tools`) should point at Fugu's docs, now that most exist.
 - [ ] `docs/essay-format.md` from Not a Chef's `FORMAT-ESSAYS.md`, if essays stay a supported section.
 - [ ] `docs/customizing.md`: the three layers (site → Fugu → Blowfish), overriding partials, the CSS custom properties (§5), fonts.
 - [ ] `docs/tools.md`: the content tools, documented properly. Today they get one paragraph in the README's Customizing section. Give them a table (tool, what it does, example command, what it needs): `frontmatter.py` (check, get, set, unset), `drafts.py`, `add-image.sh` (needs ImageMagick 7's `magick` and `exiftool`), and `compare-builds.py` for theme work; then `$FUGU_SITE_ROOT`, and a short example for each. Add an "Editing" section on the workflow around them: Fugu's content is plain Markdown with `[[wiki links]]`, so a site's `content/` folder works as an Obsidian vault, and Warped Command shows a Hugo site's posts in a way that suits recipes. Link it from the README in place of the paragraph.

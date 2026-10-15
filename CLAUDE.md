@@ -6,7 +6,7 @@ Guidance for Claude Code working in this repository.
 
 Fugu (`hugo-theme-fugu`) is a cookbook theme for the Blowfish Hugo theme. It's an add-on, not a standalone theme: sites list it before Blowfish, `theme = ["fugu", "blowfish"]`, and Hugo looks up every layout, partial and asset in the site first, then Fugu, then Blowfish.
 
-It was split out of Not a Chef (https://github.com/robotpony/not-a-chef) on 2026-10-06 and still carries that site's assumptions. **PLAN.md is the work list**: making the theme generic, its own design, docs, an example site, and release. Read it before starting, and tick items off (with the date and a short note) as they land.
+It was split out of Not a Chef (https://github.com/robotpony/not-a-chef) on 2026-10-06 and still carries that site's assumptions. **PLAN.md is the work list**: making the theme generic, its own design, docs, an example site, and release. Read it before starting, and remove items as they land (the CHANGELOG and the commit record them).
 
 ## Where it's developed
 
@@ -23,6 +23,8 @@ Not a Chef must render exactly as before unless a change means to alter it. For 
 2. Run `python3 tools/compare-builds.py` from inside the site. It builds the site with Fugu at `HEAD` and with the working tree, compares every file with whitespace stripped, and prints the differences (identical diffs across pages are grouped). Use `--ref REV` to compare against an older commit, or `compare-builds.py OLD NEW` for two folders you built yourself.
 3. The only differences should be the ones intended.
 
+Compare builds on one Hugo version only: Hugo's word count changes between releases, which shifts reading times on cards.
+
 `python3 tests/check.py --compare` (from inside the site) does that and also builds every fixture site in `tests/sites/` and checks its pages against its `expect.txt`, the same check CI runs. Use a Hugo inside Blowfish's declared range (0.163.0–0.166.0 for `295dae3`), or the fixtures fail on its version warning; `HUGO=/path/to/hugo` picks another binary.
 
 For visual changes, also check in Chrome (not Safari) at desktop and phone widths, in light and dark mode. Measure rendered boxes with `getBoundingClientRect()` rather than trusting computed styles: earlier layout bugs on this site passed every grep and build check and were only caught by looking.
@@ -31,15 +33,21 @@ After any edit while `hugo server -D` is running, restart it before trusting pag
 
 ## Layout
 
-- `layouts/`: page templates, render hooks (`_default/_markup/`), partials. 14 of these are full copies of Blowfish files with changes (listed in PLAN.md §6); comments at the top of each explain why.
+- `layouts/`: page templates, render hooks (`_default/_markup/`), partials. 14 of these are full copies of Blowfish files with changes (see "Blowfish overrides"); comments at the top of each explain why.
 - `assets/js/`: plain, dependency-free, progressive JS. `ingredients.js` (check-off, scaling, unit conversion), `automagic-sidebar.js` (moves Mechanic/To serve/Notes/photos into the sidebar, photo viewer), `search.js` (Fuse.js search, pinned results first). Pages must still read and print with JS off.
 - `assets/icons/formula/`: the formula diagram icon kit, one SVG per key.
 - `archetypes/`: `recipes.md` and the default.
 - `tools/`: `frontmatter.py`, `drafts.py`, `compare-builds.py` (Python standard library only), `add-image.sh` (ImageMagick 7 and `exiftool`). They work on the Hugo site containing the working directory, or `$FUGU_SITE_ROOT`.
 
+## Blowfish overrides
+
+Fugu overrides 14 Blowfish files: `_default/single.html`, `_default/term.html`, `_default/terms.html`, `_default/index.json`, `_default/_markup/render-heading.html`, `render-image.html`, `render-link.html`, `partials/head.html`, `partials/article-meta/basic.html`, `partials/article-pagination.html`, `partials/breadcrumbs.html`, `partials/pagination.html`, `partials/related.html`, `partials/toc.html`. It also replaces one Blowfish asset, `assets/js/search.js`. Each is a full copy, so a Blowfish update can break it without any error.
+
+Blowfish is pinned at `295dae3` (2026-09-13, declaring Hugo 0.163.0–0.166.0); `theme.toml`'s `min_version` is 0.163.0 and CI runs 0.166.0. Move Hugo and Blowfish together.
+
 ## Content the theme expects
 
-Recipes follow Not a Chef's `FORMAT.md` (in that repo, until PLAN.md §7 brings a site-neutral copy here): YAML frontmatter with `title` and `tags`; `## Ingredients` and `## Method`, or one heading per component; optional `## Mechanic`, `## To serve`, `## Variations`, `## Notes`; `[[wiki links]]`; optional ```` ```formula ```` blocks.
+Recipes follow `docs/recipe-format.md`: YAML frontmatter with `title` and `tags`; `## Ingredients` and `## Method`, or one heading per component; optional `## Mechanic`, `## To serve`, `## Variations`, `## Notes`; `[[wiki links]]`; optional ```` ```formula ```` blocks.
 
 ## Conventions
 
