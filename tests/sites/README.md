@@ -2,7 +2,7 @@
 
 Small Hugo sites that build against Fugu and Blowfish, for CI (`.github/workflows/build.yml`, Hugo 0.166.0, Blowfish `295dae3`) and for checking a change by hand.
 
-- `recipes-only/`: the smallest site Fugu should support. One section, `recipes`, and one taxonomy, `tags` (no `cuisine`). PLAN.md §3 makes it fully right (no empty blocks, zero counts, or dead links where `cuisine` and the other sections would be).
+- `recipes-only/`: the smallest site Fugu should support. One section, `recipes`, and one taxonomy, `tags` (no `cuisine`). Its `expect.txt` checks it has no empty blocks, zero counts, or dead links where `cuisine` and the other sections would be.
 - `everything/`: every optional part turned on: essays (including a reference essay), reference pages with a glossary, a dated log, `cuisine`, a principle tag, pinned pages, a formula diagram, multi-component recipes, wiki links between them, and methods in the essay section's methods folder, with a blueprint folder (`rice-bowls/`: two parts, two builds and a draft one, a stack diagram, and further reading).
 - `methods-section/`: the everything site with its methods in their own section, `content/methods/` (`methodSection = "methods"`), the section's page as the methods list, the same blueprint as a folder under it, and the method tag's page a plain term page.
 - `renamed/`: the everything site with every section renamed (`dishes`, `writing`, `guides`, `journal`) through `[params.fugu]`, each section's `_index.md` setting `type` to the default name. Anything in Fugu that hardcodes a section name breaks here.
