@@ -61,7 +61,7 @@
   {{ end }}
 {{ end }}
 <div class="principle-layout flex flex-col lg:flex-row">
-<section class="listing principle-page min-w-0 flex-1">
+<section class="listing principle-page principle-{{ .Data.Term | lower | urlize }} min-w-0 flex-1">
   <header class="listing-head">
     <h1 class="ltitle">{{ .Title }} <span class="ltitle-kind ltitle-kind-principle">principle</span></h1>
   </header>

@@ -75,7 +75,7 @@ A tag or cuisine can have its own page, `content/tags/<slug>/_index.md` (or `con
 A principle is a tag that names an idea several recipes follow, such as using up what's in the fridge. With `principle: true`:
 
 - Its term page shows the `_index.md` body as a definition, then the recipes that follow it, then everything else on the tag under "Reference & further reading".
-- Recipes carrying the tag show it as a chip (the `short` label on cards) instead of a plain tag, with its `icon`. With `card_label: false`, a card shows the icon alone.
+- Recipes carrying the tag show it as a chip (the `short` label on cards) instead of a plain tag, with its `icon`. With `card_label: false`, a card shows the icon alone. Its chips and its page carry the class `principle-<slug>` (`principle-win-the-fridge`), for a site's CSS.
 - The chip and term page link to its essay: the page named by `essay`, or else the first reference essay with the tag ([configuration.md](configuration.md), `referenceEssays`).
 
 ```yaml

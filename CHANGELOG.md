@@ -8,6 +8,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 - An example site, `exampleSite/`: nine recipes, essays, reference pages, a Food Log month, and a burger blueprint from Not a Chef (CC BY-SA 4.0, its own `LICENSE`), built against Fugu and Blowfish in `../..`.
 - Principle tags take an `icon` (an SVG named from `assets/icons/principles/`; Fugu ships `leaf`) in place of the cycle arrows, and `card_label: false` makes the chip on cards the icon alone (`.principle-chip.is-icon`, the title in `title` and `aria-label`), taking no slot in the card's top row. Win the fridge is unchanged.
+- Principle chips and a principle tag's page (`.principle-page`) carry `principle-<slug>` (e.g. `principle-win-the-fridge`), so a site can give each principle its own colour.
 - `tools/screenshots.py`: builds the example site, serves it locally, and takes the README and docs screenshots with headless Chrome (light, dark, phone width, the scale menu open), plus the theme listing's `images/screenshot.png` and `images/tn.png`. The README opens with a recipe page and a gallery; `docs/features.md` shows each part.
 - `tests/check.py` builds the example site with the fixtures, and checks every built site's internal links and wiki links (`.broken-link`).
 - A `cheese-american` stack layer: the `cheese` slice filled yellow (`--kit-yellow` edge, `--kit-yellow-top` face), for builds with a processed slice; `cheese` stays plain for mozzarella and cheddar.

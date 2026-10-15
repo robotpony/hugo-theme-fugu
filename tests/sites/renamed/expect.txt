@@ -34,7 +34,7 @@ cuisine/american/index.html: class="rcard
 tags/win-the-fridge/index.html: class="principle-intro"
 tags/win-the-fridge/index.html: !definition-callout
 tags/win-the-fridge/index.html: principle-layout
-tags/win-the-fridge/index.html: recipe-meta-label">On cards</span><span class="recipe-meta-value"><a class="principle-chip"
+tags/win-the-fridge/index.html: recipe-meta-label">On cards</span><span class="recipe-meta-value"><a class="principle-chip principle-win-the-fridge"
 tags/win-the-fridge/index.html: !listing-search
 tags/win-the-fridge/index.html: read-essay
 index.json:

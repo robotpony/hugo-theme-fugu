@@ -5,6 +5,8 @@
   when the tag isn't a principle:
 
     page   the tag's term page
+    slug   the tag's slug (win-the-fridge), for the `principle-<slug>`
+           class on its chips and page, so a site can colour each one
     essay  the essay that explains it: the page named by the _index.md's
            `essay` (a content path, e.g. essays/reference-essays/win-the-
            fridge), else the first reference essay (params.fugu.
@@ -51,7 +53,7 @@
         {{ warnf "%s: no icon called %q in assets/icons/principles/" $term.File.Path . }}
       {{ end }}
     {{ end }}
-    {{ $result = dict "page" $term "essay" $essay "short" ($term.Params.short | default $term.Title) "icon" $icon "cardLabel" (ne $term.Params.card_label false) }}
+    {{ $result = dict "page" $term "slug" $slug "essay" $essay "short" ($term.Params.short | default $term.Title) "icon" $icon "cardLabel" (ne $term.Params.card_label false) }}
   {{ end }}
 {{ end }}
 {{ return $result }}

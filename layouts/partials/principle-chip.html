@@ -8,7 +8,8 @@
   the tag's title, e.g. "Win the fridge"). The icon is the tag's own
   (`icon`, see principle/term.html), else the cycle arrows. A tag with
   `card_label: false` is its icon alone on a card (.is-icon), its title
-  in `title` and `aria-label`.
+  in `title` and `aria-label`. Every chip also has `principle-<slug>`
+  (principle-win-the-fridge), so a site can style each principle.
 
   On a page (not compact) it also carries a popover (the shared
   .pop-host/.pop component, see assets/js/popover.js) with the term's
@@ -35,10 +36,10 @@
       {{ end }}
       {{ $def = $def | markdownify | plainify | htmlUnescape | truncate 200 }}
     {{ end }}
-    {{ $chip := printf `<a class="principle-chip" href="%s">%s%s</a>` .page.RelPermalink .icon $label }}
+    {{ $chip := printf `<a class="principle-chip principle-%s" href="%s">%s%s</a>` .slug .page.RelPermalink .icon $label }}
     {{ if and $compact (not .cardLabel) }}
       {{ $name := .page.Title | htmlEscape }}
-      {{ $chip = printf `<a class="principle-chip is-icon" href="%s" title="%s" aria-label="%s">%s</a>` .page.RelPermalink $name $name .icon }}
+      {{ $chip = printf `<a class="principle-chip principle-%s is-icon" href="%s" title="%s" aria-label="%s">%s</a>` .slug .page.RelPermalink $name $name .icon }}
     {{ end }}
     {{ if $def }}
       {{ partial "concept/pop.html" (dict "kind" "principle" "card" $compact "trigger" $chip "head" (.page.Title | htmlEscape) "text" $def "link" $essay "more" "Read the full essay") }}
