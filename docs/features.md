@@ -8,6 +8,12 @@ Everything here is built from plain Markdown. The interactive parts are small sc
 
 A recipe page has two columns: the recipe itself, and a sidebar beside it.
 
+![A recipe page in light mode, with a formula diagram and the sidebar](images/recipe.png)
+
+![The same page in dark mode](images/recipe-dark.png)
+
+<img src="images/recipe-phone.png" alt="The recipe page at phone width: one column, with the sidebar's sections in a Recipe notes box above the recipe" width="320">
+
 The sidebar holds, top to bottom:
 
 - The search box.
@@ -23,6 +29,8 @@ Sections Fugu hides (`## History` by default) and blockquotes in the intro are h
 Photos written into the text are gathered into the sidebar as thumbnails (on a phone, a strip under the title), with a small "Photo 1" marker left where each one was. A thumbnail opens a viewer with the caption, the heading the photo sat under, and a link back to that spot in the text. Arrow keys step through the photos.
 
 ## Ingredients
+
+![The scale and units menu open beside a recipe's ingredients, scaled to 2×](images/scaling.png)
 
 Each line of an ingredient list gets a checkbox, so you can tick things off as you measure them. Ticks are saved in the browser, per recipe, and are still there when you come back.
 
@@ -52,6 +60,8 @@ The icons are SVGs in `assets/icons/formula/`, one per name: bowl, butter, can, 
 
 A ```` ```stack ```` block draws a build as an exploded view: each layer from the side, pulled apart top to bottom, with a dotted leader to its label and role, and a `× n` bracket for repeated layers ([recipe-format.md](recipe-format.md#stack-diagrams)). It appears full size where it's written, and the first one in a build also appears small and unlabelled on that build's card on its blueprint's page. The layers are SVGs in `assets/icons/layers/` (bun-top, bun-base, bread, lettuce, lettuce-shredded, lettuce-chunks, tomato, onion-raw, onion-fried, onion-minced, pickle, cheese, cheese-american, cheese-top, bacon, patty-thin, patty-thick (griddled), patty-thin-grilled, patty-thick-grilled, patty-smash, sauce-ketchup-mustard, ketchup, sauce-burger, mustard, mayo, pasta, ragu, bechamel, and spreads drawn on the bun as pairs like `bun-base + mayo`), drawn in `currentColor` with the theme's soft accent and surface fills, fixed browns for a patty's seared top, and soft food colours for greens, tomato, ketchup, mustard and American cheese, so they follow light and dark mode. The build warns about a layer it doesn't know.
 
+![A build page: its picks, then its stack diagram with each layer labelled](images/build.png)
+
 ## Wiki links and the glossary
 
 `[[Title]]` links any page to any other by its title, as in Obsidian, so a recipe's ingredient list can link to the recipe for its sauce ([recipe-format.md](recipe-format.md#wiki-links)).
@@ -70,6 +80,8 @@ On essays and reference pages, the recipes a page links to are also listed in it
 
 The recipes list, tag and cuisine pages, the essay and reference lists, and the log list all use the same card. A recipe card shows:
 
+![The recipes list as cards](images/cards.png)
+
 - A top row of chips: the cuisine (linking to its page), any principle tag, then tags, with a count of the rest.
 - The recipe's intro paragraph, or its frontmatter `summary` or `description`.
 - The formula strip, if the recipe has a formula block.
@@ -87,6 +99,8 @@ Tag and cuisine pages list 16 recipes to a page. A cuisine page is titled "Thai 
 
 A tag can name an idea that several recipes follow, such as cooking from what's already in the fridge. Marked as a principle, the tag:
 
+![A principle tag's page: its definition, a link to its essay, and its recipes](images/principle.png)
+
 - Shows its definition in a callout at the top of its page, with a link to the essay that explains it.
 - Lists only recipes in its grid, and everything else on the tag (essays, reference pages) under "Reference & further reading".
 - Shows as a chip on recipe cards and pages. On a page, the chip has a popover that gives the definition.
@@ -96,6 +110,10 @@ Setting one up is in [frontmatter.md](frontmatter.md#principle-tags).
 ## Methods and blueprints
 
 Methods explain how a kind of food or a process works in general. Any page in the methods section, or in the essay section's methods folder, is one, and shows a method chip on its card and page (on the page, with a popover giving the definition). The methods section's page, or without one the method tag's page, is the methods list: the definition, then each blueprint with its parts in order as whole-row links, with its builds as a line of named pills under its parts (drafts dashed), then the methods that belong to no blueprint, as cards. Its sidebar has search, counts of methods, blueprints, builds and parts, "On this page", and anything else on the method tag as further reading.
+
+![The methods list: the burgers blueprint with its parts and builds, then a standalone method](images/methods.png)
+
+![A blueprint page: its definition, parts, builds, and lineage timeline](images/blueprint.png)
 
 A blueprint is a dish type made of parts, such as a burger: patty, seasoning, cooking, assembly, sauces. It's a folder under the methods, with its parts and builds in subfolders. Its page is on the reading layout, like the methods list, and shows:
 

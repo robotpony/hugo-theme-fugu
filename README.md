@@ -2,6 +2,8 @@
 
 A cookbook theme for [Blowfish](https://github.com/nunocoracao/blowfish). Fugu is an add-on, not a standalone theme: it sits on top of Blowfish and replaces the parts a cookbook needs, so Blowfish must be installed alongside it.
 
+![A recipe page: the ingredient list with checkboxes, a formula diagram, and the sidebar with the recipe's facts, To serve and Mechanic](docs/images/recipe.png)
+
 > **Work in progress, not released yet.** Fugu was split out of [Not a Chef](https://github.com/robotpony/not-a-chef) on 2026-10-06. It builds and works on a fresh site, with basic styles coloured from your Blowfish scheme; a designed default look comes later. See "Status" below.
 
 ## Scope
@@ -22,7 +24,16 @@ Every section can be renamed in config (`dishes`, `writing`, …), and a part th
 
 Recipe pages with a sidebar for the Mechanic, To serve, Notes, and photos; ingredient check-off, scaling, and metric/imperial conversion; formula diagrams drawn from a ```` ```formula ```` block; exploded build diagrams from a ```` ```stack ```` block; `[[wiki links]]` as written in Obsidian; recipe cards; drafts published as "in development"; methods and blueprint pages; search; and a JSON index of every recipe. All the JavaScript is plain and dependency-free, and pages still read and print with it off. The full tour is [docs/features.md](docs/features.md).
 
-Content tools live in `tools/`: `frontmatter.py` (check and edit frontmatter), `drafts.py` (list drafts), `add-image.sh` (prepare photos), and `compare-builds.py` (check a theme change doesn't alter a site's pages). The Python tools use the standard library only; every tool explains itself with `--help`.
+| | |
+|---|---|
+| [![Recipe cards](docs/images/cards.png)](docs/features.md#cards-and-listings) | [![The scale and units menu](docs/images/scaling.png)](docs/features.md#ingredients) |
+| Recipe cards, with cuisine, principle and draft chips and a formula strip | Scaling and unit conversion, from the menu beside the ingredients |
+| [![A build's stack diagram](docs/images/build.png)](docs/features.md#stack-diagrams) | [![A blueprint page](docs/images/blueprint.png)](docs/features.md#methods-and-blueprints) |
+| A build's picks and its exploded stack diagram | A blueprint: its parts, its builds on a timeline, and their cards |
+
+The screenshots are of [exampleSite/](exampleSite/README.md), with Fugu's basic styles and Blowfish's default scheme; `tools/screenshots.py` retakes them ([docs/images/README.md](docs/images/README.md)).
+
+Content tools live in `tools/`: `frontmatter.py` (check and edit frontmatter), `drafts.py` (list drafts), `add-image.sh` (prepare photos), `compare-builds.py` (check a theme change doesn't alter a site's pages), and `screenshots.py` (retake the docs screenshots). The Python tools use the standard library only; every tool explains itself with `--help`.
 
 ## Install
 
@@ -78,7 +89,8 @@ python3 themes/fugu/tools/drafts.py
 - [x] Basic styles that follow the site's Blowfish colour scheme, light and dark (`params.fugu.styles`)
 - [ ] A default design of its own, with Not a Chef's CSS split into structure and look
 - [x] An example site, `exampleSite/`, built and link-checked in CI
-- [ ] Hugo modules install, screenshots, and the first release, `v0.1.0`
+- [x] Screenshots of the example site, retaken with `tools/screenshots.py`
+- [ ] Hugo modules install, and the first release, `v0.1.0`
 
 ## Contributing
 

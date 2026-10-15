@@ -7,6 +7,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 ### Added
 
 - An example site, `exampleSite/`: nine recipes, essays, reference pages, a Food Log month, and a burger blueprint from Not a Chef (CC BY-SA 4.0, its own `LICENSE`), built against Fugu and Blowfish in `../..`.
+- `tools/screenshots.py`: builds the example site, serves it locally, and takes the README and docs screenshots with headless Chrome (light, dark, phone width, the scale menu open), plus the theme listing's `images/screenshot.png` and `images/tn.png`. The README opens with a recipe page and a gallery; `docs/features.md` shows each part.
 - `tests/check.py` builds the example site with the fixtures, and checks every built site's internal links and wiki links (`.broken-link`).
 - A `cheese-american` stack layer: the `cheese` slice filled yellow (`--kit-yellow` edge, `--kit-yellow-top` face), for builds with a processed slice; `cheese` stays plain for mozzarella and cheddar.
 - Stack layer pairs: a key `a + b` (spaces optional) draws `assets/icons/layers/a+b.svg`, for a spread drawn on its bun, which is its own drawing rather than two layers. A pair with no file warns and draws the placeholder, like an unknown key. New: `bun-top+mayo`, `bun-base+mayo`, `bun-top+sauce-burger`, `bun-base+sauce-burger`; the top bun is opened toward the viewer, its cut face showing the spread.

@@ -47,7 +47,7 @@ Written so far: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `con
 - [ ] `docs/essay-format.md` from Not a Chef's `FORMAT-ESSAYS.md`, if essays stay a supported section.
 - [ ] `docs/customizing.md`: the three layers (site → Fugu → Blowfish), overriding partials, the CSS custom properties (§5), fonts.
 - [ ] `docs/tools.md`: the content tools, documented properly. Today they get one paragraph in the README's Customizing section. Give them a table (tool, what it does, example command, what it needs): `frontmatter.py` (check, get, set, unset), `drafts.py`, `add-image.sh` (needs ImageMagick 7's `magick` and `exiftool`), and `compare-builds.py` for theme work; then `$FUGU_SITE_ROOT`, and a short example for each. Add an "Editing" section on the workflow around them: Fugu's content is plain Markdown with `[[wiki links]]`, so a site's `content/` folder works as an Obsidian vault, and Warped Command shows a Hugo site's posts in a way that suits recipes. Link it from the README in place of the paragraph.
-- [ ] README: still needs the screenshot (§10) and the Hugo modules install (§6).
+- [ ] README: still needs the Hugo modules install (§6).
 
 ## 8. Tooling
 
@@ -66,19 +66,13 @@ Written so far: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `con
 
 ## 10. Release
 
-- [ ] Finish checking the basic styles: a look in the example site once §9 lands, and in interactive Chrome for hover states (popovers, card hover). Schemes with a very light `primary-100` (autumn) make the principle chip's fill faint.
-- [ ] Screenshots, before `v0.1.0`, taken with no site CSS so they show what a new user gets:
-  - `images/screenshot.png` (1500×1000) and `images/tn.png` (900×600), the sizes themes.gohugo.io expects.
-  - For the README and docs: a recipe page (ingredients, sidebar, a formula diagram), a recipe list of cards, and the scaling and unit controls in use; light and dark mode; one at phone width.
-  - Keep them in `images/` (listing) and `docs/images/` (docs). Retake them for `v1.0.0` after §5's designed look lands.
-- [ ] A screenshot export, so the screenshots above are one command rather than a chore (asked for 2026-10-12). Don't wait for `exampleSite/`: start from the `everything` and `methods-section` fixtures, and switch to the example site when §9 lands.
-  - `tools/screenshots.py` (standard library only): build the chosen site to a temporary folder, serve it locally, and drive headless Chrome (`--headless --screenshot --window-size`, found on the usual paths or `$CHROME`) over a fixed list of shots, each a page, a width, and light or dark. Fail clearly when Chrome or Hugo is missing.
-  - The shots, in order: a recipe page with its sidebar and a formula diagram; a recipe list of cards; the scale and units menu open (needs a URL hook or small script, since the Chrome CLI can't click); a build page's stack diagram; a blueprint page with its parts, lineage and build cards; the methods list; a principle tag page; a recipe page at phone width; the recipe page in dark mode. Dark mode needs Blowfish's `dark` class set before the shot (its appearance switch reads `localStorage`), so check how to force it from the CLI.
-  - Write them to `docs/images/` at 2×, crop to the content where a full window is mostly empty, and keep files small (a lossless PNG optimiser if one is installed). Also write the two listing images.
-  - README: a lead image under the title (the recipe page), then a short gallery (3–4 shots with one-line captions: cards, scaling, stack diagram, blueprint), each linking to its section of `docs/features.md`. Add the matching shots to `features.md`.
-  - A `docs/images/README.md` that says which command made the images, from which fixture, at what sizes. Check the result in GitHub's README rendering, light and dark.
+- [ ] Finish checking the basic styles: in interactive Chrome for hover states (popovers, card hover). Schemes with a very light `primary-100` (autumn) make the principle chip's fill faint. Found in the screenshots (2026-10-14): the principle tag page's sidebar label "On cards" wraps onto two lines.
+Screenshots landed 2026-10-14: `tools/screenshots.py` takes nine shots of the example site into `docs/images/` (recipe light, dark and phone, scaling, cards, build, blueprint, methods list, principle tag) and the listing's `images/screenshot.png` and `tn.png`; the README opens with one and a gallery, and `docs/features.md` shows each part. `docs/images/README.md` says how to retake them.
+
+- [ ] Check the README's images in GitHub's rendering, light and dark, once pushed.
+- [ ] Retake the screenshots for `v1.0.0` after §5's designed look lands (`python3 tools/screenshots.py`).
 - [ ] Code review, in three passes, each its own commit series: the templates (`layouts/`, including render hooks and partials), the JS (`assets/js/`), and the tools (`tools/`). Look for bugs, dead code, leftover Not a Chef assumptions, and comments that no longer match the code. `/code-review` on each folder is a starting point; for templates and JS, check every fix with `compare-builds.py`.
-- [ ] `v0.1.0` once the screenshots land, the install method (§6) is in place, and the example site builds; `v1.0.0` after §5–§7.
+- [ ] `v0.1.0` once the install method (§6) is in place; `v1.0.0` after §5–§7.
 - [ ] Optional: list it on themes.gohugo.io (PR to `gohugoio/hugoThemesSiteBuilder`). Their rules may need the theme to build on its own; check how they handle themes that need a parent theme.
 - [ ] Later, once there are tagged releases to test against: a separate test-site repo that installs Fugu exactly as an outsider would and pulls tagged releases. Until then, §9's install job covers this.
 
