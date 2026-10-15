@@ -6,6 +6,8 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Added
 
+- An example site, `exampleSite/`: nine recipes, essays, reference pages, a Food Log month, and a burger blueprint from Not a Chef (CC BY-SA 4.0, its own `LICENSE`), built against Fugu and Blowfish in `../..`.
+- `tests/check.py` builds the example site with the fixtures, and checks every built site's internal links and wiki links (`.broken-link`).
 - A `cheese-american` stack layer: the `cheese` slice filled yellow (`--kit-yellow` edge, `--kit-yellow-top` face), for builds with a processed slice; `cheese` stays plain for mozzarella and cheddar.
 - Stack layer pairs: a key `a + b` (spaces optional) draws `assets/icons/layers/a+b.svg`, for a spread drawn on its bun, which is its own drawing rather than two layers. A pair with no file warns and draws the placeholder, like an unknown key. New: `bun-top+mayo`, `bun-base+mayo`, `bun-top+sauce-burger`, `bun-base+sauce-burger`; the top bun is opened toward the viewer, its cut face showing the spread.
 - Food colours in the stack kit: `ketchup`, `lettuce`, `lettuce-chunks`, `lettuce-shredded`, `mustard`, `pickle`, `sauce-ketchup-mustard` and `tomato` are filled soft green, red or yellow, and `mayo` and `sauce-burger` have new knife marks: a solid lip in `currentColor` and a faint echo line. `lettuce-shredded`'s strands are a solid fill inside a thinner line (0.6, was 0.9), so the green shows; `tomato`'s flesh and edge take the deeper red and its seed segments the paler one. They read `--kit-green`, `--kit-green-top`, `--kit-green-ink`, `--kit-red`, `--kit-red-top`, `--kit-yellow` and `--kit-yellow-top`, falling back to new `--fugu-kit-*` in `fugu.css` (light and dark), as the sear colours do.

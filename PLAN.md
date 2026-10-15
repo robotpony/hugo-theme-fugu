@@ -58,9 +58,10 @@ Written so far: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `con
 
 ## 9. Example site and CI
 
-- [ ] `exampleSite/` with 6–10 recipes from Not a Chef (CC BY-SA 4.0 allows it; credit and link the licence; the content needs its own `exampleSite/LICENSE`, since the repo is MIT): a simple recipe, a multi-component one, one with a Mechanic, one with a formula block, plus an essay, a reference page, and a glossary entry if those ship.
-- [ ] Extend `.github/workflows/build.yml`: build `exampleSite/` and the fixtures with the pinned Hugo and Blowfish versions, `--panicOnWarning`, and run the tool tests.
-- [ ] A link check over the built example site.
+`exampleSite/` landed 2026-10-14: nine Not a Chef recipes, essays, reference pages, a Food Log month, and the burger blueprint (five parts, three builds), with its own CC BY-SA `LICENSE`. `tests/check.py` builds it with the fixtures and checks every site's links, so CI covers both.
+
+- [ ] Run the tool tests (§8) in `.github/workflows/build.yml`.
+- [ ] Move the example site to Hugo modules once §6's `go.mod` lands (today it finds the themes through `themesDir = "../.."`).
 - [ ] An install job: CI starts from `hugo new site`, installs Fugu and Blowfish the way `docs/getting-started.md` says (Fugu from the commit under test, by both methods in §6), adds the getting-started recipe, builds with `--panicOnWarning`, and checks the recipe page has its ingredients, method, and sidebar facts. This catches the install steps and docs drifting from the theme, which the fixtures can't, since they find the themes through `themesDir`.
 
 ## 10. Release

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+  <path class="dev-icon-body" d="M8 25h32v12c0 2.8-2.2 5-5 5H13c-2.8 0-5-2.2-5-5z"/>
+  <path class="dev-icon-lid" d="M6 25c0-4.4 8-7.5 18-7.5S42 20.6 42 25z"/>
+  <path d="M21.5 17.5v-2.5h5v2.5M8 29H4M40 29h4"/>
+  <path d="M15 12c-2-2 2-3.5 0-6M33 12c-2-2 2-3.5 0-6"/>
+</svg>

@@ -2,3 +2,6 @@
 tests/sites/*/.hugo_build.lock
 tests/sites/*/public/
 tests/sites/*/resources/
+exampleSite/.hugo_build.lock
+exampleSite/public/
+exampleSite/resources/

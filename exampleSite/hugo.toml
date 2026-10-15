@@ -1,0 +1,133 @@
+# Fugu's example site: a few recipes and every optional part, built against
+# Fugu and Blowfish side by side in ../.. (themes/ in a site, or a folder
+# holding fugu/ and blowfish/). Build from this folder: `hugo server -D`.
+# The content is from Not a Chef, under CC BY-SA 4.0 (LICENSE).
+baseURL = "https://example.org/"
+title = "Fugu example"
+theme = ["fugu", "blowfish"]
+themesDir = "../.."
+# Drafts publish as in-development pages ([params.fugu.development]).
+buildDrafts = true
+enableRobotsTXT = true
+summaryLength = 30
+
+[pagination]
+  pagerSize = 12
+
+[taxonomies]
+  tag = "tags"
+  cuisine = "cuisine"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[related]
+  threshold = 50
+  toLower = true
+  [[related.indices]]
+    name = "tags"
+    weight = 100
+  [[related.indices]]
+    name = "cuisine"
+    weight = 80
+
+# static/images is also mounted as assets/images so the image render hook
+# can resize photos into thumbnails. Declaring any assets mount replaces
+# Hugo's default one, so the plain assets/ mount is restated first.
+[module]
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+  [[module.mounts]]
+    source = "static/images"
+    target = "assets/images"
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+
+[menus]
+  [[menus.main]]
+    name = "Recipes"
+    pageRef = "recipes"
+    weight = 10
+  [[menus.main]]
+    name = "Methods"
+    pageRef = "methods"
+    weight = 20
+  [[menus.main]]
+    name = "Essays"
+    pageRef = "essays"
+    weight = 30
+  [[menus.main]]
+    name = "Reference"
+    pageRef = "reference"
+    weight = 40
+  [[menus.main]]
+    name = "Food Log"
+    pageRef = "the-food-log"
+    weight = 50
+  [[menus.main]]
+    name = "About"
+    pageRef = "about"
+    weight = 60
+
+[params]
+  colorScheme = "blowfish"
+  defaultAppearance = "light"
+  autoSwitchAppearance = true
+  enableSearch = true
+  enableCodeCopy = false
+  mainSections = ["recipes"]
+
+  [params.homepage]
+    layout = "page"
+    showRecent = true
+    showRecentItems = 6
+    showMoreLink = true
+    showMoreLinkDest = "recipes"
+    cardView = true
+
+  [params.article]
+    showDate = false
+    showAuthor = false
+    showBreadcrumbs = true
+    showDraftLabel = true
+    showHeadingAnchors = true
+    showPagination = true
+    showReadingTime = false
+    showTableOfContents = true
+    showRelatedContent = true
+    relatedContentLimit = 3  # Blowfish errors without it when related content is on
+    showTaxonomies = true
+    sharingLinks = []
+
+  [params.list]
+    showBreadcrumbs = true
+    showSummary = true
+    cardView = true
+
+  [params.taxonomy]
+    showTermCount = true
+
+  [params.term]
+    cardView = true
+
+  [params.recipe]
+    enableKelvin = false
+
+  [params.fugu]
+    methodSection = "methods"
+    # Drafts as Not a Chef names them, to match its test kitchen essay.
+    [params.fugu.development]
+      label   = "Test kitchen"
+      short   = "Testing"
+      message = "We're still testing this one. Cook it, change it, and expect it to move before it becomes a keeper."
+      page    = "essays/reference-essays/test-kitchen"
+      more    = "How the test kitchen works"
+      heading = "In the test kitchen now"
+      empty   = "Nothing is in the test kitchen right now."
+      icon    = "icons/development/pot-steam.svg"

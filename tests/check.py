@@ -2,9 +2,10 @@
 """
 check.py — Build every fixture site and check its pages, in one command.
 
-For each site in tests/sites/ (a folder with a hugo.toml), builds it with
---panicOnWarning, then checks the built pages against the site's
-expect.txt. A site with an XFAIL file is expected to fail for the reason
+For each site in tests/sites/ (a folder with a hugo.toml), and the example
+site (exampleSite/), builds it with --panicOnWarning, checks that every
+internal link and wiki link in the built pages resolves, then checks the
+pages against the site's expect.txt. A site with an XFAIL file is expected to fail for the reason
 written in it: its problems are reported but don't fail the run. Delete the
 file once the site passes.
 
@@ -24,14 +25,17 @@ Python standard library only. Exits 0 when every non-XFAIL site passes.
 
 import argparse
 import os
+import re
 import shutil
 import subprocess
 import sys
 import tempfile
+import urllib.parse
 from pathlib import Path
 
 FUGU = Path(__file__).resolve().parent.parent
 SITES = FUGU / "tests" / "sites"
+EXAMPLE = FUGU / "exampleSite"
 
 
 def build(site, out, hugo):
@@ -44,6 +48,25 @@ def build(site, out, hugo):
     # A panic prints a Go stack; the ERROR/WARN lines are the useful part.
     lines = [l for l in result.stderr.splitlines() if l.startswith(("ERROR", "WARN", "panic:"))]
     return ["build failed: " + (" / ".join(lines) or result.stderr.strip()[:500])]
+
+
+def check_links(out):
+    """Internal href/src targets that aren't in the build, and wiki links
+    render-link.html couldn't resolve (its .broken-link spans)."""
+    missing = {}
+    for page in sorted(out.rglob("*.html")):
+        body = page.read_text(errors="replace")
+        rel = str(page.relative_to(out))
+        for target in re.findall(r'class="broken-link" title="Not found: ([^"]*)"', body):
+            missing.setdefault(f"[[{target}]]", rel)
+        for url in re.findall(r'(?:href|src)="([^"#?]+)', body):
+            path = urllib.parse.urlparse(url).path if url.startswith("https://example.org/") else url
+            if not path.startswith("/") or path.startswith("//"):
+                continue
+            target = out / urllib.parse.unquote(path).lstrip("/")
+            if not (target.is_file() or (target / "index.html").is_file()):
+                missing.setdefault(path, rel)
+    return [f"broken link: {link} (in {page})" for link, page in missing.items()]
 
 
 def check_expectations(site, out):
@@ -81,25 +104,25 @@ def main():
     parser = argparse.ArgumentParser(
         description=__doc__.strip().split(" — ", 1)[1],
         formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("sites", nargs="*", help="fixture names to check (default: all)")
+    parser.add_argument("sites", nargs="*", help="fixture names to check, or exampleSite (default: all)")
     parser.add_argument("--hugo", default=os.environ.get("HUGO", "hugo"),
                         help="the hugo binary (default: $HUGO, else hugo on the PATH)")
     parser.add_argument("--compare", action="store_true",
                         help="also run compare-builds.py on the site containing the working directory")
     args = parser.parse_args()
 
-    names = args.sites or sorted(p.name for p in SITES.iterdir() if (p / "hugo.toml").exists())
+    names = args.sites or sorted(p.name for p in SITES.iterdir() if (p / "hugo.toml").exists()) + [EXAMPLE.name]
     failed = False
     work = Path(tempfile.mkdtemp(prefix="fugu-check-"))
     try:
         for name in names:
-            site = SITES / name
+            site = EXAMPLE if name == EXAMPLE.name else SITES / name
             if not (site / "hugo.toml").exists():
                 parser.error(f"no fixture site called {name}")
             out = work / name
             problems = build(site, out, args.hugo)
             if not problems:
-                problems = check_expectations(site, out)
+                problems = check_links(out) + check_expectations(site, out)
             xfail = site / "XFAIL"
             if not problems:
                 note = "  (XFAIL file can go: it passes now)" if xfail.exists() else ""

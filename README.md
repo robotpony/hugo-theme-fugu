@@ -77,7 +77,8 @@ python3 themes/fugu/tools/drafts.py
 - [ ] English text moved into `i18n/` for translation
 - [x] Basic styles that follow the site's Blowfish colour scheme, light and dark (`params.fugu.styles`)
 - [ ] A default design of its own, with Not a Chef's CSS split into structure and look
-- [ ] Hugo modules install, `exampleSite/`, screenshots, and the first release, `v0.1.0`
+- [x] An example site, `exampleSite/`, built and link-checked in CI
+- [ ] Hugo modules install, screenshots, and the first release, `v0.1.0`
 
 ## Contributing
 
@@ -88,7 +89,7 @@ python3 themes/fugu/tools/compare-builds.py    # the site with Fugu at HEAD vs. 
 python3 themes/fugu/tests/check.py --compare   # that, plus every fixture site in tests/sites/
 ```
 
-[tests/sites/README.md](tests/sites/README.md) describes the fixtures.
+[tests/sites/README.md](tests/sites/README.md) describes the fixtures. To see Fugu with no site of your own, run `hugo server -D` in [exampleSite/](exampleSite/README.md).
 
 ## Licence
 

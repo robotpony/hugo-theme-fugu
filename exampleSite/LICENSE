@@ -1,0 +1,15 @@
+# Licence for the example site's content
+
+The content in `exampleSite/content/` and the photo in `exampleSite/static/images/`
+are from Not a Chef (https://github.com/robotpony/not-a-chef), a family cookbook by
+Bruce Alderson, copyright © 1995-2026 Bruce Alderson.
+
+They are licensed under the Creative Commons Attribution-ShareAlike 4.0 International
+License (CC BY-SA 4.0): https://creativecommons.org/licenses/by-sa/4.0/legalcode
+
+Changes from the originals: a selection of pages; wiki links to pages not included
+here are plain text, and some "Recipes" and "Notes" lines that only pointed at those
+pages are removed; the About page is new; the photo is resized.
+
+The example site's configuration (`hugo.toml`) and the icon in `assets/` are part of
+Fugu and under its MIT licence (../LICENSE).
