@@ -11,6 +11,12 @@
            referenceEssays) carrying the tag, else false
     short  the chip's label on cards: the _index.md's `short`, else its
            title
+    icon   the chip's icon, as inline SVG: `icon: leaf` in the _index.md
+           names an SVG in assets/icons/principles/ (Fugu ships leaf; a
+           site can add its own there), else the principle kind's icon
+           (concept/icon.html, the cycle arrows)
+    cardLabel  false when the _index.md says `card_label: false`: on a
+           card the chip is its icon alone, and takes no top-row slot
 
   Shared by principle-chip.html, recipe-card.html and term.html. Callers
   use partialCached keyed by the tag; it's called once per tag per card.
@@ -37,7 +43,15 @@
         {{ end }}
       {{ end }}
     {{ end }}
-    {{ $result = dict "page" $term "essay" $essay "short" ($term.Params.short | default $term.Title) }}
+    {{ $icon := partial "concept/icon.html" "principle" }}
+    {{ with $term.Params.icon }}
+      {{ with resources.Get (printf "icons/principles/%s.svg" .) }}
+        {{ $icon = .Content | strings.TrimSpace }}
+      {{ else }}
+        {{ warnf "%s: no icon called %q in assets/icons/principles/" $term.File.Path . }}
+      {{ end }}
+    {{ end }}
+    {{ $result = dict "page" $term "essay" $essay "short" ($term.Params.short | default $term.Title) "icon" $icon "cardLabel" (ne $term.Params.card_label false) }}
   {{ end }}
 {{ end }}
 {{ return $result }}

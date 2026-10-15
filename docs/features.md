@@ -103,7 +103,7 @@ A tag can name an idea that several recipes follow, such as cooking from what's 
 
 - Shows its definition in a callout at the top of its page, with a link to the essay that explains it.
 - Lists only recipes in its grid, and everything else on the tag (essays, reference pages) under "Reference & further reading".
-- Shows as a chip on recipe cards and pages. On a page, the chip has a popover that gives the definition.
+- Shows as a chip on recipe cards and pages, with its own icon if it names one. On a page, the chip has a popover that gives the definition. On a card, a principle can be its icon alone, which leaves room in the card's top row for another tag.
 
 Setting one up is in [frontmatter.md](frontmatter.md#principle-tags).
 

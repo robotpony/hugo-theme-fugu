@@ -1,6 +1,6 @@
 ---
 title: Veg patties
-tags: [mains, vegetarian, win-the-fridge]
+tags: [mains, vegetarian, win-the-fridge, plant-based]
 cuisine: American
 source: original
 date: 2026-10-02

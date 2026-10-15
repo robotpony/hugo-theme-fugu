@@ -67,13 +67,15 @@ A tag or cuisine can have its own page, `content/tags/<slug>/_index.md` (or `con
 | `principle` | tag | `true` makes the tag a principle (below). `kind: principle` does the same. |
 | `kind` | tag | `method` makes the tag's page the methods list (see [Methods and blueprints](#methods-and-blueprints)). |
 | `essay` | principle tag | The page that explains the principle, as a content path: `essays/reference-essays/win-the-fridge`. |
+| `icon` | principle tag | The chip's icon, by name: an SVG in `assets/icons/principles/` (Fugu ships `leaf`; add your own there, drawn in `currentColor`). Without it, the chip has cycle arrows. |
+| `card_label` | principle tag | `false` makes the chip on cards its icon alone, with the title as its tooltip, and it takes no slot in the card's top row. Pages still spell it out. |
 
 ### Principle tags
 
 A principle is a tag that names an idea several recipes follow, such as using up what's in the fridge. With `principle: true`:
 
 - Its term page shows the `_index.md` body as a definition, then the recipes that follow it, then everything else on the tag under "Reference & further reading".
-- Recipes carrying the tag show it as a chip (the `short` label) instead of a plain tag.
+- Recipes carrying the tag show it as a chip (the `short` label on cards) instead of a plain tag, with its `icon`. With `card_label: false`, a card shows the icon alone.
 - The chip and term page link to its essay: the page named by `essay`, or else the first reference essay with the tag ([configuration.md](configuration.md), `referenceEssays`).
 
 ```yaml

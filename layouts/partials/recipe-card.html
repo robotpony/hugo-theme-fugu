@@ -34,7 +34,8 @@
 
   A principle tag (partials/principle-chip.html) claims a top-row slot
   the same way cuisine does, and is dropped from the plain $tags list so
-  it isn't shown twice.
+  it isn't shown twice. One with `card_label: false` is an icon alone and
+  takes no slot.
 
   A method (partials/method/is.html) shows the method chip in place of
   its folder name, taking a slot, then its own tags, less the methods tag.
@@ -73,7 +74,7 @@
 {{ $principles := 0 }}
 {{ range .Params.tags }}
   {{ if and $isRef (eq (lower .) "reference") }}{{ continue }}{{ end }}
-  {{ if partialCached "principle/term.html" . . }}{{ $principles = add $principles 1 }}{{ continue }}{{ end }}
+  {{ with partialCached "principle/term.html" . . }}{{ if .cardLabel }}{{ $principles = add $principles 1 }}{{ end }}{{ continue }}{{ end }}
   {{ if not (in $cuisinesLower (lower .)) }}{{ $tags = $tags | append . }}{{ end }}
 {{ end }}
 {{ $isMethod := partial "method/is.html" . }}

@@ -259,6 +259,7 @@ a.tag:hover { border-color: var(--fugu-accent); color: var(--fugu-ink); }
 a.cuisine-chip:hover, a.cuisine-chip:focus-visible { border-color: var(--fugu-cuisine); outline: none; }
 .principle-chip { font-weight: 600; background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); }
 .principle-chip svg { width: 10px; height: 10px; flex: none; }
+.principle-chip.is-icon { padding-left: 5px; padding-right: 5px; }
 a.principle-chip:hover, a.principle-chip:focus-visible { border-color: var(--fugu-accent); outline: none; }
 /* Methods (partials/method/chip.html): filled like the principle chip; a
  * blueprint (blueprint/chip.html) is an outline, "belongs to". */

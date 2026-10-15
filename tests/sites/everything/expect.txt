@@ -165,3 +165,12 @@ essays/methods/rice-bowls/index.html: <figure class="stack stack-compact"
 recipes/index.html: !class="pop-host
 recipes/index.html: class="dev-chip"
 recipes/veg-patties/index.html: pop-principle
+
+# A principle tag with its own icon (icon: leaf) and card_label: false:
+# the leaf on its chip, the full title on the page, the icon alone on a
+# card, where it takes no slot, so veg patties' card shows its cuisine,
+# both principles, then +2 (mains, vegetarian).
+recipes/veg-patties/index.html: href="/tags/plant-based/"><svg viewBox="0 0 48 48"
+recipes/veg-patties/index.html: M10 38C10 20 22 9 40 8c0 18-11 30-30 30z"/><path d="M10 38l17-17"/></svg>Plant-based</a>
+recipes/index.html: <a class="principle-chip is-icon" href="/tags/plant-based/" title="Plant-based" aria-label="Plant-based"><svg viewBox="0 0 48 48"
+recipes/index.html: <span class="tag tag-more">+2</span>

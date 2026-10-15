@@ -5,7 +5,10 @@
 
   Takes a dict: page (required), compact (bool: uses the tag's `short`
   label, e.g. "WTF", for the recipe card's tight top row; full pages use
-  the tag's title, e.g. "Win the fridge").
+  the tag's title, e.g. "Win the fridge"). The icon is the tag's own
+  (`icon`, see principle/term.html), else the cycle arrows. A tag with
+  `card_label: false` is its icon alone on a card (.is-icon), its title
+  in `title` and `aria-label`.
 
   On a page (not compact) it also carries a popover (the shared
   .pop-host/.pop component, see assets/js/popover.js) with the term's
@@ -17,7 +20,6 @@
 */}}
 {{ $page := .page }}
 {{ $compact := .compact }}
-{{ $icon := partial "concept/icon.html" "principle" }}
 {{ range $page.Params.tags }}
   {{ with partialCached "principle/term.html" . . }}
     {{ $label := cond $compact .short .page.Title }}
@@ -33,7 +35,11 @@
       {{ end }}
       {{ $def = $def | markdownify | plainify | htmlUnescape | truncate 200 }}
     {{ end }}
-    {{ $chip := printf `<a class="principle-chip" href="%s">%s%s</a>` .page.RelPermalink ($icon | safeHTML) $label }}
+    {{ $chip := printf `<a class="principle-chip" href="%s">%s%s</a>` .page.RelPermalink .icon $label }}
+    {{ if and $compact (not .cardLabel) }}
+      {{ $name := .page.Title | htmlEscape }}
+      {{ $chip = printf `<a class="principle-chip is-icon" href="%s" title="%s" aria-label="%s">%s</a>` .page.RelPermalink $name $name .icon }}
+    {{ end }}
     {{ if $def }}
       {{ partial "concept/pop.html" (dict "kind" "principle" "card" $compact "trigger" $chip "head" (.page.Title | htmlEscape) "text" $def "link" $essay "more" "Read the full essay") }}
     {{ else }}
