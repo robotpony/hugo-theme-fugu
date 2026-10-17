@@ -13,7 +13,7 @@ Rice is a ratio of grain to water, and then patience.
 |---|---|---|
 | Short grain (Japanese) | You want it sticky | Topping: anything wet |
 | Long grain | You want separate grains | Topping: a stir-fry |
-| [[Plain rice]] leftovers | It's day-old | Topping: fry it first |
+| [[Plain rice\|Cold rice]] leftovers | It's day-old | Topping: fry it first |
 
 ## Recipes
 

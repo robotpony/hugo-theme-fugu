@@ -157,6 +157,11 @@ reference/rice-ratios/index.html: <figure class="stack stack-labelled" role="img
 reference/rice-ratios/index.html: <figcaption class="stack-cap">Rice bake</figcaption>
 reference/rice-ratios/index.html: aria-label="Rice burger, top to bottom: Bun, with mayo, Rice patty, bun-base&#43;sauce-burger"
 reference/rice-ratios/index.html: !stack-missing
+
+# An aliased wiki link in a table cell escapes its pipe ([[Title\|Alias]]).
+reference/rice-ratios/index.html: <td><a href="/recipes/plain-rice/" class="wikilink">Basic white</a>
+essays/methods/rice-bowls/parts/cooking-rice/index.html: <a href="/recipes/plain-rice/" class="wikilink">Cold rice</a> leftovers
+reference/rice-ratios/index.html: !(&lt;Plain rice&gt;)
 essays/methods/rice-bowls/builds/patty-bowl/index.html: <figure class="stack stack-labelled"
 essays/methods/rice-bowls/builds/patty-bowl/index.html: class="stack-times"
 essays/methods/rice-bowls/index.html: <figure class="stack stack-compact"

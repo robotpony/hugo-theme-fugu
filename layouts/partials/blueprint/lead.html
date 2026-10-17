@@ -13,7 +13,7 @@
 {{ with site.GetPage (path.Join .blueprint.Path .folder) }}
   {{ if eq .Kind "section" }}
     {{ $md := .RawContent }}
-    {{ $md = replaceRE `\[\[([^\]|]+)\|([^\]]+)\]\]` `[$2](<$1>)` $md }}
+    {{ $md = replaceRE `\[\[([^\]|]+?)\\?\|([^\]]+)\]\]` `[$2](<$1>)` $md }}
     {{ $md = replaceRE `\[\[([^\]]+)\]\]` `[$1](<$1>)` $md }}
     {{ with strings.TrimSpace $md }}{{ $out = $.blueprint.RenderString (dict "display" "block") . }}{{ end }}
   {{ end }}

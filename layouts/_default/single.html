@@ -105,8 +105,10 @@
                Destinations are wrapped in <...> because CommonMark link
                destinations can't contain literal spaces otherwise — nearly
                every recipe title has one, which silently produced literal
-               bracket text instead of a link before this was added. */}}
-          {{ $md = replaceRE `\[\[([^\]|]+)\|([^\]]+)\]\]` `[$2](<$1>)` $md }}
+               bracket text instead of a link before this was added.
+               In a table, Obsidian escapes the pipe ([[Title\|Alias]]);
+               the backslash is dropped, or it would escape the closing >. */}}
+          {{ $md = replaceRE `\[\[([^\]|]+?)\\?\|([^\]]+)\]\]` `[$2](<$1>)` $md }}
           {{ $md = replaceRE `\[\[([^\]]+)\]\]` `[$1](<$1>)` $md }}
           {{ .RenderString $md }}
           {{/* Sidebar first: its DOMContentLoaded handler has to run

@@ -91,6 +91,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Fixed
 
+- An aliased wiki link in a table cell, where Obsidian escapes the pipe (`[[Title\|Alias]]`), renders as a link; it was the literal text `[Alias](<Title>)`. Fixed in pages, blueprint pages and leads, and the option names read from an `## Options` table.
 - The link render hook emits only its element, without the template's whitespace around it, so punctuation right after a link ("(see [[Seasoning burgers]]).") no longer wraps onto its own line or reads as a separate word. Word counts, reading times, and auto summaries change slightly to match.
 - A build card's stack diagram is centred between its intro and its stats when a taller card in the row stretches it, rather than sitting under the text with a gap below.
 - A method's reading sidebar labels its linked recipes "Recipes" rather than "Recipes in this essay", since its sidebar already says "On this page". A blueprint part's or build's sidebar lists the other parts in weight order, or builds in era order, as the blueprint page does, rather than alphabetically.

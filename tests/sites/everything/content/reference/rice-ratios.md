@@ -12,6 +12,7 @@ Used by [[Plain rice]].
 | Long-grain | 1½ cups |
 | Short-grain | 1¼ cups |
 | Brown | 2 cups |
+| [[Plain rice\|Basic white]] | 1½ cups |
 
 A rice casserole, layered:
 

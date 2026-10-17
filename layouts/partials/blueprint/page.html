@@ -40,7 +40,7 @@
 {{ $info := partialCached "blueprint/info.html" . .Path }}
 {{ $list := partialCached "method/list-page.html" . "list" }}
 {{ $md := .RawContent }}
-{{ $md = replaceRE `\[\[([^\]|]+)\|([^\]]+)\]\]` `[$2](<$1>)` $md }}
+{{ $md = replaceRE `\[\[([^\]|]+?)\\?\|([^\]]+)\]\]` `[$2](<$1>)` $md }}
 {{ $md = replaceRE `\[\[([^\]]+)\]\]` `[$1](<$1>)` $md }}
 {{ $definition := slice }}
 {{ $furtherMD := slice }}

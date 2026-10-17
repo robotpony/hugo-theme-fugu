@@ -15,7 +15,10 @@
   {{ end }}
   {{/* The first row is the table's header. */}}
   {{ range after 1 $rows }}
-    {{ $cell := index (split . "|") 1 | replaceRE `\[\[(?:[^\]|]*\|)?([^\]]+)\]\]` "$1" | markdownify | plainify | htmlUnescape }}
+    {{/* Wiki links go first: an aliased one in a table escapes its pipe
+         ([[Title\|Alias]]), which the split would otherwise cut. */}}
+    {{ $row := replaceRE `\[\[(?:[^\]|]*\|)?([^\]]+)\]\]` "$1" . }}
+    {{ $cell := index (split $row "|") 1 | markdownify | plainify | htmlUnescape }}
     {{ $cell = replaceRE `\s*\(.*$` "" $cell | strings.TrimSpace }}
     {{ with $cell }}{{ $out = $out | append . }}{{ end }}
   {{ end }}
