@@ -6,6 +6,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Added
 
+- Hugo modules install: Fugu is a module (`go.mod`, `github.com/robotpony/hugo-theme-fugu`) requiring the Blowfish it's tested against (`295dae3`), and `docs/getting-started.md` and the README describe it as the recommended install, importing Fugu then Blowfish under `[module]`. Submodules still work as before; the docs now say to check out Blowfish `295dae3`.
 - An example site, `exampleSite/`: nine recipes, essays, reference pages, a Food Log month, and a burger blueprint from Not a Chef (CC BY-SA 4.0, its own `LICENSE`), built against Fugu and Blowfish in `../..`.
 - Principle tags take an `icon` (an SVG named from `assets/icons/principles/`; Fugu ships `leaf`) in place of the cycle arrows, and `card_label: false` makes the chip on cards the icon alone (`.principle-chip.is-icon`, the title in `title` and `aria-label`), taking no slot in the card's top row. Win the fridge is unchanged.
 - Principle chips and a principle tag's page (`.principle-page`) carry `principle-<slug>` (e.g. `principle-win-the-fridge`), so a site can give each principle its own colour.

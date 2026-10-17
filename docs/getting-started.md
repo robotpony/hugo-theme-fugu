@@ -1,20 +1,50 @@
 # Getting started
 
-From an empty Hugo site to one working recipe page. This takes about ten minutes, and needs Hugo (extended) and git.
+From an empty Hugo site to one working recipe page. This takes about ten minutes, and needs Hugo (extended), git, and, for the recommended install, Go.
 
 ## 1. Install Fugu and Blowfish
 
-Fugu is an add-on for [Blowfish](https://github.com/nunocoracao/blowfish), not a standalone theme, so a site installs both. Start a site and add them as submodules:
+Fugu is an add-on for [Blowfish](https://github.com/nunocoracao/blowfish), not a standalone theme, so a site installs both. Install them as Hugo modules (recommended) or as git submodules.
+
+Use a Hugo version inside the range Blowfish declares (its `config.toml`, `module.hugoVersion`; for the Blowfish Fugu is tested against, 0.163.0–0.166.0). Outside it, Hugo prints a warning on every build.
+
+### As Hugo modules (recommended)
+
+Fugu's `go.mod` names the Blowfish version it's tested against, so a module install can't end up with an older one. It needs [Go](https://go.dev/dl/) wherever the site builds (Netlify has it; on GitHub Actions, add `actions/setup-go`).
+
+```sh
+hugo new site my-cookbook
+cd my-cookbook
+hugo mod init github.com/<you>/my-cookbook
+```
+
+Then import both themes, Fugu first, in place of a `theme` line:
+
+```toml
+# hugo.toml
+[module]
+  [[module.imports]]
+    path = "github.com/robotpony/hugo-theme-fugu"
+  [[module.imports]]
+    path = "github.com/nunocoracao/blowfish/v3"
+```
+
+`hugo mod get` fetches them (the first build does too). To update Fugu later, `hugo mod get github.com/robotpony/hugo-theme-fugu@latest`, which moves Blowfish only as far as that Fugu needs. Avoid `hugo mod get -u`: it moves Blowfish to its newest release, which Fugu may not be tested against.
+
+### As git submodules
+
+Submodules need only git and work offline, but nothing checks the Blowfish version: check out the one Fugu is tested against yourself.
 
 ```sh
 hugo new site my-cookbook
 cd my-cookbook
 git init
 git submodule add https://github.com/nunocoracao/blowfish.git themes/blowfish
+git -C themes/blowfish checkout 295dae3
 git submodule add https://github.com/robotpony/hugo-theme-fugu.git themes/fugu
 ```
 
-Use a Hugo version inside the range Blowfish declares (its `config.toml`, `module.hugoVersion`). Outside it, Hugo prints a warning on every build.
+and list Fugu first in `theme`, as in the config below.
 
 ## 2. The minimum config
 
@@ -23,7 +53,7 @@ Replace the generated `hugo.toml` with:
 ```toml
 baseURL = "https://example.org/"
 title = "My cookbook"
-theme = ["fugu", "blowfish"]
+theme = ["fugu", "blowfish"]  # or the [module] imports above
 
 [taxonomies]
   tag = "tags"
@@ -32,7 +62,7 @@ theme = ["fugu", "blowfish"]
   mainSections = ["recipes"]
 ```
 
-The order in `theme` matters: Hugo looks for every layout in your site first, then Fugu, then Blowfish, so Fugu's recipe pages win over Blowfish's article pages.
+The order matters: Hugo looks for every layout in your site first, then Fugu, then Blowfish, so Fugu's recipe pages win over Blowfish's article pages.
 
 That's all a site needs. Fugu's own settings, under `[params.fugu]`, all have defaults (see [configuration.md](configuration.md)).
 

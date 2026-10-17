@@ -37,23 +37,24 @@ Content tools live in `tools/`: `frontmatter.py` (check and edit frontmatter), `
 
 ## Install
 
-The full walkthrough, from an empty site to a recipe page, is [docs/getting-started.md](docs/getting-started.md). In short, add Fugu and Blowfish as submodules:
+The full walkthrough, from an empty site to a recipe page, is [docs/getting-started.md](docs/getting-started.md). In short, install Fugu and Blowfish as Hugo modules (this needs Go), importing Fugu first so it takes precedence:
 
 ```sh
-git submodule add https://github.com/nunocoracao/blowfish.git themes/blowfish
-git submodule add https://github.com/robotpony/hugo-theme-fugu.git themes/fugu
+hugo mod init github.com/<you>/my-cookbook
 ```
-
-and list Fugu first, so it takes precedence:
 
 ```toml
 # hugo.toml
-theme = ["fugu", "blowfish"]
+[module]
+  [[module.imports]]
+    path = "github.com/robotpony/hugo-theme-fugu"
+  [[module.imports]]
+    path = "github.com/nunocoracao/blowfish/v3"
 ```
 
-Fugu is tested against Blowfish `295dae3` and Hugo 0.166.0, and needs at least Hugo 0.163.0. Use a Hugo inside the range Blowfish declares, or Hugo warns on every build.
+Fugu's `go.mod` requires the Blowfish it's tested against, so a module install gets at least that version. Git submodules work too (`theme = ["fugu", "blowfish"]`), without Go, but then the Blowfish version is yours to check; [getting-started.md](docs/getting-started.md#as-git-submodules) has both.
 
-Hugo modules will become the recommended install before the first release, with submodules as the alternative (PLAN.md §6).
+Fugu is tested against Blowfish `295dae3` and Hugo 0.166.0, and needs at least Hugo 0.163.0. Use a Hugo inside the range Blowfish declares, or Hugo warns on every build.
 
 ## Docs
 
@@ -69,11 +70,12 @@ The index is [docs/README.md](docs/README.md). Still to come: customizing, tools
 
 Hugo uses your site's files before Fugu's, and Fugu's before Blowfish's, so any layout or partial can be replaced by a file of the same name in your site. Fugu's own settings go under `[params.fugu]`, all with defaults ([configuration.md](docs/configuration.md)). To load web fonts, override `layouts/partials/fonts.html` (empty by default).
 
-Run the tools from your site's root (or anywhere inside it), or set `FUGU_SITE_ROOT` to point them at a site from elsewhere:
+Run the tools from your site's root (or anywhere inside it), or set `FUGU_SITE_ROOT` to point them at a site from elsewhere. With submodules they're in `themes/fugu/tools/`; with modules, in Go's module cache:
 
 ```sh
 python3 themes/fugu/tools/frontmatter.py check
-python3 themes/fugu/tools/drafts.py
+fugu=$(go list -m -f '{{.Dir}}' github.com/robotpony/hugo-theme-fugu)  # modules
+python3 "$fugu/tools/drafts.py"
 ```
 
 ## Status
@@ -90,7 +92,7 @@ python3 themes/fugu/tools/drafts.py
 - [ ] A default design of its own, with Not a Chef's CSS split into structure and look
 - [x] An example site, `exampleSite/`, built and link-checked in CI
 - [x] Screenshots of the example site, retaken with `tools/screenshots.py`
-- [ ] Hugo modules install, and the first release, `v0.1.0`
+- [ ] Hugo modules install (`go.mod` and docs in place; CI install job to come), and the first release, `v0.1.0`
 
 ## Contributing
 
