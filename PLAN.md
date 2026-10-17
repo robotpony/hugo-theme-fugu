@@ -25,7 +25,6 @@ Not a Chef's `custom.css` (1,553 lines) still styles every class Fugu emits; `fu
 
 Overrides and pinned versions are in CLAUDE.md ("Blowfish overrides").
 
-- [ ] `archetypes/default.md` is Hugo's stock TOML archetype, so `hugo new` writes TOML on a Fugu site. Delete it, or make it YAML.
 - [ ] Install by Hugo modules first, submodules second (decided 2026-10-08); blocks `v0.1.0`. A `go.mod` (`github.com/robotpony/hugo-theme-fugu`, requiring `github.com/nunocoracao/blowfish/v3` at the tested version, same in CI); install sections for both in `docs/getting-started.md` and the README. Modules need Go on every build machine (not on the dev Mac today; CI needs `setup-go`); submodules need only git but catch no version mismatch. Not a Chef stays on submodules.
 - [ ] `docs/blowfish.md`: per overridden file, what Fugu changes and why (from each header comment) and the Blowfish version it came from; plus the Blowfish params Fugu ignores or uses differently (`article.relatedContentLimit` required with related content, `footer.showAppearanceSwitcher` driving a header toggle, homepage `layout`, `bg-neutral` always white). Not a Chef's `params.toml` comments have most.
 - [ ] Prefer Blowfish's hooks (`extend-head.html`, `extend-footer.html`) over full overrides; shrink overrides where possible.

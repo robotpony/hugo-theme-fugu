@@ -36,7 +36,7 @@ After any edit while `hugo server -D` is running, restart it before trusting pag
 - `layouts/`: page templates, render hooks (`_default/_markup/`), partials. 14 of these are full copies of Blowfish files with changes (see "Blowfish overrides"); comments at the top of each explain why.
 - `assets/js/`: plain, dependency-free, progressive JS. `ingredients.js` (check-off, scaling, unit conversion), `automagic-sidebar.js` (moves Mechanic/To serve/Notes/photos into the sidebar, photo viewer), `search.js` (Fuse.js search, pinned results first). Pages must still read and print with JS off.
 - `assets/icons/formula/`: the formula diagram icon kit, one SVG per key.
-- `archetypes/`: `recipes.md` and the default.
+- `archetypes/`: `recipes.md`, and a YAML default (in place of Hugo's TOML one; Blowfish's would Title Case the title).
 - `tools/`: `frontmatter.py`, `drafts.py`, `compare-builds.py` (Python standard library only), `add-image.sh` (ImageMagick 7 and `exiftool`). They work on the Hugo site containing the working directory, or `$FUGU_SITE_ROOT`.
 
 ## Blowfish overrides

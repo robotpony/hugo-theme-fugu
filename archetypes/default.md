@@ -1,5 +1,5 @@
-+++
-date = '{{ .Date }}'
-draft = true
-title = '{{ .File.ContentBaseName | humanize }}'
-+++
+---
+title: "{{ .File.ContentBaseName | humanize }}"
+date: {{ .Date | time.Format "2006-01-02" }}
+draft: true
+---

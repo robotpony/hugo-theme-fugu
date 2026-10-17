@@ -53,6 +53,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Changed
 
+- `hugo new` writes YAML frontmatter for anything but a recipe (`archetypes/default.md`, was Hugo's stock TOML): `title` in sentence case from the file name, `date`, and `draft: true`.
 - The `bun-top` stack layer is drawn opened toward the reader with bare crumb, the same shape as `bun-top+mayo` without the spread, so every build's top bun matches. It's taller (77.6, was 62.3), so stacks with it grow by 15.3; its edge is still 70.
 - The `cheese` and `cheese-american` stack layers have a plain top face, without hatching: sliced cheese isn't textured. The edges and the drape line stay.
 - Each row of the About page's "cookbook in numbers" (`stats: true`) links to its section or the cuisine list: `a.rs-number` in place of `div.rs-number`, which stays for a row whose page can't be found. A site styling `.rs-number` itself may want `text-decoration: none` and a hover state on `a.rs-number`.
