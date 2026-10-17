@@ -6,7 +6,7 @@ Early October is mostly trip notes: a tabbouleh worth learning, a subtly sweet r
 
 ## Week of Friday, October 16th
 
-### Essay topics:  #todo
+### Essay topics:  #ideas
 
 - toasting methods → dry, dry/smooth, oil, whole vs. surface
 - add cheesey pasta (one pan) build or recipe 
