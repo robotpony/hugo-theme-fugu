@@ -8,7 +8,7 @@ A recipe like [[Veg patties]] is a ratio with defaults filled in.
 
 ## The ratio
 
-Learn the ratio and the leftovers in the fridge become ingredients, not a problem. [[Plain rice]] is the usual starch.
+Learn the ratio and the leftovers in the fridge become ingredients, not a problem. [[Plain rice]] is the usual starch. See [[Win the fridge]].
 
 ## The takeaway
 

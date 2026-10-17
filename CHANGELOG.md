@@ -53,6 +53,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Changed
 
+- `params.fugu.referenceEssays` takes a content path as well as a folder name: with a `/` (`"reference/essays"`), every page under that folder, in any section, is a reference essay, so they can live outside the essay section. A folder name works as before, and `"reference-essays"` stays the default. Glossary popovers and principle tags' essays both use it (`partials/section/reference-essay.html`).
 - `hugo new` writes YAML frontmatter for anything but a recipe (`archetypes/default.md`, was Hugo's stock TOML): `title` in sentence case from the file name, `date`, and `draft: true`.
 - The `bun-top` stack layer is drawn opened toward the reader with bare crumb, the same shape as `bun-top+mayo` without the spread, so every build's top bun matches. It's taller (77.6, was 62.3), so stacks with it grow by 15.3; its edge is still 70.
 - The `cheese` and `cheese-american` stack layers have a plain top face, without hatching: sliced cheese isn't textured. The edges and the drape line stay.

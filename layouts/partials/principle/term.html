@@ -9,8 +9,8 @@
            class on its chips and page, so a site can colour each one
     essay  the essay that explains it: the page named by the _index.md's
            `essay` (a content path, e.g. essays/reference-essays/win-the-
-           fridge), else the first reference essay (params.fugu.
-           referenceEssays) carrying the tag, else false
+           fridge), else the first reference essay (section/
+           reference-essay.html) carrying the tag, else false
     short  the chip's label on cards: the _index.md's `short`, else its
            title
     icon   the chip's icon, as inline SVG: `icon: leaf` in the _index.md
@@ -32,12 +32,10 @@
     {{ with .Params.essay }}
       {{ $essay = site.GetPage (printf "/%s" (strings.TrimPrefix "/" .)) | default false }}
     {{ else }}
-      {{ $section := partial "section/name.html" "essay" }}
-      {{ $folder := site.Params.fugu.referenceEssays | default "" }}
-      {{ if and $section $folder }}
-        {{ range where site.RegularPages "Section" $section }}
+      {{ if site.Params.fugu.referenceEssays }}
+        {{ range site.RegularPages }}
           {{ $candidate := . }}
-          {{ if and (not $essay) (eq (path.Base (strings.TrimSuffix "/" .File.Dir)) $folder) }}
+          {{ if and (not $essay) (partial "section/reference-essay.html" .) }}
             {{ range .Params.tags }}
               {{ if eq (. | lower | urlize) $slug }}{{ $essay = $candidate }}{{ end }}
             {{ end }}

@@ -36,6 +36,8 @@ buildDrafts = true  # drafts publish as pages in development
 
   [params.fugu]
     methodSection = "methods"
+    # Reference essays in the reference section, by content path.
+    referenceEssays = "reference/essays"
 
   [params.recipe]
     enableKelvin = false

@@ -1,0 +1,23 @@
+{{/*
+  Whether a page is a reference essay, the full definition of a term:
+  wiki links to one get a glossary popover (render-link.html), and a
+  principle tag finds its essay among them (principle/term.html). Takes a
+  page; returns true or false.
+
+  params.fugu.referenceEssays says where they are. A folder name
+  ("reference-essays", the default) means a folder of that name in the
+  essay section, its pages directly inside. A content path, with a "/"
+  ("reference/essays"), means every page under that folder, in any
+  section. "" turns reference essays off.
+*/}}
+{{ $is := false }}
+{{ $where := strings.Trim (site.Params.fugu.referenceEssays | default "") "/" }}
+{{ with and $where .File }}
+  {{ $dir := strings.Trim (replace $.File.Dir "\\" "/") "/" }}
+  {{ if in $where "/" }}
+    {{ $is = or (eq $dir $where) (hasPrefix $dir (printf "%s/" $where)) }}
+  {{ else }}
+    {{ $is = and (eq (partialCached "section/role.html" $.Section $.Section) "essay") (eq (path.Base $dir) $where) }}
+  {{ end }}
+{{ end }}
+{{ return $is }}

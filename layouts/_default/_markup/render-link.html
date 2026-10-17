@@ -13,9 +13,9 @@
   link opens in a new tab, as an .extlink, whatever
   article.externalLinkForceNewTab says.
 
-  Glossary popover: a [[Term]] that resolves to a reference essay (a page
-  in the essay section's params.fugu.referenceEssays folder, by default
-  content/essays/reference-essays/) renders as a .glossary-link with a hover/focus popover instead of a plain
+  Glossary popover: a [[Term]] that resolves to a reference essay (where
+  params.fugu.referenceEssays says, by default content/essays/reference-
+  essays/; see section/reference-essay.html) renders as a .glossary-link with a hover/focus popover instead of a plain
   .wikilink — reference essays are themselves the "gets its own page" tier
   of the glossary. A [[Term]] that resolves to no page at all falls back to
   checking ## headings in the glossary page (params.fugu.glossaryPage in the
@@ -54,8 +54,7 @@
   {{- end -}}
   {{- if gt (len $matches) 0 -}}
     {{- $target := index $matches 0 -}}
-    {{- $refFolder := site.Params.fugu.referenceEssays | default "" -}}
-    {{- $isRefEssay := and $refFolder (eq (partialCached "section/role.html" $target.Section $target.Section) "essay") (eq (path.Base (strings.TrimSuffix "/" $target.File.Dir)) $refFolder) -}}
+    {{- $isRefEssay := partial "section/reference-essay.html" $target -}}
     {{- if $isRefEssay -}}
       {{- $def := $target.Params.summary | default $target.Description -}}
       {{- if not $def -}}

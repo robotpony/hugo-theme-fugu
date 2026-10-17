@@ -24,9 +24,10 @@
   methodSection = ""
 
   # Where wiki links look for glossary terms (see render-link.html): a
-  # folder in the essay section whose pages are reference essays, and a
-  # page in the reference section whose ## headings are short entries.
-  # "" turns either off.
+  # folder in the essay section whose pages are reference essays (or, with
+  # a "/", a content path in any section: "reference/essays"), and a page
+  # in the reference section whose ## headings are short entries. "" turns
+  # either off.
   referenceEssays = "reference-essays"
   glossaryPage = "glossary"
 

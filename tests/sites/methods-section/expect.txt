@@ -37,8 +37,8 @@ methods/index.html: Techniques and ratios<span class="subsection-count">1<
 methods/index.html: !further reading
 recipes/plain-rice/index.html: !blueprint-chip
 
-# The essay section no longer holds them.
-essays/index.html: 2 essays
+# The essay section no longer holds them (or the reference essay).
+essays/index.html: 1 essay
 essays/index.html: !/methods/
 
 # The About numbers count them.
@@ -48,3 +48,11 @@ about/index.html: Methods <b>6
 tags/method/index.html: href="/methods/rice-bowls/parts/cooking-rice/"
 tags/method/index.html: !rcard-link" href="/methods/rice-bowls/"
 tags/method/index.html: !rcard-link" href="/methods/"
+
+# Reference essays by content path, in the reference section
+# (referenceEssays = "reference/essays"): the principle chip finds its
+# essay there, and a wiki link to it gets the glossary popover.
+recipes/plain-rice/index.html: href="/reference/essays/win-the-fridge/"
+essays/cooking-reflections/why-ratios/index.html: <a href="/reference/essays/win-the-fridge/" class="glossary-link">
+tags/win-the-fridge/index.html: read-essay
+reference/index.html: href="/reference/essays/win-the-fridge/"

@@ -88,7 +88,7 @@ A recipe's `cuisine` then shows as a chip on its card, linking to a page of ever
   glossaryPage = "glossary"
 ```
 
-- **Reference essays**: essays in this subfolder of the essay section (`content/essays/reference-essays/`) are full definitions of a term. A wiki link to one shows a popover with its `summary` (or `description`) as well as linking to it.
+- **Reference essays**: essays in this subfolder of the essay section (`content/essays/reference-essays/`) are full definitions of a term. A value with a `/` is a content path instead, in any section: `referenceEssays = "reference/essays"` means every page under `content/reference/essays/`. `""` turns them off. A wiki link to one shows a popover with its `summary` (or `description`) as well as linking to it.
 - **The glossary page**: a page with this name in the reference section (`content/reference/glossary.md`), whose `##` headings are short entries. A wiki link that matches no page title, but matches one of its headings, shows that entry in a popover.
 
 ```markdown
