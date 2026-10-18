@@ -1,8 +1,10 @@
 # Plan
 
-The work list for taking Fugu to a theme other Blowfish users can install. Finished items are removed as they land; `CHANGELOG.md` and git history record them (the last full plan is `75a3a89`, the last long one `183c807`). Section numbers are kept, since other files cite them.
+The work list for taking Fugu to a theme other Blowfish users can install. Finished items are removed as they land; `CHANGELOG.md` and git history record them (the last full plan is `75a3a89`, the last long one `183c807`, the last before `v0.1.0` `102abb1`). Section numbers are kept, since other files cite them.
 
-**Release path:** `v0.1.0` is tagged (2026-10-17). `v1.0.0` needs §4–§7 and the §10 review. Features come after 1.0.
+**Release path:** `v0.1.0` is tagged (2026-10-17): installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §4–§7 and the §10 review. Features come after 1.0.
+
+**Next:** §5's class inventory (mechanical; it sizes the design split), or §4 as a smaller start.
 
 ## 4. Translation
 
@@ -47,7 +49,7 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
 ## 9. Example site and CI
 
 - [ ] Run the tool tests (§8) in `.github/workflows/build.yml`.
-- [ ] Move the example site to Hugo modules once `go.mod` lands (it uses `themesDir = "../.."` today).
+- [ ] Move the example site to Hugo modules (it uses `themesDir = "../.."` today); `go.mod` is in.
 
 ## 10. Release
 
@@ -74,5 +76,5 @@ After 1.0 unless Not a Chef needs one sooner. Several cite `SPEC.md`, still in N
 - **Listings:** sort and filter on the recipes list; term pages as filters; TOC behaviour on long reference pages; extra taxonomies in the header's tags row (skip them by param, or chip them like cuisine); an option to leave hidden personal notes out of the build, since today they're only hidden visually.
 - **Build-time enrichment:** parsed ingredients in `recipes/index.json` (input for the rest); per-recipe cost from site `data/ingredient_prices.yaml`; grocery departments (`data/departments.yaml`, with a Fugu default); schema.org `Recipe` JSON-LD.
 - **Cooking-time JS:** optional-ingredient toggle; print view; cook mode with Wake Lock; interactive substitutions; shopping list in department order; pantry tool (win the fridge); method check-off in `localStorage`, reusing `ingredients.js`'s key scheme.
-- **Later:** a separate test-site repo that installs tagged releases as an outsider would (§9's install job covers this until then).
+- **Later:** a separate test-site repo that installs tagged releases as an outsider would; possible now `v0.1.0` exists, though §9's install job covers most of it.
 - **Deferred on purpose** (`SPEC.md` §10): saved recipes, personal notes, ratings, reader-side change tracking (need a backend); nutrition (no model yet).
