@@ -25,7 +25,7 @@ Not a Chef's `custom.css` (1,553 lines) still styles every class Fugu emits; `fu
 
 Overrides and pinned versions are in CLAUDE.md ("Blowfish overrides").
 
-- [ ] Install by Hugo modules: `go.mod` and the install docs landed 2026-10-17, tested locally through `replace` directives only (fetching Blowfish's 108 MB module zip was too slow on the dev Mac). §9's install job is the first real fetch, and the proof of the version floor; it blocks `v0.1.0`. Fugu's `hugo.toml` can't import Blowfish itself: submodule sites then fail looking for `themes/github.com/nunocoracao/blowfish/v3`, so module sites import both.
+- [ ] Install by Hugo modules: `go.mod`, the docs, and CI's install job (`tests/install.py`, both methods) landed 2026-10-17. Left: see the install job pass in CI, the first real fetch of Blowfish (too slow on the dev Mac, so local runs use `--blowfish ../blowfish`). Findings: Fugu's `hugo.toml` can't import Blowfish (submodule sites then fail looking for `themes/github.com/nunocoracao/blowfish/v3`), so sites import both; and a bare `hugo mod get` takes Blowfish's newest release (v3.9.0), so the docs fetch Fugu by name, which brings its pinned Blowfish.
 - [ ] `docs/blowfish.md`: per overridden file, what Fugu changes and why (from each header comment) and the Blowfish version it came from; plus the Blowfish params Fugu ignores or uses differently (`article.relatedContentLimit` required with related content, `footer.showAppearanceSwitcher` driving a header toggle, homepage `layout`, `bg-neutral` always white). Not a Chef's `params.toml` comments have most.
 - [ ] Prefer Blowfish's hooks (`extend-head.html`, `extend-footer.html`) over full overrides; shrink overrides where possible.
 - [ ] Upgrade checklist, from the `295dae3` move: build before and after moving only the submodule and `compare-builds.py OLD NEW`; `git diff OLD NEW` in Blowfish per copied file and `patch` the hunks into Fugu's copies; measure element boxes in Chrome at each width and mode; rebuild fixtures and the example site.
@@ -49,7 +49,6 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
 
 - [ ] Run the tool tests (§8) in `.github/workflows/build.yml`.
 - [ ] Move the example site to Hugo modules once `go.mod` lands (it uses `themesDir = "../.."` today).
-- [ ] Install job: `hugo new site`, install Fugu (commit under test) and Blowfish by both methods as `docs/getting-started.md` says, add the getting-started recipe, build with `--panicOnWarning`, check the recipe page. Catches the install docs drifting, which the `themesDir` fixtures can't.
 
 ## 10. Release
 

@@ -1,6 +1,7 @@
 # Builds the fixture sites (tests/sites/) against pinned Hugo and Blowfish
 # versions, failing on any warning, and checks their pages (tests/check.py). check.py also builds
-# exampleSite/ and checks every site's links. PLAN.md §9 adds the tool tests.
+# exampleSite/ and checks every site's links; the install job installs Fugu on a new
+# site both ways. PLAN.md §9 adds the tool tests.
 #
 # Hugo is pinned inside Blowfish's declared range for that commit
 # (295dae3 allows 0.163.0–0.166.0); outside it, Hugo warns about the
@@ -40,3 +41,30 @@ jobs:
       # don't fail the job.
       - name: Build and check the fixtures and example site
         run: python3 themes/fugu/tests/check.py
+
+  # Installs Fugu on a new site by each method, as docs/getting-started.md
+  # says, fetching Blowfish for real (tests/install.py). Catches the
+  # install steps and docs drifting from the theme, which the fixtures
+  # can't, since they find the themes through themesDir.
+  install:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        method: [modules, submodules]
+    steps:
+      # Full history: the submodule install clones this checkout.
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v6
+        if: matrix.method == 'modules'
+        with:
+          go-version: stable
+          cache: false
+      - name: Install Hugo
+        run: |
+          curl -sSLf -o hugo.deb "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          sudo dpkg -i hugo.deb
+          hugo version
+      - name: Install Fugu by ${{ matrix.method }} and build a recipe
+        run: python3 tests/install.py ${{ matrix.method }}

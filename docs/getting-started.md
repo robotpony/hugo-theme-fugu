@@ -29,7 +29,13 @@ Then import both themes, Fugu first, in place of a `theme` line:
     path = "github.com/nunocoracao/blowfish/v3"
 ```
 
-`hugo mod get` fetches them (the first build does too). To update Fugu later, `hugo mod get github.com/robotpony/hugo-theme-fugu@latest`, which moves Blowfish only as far as that Fugu needs. Avoid `hugo mod get -u`: it moves Blowfish to its newest release, which Fugu may not be tested against.
+Then fetch Fugu, which brings the Blowfish its `go.mod` requires:
+
+```sh
+hugo mod get github.com/robotpony/hugo-theme-fugu
+```
+
+Fetch Fugu by name like this, before the first build. A bare `hugo mod get` or `hugo mod get -u` fetches each import at its newest release, which for Blowfish may be newer than Fugu is tested against. Run the same command to update Fugu later; Blowfish moves only as far as that Fugu needs.
 
 ### As git submodules
 

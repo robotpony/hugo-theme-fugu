@@ -39,10 +39,6 @@ Content tools live in `tools/`: `frontmatter.py` (check and edit frontmatter), `
 
 The full walkthrough, from an empty site to a recipe page, is [docs/getting-started.md](docs/getting-started.md). In short, install Fugu and Blowfish as Hugo modules (this needs Go), importing Fugu first so it takes precedence:
 
-```sh
-hugo mod init github.com/<you>/my-cookbook
-```
-
 ```toml
 # hugo.toml
 [module]
@@ -52,7 +48,12 @@ hugo mod init github.com/<you>/my-cookbook
     path = "github.com/nunocoracao/blowfish/v3"
 ```
 
-Fugu's `go.mod` requires the Blowfish it's tested against, so a module install gets at least that version. Git submodules work too (`theme = ["fugu", "blowfish"]`), without Go, but then the Blowfish version is yours to check; [getting-started.md](docs/getting-started.md#as-git-submodules) has both.
+```sh
+hugo mod init github.com/<you>/my-cookbook
+hugo mod get github.com/robotpony/hugo-theme-fugu
+```
+
+Fugu's `go.mod` requires the Blowfish it's tested against, so fetching Fugu by name brings that version. Git submodules work too (`theme = ["fugu", "blowfish"]`), without Go, but then the Blowfish version is yours to check; [getting-started.md](docs/getting-started.md#as-git-submodules) has both.
 
 Fugu is tested against Blowfish `295dae3` and Hugo 0.166.0, and needs at least Hugo 0.163.0. Use a Hugo inside the range Blowfish declares, or Hugo warns on every build.
 
@@ -92,7 +93,7 @@ python3 "$fugu/tools/drafts.py"
 - [ ] A default design of its own, with Not a Chef's CSS split into structure and look
 - [x] An example site, `exampleSite/`, built and link-checked in CI
 - [x] Screenshots of the example site, retaken with `tools/screenshots.py`
-- [ ] Hugo modules install (`go.mod` and docs in place; CI install job to come), and the first release, `v0.1.0`
+- [ ] Hugo modules install (`go.mod`, docs, and a CI install job in place), and the first release, `v0.1.0`
 
 ## Contributing
 
