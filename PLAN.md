@@ -2,7 +2,7 @@
 
 The work list for taking Fugu to a theme other Blowfish users can install. Finished items are removed as they land; `CHANGELOG.md` and git history record them (the last full plan is `75a3a89`, the last long one `183c807`). Section numbers are kept, since other files cite them.
 
-**Release path:** `v0.1.0` needs only the install method (§6, with §9's install job). `v1.0.0` needs §4–§7 and the §10 review. Features come after 1.0.
+**Release path:** `v0.1.0` is ready to tag: the modules install passed CI's install job on 2026-10-17 (fetching Blowfish for real, at the pinned version). `v1.0.0` needs §4–§7 and the §10 review. Features come after 1.0.
 
 ## 4. Translation
 
@@ -25,7 +25,6 @@ Not a Chef's `custom.css` (1,553 lines) still styles every class Fugu emits; `fu
 
 Overrides and pinned versions are in CLAUDE.md ("Blowfish overrides").
 
-- [ ] Install by Hugo modules: `go.mod`, the docs, and CI's install job (`tests/install.py`, both methods) landed 2026-10-17. Left: see the install job pass in CI, the first real fetch of Blowfish (too slow on the dev Mac, so local runs use `--blowfish ../blowfish`). Findings: Fugu's `hugo.toml` can't import Blowfish (submodule sites then fail looking for `themes/github.com/nunocoracao/blowfish/v3`), so sites import both; and a bare `hugo mod get` takes Blowfish's newest release (v3.9.0), so the docs fetch Fugu by name, which brings its pinned Blowfish.
 - [ ] `docs/blowfish.md`: per overridden file, what Fugu changes and why (from each header comment) and the Blowfish version it came from; plus the Blowfish params Fugu ignores or uses differently (`article.relatedContentLimit` required with related content, `footer.showAppearanceSwitcher` driving a header toggle, homepage `layout`, `bg-neutral` always white). Not a Chef's `params.toml` comments have most.
 - [ ] Prefer Blowfish's hooks (`extend-head.html`, `extend-footer.html`) over full overrides; shrink overrides where possible.
 - [ ] Upgrade checklist, from the `295dae3` move: build before and after moving only the submodule and `compare-builds.py OLD NEW`; `git diff OLD NEW` in Blowfish per copied file and `patch` the hunks into Fugu's copies; measure element boxes in Chrome at each width and mode; rebuild fixtures and the example site.
@@ -60,7 +59,7 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
   - Tools: run from a fresh clone of a site with the submodule uninitialised.
   - Accessibility: popover ARIA and tap behaviour, focus order, landmarks, heading levels.
 - [ ] Retake the screenshots after §5 (`python3 tools/screenshots.py`).
-- [ ] Tag `v0.1.0` after §6's install method; `v1.0.0` after §4–§7 and the review.
+- [ ] Tag `v0.1.0` (the install method is in); `v1.0.0` after §4–§7 and the review.
 - [ ] Optional: list on themes.gohugo.io; check how they handle themes that need a parent theme.
 
 ## Features
