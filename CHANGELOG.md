@@ -1,8 +1,12 @@
 # Changelog
 
-Notable changes to Fugu, newest first. Versions follow [semantic versioning](https://semver.org); until `v1.0.0`, a minor version can change how a site renders or what it has to configure. Each release is a git tag (`v0.1.0`, …). PLAN.md §10 says when the first one lands.
+Notable changes to Fugu, newest first. Versions follow [semantic versioning](https://semver.org); until `v1.0.0`, a minor version can change how a site renders or what it has to configure. Each release is a git tag (`v0.1.0`, …). The first was `v0.1.0`, on 2026-10-17.
 
 ## Unreleased
+
+## v0.1.0 (2026-10-17)
+
+The first release: Fugu installs as a Hugo module, pinned to the Blowfish it's tested against, or as a git submodule. Still a work in progress before `v1.0.0` (PLAN.md).
 
 ### Added
 

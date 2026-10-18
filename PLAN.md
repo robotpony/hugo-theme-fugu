@@ -2,7 +2,7 @@
 
 The work list for taking Fugu to a theme other Blowfish users can install. Finished items are removed as they land; `CHANGELOG.md` and git history record them (the last full plan is `75a3a89`, the last long one `183c807`). Section numbers are kept, since other files cite them.
 
-**Release path:** `v0.1.0` is ready to tag: the modules install passed CI's install job on 2026-10-17 (fetching Blowfish for real, at the pinned version). `v1.0.0` needs §4–§7 and the §10 review. Features come after 1.0.
+**Release path:** `v0.1.0` is tagged (2026-10-17). `v1.0.0` needs §4–§7 and the §10 review. Features come after 1.0.
 
 ## 4. Translation
 
@@ -59,7 +59,7 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
   - Tools: run from a fresh clone of a site with the submodule uninitialised.
   - Accessibility: popover ARIA and tap behaviour, focus order, landmarks, heading levels.
 - [ ] Retake the screenshots after §5 (`python3 tools/screenshots.py`).
-- [ ] Tag `v0.1.0` (the install method is in); `v1.0.0` after §4–§7 and the review.
+- [ ] Tag `v1.0.0` after §4–§7 and the review.
 - [ ] Optional: list on themes.gohugo.io; check how they handle themes that need a parent theme.
 
 ## Features

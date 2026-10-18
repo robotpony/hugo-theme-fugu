@@ -4,7 +4,7 @@ A cookbook theme for [Blowfish](https://github.com/nunocoracao/blowfish). Fugu i
 
 ![A recipe page: the ingredient list with checkboxes, a formula diagram, and the sidebar with the recipe's facts, To serve and Mechanic](docs/images/recipe.png)
 
-> **Work in progress, not released yet.** Fugu was split out of [Not a Chef](https://github.com/robotpony/not-a-chef) on 2026-10-06. It builds and works on a fresh site, with basic styles coloured from your Blowfish scheme; a designed default look comes later. See "Status" below.
+> **Work in progress: `v0.1.0`, the first release.** Fugu was split out of [Not a Chef](https://github.com/robotpony/not-a-chef) on 2026-10-06. It builds and works on a fresh site, with basic styles coloured from your Blowfish scheme; a designed default look comes later. See "Status" below.
 
 ## Scope
 
@@ -93,7 +93,7 @@ python3 "$fugu/tools/drafts.py"
 - [ ] A default design of its own, with Not a Chef's CSS split into structure and look
 - [x] An example site, `exampleSite/`, built and link-checked in CI
 - [x] Screenshots of the example site, retaken with `tools/screenshots.py`
-- [ ] Hugo modules install (`go.mod`, docs, and a CI install job in place), and the first release, `v0.1.0`
+- [x] Hugo modules install, checked in CI, and the first release, `v0.1.0`
 
 ## Contributing
 
