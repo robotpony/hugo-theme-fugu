@@ -6,6 +6,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Added
 
+- 15 formula icons from Not a Chef: `fruit`, `herb`, `honey`, `jar`, `lemon`, `lentils`, `mustard`, `oats`, `oven`, `pepper`, `pickle`, `soy`, `strainer`, `sugar`, `vinegar`.
 - `tests/install.py` installs Fugu on a new site by modules or submodules, following `docs/getting-started.md` and its code blocks, and checks the recipe page; CI runs it both ways, fetching Blowfish for real.
 - Hugo modules install: Fugu is a module (`go.mod`, `github.com/robotpony/hugo-theme-fugu`) requiring the Blowfish it's tested against (`295dae3`), and `docs/getting-started.md` and the README describe it as the recommended install, importing Fugu then Blowfish under `[module]` and fetching Fugu by name (`hugo mod get github.com/robotpony/hugo-theme-fugu`), which brings that Blowfish; a bare `hugo mod get` takes Blowfish's newest release instead. Submodules still work as before; the docs now say to check out Blowfish `295dae3`.
 - An example site, `exampleSite/`: nine recipes, essays, reference pages, a Food Log month, and a burger blueprint from Not a Chef (CC BY-SA 4.0, its own `LICENSE`), built against Fugu and Blowfish in `../..`.

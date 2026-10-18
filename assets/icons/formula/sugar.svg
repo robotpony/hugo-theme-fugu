@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path style="fill:var(--accent-soft)" d="M7 22h14v14H7z"/>
+  <path style="fill:var(--surface)" d="M7 22l5-5h14l-5 5z"/>
+  <path d="M21 22l5-5v14l-5 5"/>
+  <path style="fill:var(--accent-soft)" d="M25 29h12v12H25z"/>
+  <path style="fill:var(--surface)" d="M25 29l4-4h12l-4 4z"/>
+  <path d="M37 29l4-4v12l-4 4M10 41h.01M15 43h.01M19 40.5h.01"/>
+</svg>
