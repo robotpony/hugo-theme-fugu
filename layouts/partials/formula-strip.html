@@ -21,7 +21,6 @@
   {{- $slots := slice }}
   {{- $kind := "" }}
   {{- $ended := false }}
-  {{- $first := true }}
   {{- range split (index (index . 0) 1) "\n" }}
     {{- $line := partialCached "fence/line.html" . . }}
     {{- if not $line }}{{ continue }}{{ end }}
@@ -32,12 +31,11 @@
       {{- $op = index (index . 0) 1 }}
       {{- $line = index (index . 0) 2 }}
     {{- end }}
-    {{- if $first }}{{ $op = "" }}{{ end }}
-    {{- $first = false }}
-    {{- if eq $op "=" }}{{ $ended = true }}{{ continue }}{{ end }}
-    {{- if eq $op "->" }}{{ $op = "→" }}{{ end }}
     {{- $f := split $line "|" }}
     {{- if or (lt (len $f) 2) (not (trim (index $f 1) " ")) }}{{ continue }}{{ end }}
+    {{- if not $slots }}{{ $op = "" }}{{ end }}
+    {{- if eq $op "=" }}{{ $ended = true }}{{ continue }}{{ end }}
+    {{- if eq $op "->" }}{{ $op = "→" }}{{ end }}
     {{- if and $op (not $kind) }}{{ $kind = $op }}{{ end }}
     {{- $label := "" }}
     {{- $qty := "" }}

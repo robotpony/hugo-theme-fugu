@@ -31,7 +31,6 @@
 {{- $bar := false }}
 {{- $seen := dict }}
 {{- $ended := false }}
-{{- $first := true }}
 {{- range $n, $raw := split .Inner "\n" }}
   {{- $line := partialCached "fence/line.html" $raw $raw }}
   {{- $at := partial "fence/where.html" (dict "pos" $.Position "line" $n) }}
@@ -61,16 +60,14 @@
     {{- $line = index (index . 0) 2 }}
   {{- end }}
   {{- if eq $op "->" }}{{ $op = "→" }}{{ end }}
-  {{- /* The first row line, drawn or not (hugo-warped fixture missing-cell). */}}
-  {{- $isFirst := $first }}
-  {{- $first = false }}
   {{- $f := slice }}
   {{- range split $line "|" }}{{ $f = $f | append (trim . " ") }}{{ end }}
   {{- if or (lt (len $f) 2) (not (index $f 1)) }}
     {{- warnf "formula [missing-cell]: skipped %q, which has no label (want icon | label | quantity | swaps) at %q" $line $at }}
     {{- continue }}
   {{- end }}
-  {{- if and $op $isFirst }}
+  {{- /* The first row drawn: rows skipped before it don't count (hugo-warped fences/README.md, "Bad lines"). */}}
+  {{- if and $op (not $slots) }}
     {{- warnf "formula [stray-marker]: dropped the %s on the first row at %q" $op $at }}
     {{- $op = "" }}
   {{- end }}
