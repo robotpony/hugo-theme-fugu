@@ -169,7 +169,7 @@ can          | Beans   | 1 can         | black, pinto, chickpea
 
 The diagram illustrates a sentence; it doesn't replace one. In Obsidian it reads as plain text.
 
-The icons in the kit today: bowl, butter, can, carrot, cheese, clock, crumbs, cup, egg, flame, flour, fruit, herb, honey, jar, lemon, lentils, mustard, oats, oil, onion, oven, pan, patty, pepper, pickle, pot, potato, salt, soy, strainer, sugar, vinegar, water. A site can add its own by putting SVGs in its own `assets/icons/formula/`.
+The icons in the kit today: bowl, butter, buttermilk, can, carrot, cheese, chicken, clock, cornmeal, crumbs, cup, egg, flame, flour, fruit, herb, honey, jar, lemon, lentils, mustard, oats, oil, onion, oven, pan, patty, pepper, pickle, pot, potato, salt, soy, strainer, sugar, vinegar, water. A site can add its own by putting SVGs in its own `assets/icons/formula/`.
 
 ## Stack diagrams
 

@@ -4,6 +4,10 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ## Unreleased
 
+### Added
+
+- 3 formula icons: `buttermilk` (a gable-top carton), `chicken` (a drumstick), and `cornmeal` (a corn cob), for Not a Chef's cornmeal fried chicken.
+
 ## v0.1.0 (2026-10-17)
 
 The first release: Fugu installs as a Hugo module, pinned to the Blowfish it's tested against, or as a git submodule. Still a work in progress before `v1.0.0` (PLAN.md).
