@@ -1,4 +1,4 @@
-{{/* One slot of a formula diagram; called by layouts/_default/_markup/render-codeblock-formula.html with dict "slot" "variant" "pos". */}}
+{{/* One slot of a formula diagram; called by layouts/_default/_markup/render-codeblock-formula.html with dict "slot" "variant"; the slot carries "at", its line, for warnings. */}}
 {{- $s := .slot }}
 <div class="f-slot{{ if eq $s.op "=" }} f-result{{ end }}">
   <span class="f-icons{{ if gt (len $s.icons) 1 }} f-pair{{ end }}">
@@ -6,7 +6,7 @@
       {{- with resources.Get (printf "icons/formula/%s.svg" .) }}
         {{- replace .Content "<svg " `<svg class="ic" aria-hidden="true" focusable="false" ` | safeHTML }}
       {{- else }}
-        {{- warnf "formula: unknown icon %q at %s" . $.pos }}
+        {{- warnf "formula [unknown-token]: no icon %q (assets/icons/formula/) at %q" . $s.at }}
         <svg class="ic ic-missing" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><circle cx="24" cy="24" r="14" stroke-dasharray="4 4"/></svg>
       {{- end }}
     {{- end }}

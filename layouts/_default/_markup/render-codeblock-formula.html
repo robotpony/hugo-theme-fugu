@@ -24,8 +24,9 @@
 {{- $kind := "" }}
 {{- $caption := "" }}
 {{- $bar := false }}
-{{- range split .Inner "\n" }}
-  {{- $line := partialCached "fence/line.html" . . }}
+{{- range $n, $raw := split .Inner "\n" }}
+  {{- $line := partialCached "fence/line.html" $raw $raw }}
+  {{- $at := partial "fence/where.html" (dict "pos" $.Position "line" $n) }}
   {{- if not $line }}{{ continue }}{{ end }}
   {{- if hasPrefix $line "caption:" }}
     {{- $caption = trim (strings.TrimPrefix "caption:" $line) " " }}
@@ -43,7 +44,7 @@
   {{- if eq $op "->" }}{{ $op = "→" }}{{ end }}
   {{- if and $op (ne $op "=") }}
     {{- if and $kind (ne $kind $op) }}
-      {{- warnf "formula: mixed operators (%s and %s) at %s" $kind $op $.Position }}
+      {{- warnf "formula [mixed-markers]: %s after %s, one operator per block, at %q" $op $kind $at }}
     {{- else }}
       {{- $kind = $op }}
     {{- end }}
@@ -51,9 +52,9 @@
   {{- $f := slice }}
   {{- range split $line "|" }}{{ $f = $f | append (trim . " ") }}{{ end }}
   {{- if gt (len $f) 4 }}
-    {{- warnf "formula: %d cells in %q; a row is icon | label | quantity | swaps, at %s" (len $f) $line $.Position }}
+    {{- warnf "formula [too-many-cells]: %d cells in %q (want icon | label | quantity | swaps) at %q" (len $f) $line $at }}
   {{- end }}
-  {{- $slot := dict "op" $op "icons" (findRE `[a-z-]+` (index $f 0)) "label" "" "qty" "" "swaps" slice }}
+  {{- $slot := dict "op" $op "icons" (findRE `[a-z-]+` (index $f 0)) "label" "" "qty" "" "swaps" slice "at" $at }}
   {{- if ge (len $f) 2 }}{{ $slot = merge $slot (dict "label" (index $f 1)) }}{{ end }}
   {{- if ge (len $f) 3 }}{{ $slot = merge $slot (dict "qty" (index $f 2)) }}{{ end }}
   {{- if ge (len $f) 4 }}
@@ -64,7 +65,7 @@
   {{- $slots = $slots | append $slot }}
 {{- end }}
 {{- if gt (len $slots) 5 }}
-  {{- warnf "formula: %d slots at %s; more than five won't fit the sidebar" (len $slots) .Position }}
+  {{- warnf "formula [over-limit]: %d slots; more than five won't fit the sidebar, at %q" (len $slots) (index $slots 5).at }}
 {{- end }}
 
 {{- $variant := "add" }}
@@ -81,11 +82,11 @@
   <div class="formula-row">
     {{- range $i, $s := $slots }}
       {{- if eq $i 0 }}
-        {{- partial "formula-slot.html" (dict "slot" $s "variant" $variant "pos" $.Position) }}
+        {{- partial "formula-slot.html" (dict "slot" $s "variant" $variant) }}
       {{- else }}
         <div class="f-step">
           <span class="f-op{{ if eq $s.op "=" }} f-eq{{ end }}" aria-hidden="true">{{ $s.op }}</span>
-          {{- partial "formula-slot.html" (dict "slot" $s "variant" $variant "pos" $.Position) }}
+          {{- partial "formula-slot.html" (dict "slot" $s "variant" $variant) }}
         </div>
       {{- end }}
     {{- end }}

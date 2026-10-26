@@ -40,8 +40,10 @@
 {{- $caption := "" }}
 {{- $repeats := slice }}
 {{- $layers := slice }}
-{{- range split .inner "\n" }}
-  {{- $line := partialCached "fence/line.html" . . }}
+{{- range $n, $raw := split .inner "\n" }}
+  {{- $line := partialCached "fence/line.html" $raw $raw }}
+  {{- $at := "" }}
+  {{- with $pos }}{{ $at = partial "fence/where.html" (dict "pos" . "line" $n) }}{{ end }}
   {{- if not $line }}{{ continue }}{{ end }}
   {{- if hasPrefix $line "caption:" }}
     {{- $caption = trim (strings.TrimPrefix "caption:" $line) " " }}
@@ -53,9 +55,9 @@
       {{- $m := index . 0 }}
       {{- $from := int (index $m 1) }}
       {{- $to := cond (ne (index $m 2) "") (int (index $m 2)) $from }}
-      {{- $repeats = $repeats | append (dict "from" $from "to" $to "n" (index $m 3)) }}
+      {{- $repeats = $repeats | append (dict "from" $from "to" $to "n" (index $m 3) "at" $at) }}
     {{- else }}
-      {{- with $pos }}{{ warnf "stack: can't read %q (try `repeat: 3-5 x3`) at %s" $line . }}{{ end }}
+      {{- with $pos }}{{ warnf "stack [bad-repeat]: can't read %q (want `repeat: 3-5 x3`) at %q" $line $at }}{{ end }}
     {{- end }}
     {{- continue }}
   {{- end }}
@@ -72,7 +74,7 @@
     {{- $edge := index (index (findRESubmatch `data-edge="([0-9.]+)"` $c 1) 0) 1 }}
     {{- $layer = merge $layer (dict "svg" (replaceRE `(?s)^.*?<svg[^>]*>\s*|\s*</svg>\s*$` "" $c) "h" (float $h) "edge" (float $edge)) }}
   {{- else }}
-    {{- with $pos }}{{ warnf "stack: no layer drawing %q (assets/icons/layers/) at %s" $key . }}{{ end }}
+    {{- with $pos }}{{ warnf "stack [unknown-token]: no layer drawing %q (assets/icons/layers/) at %q" $key $at }}{{ end }}
     {{- $layer = merge $layer (dict "svg" (printf `<ellipse class="stack-missing" stroke="currentColor" stroke-dasharray="4 3" cx="%g" cy="10" rx="40" ry="9"/>` $cx)) }}
   {{- end }}
   {{- $layers = $layers | append $layer }}
@@ -129,7 +131,7 @@
   <path class="stack-bracket" stroke="currentColor" stroke-width="1.2" d="{{ printf "M%.1f,%.1fH%.1fV%.1fH%.1f" (add $bracketX 6) $a.y $bracketX $y2 (add $bracketX 6) }}"/>
   <text class="stack-times" fill="currentColor" x="{{ printf "%.1f" (sub $bracketX 4) }}" y="{{ printf "%.1f" (add (div (add $a.y $y2) 2) 4) }}" font-size="12" text-anchor="end">× {{ .n }}</text>
     {{- else }}
-      {{- with $pos }}{{ warnf "stack: repeat %d-%d is outside the %d layers at %s" $r.from $r.to (len $placed) . }}{{ end }}
+      {{- with $pos }}{{ warnf "stack [bad-repeat]: repeat %d-%d is outside the %d layers at %q" $r.from $r.to (len $placed) $r.at }}{{ end }}
     {{- end }}
   {{- end }}
 </svg>

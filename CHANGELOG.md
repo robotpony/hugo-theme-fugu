@@ -13,6 +13,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 ### Changed
 
 - A `formula` row with more than four cells warns during the build, rather than dropping the extra cells quietly.
+- `formula` and `stack` warnings carry the shared fence spec's codes after the type (`formula [unknown-token]: …`), and point at the line they're about, not the block's opening fence.
 
 ## v0.1.0 (2026-10-17)
 

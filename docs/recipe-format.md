@@ -187,7 +187,7 @@ can          | Beans   | 1 can         | black, pinto, chickpea
 
 The diagram illustrates a sentence; it doesn't replace one. In Obsidian it reads as plain text.
 
-The full grammar, and what warns, is the shared fence spec in hugo-warped: [`fences/formula.md`](https://github.com/robotpony/hugo-warped/blob/main/fences/formula.md), with the rules every fence shares in [`fences/README.md`](https://github.com/robotpony/hugo-warped/blob/main/fences/README.md).
+Each warning names the line it's about and starts with a code from the spec, such as `formula [unknown-token]:`. The full grammar, and what warns, is the shared fence spec in hugo-warped: [`fences/formula.md`](https://github.com/robotpony/hugo-warped/blob/main/fences/formula.md), with the rules every fence shares in [`fences/README.md`](https://github.com/robotpony/hugo-warped/blob/main/fences/README.md).
 
 The icons in the kit today: bowl, butter, buttermilk, can, carrot, cheese, chicken, clock, cornmeal, crumbs, cup, egg, flame, flour, fruit, herb, honey, jar, lemon, lentils, mustard, oats, oil, onion, oven, pan, patty, pepper, pickle, pot, potato, salt, soy, strainer, sugar, vinegar, water. A site can add its own by putting SVGs in its own `assets/icons/formula/`.
 

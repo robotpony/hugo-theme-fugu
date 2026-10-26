@@ -1,0 +1,14 @@
+{{/*
+  Where a fence warning points: the block's .Position moved down to one
+  line of its body, as "file:line:col". The shared fence spec's tests
+  compare a warning's code and line (hugo-warped, fences/README.md,
+  "Warning codes"), so a warning names the line it's about, not the
+  opening fence. Takes a dict: pos (the block's .Position) and line (the
+  body line's index, from 0; -1 for the opening fence itself). A pos
+  that's only a file path (stack-strip.html) comes back as it is.
+
+  Shared by render-codeblock-formula.html, formula-slot.html and
+  stack/draw.html.
+*/}}
+{{- if eq (printf "%T" .pos) "string" }}{{ return .pos }}{{ end }}
+{{- return (printf "%s:%d:%d" .pos.Filename (add .pos.LineNumber .line 1) .pos.ColumnNumber) }}
