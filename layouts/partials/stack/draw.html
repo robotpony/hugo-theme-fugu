@@ -41,7 +41,7 @@
 {{- $repeats := slice }}
 {{- $layers := slice }}
 {{- range split .inner "\n" }}
-  {{- $line := trim . " \t\r" }}
+  {{- $line := partialCached "fence/line.html" . . }}
   {{- if not $line }}{{ continue }}{{ end }}
   {{- if hasPrefix $line "caption:" }}
     {{- $caption = trim (strings.TrimPrefix "caption:" $line) " " }}

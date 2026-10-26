@@ -189,3 +189,13 @@ recipes/plain-rice/index.html: data-sidebar-heading="notes"
 recipes/plain-rice/index.html: !{.article}
 essays/cooking-reflections/why-ratios/index.html: !data-sidebar-heading="variations"
 essays/cooking-reflections/why-ratios/index.html: href="#variations"
+
+# A ← note in a formula or stack line is dropped from the drawing, its
+# alt text and the card tooltip; \← is a literal arrow.
+recipes/veg-patties/index.html: Per can ← of beans
+recipes/veg-patties/index.html: !note-only line
+recipes/veg-patties/index.html: !any tin
+recipes/veg-patties/index.html: !source-only
+recipes/index.html: !any tin
+recipes/index.html: !note-only line
+essays/methods/rice-bowls/builds/patty-bowl/index.html: !bread-and-butter

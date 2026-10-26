@@ -16,7 +16,7 @@ Crisp edges over soft rice.
 
 ```stack
 patty-thin | Veg patty  | crisp edges
-pickle     | Pickles    | sour
+pickle     | Pickles    | sour ← dill or bread-and-butter
 tomato     | Tomato     | acid
 bun-base   | Rice       | soft
 repeat: 1-2 x2

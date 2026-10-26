@@ -14,11 +14,13 @@ summary: Beans, starch, vegetables, and a binder, by ratio.
 A patty is a formula, not a fixed recipe.
 
 ```formula
-can          | Beans   | 1 can         | black, pinto, chickpea
+← a note-only line, never drawn
+can          | Beans   | 1 can         | black, pinto, chickpea ← any tin, drained
 + bowl       | Starch  | 1 cup         | rice, mash, quinoa
 + carrot     | Veg     | 1 cup         | carrot, peas, corn
 + crumbs egg | Binder  | ½ cup + 1 egg | or gluten + oats
 = patty      | Patties | 6
+caption: Per can \← of beans <- source-only caption note
 ```
 
 ## Mechanic

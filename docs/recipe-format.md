@@ -182,7 +182,7 @@ can          | Beans   | 1 can         | black, pinto, chickpea
 
 - One operator per block: `+` for parts that go together, `:` for a ratio (the quantity is the ratio number), or `→` (or `->`) for the steps of a method. An optional last `=` line names the result.
 - Icons are file names from `assets/icons/formula/`, without `.svg`: one or two per slot. An unknown name draws a dashed circle and warns during the build.
-- Labels are one short word. Swaps are optional, up to three, separated by commas. Keep it to five slots.
+- Labels are one short word. Swaps are optional, up to three, separated by commas. A row with a fifth cell warns during the build. Keep it to five slots.
 - Optional lines after the slots: `caption: <text>`, and `bar: yes` to draw a ratio's proportions as a bar.
 
 The diagram illustrates a sentence; it doesn't replace one. In Obsidian it reads as plain text.
@@ -209,6 +209,21 @@ caption: Drive-in deluxe
 - Optional lines: `caption: <text>`, and `repeat: 3-5 x3` to mark layers 3 to 5 as repeated three times (a `× 3` bracket on the left; `x` or `×`, and a single layer works too: `repeat: 4 x2`).
 
 A build's first `stack` block is also drawn smaller, without labels, on its card on the blueprint's page. In Obsidian it reads as plain text.
+
+### Notes in a diagram
+
+Any line of a `formula` or `stack` block can carry a note for whoever reads the source: `←` (or `<-`) and everything after it on the line. It's never drawn, and it's left out of the diagram's alt text and the card's tooltip. A line that's only a note is skipped. To put a literal arrow in a cell, write `\←` (or `\<-`).
+
+````markdown
+```formula
+cornmeal | Cornmeal | 1  ← coarse, not corn flour
+: flour  | Flour    | 1
+← by volume; by weight it's closer to 150 g : 130 g
+caption: By volume, for the dredge
+```
+````
+
+The note starts at an arrow at the start of the line or after a space, so `a<-b` in a cell is left alone. The note still shows wherever the block isn't drawn: in Obsidian, on GitHub.
 
 The layers in the kit today: bun-top, bun-base, bread, lettuce (leaf), lettuce-shredded, lettuce-chunks (torn or chopped), tomato, onion-raw, onion-fried, onion-minced, pickle, cheese, cheese-american (the slice in yellow), cheese-top, bacon, patty-thin, patty-thick (griddled), patty-thin-grilled, patty-thick-grilled, patty-smash, sauce-ketchup-mustard, ketchup, sauce-burger, mustard, mayo, pasta, ragu, bechamel; and the pairs bun-top + mayo, bun-base + mayo, bun-top + sauce-burger, bun-base + sauce-burger. A site can add its own, or replace Fugu's, by putting SVGs with those names in its own `assets/icons/layers/`: a 210-wide `viewBox` centred on x=105, its own height, and a `data-edge` attribute saying how far right of centre the drawing reaches (where the leader line starts). A pair's file is named with a `+`, `bun-base+mayo.svg`.
 

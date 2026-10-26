@@ -14,6 +14,7 @@
   pre-drawn pair, bun-base+mayo.svg. An unknown key draws a dashed
   placeholder and warns, like the formula block. partials/stack/draw.html
   does the work; stack-strip.html draws a page's first block on its build
-  card. Obsidian shows the block as plain text.
+  card. A `← note` on any line is dropped (partials/fence/line.html).
+  Obsidian shows the block as plain text.
 */}}
 {{- partial "stack/draw.html" (dict "inner" .Inner "labels" true "caption" true "pos" .Position) }}

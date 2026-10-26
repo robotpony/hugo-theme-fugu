@@ -19,7 +19,7 @@
   {{- $slots := slice }}
   {{- $kind := "" }}
   {{- range split (index (index . 0) 1) "\n" }}
-    {{- $line := trim . " \t\r" }}
+    {{- $line := partialCached "fence/line.html" . . }}
     {{- if or (not $line) (hasPrefix $line "caption:") (hasPrefix $line "bar:") }}{{ continue }}{{ end }}
     {{- $op := "" }}
     {{- with findRESubmatch `^(\+|:|→|->|=)\s+(.*)$` $line 1 }}
