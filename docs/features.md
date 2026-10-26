@@ -45,7 +45,7 @@ Conversion understands English unit words only (cups, tbsp, ounces, grams, and s
 
 ## Formula diagrams
 
-A ```` ```formula ```` block draws a ratio or method as a row of icons, with a label, a quantity, and swaps under each one ([recipe-format.md](recipe-format.md#formula-diagrams)). It appears in two places:
+A ```` ```formula ```` block draws a ratio or method as a row of icons, with a label, a quantity, and swaps under each one ([recipe-format.md](recipe-format.md#formula-diagrams); the full grammar is hugo-warped's [`fences/formula.md`](https://github.com/robotpony/hugo-warped/blob/main/fences/formula.md)). It appears in two places:
 
 - **On the recipe page**, full size, where the block was written. A `:` ratio can add a bar showing the proportions.
 - **On the recipe's card**, as a small strip of the icons and operators. For a ratio it keeps the numbers, since they're the point. Hovering a slot shows its label, quantity, and swaps.
@@ -58,7 +58,7 @@ The icons are SVGs in `assets/icons/formula/`, one per name: bowl, butter, butte
 
 ## Stack diagrams
 
-A ```` ```stack ```` block draws a build as an exploded view: each layer from the side, pulled apart top to bottom, with a dotted leader to its label and role, and a `× n` bracket for repeated layers ([recipe-format.md](recipe-format.md#stack-diagrams)). It appears full size where it's written, and the first one in a build also appears small and unlabelled on that build's card on its blueprint's page. The layers are SVGs in `assets/icons/layers/` (bun-top, bun-base, bread, lettuce, lettuce-shredded, lettuce-chunks, tomato, onion-raw, onion-fried, onion-minced, pickle, cheese, cheese-american, cheese-top, bacon, patty-thin, patty-thick (griddled), patty-thin-grilled, patty-thick-grilled, patty-smash, sauce-ketchup-mustard, ketchup, sauce-burger, mustard, mayo, pasta, ragu, bechamel, and spreads drawn on the bun as pairs like `bun-base + mayo`), drawn in `currentColor` with the theme's soft accent and surface fills, fixed browns for a patty's seared top, and soft food colours for greens, tomato, ketchup, mustard and American cheese, so they follow light and dark mode. The build warns about a layer it doesn't know.
+A ```` ```stack ```` block draws a build as an exploded view: each layer from the side, pulled apart top to bottom, with a dotted leader to its label and role, and a `× n` bracket for repeated layers ([recipe-format.md](recipe-format.md#stack-diagrams); the full grammar is hugo-warped's [`fences/stack.md`](https://github.com/robotpony/hugo-warped/blob/main/fences/stack.md)). It appears full size where it's written, and the first one in a build also appears small and unlabelled on that build's card on its blueprint's page. The layers are SVGs in `assets/icons/layers/` (bun-top, bun-base, bread, lettuce, lettuce-shredded, lettuce-chunks, tomato, onion-raw, onion-fried, onion-minced, pickle, cheese, cheese-american, cheese-top, bacon, patty-thin, patty-thick (griddled), patty-thin-grilled, patty-thick-grilled, patty-smash, sauce-ketchup-mustard, ketchup, sauce-burger, mustard, mayo, pasta, ragu, bechamel, and spreads drawn on the bun as pairs like `bun-base + mayo`), drawn in `currentColor` with the theme's soft accent and surface fills, fixed browns for a patty's seared top, and soft food colours for greens, tomato, ketchup, mustard and American cheese, so they follow light and dark mode. The build warns about a layer it doesn't know.
 
 ![A build page: its picks, then its stack diagram with each layer labelled](images/build.png)
 

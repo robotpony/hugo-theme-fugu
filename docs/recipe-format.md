@@ -187,6 +187,8 @@ can          | Beans   | 1 can         | black, pinto, chickpea
 
 The diagram illustrates a sentence; it doesn't replace one. In Obsidian it reads as plain text.
 
+The full grammar, and what warns, is the shared fence spec in hugo-warped: [`fences/formula.md`](https://github.com/robotpony/hugo-warped/blob/main/fences/formula.md), with the rules every fence shares in [`fences/README.md`](https://github.com/robotpony/hugo-warped/blob/main/fences/README.md).
+
 The icons in the kit today: bowl, butter, buttermilk, can, carrot, cheese, chicken, clock, cornmeal, crumbs, cup, egg, flame, flour, fruit, herb, honey, jar, lemon, lentils, mustard, oats, oil, onion, oven, pan, patty, pepper, pickle, pot, potato, salt, soy, strainer, sugar, vinegar, water. A site can add its own by putting SVGs in its own `assets/icons/formula/`.
 
 ## Stack diagrams
@@ -210,6 +212,8 @@ caption: Drive-in deluxe
 
 A build's first `stack` block is also drawn smaller, without labels, on its card on the blueprint's page. In Obsidian it reads as plain text.
 
+The full grammar, and what warns, is in hugo-warped's [`fences/stack.md`](https://github.com/robotpony/hugo-warped/blob/main/fences/stack.md).
+
 ### Notes in a diagram
 
 Any line of a `formula` or `stack` block can carry a note for whoever reads the source: `←` (or `<-`) and everything after it on the line. It's never drawn, and it's left out of the diagram's alt text and the card's tooltip. A line that's only a note is skipped. To put a literal arrow in a cell, write `\←` (or `\<-`).
@@ -223,7 +227,7 @@ caption: By volume, for the dredge
 ```
 ````
 
-The note starts at an arrow at the start of the line or after a space, so `a<-b` in a cell is left alone. The note still shows wherever the block isn't drawn: in Obsidian, on GitHub.
+The note starts at an arrow at the start of the line or after a space, so `a<-b` in a cell is left alone. The note still shows wherever the block isn't drawn: in Obsidian, on GitHub. The rules are the shared spec's, in [`fences/README.md`](https://github.com/robotpony/hugo-warped/blob/main/fences/README.md) under "Notes".
 
 The layers in the kit today: bun-top, bun-base, bread, lettuce (leaf), lettuce-shredded, lettuce-chunks (torn or chopped), tomato, onion-raw, onion-fried, onion-minced, pickle, cheese, cheese-american (the slice in yellow), cheese-top, bacon, patty-thin, patty-thick (griddled), patty-thin-grilled, patty-thick-grilled, patty-smash, sauce-ketchup-mustard, ketchup, sauce-burger, mustard, mayo, pasta, ragu, bechamel; and the pairs bun-top + mayo, bun-base + mayo, bun-top + sauce-burger, bun-base + sauce-burger. A site can add its own, or replace Fugu's, by putting SVGs with those names in its own `assets/icons/layers/`: a 210-wide `viewBox` centred on x=105, its own height, and a `data-edge` attribute saying how far right of centre the drawing reaches (where the leader line starts). A pair's file is named with a `+`, `bun-base+mayo.svg`.
 
