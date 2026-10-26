@@ -42,6 +42,6 @@ caption: Rice bake
 ```stack
 bun-top + mayo | Bun, with mayo
 patty-thin     | Rice patty
-bun-base+sauce-burger
+bun-base+sauce-burger | Bun, with sauce
 caption: Rice burger
 ```

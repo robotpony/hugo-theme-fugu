@@ -155,7 +155,7 @@ recipes/index.json: !"build_name"
 # its body, where it's written, and the compact one on the build card.
 reference/rice-ratios/index.html: <figure class="stack stack-labelled" role="img" aria-label="Rice bake, top to bottom: Cheese, Rice, Beans">
 reference/rice-ratios/index.html: <figcaption class="stack-cap">Rice bake</figcaption>
-reference/rice-ratios/index.html: aria-label="Rice burger, top to bottom: Bun, with mayo, Rice patty, bun-base&#43;sauce-burger"
+reference/rice-ratios/index.html: aria-label="Rice burger, top to bottom: Bun, with mayo, Rice patty, Bun, with sauce"
 reference/rice-ratios/index.html: !stack-missing
 
 # An aliased wiki link in a table cell escapes its pipe ([[Title\|Alias]]).

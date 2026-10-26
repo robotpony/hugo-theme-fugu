@@ -13,6 +13,13 @@
     caption: Drive-in deluxe
     repeat: 3-5 x3     (layers 3 to 5, three times: a "× 3" bracket)
 
+  The optional lines come after the layers, in either order; a layer
+  after one is skipped. Several repeat: lines may overlap or nest; a
+  second caption: is skipped. A layer with no label, or a repeat: whose
+  count isn't a whole number of 2 or more, is skipped too, and a fourth
+  cell or more is dropped. Each of those warns when pos is set (the
+  shared fence spec's readings, hugo-warped fences/stack.md).
+
   The layer files share a 210-wide viewBox centred on x=105, each with its
   own height; data-edge is how far the drawing reaches right of centre, so
   a leader line starts just past it. They're inlined, so currentColor and
@@ -40,24 +47,32 @@
 {{- $caption := "" }}
 {{- $repeats := slice }}
 {{- $layers := slice }}
+{{- $trailer := dict }}
 {{- range $n, $raw := split .inner "\n" }}
   {{- $line := partialCached "fence/line.html" $raw $raw }}
   {{- $at := "" }}
   {{- with $pos }}{{ $at = partial "fence/where.html" (dict "pos" . "line" $n) }}{{ end }}
   {{- if not $line }}{{ continue }}{{ end }}
   {{- if hasPrefix $line "caption:" }}
+    {{- if index $trailer "caption" }}
+      {{- with $pos }}{{ warnf "stack [duplicate-keyword]: skipped a second caption: at %q" $at }}{{ end }}
+      {{- continue }}
+    {{- end }}
     {{- $caption = trim (strings.TrimPrefix "caption:" $line) " " }}
+    {{- $trailer = merge $trailer (dict "caption" true) }}
     {{- continue }}
   {{- end }}
   {{- if hasPrefix $line "repeat:" }}
+    {{- $trailer = merge $trailer (dict "repeat" true) }}
     {{- $spec := trim (strings.TrimPrefix "repeat:" $line) " " }}
-    {{- with findRESubmatch `^(\d+)(?:\s*-\s*(\d+))?\s*[x×]\s*(.+)$` $spec 1 }}
-      {{- $m := index . 0 }}
+    {{- $m := slice }}
+    {{- with findRESubmatch `^(\d+)(?:\s*-\s*(\d+))?\s*[x×]\s*(\d+)$` $spec 1 }}{{ $m = index . 0 }}{{ end }}
+    {{- if and $m (ge (int (index $m 3)) 2) }}
       {{- $from := int (index $m 1) }}
       {{- $to := cond (ne (index $m 2) "") (int (index $m 2)) $from }}
       {{- $repeats = $repeats | append (dict "from" $from "to" $to "n" (index $m 3) "at" $at) }}
     {{- else }}
-      {{- with $pos }}{{ warnf "stack [bad-repeat]: can't read %q (want `repeat: 3-5 x3`) at %q" $line $at }}{{ end }}
+      {{- with $pos }}{{ warnf "stack [bad-repeat]: can't read %q (want `repeat: 3-5 x3`, a count of 2 or more) at %q" $line $at }}{{ end }}
     {{- end }}
     {{- continue }}
   {{- end }}
@@ -65,12 +80,22 @@
     {{- with $pos }}{{ warnf "stack [unknown-keyword]: skipped %q (takes caption: and repeat:) at %q" $line $at }}{{ end }}
     {{- continue }}
   {{- end }}
+  {{- if $trailer }}
+    {{- with $pos }}{{ warnf "stack [out-of-order]: skipped %q after the caption: or repeat: lines at %q" $line $at }}{{ end }}
+    {{- continue }}
+  {{- end }}
   {{- $f := slice }}
   {{- range split $line "|" }}{{ $f = $f | append (trim . " ") }}{{ end }}
+  {{- if or (lt (len $f) 2) (not (index $f 1)) }}
+    {{- with $pos }}{{ warnf "stack [missing-cell]: skipped %q, which has no label (want layer | label | role) at %q" $line $at }}{{ end }}
+    {{- continue }}
+  {{- end }}
+  {{- if gt (len $f) 3 }}
+    {{- with $pos }}{{ warnf "stack [too-many-cells]: %d cells in %q; drew the first three (layer | label | role) at %q" (len $f) $line $at }}{{ end }}
+  {{- end }}
   {{- /* `a + b` is a pre-drawn pair (a spread on the bun), a+b.svg. */}}
   {{- $key := replaceRE `\s*\+\s*` "+" (index $f 0) }}
-  {{- $layer := dict "key" $key "label" "" "role" "" "svg" "" "h" 20.0 "edge" 40.0 }}
-  {{- if ge (len $f) 2 }}{{ $layer = merge $layer (dict "label" (index $f 1)) }}{{ end }}
+  {{- $layer := dict "key" $key "label" (index $f 1) "role" "" "svg" "" "h" 20.0 "edge" 40.0 }}
   {{- if ge (len $f) 3 }}{{ $layer = merge $layer (dict "role" (index $f 2)) }}{{ end }}
   {{- with and (findRE `^[a-z0-9-]+(\+[a-z0-9-]+)*$` $key) (resources.Get (printf "icons/layers/%s.svg" $key)) }}
     {{- $c := .Content }}
@@ -109,7 +134,7 @@
   {{- $minX := cond (gt (len $repeats) 0) (sub $bracketX 34) 0.0 }}
   {{- $width := cond $labels (add $labelX 160) (mul $cx 2) }}
   {{- $names := slice }}
-  {{- range $placed }}{{ $names = $names | append (.label | default .key) }}{{ end }}
+  {{- range $placed }}{{ $names = $names | append .label }}{{ end }}
 <figure class="stack{{ if $.compact }} stack-compact{{ end }}{{ if $labels }} stack-labelled{{ end }}" role="img" aria-label="{{ with $caption }}{{ . }}, {{ end }}top to bottom: {{ delimit $names ", " }}">
 <svg class="stack-svg" xmlns="http://www.w3.org/2000/svg" viewBox="{{ printf "%.1f 0 %.1f %.1f" $minX (sub $width $minX) $height }}" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
   {{- safeHTML $body }}
@@ -120,7 +145,7 @@
       {{- $ex := add $cx (add .edge 10) }}
   <circle class="stack-dot" fill="currentColor" fill-opacity=".5" cx="{{ printf "%.1f" $ex }}" cy="{{ printf "%.1f" .mid }}" r="1.8"/>
   <path class="stack-lead" stroke="currentColor" stroke-opacity=".5" stroke-width=".8" stroke-dasharray="2 2" d="{{ printf "M%.1f,%.1fH%.1f" $ex .mid (sub $labelX 6) }}"/>
-  <text class="stack-label" fill="currentColor" font-weight="600" x="{{ printf "%.1f" $labelX }}" y="{{ printf "%.1f" (sub .mid 1) }}" font-size="13">{{ .label | default .key }}</text>
+  <text class="stack-label" fill="currentColor" font-weight="600" x="{{ printf "%.1f" $labelX }}" y="{{ printf "%.1f" (sub .mid 1) }}" font-size="13">{{ .label }}</text>
       {{- if .role }}
   <text class="stack-role" fill="currentColor" fill-opacity=".7" font-style="italic" x="{{ printf "%.1f" $labelX }}" y="{{ printf "%.1f" (add .mid 13) }}" font-size="12">{{ .role }}</text>
       {{- end }}

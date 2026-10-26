@@ -210,8 +210,8 @@ caption: Drive-in deluxe
 - Layers are file names from `assets/icons/layers/`, without `.svg`. An unknown name draws a dashed placeholder and warns during the build.
 - A spread on its bun is one layer, written as a pair: `bun-base + mayo | Sesame bun, with mayo | barrier` (the spaces are optional). It draws `bun-base+mayo.svg`, its own drawing (the top bun opened toward you, its cut face showing the spread), not two layers stacked. A pair with no file warns like an unknown name.
 - The label is what the layer is; the role is what it does for the whole. Both are short.
-- Optional lines: `caption: <text>`, and `repeat: 3-5 x3` to mark layers 3 to 5 as repeated three times (a `× 3` bracket on the left; `x` or `×`, and a single layer works too: `repeat: 4 x2`).
-- Any other lowercase `key: ` line is skipped with a warning. A block with no layers shows its source as plain text, and warns.
+- Optional lines after the layers, in either order: `caption: <text>`, and `repeat: 3-5 x3` to mark layers 3 to 5 as repeated three times (a `× 3` bracket on the left; `x` or `×`, and a single layer works too: `repeat: 4 x2`). Several `repeat:` lines may overlap or nest; the count is a whole number, 2 or more.
+- These are skipped with a warning: a layer with no label (`bun-top`, `bun-top |`), a layer after `caption:` or `repeat:`, a second `caption:`, a `repeat:` it can't read or whose layers aren't there, and any other lowercase `key: ` line. A fourth cell or more is dropped, with a warning. A block with no layers shows its source as plain text, and warns.
 
 A build's first `stack` block is also drawn smaller, without labels, on its card on the blueprint's page. In Obsidian it reads as plain text.
 
