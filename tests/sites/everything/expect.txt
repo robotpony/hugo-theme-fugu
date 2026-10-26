@@ -180,3 +180,12 @@ recipes/veg-patties/index.html: M10 38C10 20 22 9 40 8c0 18-11 30-30 30z"/><path
 recipes/index.html: <a class="principle-chip principle-plant-based is-icon" href="/tags/plant-based/" title="Plant-based" aria-label="Plant-based"><svg viewBox="0 0 48 48"
 recipes/index.html: <span class="tag tag-more">+2</span>
 tags/plant-based/index.html: class="listing principle-page principle-plant-based
+
+# {.article} keeps a section in the article: not an ingredient section,
+# not moved to the sidebar, and still in "On this page".
+recipes/plain-rice/index.html: data-ing-heading="false" data-method-heading="false">Rinsing
+recipes/plain-rice/index.html: !data-sidebar-heading="mechanic"
+recipes/plain-rice/index.html: data-sidebar-heading="notes"
+recipes/plain-rice/index.html: !{.article}
+essays/cooking-reflections/why-ratios/index.html: !data-sidebar-heading="variations"
+essays/cooking-reflections/why-ratios/index.html: href="#variations"

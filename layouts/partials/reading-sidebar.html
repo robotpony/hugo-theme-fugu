@@ -17,11 +17,14 @@
 {{ $recipes := where site.RegularPages "Section" (partial "section/name.html" "recipe") }}
 {{/* Sections automagic-sidebar.js moves into the slots below (Notes,
   Mechanic, ...) are dropped from "On this page": their anchors end up in
-  the sidebar itself, hidden, so a jump link would go nowhere. */}}
+  the sidebar itself, hidden, so a jump link would go nowhere. One marked
+  {.article} stays (render-heading.html lists those, as the main column
+  renders first). */}}
 {{ $headings := slice }}
+{{ $kept := .Store.Get "fuguArticleHeadings" | default dict }}
 {{ range partial "reading-sidebar/headings.html" .Fragments.Headings }}
   {{ $norm := .title | strings.TrimSuffix ":" | strings.TrimSpace | lower }}
-  {{ if not (and (eq .level 2) (partial "sidebar/heading-slot.html" $norm)) }}
+  {{ if or (index $kept .id) (not (and (eq .level 2) (partial "sidebar/heading-slot.html" $norm))) }}
     {{ $headings = $headings | append . }}
   {{ end }}
 {{ end }}

@@ -175,6 +175,8 @@ How Fugu reads a recipe's `##` headings, by their whole title. Matching ignores 
 | `hidden` | Sections hidden from readers. Still in the HTML, so not private. `[]` hides none. |
 | `notIngredients` | Words, not whole titles. Any other heading is an ingredient section (a component of the recipe) unless one of its words is in this list. |
 
+A single recipe can keep any section in the article, whatever its title, with `{.article}` on its heading ([recipe-format.md](recipe-format.md#keeping-a-section-in-the-article)).
+
 This is also how a site in another language names its sections: `method = ["Préparation"]`, and so on. Unit conversion still only understands English unit words.
 
 ## The recipe sidebar

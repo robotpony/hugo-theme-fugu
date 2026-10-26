@@ -66,7 +66,14 @@
      level deeper. */}}
 {{ $normalized := .Text | plainify | strings.TrimSuffix ":" | strings.TrimSpace | lower }}
 {{ $headingRole := partialCached "headings/role.html" $normalized $normalized }}
-{{- $hasNonIngredientWord := ne $headingRole "" }}
+{{- /* "## Breading {.article}": the writer says this section is article
+     prose, wherever it's written. It's never an ingredient section, never
+     moves to the sidebar, and is never hidden, whatever its title; a
+     Method keeps its quantity marking. A Goldmark attribute rather than a
+     title list, so it sits on the heading itself, reads plainly in
+     Obsidian, and survives a rename. The class isn't emitted. */}}
+{{- $inArticle := in (split (string (.Attributes.class | default "")) " ") "article" }}
+{{- $hasNonIngredientWord := or $inArticle (ne $headingRole "") }}
 {{ range split $normalized " " }}
   {{ if in $nonIngredientKeywords . }}{{ $hasNonIngredientWord = true }}{{ end }}
 {{ end }}
@@ -75,6 +82,13 @@
 {{ $sidebarHeading := "" }}
 {{ if and (partial "sidebar/kind.html" .Page) (eq .Level 2) }}
   {{ $sidebarHeading = partial "sidebar/heading-slot.html" $normalized }}
+  {{- /* reading-sidebar.html drops sidebar-titled headings from "On this
+       page" by title alone (.Fragments has no attributes), so it's told
+       which ones stayed. */}}
+  {{- if and $inArticle $sidebarHeading }}
+    {{- .Page.Store.SetInMap "fuguArticleHeadings" $anchor true }}
+    {{- $sidebarHeading = "" }}
+  {{- end }}
 {{ end }}
 {{/* Personal notes: a recipe section in params.fugu.headings.hidden
      ("History" by default, family-provenance text) is hidden client-side
@@ -82,7 +96,7 @@
      blockquotes (hideIntroQuotes), by the same "walk to the next H2"
      approach as the sidebar sections above, rather than relocated
      anywhere visible. Still in the HTML, so not private. */}}
-{{ $isHiddenHeading := and $isRecipe (eq .Level 2) (eq $headingRole "hidden") }}
+{{ $isHiddenHeading := and $isRecipe (eq .Level 2) (eq $headingRole "hidden") (not $inArticle) }}
 
 {{ if and $isRecipe (eq .Level 2) }}
   {{ .Page.Scratch.Set "ingSection" $isIngredientHeading }}

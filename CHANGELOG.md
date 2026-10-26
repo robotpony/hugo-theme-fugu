@@ -7,6 +7,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 ### Added
 
 - 3 formula icons: `buttermilk` (a gable-top carton), `chicken` (a drumstick), and `cornmeal` (a corn cob), for Not a Chef's cornmeal fried chicken.
+- `{.article}` on a `##` heading keeps that section in the article: never an ingredient section, never moved to the sidebar or hidden, and still listed in "On this page" (`docs/recipe-format.md`).
 
 ## v0.1.0 (2026-10-17)
 

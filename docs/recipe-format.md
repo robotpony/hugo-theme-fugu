@@ -136,6 +136,24 @@ Which sections move into the sidebar, and in what order, is `recipeSidebar` in `
 
 Other headings you might use, such as `## Substitutions` or `## Timing`, stay in the article as written. Tables are fine for timing or ratio references with several variables.
 
+### Keeping a section in the article
+
+Add `{.article}` to a `##` heading to keep that section in the article, where it's written:
+
+```markdown
+## Method
+
+Fry until deep golden, about 12 minutes.
+
+## Breading {.article}
+
+The breading goes soak, dredge, rest, fry.
+```
+
+Without it, `## Breading` would be read as a component and its lists as ingredients. With it, the section is never a component, never moves to the sidebar, and is never hidden, whatever its title. So `## Mechanic {.article}` written under the method stays there instead of becoming the sidebar callout, formula diagram and all. A `## Method {.article}` is still the method: its quantities still convert.
+
+The marker is a Markdown heading attribute, which Hugo reads and leaves out of the page: the heading shows as "Breading" and its anchor is `#breading`. Obsidian shows `{.article}` as part of the heading, which is the point: anyone reading the file can see the section is placed on purpose. It works on any page with a sidebar, so an essay's `## Notes {.article}` stays in the essay and in its "On this page" list. A site that turns off Goldmark's heading attributes (`markup.goldmark.parser.attribute.title = false`) loses it.
+
 ## Wiki links
 
 Link to another page by its title, as in Obsidian:

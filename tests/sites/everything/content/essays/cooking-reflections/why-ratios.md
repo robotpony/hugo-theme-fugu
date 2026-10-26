@@ -13,3 +13,7 @@ Learn the ratio and the leftovers in the fridge become ingredients, not a proble
 ## The takeaway
 
 Write the ratio down first, then the recipe.
+
+## Variations {.article}
+
+A ratio's variations are the point of it, so they stay in the essay.
