@@ -61,6 +61,10 @@
     {{- end }}
     {{- continue }}
   {{- end }}
+  {{- if findRE `^[a-z][a-z-]*: ` $line 1 }}
+    {{- with $pos }}{{ warnf "stack [unknown-keyword]: skipped %q (takes caption: and repeat:) at %q" $line $at }}{{ end }}
+    {{- continue }}
+  {{- end }}
   {{- $f := slice }}
   {{- range split $line "|" }}{{ $f = $f | append (trim . " ") }}{{ end }}
   {{- /* `a + b` is a pre-drawn pair (a spread on the bun), a+b.svg. */}}
@@ -139,4 +143,10 @@
 <figcaption class="stack-cap">{{ $caption }}</figcaption>
   {{- end }}
 </figure>
+{{- else }}
+  {{- /* Nothing to draw: the hook shows the source and warns; a card shows nothing. */}}
+  {{- with $pos }}
+    {{- warnf "stack [no-valid-lines]: nothing to draw, so the source shows, at %q" (partial "fence/where.html" (dict "pos" . "line" -1)) }}
+<pre><code>{{ $.inner }}</code></pre>
+  {{- end }}
 {{- end }}

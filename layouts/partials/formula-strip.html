@@ -20,7 +20,7 @@
   {{- $kind := "" }}
   {{- range split (index (index . 0) 1) "\n" }}
     {{- $line := partialCached "fence/line.html" . . }}
-    {{- if or (not $line) (hasPrefix $line "caption:") (hasPrefix $line "bar:") }}{{ continue }}{{ end }}
+    {{- if or (not $line) (hasPrefix $line "caption:") (hasPrefix $line "bar:") (findRE `^[a-z][a-z-]*: ` $line 1) }}{{ continue }}{{ end }}
     {{- $op := "" }}
     {{- with findRESubmatch `^(\+|:|→|->|=)\s+(.*)$` $line 1 }}
       {{- $op = index (index . 0) 1 }}

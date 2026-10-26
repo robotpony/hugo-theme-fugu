@@ -184,6 +184,7 @@ can          | Beans   | 1 can         | black, pinto, chickpea
 - Icons are file names from `assets/icons/formula/`, without `.svg`: one or two per slot. An unknown name draws a dashed circle and warns during the build.
 - Labels are one short word. Swaps are optional, up to three, separated by commas. A row with a fifth cell warns during the build. Keep it to five slots.
 - Optional lines after the slots: `caption: <text>`, and `bar: yes` to draw a ratio's proportions as a bar.
+- Any other lowercase `key: ` line is skipped with a warning. A block with nothing to draw shows its source as plain text, and warns.
 
 The diagram illustrates a sentence; it doesn't replace one. In Obsidian it reads as plain text.
 
@@ -209,6 +210,7 @@ caption: Drive-in deluxe
 - A spread on its bun is one layer, written as a pair: `bun-base + mayo | Sesame bun, with mayo | barrier` (the spaces are optional). It draws `bun-base+mayo.svg`, its own drawing (the top bun opened toward you, its cut face showing the spread), not two layers stacked. A pair with no file warns like an unknown name.
 - The label is what the layer is; the role is what it does for the whole. Both are short.
 - Optional lines: `caption: <text>`, and `repeat: 3-5 x3` to mark layers 3 to 5 as repeated three times (a `× 3` bracket on the left; `x` or `×`, and a single layer works too: `repeat: 4 x2`).
+- Any other lowercase `key: ` line is skipped with a warning. A block with no layers shows its source as plain text, and warns.
 
 A build's first `stack` block is also drawn smaller, without labels, on its card on the blueprint's page. In Obsidian it reads as plain text.
 

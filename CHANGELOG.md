@@ -14,6 +14,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 - A `formula` row with more than four cells warns during the build, rather than dropping the extra cells quietly.
 - `formula` and `stack` warnings carry the shared fence spec's codes after the type (`formula [unknown-token]: …`), and point at the line they're about, not the block's opening fence.
+- A `formula` or `stack` line that's a keyword the block doesn't take (`note: …`) is skipped with one `unknown-keyword` warning, instead of drawing its words as icons or a layer. A block with nothing to draw shows its source as plain text and warns `no-valid-lines`.
 
 ## v0.1.0 (2026-10-17)
 

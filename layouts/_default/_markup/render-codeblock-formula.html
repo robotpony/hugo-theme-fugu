@@ -16,7 +16,8 @@
   closing `=` result. Icons are assets/icons/formula/<key>.svg, inlined so
   they pick up currentColor and the theme tokens. An unknown key draws a
   dashed circle and warns, so a typo shows up in review instead of
-  breaking the page, as does a row with a fifth cell. A `← note` on any
+  breaking the page, as does a row with a fifth cell or a keyword it
+  doesn't take (skipped). A block with nothing to draw shows its source. A `← note` on any
   line is dropped (partials/fence/line.html). Obsidian shows the block as
   plain text.
 */}}
@@ -34,6 +35,10 @@
   {{- end }}
   {{- if hasPrefix $line "bar:" }}
     {{- $bar = in (slice "yes" "true") (trim (strings.TrimPrefix "bar:" $line) " ") }}
+    {{- continue }}
+  {{- end }}
+  {{- if findRE `^[a-z][a-z-]*: ` $line 1 }}
+    {{- warnf "formula [unknown-keyword]: skipped %q (takes caption: and bar:) at %q" $line $at }}
     {{- continue }}
   {{- end }}
   {{- $op := "" }}
@@ -68,6 +73,10 @@
   {{- warnf "formula [over-limit]: %d slots; more than five won't fit the sidebar, at %q" (len $slots) (index $slots 5).at }}
 {{- end }}
 
+{{- if not $slots }}
+  {{- warnf "formula [no-valid-lines]: nothing to draw, so the source shows, at %q" (partial "fence/where.html" (dict "pos" .Position "line" -1)) }}
+<pre><code>{{ .Inner }}</code></pre>
+{{- else }}
 {{- $variant := "add" }}
 {{- if eq $kind ":" }}{{ $variant = "ratio" }}{{ else if eq $kind "→" }}{{ $variant = "seq" }}{{ end }}
 {{- $words := dict "+" "plus" ":" "to" "→" "then" "=" "makes" }}
@@ -101,3 +110,4 @@
   {{- end }}
   {{- with $caption }}<figcaption class="f-cap">{{ . }}</figcaption>{{ end }}
 </figure>
+{{- end }}
