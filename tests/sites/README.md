@@ -24,3 +24,14 @@ hugo --source tests/sites/everything --panicOnWarning --destination /tmp/fugu-ev
 ```
 
 The content is made up for testing, written to exercise templates rather than to be cooked from.
+
+## Fence spec fixtures
+
+The `formula`, `stack` and `flow` hooks follow hugo-warped's shared fence spec, which keeps a fixture for each case (`fences/fixtures/<type>/`). Its runner builds them all through Fugu's hooks and checks each one's warnings, fallback and drawn items. From a hugo-warped checkout:
+
+```sh
+tools/run-hugo-fixtures.py <site>/themes/fugu --with blowfish --types formula,stack,flow \
+    --item formula=f-slot --item stack=stack-label
+```
+
+Run it after changing any of those hooks; every case should pass.
