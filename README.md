@@ -22,7 +22,7 @@ Every section can be renamed in config (`dishes`, `writing`, …), and a part th
 
 ## What it adds
 
-Recipe pages with a sidebar for the Mechanic, To serve, Notes, and photos; ingredient check-off, scaling, and metric/imperial conversion; formula diagrams drawn from a ```` ```formula ```` block; exploded build diagrams from a ```` ```stack ```` block; `[[wiki links]]` as written in Obsidian; recipe cards; drafts published as "in development"; methods and blueprint pages; search; and a JSON index of every recipe. All the JavaScript is plain and dependency-free, and pages still read and print with it off. The full tour is [docs/features.md](docs/features.md).
+Recipe pages with a sidebar for the Mechanic, To serve, Notes, and photos; ingredient check-off, scaling, and metric/imperial conversion; formula diagrams drawn from a ```` ```formula ```` block; exploded build diagrams from a ```` ```stack ```` block; step-by-step flows from a ```` ```flow ```` block; `[[wiki links]]` as written in Obsidian; recipe cards; drafts published as "in development"; methods and blueprint pages; search; and a JSON index of every recipe. All the JavaScript is plain and dependency-free, and pages still read and print with it off. The full tour is [docs/features.md](docs/features.md).
 
 | | |
 |---|---|
@@ -60,7 +60,7 @@ Fugu is tested against Blowfish `295dae3` and Hugo 0.166.0, and needs at least H
 ## Docs
 
 - [Getting started](docs/getting-started.md): an empty site to one working recipe page
-- [Recipe format](docs/recipe-format.md): sections, multi-component recipes, wiki links, formula and stack diagrams, photos
+- [Recipe format](docs/recipe-format.md): sections, multi-component recipes, wiki links, formula, stack and flow diagrams, photos
 - [Frontmatter](docs/frontmatter.md): every field Fugu reads
 - [Configuration](docs/configuration.md): every `[params.fugu]` setting, and the Blowfish settings that matter
 - [Features](docs/features.md): what Fugu adds, as a reader sees it

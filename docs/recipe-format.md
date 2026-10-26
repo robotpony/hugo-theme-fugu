@@ -216,9 +216,32 @@ A build's first `stack` block is also drawn smaller, without labels, on its card
 
 The full grammar, and what warns, is in hugo-warped's [`fences/stack.md`](https://github.com/robotpony/hugo-warped/blob/main/fences/stack.md).
 
+## Flow diagrams
+
+A short sequence of steps, with no icons to draw, can be a row of boxed labels joined by arrows. Use a `flow` code block, one step per line, `Label | note`, the note optional:
+
+````markdown
+```flow
+Soak   | buttermilk, 4 hours+
+Dredge | once
+Rest   | 10 min
+Fry    | 12 min, then covered 10
+caption: The breading, start to finish
+```
+````
+
+- A leading `→ ` or `-> ` on a step is dropped, since the arrows are drawn anyway; so a `formula` sequence pastes in once its icon column is gone. On the first step it warns.
+- `row: <label>` lines split the steps into parallel rows, up to three, drawn one above the other with step *n* of each row in the same column, to compare two ways of doing a thing. A block that uses them starts with one; the label is optional.
+- An optional `caption: <text>` line goes last. Labels, notes, row labels and the caption are inline Markdown.
+- Keep a row to about five steps. More still draw, with a warning. A line with more than one `|`, or no label, is skipped with a warning, as is any other lowercase `key: ` line. A block with nothing to draw shows its source as plain text, and warns.
+
+In a narrow box (a phone, or the recipe sidebar, where a `## Variations` block lands) each row becomes a list down the page: the labels in a column with ↓ between them, each note beside its label. In Obsidian it reads as plain text.
+
+The full grammar, and what warns, is in hugo-warped's [`fences/flow.md`](https://github.com/robotpony/hugo-warped/blob/main/fences/flow.md).
+
 ### Notes in a diagram
 
-Any line of a `formula` or `stack` block can carry a note for whoever reads the source: `←` (or `<-`) and everything after it on the line. It's never drawn, and it's left out of the diagram's alt text and the card's tooltip. A line that's only a note is skipped. To put a literal arrow in a cell, write `\←` (or `\<-`).
+Any line of a `formula`, `stack` or `flow` block can carry a note for whoever reads the source: `←` (or `<-`) and everything after it on the line. It's never drawn, and it's left out of the diagram's alt text and the card's tooltip. A line that's only a note is skipped. To put a literal arrow in a cell, write `\←` (or `\<-`).
 
 ````markdown
 ```formula

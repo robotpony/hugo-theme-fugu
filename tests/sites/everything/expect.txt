@@ -199,3 +199,15 @@ recipes/veg-patties/index.html: !source-only
 recipes/index.html: !any tin
 recipes/index.html: !note-only line
 essays/methods/rice-bowls/builds/patty-bowl/index.html: !bread-and-butter
+
+# Flow blocks: one row drawn as an image, parallel rows as labelled lists,
+# notes and arrow prefixes dropped, inline Markdown in notes.
+recipes/plain-rice/index.html: <figure class="flow">
+recipes/plain-rice/index.html: aria-label="Rinse until clear, then Boil covered, then Simmer 15 min, then Rest 5 min, ← still covered"
+recipes/plain-rice/index.html: <span class="flow-note">until <em>clear</em></span>
+recipes/plain-rice/index.html: !lid on from here
+recipes/plain-rice/index.html: !note-only line
+recipes/plain-rice/index.html: aria-label="Stove: Rinse, then Boil covered, then Rest"
+recipes/plain-rice/index.html: aria-label="Rinse, then Cooker press start"
+reference/rice-ratios/index.html: <figure class="flow flow-rows headed" style="--cols: 5">
+reference/rice-ratios/index.html: <p class="flow-head" aria-hidden="true">Long-grain</p>

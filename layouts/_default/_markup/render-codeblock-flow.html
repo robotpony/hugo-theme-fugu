@@ -1,0 +1,150 @@
+{{/*
+  Flow diagrams: a ```flow fenced block drawn as a row of steps joined by
+  arrows, each label boxed with its note under it. Like a formula's →
+  mode, without icons. Ported from w42 (theme 0.6.0); the syntax is the
+  shared fence spec's (hugo-warped, fences/flow.md).
+
+    Soak   | buttermilk, 4 hours+
+    Dredge | once
+    → Fry  | 12 min, then covered 10
+    caption: The breading, start to finish
+
+  One step per line, `Label | note`, the note optional. A leading → or ->
+  is dropped, since the hook draws the arrows (it warns on a row's first
+  step). An optional `caption:` line, last, goes under the drawing.
+  Labels, notes, row labels and the caption are inline Markdown.
+
+  `row: <label>` lines (the label optional) split the steps into parallel
+  rows, up to three, with step n of each row in the same column. A block
+  that uses them must start with one. Without them it's one row.
+
+  A line with more than one |, an empty label, or a step after the
+  caption warns and isn't drawn; so does a keyword the block doesn't take.
+  A block with nothing to draw shows its source. A `← note` on any line
+  is dropped (partials/fence/line.html). Obsidian shows the block as
+  plain text.
+
+  A single row reads as one image ("Soak buttermilk, then Dredge once,
+  then …"); parallel rows are one <ol> each, labelled with the row's
+  label first. In a narrow box (a phone, the recipe sidebar) fugu.css
+  stacks a single row as a column with arrows pointing down, and wraps
+  each parallel row under its label.
+*/}}
+{{- $rowMode := findRE `(?m)^[ \t]*row:` .Inner 1 }}
+{{- $rows := slice }}
+{{- $head := "" }}
+{{- $steps := slice }}
+{{- $inRow := false }}
+{{- $rowAt := "" }}
+{{- $caption := "" }}
+{{- range $n, $raw := split .Inner "\n" }}
+  {{- $line := partialCached "fence/line.html" $raw $raw }}
+  {{- $at := partial "fence/where.html" (dict "pos" $.Position "line" $n) }}
+  {{- if not $line }}{{ continue }}{{ end }}
+  {{- if hasPrefix $line "caption:" }}
+    {{- $caption = trim (strings.TrimPrefix "caption:" $line) " " }}
+    {{- continue }}
+  {{- end }}
+  {{- if $caption }}
+    {{- warnf "flow [out-of-order]: skipped %q after the caption (the caption goes last) at %q" $line $at }}
+    {{- continue }}
+  {{- end }}
+  {{- if and $rowMode (hasPrefix $line "row:") }}
+    {{- if $inRow }}{{ $rows = $rows | append (dict "head" $head "steps" $steps "at" $rowAt) }}{{ end }}
+    {{- $head = trim (strings.TrimPrefix "row:" $line) " " }}
+    {{- $rowAt = $at }}
+    {{- $steps = slice }}
+    {{- $inRow = true }}
+    {{- continue }}
+  {{- end }}
+  {{- if findRE `^[a-z][a-z-]*: ` $line 1 }}
+    {{- warnf "flow [unknown-keyword]: skipped %q (takes row: and caption:) at %q" $line $at }}
+    {{- continue }}
+  {{- end }}
+  {{- if and $rowMode (not $inRow) }}
+    {{- warnf "flow [out-of-order]: skipped %q before the first row: (a block with rows starts with one) at %q" $line $at }}
+    {{- continue }}
+  {{- end }}
+  {{- with findRESubmatch `^(?:→|->)\s+(.*)$` $line 1 }}
+    {{- if not $steps }}{{ warnf "flow [stray-marker]: the first step has an arrow at %q" $at }}{{ end }}
+    {{- $line = index (index . 0) 1 }}
+  {{- end }}
+  {{- $f := split $line "|" }}
+  {{- $label := trim (index $f 0) " " }}
+  {{- if gt (len $f) 2 }}
+    {{- warnf "flow [too-many-cells]: skipped %q (want \"Label | note\") at %q" $line $at }}
+    {{- continue }}
+  {{- end }}
+  {{- if not $label }}
+    {{- warnf "flow [missing-cell]: skipped %q (want \"Label | note\") at %q" $line $at }}
+    {{- continue }}
+  {{- end }}
+  {{- $note := "" }}
+  {{- if eq (len $f) 2 }}{{ $note = trim (index $f 1) " " }}{{ end }}
+  {{- $steps = $steps | append (dict "label" $label "note" $note "at" $at) }}
+{{- end }}
+{{- if $rowMode }}
+  {{- if $inRow }}{{ $rows = $rows | append (dict "head" $head "steps" $steps "at" $rowAt) }}{{ end }}
+  {{- $drawn := slice }}
+  {{- range $rows }}
+    {{- if .steps }}{{ $drawn = $drawn | append . }}{{ else }}{{ warnf "flow [empty-group]: row %q has no steps at %q" .head .at }}{{ end }}
+  {{- end }}
+  {{- $rows = $drawn }}
+  {{- if gt (len $rows) 3 }}
+    {{- warnf "flow [over-limit]: %d rows; more than three crowd the block, at %q" (len $rows) (index $rows 3).at }}
+  {{- end }}
+{{- else if $steps }}
+  {{- $rows = slice (dict "head" "" "steps" $steps) }}
+{{- end }}
+{{- $cols := 0 }}
+{{- $headed := false }}
+{{- range $rows }}
+  {{- if gt (len .steps) 5 }}
+    {{- warnf "flow [over-limit]: %d steps; more than five crowd the row, at %q" (len .steps) (index .steps 5).at }}
+  {{- end }}
+  {{- if gt (len .steps) $cols }}{{ $cols = len .steps }}{{ end }}
+  {{- if .head }}{{ $headed = true }}{{ end }}
+{{- end }}
+
+{{- if not $rows }}
+  {{- warnf "flow [no-valid-lines]: nothing to draw, so the source shows, at %q" (partial "fence/where.html" (dict "pos" .Position "line" -1)) }}
+<pre><code>{{ .Inner }}</code></pre>
+{{- else if not $rowMode }}
+{{- $s0 := index $rows 0 }}
+<figure class="flow">
+  <div class="flow-row" role="img" aria-label="{{ partial "flow/aria.html" (dict "page" .Page "steps" $s0.steps) }}">
+    {{- range $i, $s := $s0.steps }}
+    {{- if $i }}<span class="flow-arrow" aria-hidden="true">→</span>{{ end }}
+    <div class="flow-step">
+      <span class="flow-label">{{ $.Page.RenderString (dict "display" "inline") $s.label }}</span>
+      {{- with $s.note }}<span class="flow-note">{{ $.Page.RenderString (dict "display" "inline") . }}</span>{{ end }}
+    </div>
+    {{- end }}
+  </div>
+  {{- with $caption }}<figcaption class="flow-cap">{{ $.Page.RenderString (dict "display" "inline") . }}</figcaption>{{ end }}
+</figure>
+{{- else }}
+<figure class="flow flow-rows{{ if $headed }} headed{{ end }}" style="--cols: {{ $cols }}">
+  <div class="flow-grid">
+    {{- range $rows }}
+    {{- $aria := partial "flow/aria.html" (dict "page" $.Page "steps" .steps) }}
+    {{- with .head }}
+    {{- $aria = printf "%s: %s" (plainify ($.Page.RenderString (dict "display" "inline") .)) $aria }}
+    <p class="flow-head" aria-hidden="true">{{ $.Page.RenderString (dict "display" "inline") . }}</p>
+    {{- end }}
+    <ol class="flow-row" aria-label="{{ $aria }}">
+      {{- range $i, $s := .steps }}
+      <li class="flow-item">
+        {{- if $i }}<span class="flow-arrow" aria-hidden="true">→</span>{{ end }}
+        <div class="flow-step">
+          <span class="flow-label">{{ $.Page.RenderString (dict "display" "inline") $s.label }}</span>
+          {{- with $s.note }}<span class="flow-note">{{ $.Page.RenderString (dict "display" "inline") . }}</span>{{ end }}
+        </div>
+      </li>
+      {{- end }}
+    </ol>
+    {{- end }}
+  </div>
+  {{- with $caption }}<figcaption class="flow-cap">{{ $.Page.RenderString (dict "display" "inline") . }}</figcaption>{{ end }}
+</figure>
+{{- end }}

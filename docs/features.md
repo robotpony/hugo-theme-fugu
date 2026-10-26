@@ -62,6 +62,10 @@ A ```` ```stack ```` block draws a build as an exploded view: each layer from th
 
 ![A build page: its picks, then its stack diagram with each layer labelled](images/build.png)
 
+## Flow diagrams
+
+A ```` ```flow ```` block draws a short sequence as boxed labels joined by arrows, each with a note under it, or up to three parallel rows lined up by step to compare them ([recipe-format.md](recipe-format.md#flow-diagrams); the full grammar is hugo-warped's [`fences/flow.md`](https://github.com/robotpony/hugo-warped/blob/main/fences/flow.md)). It's a formula's `→` sequence without icons, for steps that have none. In a narrow box, a phone or the recipe sidebar, each row becomes a list down the page.
+
 ## Wiki links and the glossary
 
 `[[Title]]` links any page to any other by its title, as in Obsidian, so a recipe's ingredient list can link to the recipe for its sauce ([recipe-format.md](recipe-format.md#wiki-links)).

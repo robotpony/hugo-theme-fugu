@@ -1,0 +1,14 @@
+{{/*
+  A flow row's aria-label: each step's label and note, plain text, joined
+  by ", then " ("Soak buttermilk, then Dredge once"), as the shared fence
+  spec says (hugo-warped, fences/flow.md, "Accessibility"). Takes a dict:
+  page (to render inline Markdown) and steps (the hook's step dicts).
+  Used by render-codeblock-flow.html.
+*/}}
+{{- $aria := slice }}
+{{- range .steps }}
+  {{- $label := plainify ($.page.RenderString (dict "display" "inline") .label) }}
+  {{- $note := plainify ($.page.RenderString (dict "display" "inline") .note) }}
+  {{- $aria = $aria | append (trim (printf "%s %s" $label $note) " ") }}
+{{- end }}
+{{- return (delimit $aria ", then ") }}

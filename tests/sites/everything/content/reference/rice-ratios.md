@@ -14,6 +14,22 @@ Used by [[Plain rice]].
 | Brown | 2 cups |
 | [[Plain rice\|Basic white]] | 1½ cups |
 
+Short-grain against long-grain:
+
+```flow
+row: Short-grain
+Rinse | three changes
+Soak  | 30 min
+Boil
+Steam | 15 min
+Rest  | 10 min
+row: Long-grain
+Rinse | once
+Boil  | `1½ cups` water
+Steam | 18 min
+caption: Same pot, different patience
+```
+
 A rice casserole, layered:
 
 ```stack

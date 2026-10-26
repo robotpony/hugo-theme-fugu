@@ -21,6 +21,15 @@ Rice on the stove, by ratio. Leftovers go into [[Veg patties]].
 
 Rinse the rice until the water runs clear. Bring the rice, water, and salt to a boil in a small pot, cover, and turn the heat to low. Cook for 15 minutes, then let it sit, covered, for 5 more.
 
+```flow
+← a note-only line, never drawn
+Rinse | until *clear*
+-> Boil  | covered ← lid on from here
+→ Simmer | 15 min
+Rest  | 5 min, \← still covered
+caption: Stove-top rice
+```
+
 ## Rinsing {.article}
 
 - Rinse in a sieve, not the pot.
@@ -33,3 +42,14 @@ Rinse the rice until the water runs clear. Bring the rice, water, and salt to a 
 ## Notes
 
 - Day-old rice is drier, which is what a patty or fried rice wants.
+
+```flow
+row: Stove
+Rinse
+Boil | covered
+Rest
+row:
+Rinse
+Cooker | press start
+caption: Two pots
+```
