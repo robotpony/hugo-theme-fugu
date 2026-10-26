@@ -10,7 +10,6 @@ The work list for taking Fugu to a theme other Blowfish users can install. Finis
 
 - [ ] Move template English to `i18n/en.yaml`, with Hugo's plural forms for counts: `single.html`, `term.html`, `reading-sidebar.html`, `toc.html`, `essays/list.html` (`git grep` the visible strings; "Recipe notes", "On cards", "Jump to", the "N recipes" counts, …).
 - [ ] JS strings in `ingredients.js` and `automagic-sidebar.js`: pass them in from the template (`data-` attribute or a JSON block from `i18n`), not translated in JS.
-- [ ] Docs note: unit conversion assumes English unit words; other languages' units are out of scope for 1.0.
 
 ## 5. Default design
 

@@ -5,3 +5,6 @@ tests/sites/*/resources/
 exampleSite/.hugo_build.lock
 exampleSite/public/
 exampleSite/resources/
+
+# macOS Finder metadata.
+.DS_Store
