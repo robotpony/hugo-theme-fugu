@@ -7,7 +7,9 @@
   the operator and icon keys, plus the quantity for a `:` ratio, where the
   numbers are the point. Labels, swaps, the `=` result, caption and bar
   never show here. Outputs nothing when the page has no formula block, and
-  skips unknown icon keys quietly (the recipe page's build already warns).
+  skips quietly what the page's hook skips with a warning: unknown icon
+  keys, rows with no label, and rows after the `=` row or the trailer; a
+  marker on the first row is dropped.
 
   Each slot carries the rest in a native tooltip (title): label, quantity,
   and swaps on a second line. The card's stretched title link would cover
@@ -18,18 +20,25 @@
 {{- with findRESubmatch "(?s)```formula[^\\n]*\\n(.*?)\\n```" .RawContent 1 }}
   {{- $slots := slice }}
   {{- $kind := "" }}
+  {{- $ended := false }}
+  {{- $first := true }}
   {{- range split (index (index . 0) 1) "\n" }}
     {{- $line := partialCached "fence/line.html" . . }}
-    {{- if or (not $line) (hasPrefix $line "caption:") (hasPrefix $line "bar:") (findRE `^[a-z][a-z-]*: ` $line 1) }}{{ continue }}{{ end }}
+    {{- if not $line }}{{ continue }}{{ end }}
+    {{- if findRE `^(caption|bar):` $line 1 }}{{ $ended = true }}{{ continue }}{{ end }}
+    {{- if or $ended (findRE `^[a-z][a-z-]*: ` $line 1) }}{{ continue }}{{ end }}
     {{- $op := "" }}
     {{- with findRESubmatch `^(\+|:|→|->|=)\s+(.*)$` $line 1 }}
       {{- $op = index (index . 0) 1 }}
       {{- $line = index (index . 0) 2 }}
     {{- end }}
-    {{- if eq $op "=" }}{{ continue }}{{ end }}
+    {{- if $first }}{{ $op = "" }}{{ end }}
+    {{- $first = false }}
+    {{- if eq $op "=" }}{{ $ended = true }}{{ continue }}{{ end }}
     {{- if eq $op "->" }}{{ $op = "→" }}{{ end }}
-    {{- if and $op (not $kind) }}{{ $kind = $op }}{{ end }}
     {{- $f := split $line "|" }}
+    {{- if or (lt (len $f) 2) (not (trim (index $f 1) " ")) }}{{ continue }}{{ end }}
+    {{- if and $op (not $kind) }}{{ $kind = $op }}{{ end }}
     {{- $label := "" }}
     {{- $qty := "" }}
     {{- $swaps := "" }}

@@ -183,8 +183,9 @@ can          | Beans   | 1 can         | black, pinto, chickpea
 - One operator per block: `+` for parts that go together, `:` for a ratio (the quantity is the ratio number), or `→` (or `->`) for the steps of a method. An optional last `=` line names the result.
 - Icons are file names from `assets/icons/formula/`, without `.svg`: one or two per slot. An unknown name draws a dashed circle and warns during the build.
 - Labels are one short word. Swaps are optional, up to three, separated by commas. A row with a fifth cell warns during the build. Keep it to five slots.
-- Optional lines after the slots: `caption: <text>`, and `bar: yes` to draw a ratio's proportions as a bar.
-- Any other lowercase `key: ` line is skipped with a warning. A block with nothing to draw shows its source as plain text, and warns.
+- The first slot has no operator; one there is dropped, with a warning. A later slot with none is joined by the block's operator.
+- Optional lines after the slots, once each and in either order: `caption: <text>`, and `bar: yes` to draw a ratio's proportions as a bar.
+- These are skipped with a warning: a slot with no label (`can`, `can |`), a slot after the `=` line or after `caption:` or `bar:`, a second `caption:` or `bar:`, and any other lowercase `key: ` line. More than two icons or three swaps draw, but warn. A block with nothing to draw shows its source as plain text, and warns.
 
 The diagram illustrates a sentence; it doesn't replace one. In Obsidian it reads as plain text.
 

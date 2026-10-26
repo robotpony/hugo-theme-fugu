@@ -17,7 +17,11 @@
   they pick up currentColor and the theme tokens. An unknown key draws a
   dashed circle and warns, so a typo shows up in review instead of
   breaking the page, as does a row with a fifth cell or a keyword it
-  doesn't take (skipped). A block with nothing to draw shows its source. A `← note` on any
+  doesn't take (skipped). A row with no label, a row after the `=` row or
+  the trailer (caption:, bar:, in either order), and a second caption: or
+  bar: are skipped with a warning; a marker on the first row is dropped
+  with one, and more than two icons or three swaps draw but warn. A block
+  with nothing to draw shows its source. A `← note` on any
   line is dropped (partials/fence/line.html). Obsidian shows the block as
   plain text.
 */}}
@@ -25,20 +29,30 @@
 {{- $kind := "" }}
 {{- $caption := "" }}
 {{- $bar := false }}
+{{- $seen := dict }}
+{{- $ended := false }}
+{{- $first := true }}
 {{- range $n, $raw := split .Inner "\n" }}
   {{- $line := partialCached "fence/line.html" $raw $raw }}
   {{- $at := partial "fence/where.html" (dict "pos" $.Position "line" $n) }}
   {{- if not $line }}{{ continue }}{{ end }}
-  {{- if hasPrefix $line "caption:" }}
-    {{- $caption = trim (strings.TrimPrefix "caption:" $line) " " }}
-    {{- continue }}
-  {{- end }}
-  {{- if hasPrefix $line "bar:" }}
-    {{- $bar = in (slice "yes" "true") (trim (strings.TrimPrefix "bar:" $line) " ") }}
+  {{- with findRESubmatch `^(caption|bar):\s*(.*)$` $line 1 }}
+    {{- $key := index (index . 0) 1 }}
+    {{- if index $seen $key }}
+      {{- warnf "formula [duplicate-keyword]: skipped a second %s: line at %q" $key $at }}
+      {{- continue }}
+    {{- end }}
+    {{- $seen = merge $seen (dict $key true) }}
+    {{- $val := trim (index (index . 0) 2) " " }}
+    {{- if eq $key "caption" }}{{ $caption = $val }}{{ else }}{{ $bar = in (slice "yes" "true") $val }}{{ end }}
     {{- continue }}
   {{- end }}
   {{- if findRE `^[a-z][a-z-]*: ` $line 1 }}
     {{- warnf "formula [unknown-keyword]: skipped %q (takes caption: and bar:) at %q" $line $at }}
+    {{- continue }}
+  {{- end }}
+  {{- if or $ended $seen }}
+    {{- warnf "formula [out-of-order]: skipped %q after the %s at %q" $line (cond $ended "= row" "caption: or bar:") $at }}
     {{- continue }}
   {{- end }}
   {{- $op := "" }}
@@ -47,6 +61,20 @@
     {{- $line = index (index . 0) 2 }}
   {{- end }}
   {{- if eq $op "->" }}{{ $op = "→" }}{{ end }}
+  {{- /* The first row line, drawn or not (hugo-warped fixture missing-cell). */}}
+  {{- $isFirst := $first }}
+  {{- $first = false }}
+  {{- $f := slice }}
+  {{- range split $line "|" }}{{ $f = $f | append (trim . " ") }}{{ end }}
+  {{- if or (lt (len $f) 2) (not (index $f 1)) }}
+    {{- warnf "formula [missing-cell]: skipped %q, which has no label (want icon | label | quantity | swaps) at %q" $line $at }}
+    {{- continue }}
+  {{- end }}
+  {{- if and $op $isFirst }}
+    {{- warnf "formula [stray-marker]: dropped the %s on the first row at %q" $op $at }}
+    {{- $op = "" }}
+  {{- end }}
+  {{- if eq $op "=" }}{{ $ended = true }}{{ end }}
   {{- if and $op (ne $op "=") }}
     {{- if and $kind (ne $kind $op) }}
       {{- warnf "formula [mixed-markers]: %s after %s, one operator per block, at %q" $op $kind $at }}
@@ -54,8 +82,6 @@
       {{- $kind = $op }}
     {{- end }}
   {{- end }}
-  {{- $f := slice }}
-  {{- range split $line "|" }}{{ $f = $f | append (trim . " ") }}{{ end }}
   {{- if gt (len $f) 4 }}
     {{- warnf "formula [too-many-cells]: %d cells in %q (want icon | label | quantity | swaps) at %q" (len $f) $line $at }}
   {{- end }}
@@ -66,6 +92,12 @@
     {{- $sw := slice }}
     {{- range split (index $f 3) "," }}{{ with trim . " " }}{{ $sw = $sw | append . }}{{ end }}{{ end }}
     {{- $slot = merge $slot (dict "swaps" $sw) }}
+  {{- end }}
+  {{- if gt (len $slot.icons) 2 }}
+    {{- warnf "formula [over-limit]: %d icons in %q; two fit a slot, at %q" (len $slot.icons) $line $at }}
+  {{- end }}
+  {{- if gt (len $slot.swaps) 3 }}
+    {{- warnf "formula [over-limit]: %d swaps in %q; three fit under a slot, at %q" (len $slot.swaps) $line $at }}
   {{- end }}
   {{- $slots = $slots | append $slot }}
 {{- end }}
