@@ -19,7 +19,8 @@
   that uses them must start with one. Without them it's one row.
 
   A line with more than one |, an empty label, or a step after the
-  caption warns and isn't drawn; so does a keyword the block doesn't take.
+  caption warns and isn't drawn; so does a keyword the block doesn't take,
+  and a second caption: (the first stands).
   A block with nothing to draw shows its source. A `← note` on any line
   is dropped (partials/fence/line.html). Obsidian shows the block as
   plain text.
@@ -37,15 +38,21 @@
 {{- $inRow := false }}
 {{- $rowAt := "" }}
 {{- $caption := "" }}
+{{- $hasCaption := false }}
 {{- range $n, $raw := split .Inner "\n" }}
   {{- $line := partialCached "fence/line.html" $raw $raw }}
   {{- $at := partial "fence/where.html" (dict "pos" $.Position "line" $n) }}
   {{- if not $line }}{{ continue }}{{ end }}
   {{- if hasPrefix $line "caption:" }}
+    {{- if $hasCaption }}
+      {{- warnf "flow [duplicate-keyword]: skipped a second caption: at %q" $at }}
+      {{- continue }}
+    {{- end }}
     {{- $caption = trim (strings.TrimPrefix "caption:" $line) " " }}
+    {{- $hasCaption = true }}
     {{- continue }}
   {{- end }}
-  {{- if $caption }}
+  {{- if $hasCaption }}
     {{- warnf "flow [out-of-order]: skipped %q after the caption (the caption goes last) at %q" $line $at }}
     {{- continue }}
   {{- end }}

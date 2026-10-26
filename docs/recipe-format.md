@@ -234,7 +234,7 @@ caption: The breading, start to finish
 - A leading `→ ` or `-> ` on a step is dropped, since the arrows are drawn anyway; so a `formula` sequence pastes in once its icon column is gone. On the first step it warns.
 - `row: <label>` lines split the steps into parallel rows, up to three, drawn one above the other with step *n* of each row in the same column, to compare two ways of doing a thing. A block that uses them starts with one; the label is optional.
 - An optional `caption: <text>` line goes last. Labels, notes, row labels and the caption are inline Markdown.
-- Keep a row to about five steps. More still draw, with a warning. A line with more than one `|`, or no label, is skipped with a warning, as is any other lowercase `key: ` line. A block with nothing to draw shows its source as plain text, and warns.
+- Keep a row to about five steps. More still draw, with a warning. A line with more than one `|`, or no label, is skipped with a warning, as is any other lowercase `key: ` line and a second `caption:` (the first stands). A block with nothing to draw shows its source as plain text, and warns.
 
 In a narrow box (a phone, or the recipe sidebar, where a `## Variations` block lands) each row becomes a list down the page: the labels in a column with ↓ between them, each note beside its label. In Obsidian it reads as plain text.
 

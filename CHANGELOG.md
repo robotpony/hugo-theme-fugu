@@ -8,7 +8,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 - 3 formula icons: `buttermilk` (a gable-top carton), `chicken` (a drumstick), and `cornmeal` (a corn cob), for Not a Chef's cornmeal fried chicken.
 - `{.article}` on a `##` heading keeps that section in the article: never an ingredient section, never moved to the sidebar or hidden, and still listed in "On this page" (`docs/recipe-format.md`).
-- `flow` blocks: a row of boxed steps joined by arrows, each with a note under it, or up to three parallel `row:`s lined up by step, ported from warpedvisions.org's w42 theme to hugo-warped's shared fence spec (`docs/recipe-format.md`, "Flow diagrams"). Styled in `fugu.css` under `.flow-*`; in a narrow box (a phone, the recipe sidebar) each row becomes a list down the page. A site that sets `fugu.styles = false` styles the `.flow-*` classes itself.
+- `flow` blocks: a row of boxed steps joined by arrows, each with a note under it, or up to three parallel `row:`s lined up by step, ported from warpedvisions.org's w42 theme to hugo-warped's shared fence spec (`docs/recipe-format.md`, "Flow diagrams"). Styled in `fugu.css` under `.flow-*`; in a narrow box (a phone, the recipe sidebar) each row becomes a list down the page. A site that sets `fugu.styles = false` styles the `.flow-*` classes itself. Checked against hugo-warped's `fences/fixtures/flow/`.
 - Notes in `formula`, `stack` and `flow` blocks: `←` (or `<-`) and the rest of the line is a source comment, never drawn, and `\←` is a literal arrow (`docs/recipe-format.md`, "Notes in a diagram").
 
 ### Changed
