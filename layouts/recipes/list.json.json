@@ -6,17 +6,24 @@
   _index.md asks for it with `outputs: [HTML, RSS, JSON]`.
 
   One entry per recipe, by title: frontmatter facts, word count, and
-  has_* flags for the optional sections. The flags are substring checks on
+  has_* flags for the optional sections. Drinks in the drink section
+  (params.fugu.drinkSection) are recipes too and are listed with them;
+  `section` says which folder each came from. The flags are substring checks on
   the raw Markdown, so a "## Notes" inside a code block counts too.
   `generated` is the build date, so this file differs between builds made
   on different days.
 */ -}}
 {{- $recipes := slice -}}
-{{- range .RegularPages.ByTitle -}}
+{{- $pages := .RegularPages -}}
+{{- with partial "section/name.html" "drink" -}}
+  {{- with site.GetPage (printf "/%s" .) -}}{{- $pages = $pages | append .RegularPages -}}{{- end -}}
+{{- end -}}
+{{- range $pages.ByTitle -}}
   {{- $raw := .RawContent -}}
   {{- $recipe := dict
     "title"          .Title
     "slug"           .File.ContentBaseName
+    "section"        .Section
     "date"           (cond (not .Date.IsZero) (.Date.Format "2006-01-02") "")
     "tags"           .Params.tags
     "cuisine"        .Params.cuisine

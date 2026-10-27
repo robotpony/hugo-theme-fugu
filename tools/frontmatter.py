@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
 frontmatter.py — Review and edit frontmatter across a Fugu site's recipes,
-essays, reference pages, log, and methods. The section folders come from
-the site's [params.fugu] (recipeSection, essaySection, referenceSection,
-logSection, methodSection), defaulting to content/recipes, content/essays,
-content/reference, and content/the-food-log, with no methods section.
+essays, reference pages, log, methods, and drinks. The section folders
+come from the site's [params.fugu] (recipeSection, essaySection,
+referenceSection, logSection, methodSection, drinkSection), defaulting to
+content/recipes, content/essays, content/reference, and
+content/the-food-log, with no methods or drinks section.
 
 No third-party dependencies. Frontmatter on these sites is a flat YAML
 mapping (scalars, flow lists `[a, b, c]`, occasional block lists, one
@@ -53,6 +54,7 @@ DEFAULT_SECTIONS = {
     "reference": "reference",
     "log": "the-food-log",
     "method": "",
+    "drink": "",
 }
 SECTION_PARAMS = {
     "recipe": "recipesection",
@@ -60,6 +62,7 @@ SECTION_PARAMS = {
     "reference": "referencesection",
     "log": "logsection",
     "method": "methodsection",
+    "drink": "drinksection",
 }
 
 
@@ -110,6 +113,7 @@ REQUIRED_FIELDS = {
     "reference": ["title", "date"],
     "log": ["title", "date"],
     "method": ["title", "date"],
+    "drink": ["title", "tags", "date"],
 }
 
 RECOMMENDED_FIELDS = {
@@ -118,6 +122,7 @@ RECOMMENDED_FIELDS = {
     "reference": ["source", "tags", "draft"],
     "log": [],
     "method": ["tags", "draft"],
+    "drink": ["source", "draft"],
 }
 
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -440,7 +445,7 @@ def cmd_check(args):
         total_errors += len(errors)
         total_warnings += len(warnings)
 
-        if kind == "recipe":
+        if kind in ("recipe", "drink"):
             try:
                 fm_lines, _ = read_file(path if path.is_absolute() else (REPO_ROOT / path))
                 title = parse_fields(fm_lines).get("title")

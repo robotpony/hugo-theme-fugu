@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 drafts.py — List content marked draft: true across a Fugu site's recipes,
-essays, methods, reference pages, and log (the sections frontmatter.py checks; see
-its --help).
+drinks, essays, methods, reference pages, and log (the sections
+frontmatter.py checks; see its --help).
 
 Reuses frontmatter.py's parser (same constrained YAML subset, no
 third-party dependencies).
@@ -63,8 +63,8 @@ def main():
     for d in drafts:
         by_kind.setdefault(d["kind"], []).append(d)
 
-    labels = {"recipe": "recipes", "essay": "essays", "method": "methods", "reference": "reference pages", "log": "log entries"}
-    for kind in ("recipe", "essay", "method", "reference", "log"):
+    labels = {"recipe": "recipes", "drink": "drinks", "essay": "essays", "method": "methods", "reference": "reference pages", "log": "log entries"}
+    for kind in ("recipe", "drink", "essay", "method", "reference", "log"):
         if kind not in by_kind:
             continue
         print(f"{labels[kind]} ({len(by_kind[kind])}):")

@@ -1,9 +1,9 @@
 {{/*
   The content folder a site uses for one of Fugu's sections, from
   [params.fugu] (defaults in Fugu's hugo.toml). Takes the role: "recipe",
-  "essay", "reference", "log", or "method". Returns "" when the site has turned that
-  section off, so callers must check before matching it against a page's
-  .Section: root pages like About have .Section "" too.
+  "essay", "reference", "log", "method", or "drink". Returns "" when the
+  site has turned that section off, so callers must check before matching
+  it against a page's .Section: root pages like About have .Section "" too.
 */}}
 {{ $params := site.Params.fugu | default dict }}
 {{ $key := printf "%ssection" . }}

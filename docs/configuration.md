@@ -39,9 +39,10 @@ These Blowfish and Hugo settings also matter:
   referenceSection = "reference"
   logSection = "the-food-log"
   methodSection = ""
+  drinkSection = ""
 ```
 
-Each is a folder under `content/`. Only recipes is required. `methodSection` is off by default: methods live in a folder of the essay section unless it names their own section ([Methods and blueprints](#methods-and-blueprints)). A section with no pages already shows nothing, so a site without essays doesn't have to set anything; set a section to `""` when the folder exists but isn't meant as that section.
+Each is a folder under `content/`. Only recipes is required. `methodSection` is off by default: methods live in a folder of the essay section unless it names their own section ([Methods and blueprints](#methods-and-blueprints)). `drinkSection` is off by default too; naming a folder (`"drinks"`) makes it a second recipe section, for drinks written in the recipe format: its pages get the recipe page, its list (`layouts/drinks/list.html`) is the recipes list counting drinks, its pages are in `/recipes/index.json`, the content tools check them as recipes, and the tag of the same name (`/tags/drinks/`) links to it. A section with no pages already shows nothing, so a site without essays doesn't have to set anything; set a section to `""` when the folder exists but isn't meant as that section.
 
 To rename a section, set its folder here and also set `type` in that section's `_index.md` to the default name, so Hugo finds Fugu's list layout for it:
 

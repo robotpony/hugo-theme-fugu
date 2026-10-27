@@ -1,0 +1,10 @@
+{{ define "main" }}
+{{/*
+  The drink section's page (params.fugu.drinkSection, e.g. /drinks/): the
+  recipes list's layout (partials/recipe/list.html), counting drinks. A
+  renamed section sets `type: drinks` in its _index.md so Hugo finds this
+  layout.
+*/}}
+{{ .Scratch.Set "scope" "list" }}
+{{ partial "recipe/list.html" (dict "page" . "noun" "drinks") }}
+{{ end }}

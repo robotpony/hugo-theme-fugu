@@ -3,12 +3,14 @@
   "reference", "log", "method", or "" for anything else (including root pages, whose
   .Section is ""). Takes a section name, usually a page's .Section, so
   templates compare roles instead of folder names a site may have renamed
-  (section/name.html goes the other way).
+  (section/name.html goes the other way). The drink section, when a site
+  has one, is a second recipe section: its role is "recipe".
 */}}
 {{ $role := "" }}
 {{ if . }}
   {{ range slice "recipe" "essay" "reference" "log" "method" }}
     {{ if eq (partial "section/name.html" .) $ }}{{ $role = . }}{{ break }}{{ end }}
   {{ end }}
+  {{ if and (not $role) (eq (partial "section/name.html" "drink") .) }}{{ $role = "recipe" }}{{ end }}
 {{ end }}
 {{ return $role }}

@@ -34,8 +34,11 @@
 {{ $essay := false }}
 {{ with and $isPrinciple (partialCached "principle/term.html" .Data.Term .Data.Term) }}{{ $essay = .essay }}{{ end }}
 {{ $recipeSection := partial "section/name.html" "recipe" }}
-{{ $allRecipes := eq (len (where .Pages "Section" $recipeSection)) (len .Pages) }}
-{{ $recipePages := where .Pages "Section" $recipeSection }}
+{{/* Recipes here means the recipe section's pages and the drink
+  section's, if the site has one. */}}
+{{ $recipeSections := partial "section/recipe-sections.html" . }}
+{{ $recipePages := where .Pages "Section" "in" $recipeSections }}
+{{ $allRecipes := eq (len $recipePages) (len .Pages) }}
 {{/* Pinned pages (frontmatter `pinned: true`) float to the top of a term
   listing too; everything else keeps its existing relative order. See
   DESIGN.md. */}}
@@ -56,7 +59,7 @@
 {{ $further := slice }}
 {{ with $essay }}{{ $further = $further | append . }}{{ end }}
 {{ range $allPages }}
-  {{ if and (ne .Section $recipeSection) (not (and $essay (eq .RelPermalink $essay.RelPermalink))) }}
+  {{ if and (not (in $recipeSections .Section)) (not (and $essay (eq .RelPermalink $essay.RelPermalink))) }}
     {{ $further = $further | append . }}
   {{ end }}
 {{ end }}
@@ -123,7 +126,15 @@
   {{/* Tagline: the term's own description (content/cuisine/<name>/_index.md)
     if one exists, else the recipe section's (content/recipes/_index.md by default),
     so the header lines up with the recipes list. */}}
-  {{ with .Description | default (site.GetPage (printf "/%s" $recipeSection)).Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
+  {{/* The tag named for the drink section (drinks, on /tags/drinks/)
+    also links to that section's page, which may hold only some of the
+    tag's pages. */}}
+  {{ $drinks := false }}
+  {{ with partial "section/name.html" "drink" }}
+    {{ if and (eq $.Data.Plural "tags") (eq ($.Data.Term | urlize) (path.Base .)) }}{{ $drinks = site.GetPage (printf "/%s" .) }}{{ end }}
+  {{ end }}
+  {{ $dek := .Description | default (site.GetPage (printf "/%s" $recipeSection)).Description }}
+  {{ if or $dek $drinks }}<p class="listing-dek">{{ $dek }}{{ with $drinks }}{{ if $dek }} {{ end }}<a class="listing-section-link" href="{{ .RelPermalink }}">{{ .Title }} →</a>{{ end }}</p>{{ end }}
   <div class="listing-search">{{ partial "search-box.html" (len (where site.RegularPages "Section" $recipeSection)) }}</div>
   <div class="rgrid">
     {{ range $pager.Pages }}

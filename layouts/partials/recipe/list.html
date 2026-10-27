@@ -1,0 +1,30 @@
+{{/*
+  A list of recipes: the recipes section's page (layouts/recipes/
+  list.html) and the drink section's (layouts/drinks/list.html). Takes
+  a dict: "page", the section page, and "noun", the word after the count
+  ("recipes", "drinks"). Uses the shared recipe card (partials/
+  recipe-card.html) in the .rgrid, under an .ltitle / .listing-count
+  header.
+
+  16 = four rows of four, so pagination stays near the fold; overrides the
+  site-wide pagerSize (12) for these pages only. Pinned pages (frontmatter
+  `pinned: true`) float to the top; everything else keeps its existing
+  relative order. See DESIGN.md.
+*/}}
+{{ $page := .page }}
+{{ $sorted := (where $page.Pages "Params.pinned" true) | append (where $page.Pages "Params.pinned" "!=" true) }}
+{{ $pager := $page.Paginate $sorted 16 }}
+<section class="listing">
+  <header class="listing-head">
+    <h1 class="ltitle">{{ $page.Title }}</h1>
+    <span class="listing-count">{{ len $page.Pages }} {{ .noun }}{{ if gt $pager.TotalPages 1 }} · page {{ $pager.PageNumber }} of {{ $pager.TotalPages }}{{ end }}</span>
+  </header>
+  {{ with $page.Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
+  <div class="listing-search">{{ partial "search-box.html" (len $page.Pages) }}</div>
+  <div class="rgrid">
+    {{ range $pager.Pages }}
+      {{ partial "recipe-card.html" . }}
+    {{ end }}
+  </div>
+  {{ partial "pagination.html" $page }}
+</section>

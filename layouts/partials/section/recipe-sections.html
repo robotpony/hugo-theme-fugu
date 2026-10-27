@@ -1,0 +1,11 @@
+{{/*
+  The folders whose pages are recipes: the recipe section and, when a
+  site has one, the drink section (both have the role "recipe" in
+  section/role.html). A slice of names, without any the site turned off,
+  for `where .Pages "Section" "in" …`.
+*/}}
+{{ $names := slice }}
+{{ range slice "recipe" "drink" }}
+  {{ with partial "section/name.html" . }}{{ $names = $names | append . }}{{ end }}
+{{ end }}
+{{ return $names }}

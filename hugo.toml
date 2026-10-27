@@ -32,6 +32,12 @@
   # definition, and its page is the methods list (layouts/methods/
   # list.html; a renamed section sets `type: methods`).
   methodSection = ""
+  # Drinks as their own section (e.g. "drinks" for content/drinks/), in
+  # the recipe format. Off by default. Its pages are recipes in every way
+  # but their folder: the recipe page, cards, list and the recipes JSON
+  # index. Its list is layouts/drinks/list.html (a renamed section sets
+  # `type: drinks`).
+  drinkSection = ""
 
   # Where wiki links look for glossary terms (see render-link.html): a
   # folder in the essay section whose pages are reference essays (or, with
