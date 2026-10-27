@@ -56,3 +56,6 @@ recipes/plain-rice/index.html: href="/reference/essays/win-the-fridge/"
 essays/cooking-reflections/why-ratios/index.html: <a href="/reference/essays/win-the-fridge/" class="glossary-link">
 tags/win-the-fridge/index.html: read-essay
 reference/index.html: href="/reference/essays/win-the-fridge/"
+
+# A wiki link reaches a section page by its title too, here a blueprint.
+recipes/plain-rice/index.html: <a href="/methods/rice-bowls/" class="wikilink">Rice bowls</a>

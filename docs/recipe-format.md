@@ -163,7 +163,7 @@ Link to another page by its title, as in Obsidian:
 - 1 batch [[Basic pie crust|pie crust]], blind-baked
 ```
 
-The link matches a page's `title`, ignoring case and punctuation, so `[[rich veg mushroom stock]]` finds "Rich veg/mushroom stock". `[[Title|text]]` shows `text`. A link can point at any page on the site, not only recipes.
+The link matches a page's `title`, ignoring case and punctuation, so `[[rich veg mushroom stock]]` finds "Rich veg/mushroom stock". `[[Title|text]]` shows `text`. A link can point at any page on the site, not only recipes, including a section's own page (its `_index.md`), such as a blueprint like `[[Burgers]]`; when a regular page and a section share a title, the regular page wins.
 
 If no page has that title, Fugu looks for a `##` heading of that name in the glossary page, if the site has one, and shows the entry in a popover. A link that matches nothing is marked as broken. See [configuration.md](configuration.md) for the glossary.
 

@@ -9,7 +9,7 @@ prep_time: 5 min
 cook_time: 20 min
 total_time: 25 min
 ---
-Rice on the stove, by ratio. Leftovers go into [[Veg patties]].
+Rice on the stove, by ratio. Leftovers go into [[Veg patties]], or under one of the [[Rice bowls]].
 
 ## Ingredients
 

@@ -23,6 +23,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Changed
 
+- A wiki link can reach a section's page by its title, such as a blueprint (`[[Burgers]]`), which rendered as broken before; a regular page with the same title still wins.
 - A `formula` row with more than four cells warns during the build, rather than dropping the extra cells quietly.
 - `formula` follows hugo-warped's settled readings: a marker on the first row drawn (rows skipped before it don't count) is dropped with a warning (`stray-marker`); a row with no label (`missing-cell`), a row after the `=` row or the `caption:`/`bar:` trailer (`out-of-order`), and a second `caption:` or `bar:` (`duplicate-keyword`) are skipped with a warning; more than two icons or three swaps draw with an `over-limit` warning. A card's formula strip skips the same rows. Checked against hugo-warped's `fences/fixtures/formula/`.
 - `stack` follows hugo-warped's settled readings: a layer with no label is skipped with a `missing-cell` warning, where before it drew with its key as the label; a layer after `caption:` or `repeat:` (`out-of-order`) and a second `caption:` (`duplicate-keyword`) are skipped; a fourth cell warns `too-many-cells`; a `repeat:` count that isn't a whole number of 2 or more warns `bad-repeat`. Checked against hugo-warped's `fences/fixtures/stack/`.

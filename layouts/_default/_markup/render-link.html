@@ -22,6 +22,10 @@
   reference section, by default content/reference/glossary.md), the
   "doesn't get its own page" tier, before giving up as a .broken-link.
   Either tier is off when its param or section is "".
+
+  A [[Title]] matches regular pages first, then section pages, so a
+  blueprint (content/methods/burgers/_index.md) can be linked by its title
+  too; a regular page wins when the two share one.
 */ -}}
 
 {{- $destination := .Destination -}}
@@ -50,6 +54,14 @@
     {{- $normTitle := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower .Title)) -}}
     {{- if eq $normTitle $normDest -}}
       {{- $matches = $matches | append . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if not $matches -}}
+    {{- range where site.Pages "Kind" "section" -}}
+      {{- $normTitle := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower .Title)) -}}
+      {{- if eq $normTitle $normDest -}}
+        {{- $matches = $matches | append . -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
   {{- if gt (len $matches) 0 -}}
