@@ -28,6 +28,13 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 - `formula` and `stack` warnings carry the shared fence spec's codes after the type (`formula [unknown-token]: …`), and point at the line they're about, not the block's opening fence.
 - A `formula` or `stack` line that's a keyword the block doesn't take (`note: …`) is skipped with one `unknown-keyword` warning, instead of drawing its words as icons or a layer. A block with nothing to draw shows its source as plain text and warns `no-valid-lines`.
 
+- `tests/check.py` fails a build on any Hugo warning except Blowfish's "not compatible with this Hugo version", instead of building with `--panicOnWarning`, so it runs on a Hugo newer than Blowfish's declared range.
+
+### Fixed
+
+- `params.disableImageZoom = true` now turns image zoom off. Blowfish's `head.html` (and Fugu's copy) piped `not .Site.Params.disableImageZoom` into `default true`, which turns `false` back into `true`, so zoom always loaded.
+- The ingredient options callout (`.ing-config`) closes on a click outside it, from `ingredients.js`. Not a Chef did this in its own header script; other sites' callouts stayed open.
+
 ## v0.1.0 (2026-10-17)
 
 The first release: Fugu installs as a Hugo module, pinned to the Blowfish it's tested against, or as a git submodule. Still a work in progress before `v1.0.0` (PLAN.md).

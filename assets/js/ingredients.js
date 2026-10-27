@@ -995,6 +995,12 @@
       summary.focus();
     });
 
+    // A click anywhere outside the open callout closes it, as a menu would;
+    // <details> alone stays open. Clicks inside are left to the browser.
+    document.addEventListener('click', function (e) {
+      if (details.open && !details.contains(e.target)) details.open = false;
+    });
+
     controller.attachSurface(surface);
     return details;
   }
