@@ -28,7 +28,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 - `formula` and `stack` warnings carry the shared fence spec's codes after the type (`formula [unknown-token]: …`), and point at the line they're about, not the block's opening fence.
 - A `formula` or `stack` line that's a keyword the block doesn't take (`note: …`) is skipped with one `unknown-keyword` warning, instead of drawing its words as icons or a layer. A block with nothing to draw shows its source as plain text and warns `no-valid-lines`.
 
-- `tests/check.py` fails a build on any Hugo warning except Blowfish's "not compatible with this Hugo version", instead of building with `--panicOnWarning`, so it runs on a Hugo newer than Blowfish's declared range.
+- `tests/check.py` and `tests/install.py` fail a build on any Hugo warning except Blowfish's "not compatible with this Hugo version", instead of building with `--panicOnWarning`, so they run on a Hugo newer than Blowfish's declared range.
 
 ### Fixed
 

@@ -43,7 +43,7 @@ EXAMPLE = FUGU / "exampleSite"
 # other. That says nothing about whether the site renders, so it's the one
 # warning a build may carry; every other warning fails the build.
 IGNORED_WARNINGS = [
-    re.compile(r'Module "blowfish" is not compatible with this Hugo version'),
+    re.compile(r'Module "(blowfish|github\.com/nunocoracao/blowfish[^"]*)" is not compatible with this Hugo version'),
 ]
 
 

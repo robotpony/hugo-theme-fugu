@@ -8,7 +8,8 @@ says, and check the recipe page it promises.
 
 Starts from `hugo new site`, installs Fugu and Blowfish by one method,
 writes the config, the recipes section, and the first recipe from the
-code blocks in getting-started.md, builds with --panicOnWarning, and checks
+code blocks in getting-started.md, builds it, failing on any warning but
+Blowfish's Hugo version check (as tests/check.py does), and checks
 the recipe page has its ingredients, method, and sidebar. Fixtures find
 the themes through themesDir, so they can't catch the install steps or the
 docs drifting from the theme; this can.
@@ -46,6 +47,13 @@ def block_after(doc, marker):
     if not m:
         sys.exit(f"install: no code block after {marker!r}")
     return m.group(1)
+
+
+# Blowfish warns on a Hugo outside its declared range; that says nothing
+# about whether the site renders, so it's the one warning a build may carry.
+IGNORED_WARNINGS = [
+    re.compile(r'Module "(blowfish|github\.com/nunocoracao/blowfish[^"]*)" is not compatible with this Hugo version'),
+]
 
 
 def run(cmd, cwd, shell=False):
@@ -121,7 +129,11 @@ def main():
         recipes.mkdir(parents=True)
         (recipes / "_index.md").write_text(block_after(doc, "Create `content/recipes/_index.md`"))
         (recipes / "plain-rice.md").write_text(block_after(doc, "Create `content/recipes/plain-rice.md`"))
-        run(["hugo", "--panicOnWarning", "--destination", "public"], site)
+        out = run(["hugo", "--logLevel", "warn", "--destination", "public"], site)
+        warnings = [l for l in out.splitlines() if l.startswith("WARN")
+                    and not any(p.search(l) for p in IGNORED_WARNINGS)]
+        if warnings:
+            sys.exit("install: build warned:\n" + "\n".join(warnings))
 
         page = (site / "public" / "recipes" / "plain-rice" / "index.html").read_text()
         checks = {
