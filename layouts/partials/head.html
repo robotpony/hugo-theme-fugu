@@ -1,5 +1,5 @@
 {{/*
-  Full override of themes/blowfish/layouts/partials/head.html. Six
+  Full override of themes/blowfish/layouts/partials/head.html. Seven
   changes, everything else as Blowfish has it:
 
   - Feed link on pages: a regular page links its nearest section's RSS
@@ -21,6 +21,9 @@
     description.
   - Popovers: loads assets/js/popover.js (deferred) on every page, since
     glossary terms, principle chips, and draft marks can be anywhere.
+  - Image zoom: params.disableImageZoom = true turns it off. Blowfish's
+    `not .Site.Params.disableImageZoom | default true` pipes the `not`
+    into `default`, so zoom always loaded; the parentheses fix that.
 */}}
 <head>
   <meta charset="utf-8">
@@ -164,7 +167,7 @@
   {{ with resources.Get "css/custom.css" }}
     {{ $cssResources = $cssResources | append . }}
   {{ end }}
-  {{ if not .Site.Params.disableImageZoom | default true }}
+  {{ if not (.Site.Params.disableImageZoom | default false) }}
     {{ $cssResources = $cssResources | append (resources.Get "lib/zoom/style.css") }}
   {{ end }}
   {{ $bundleCSS := $cssResources | resources.Concat "css/main.bundle.css" | resources.Minify | resources.Fingerprint $alg }}
@@ -197,7 +200,7 @@
       src="{{ $jsZenMode.RelPermalink }}"
       integrity="{{ $jsZenMode.Data.Integrity }}"></script>
   {{ end }}
-  {{ if not .Site.Params.disableImageZoom | default true }}
+  {{ if not (.Site.Params.disableImageZoom | default false) }}
     {{ $zoomJS := resources.Get "lib/zoom/zoom.min.umd.js" | resources.Fingerprint $alg }}
     <script defer src="{{ $zoomJS.RelPermalink }}" integrity="{{ $zoomJS.Data.Integrity }}"></script>
     {{ $zoomInit := resources.Get "js/medium-zoom.js" | resources.Fingerprint $alg }}
