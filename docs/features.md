@@ -54,7 +54,7 @@ The build warns about an icon name it doesn't know (and draws a dashed circle fo
 
 ### The icon kit
 
-The icons are SVGs in `assets/icons/formula/`, one per name: bottle, bowl, butter, buttermilk, can, carrot, cheese, chicken, clock, cornmeal, crumbs, cup, egg, flame, flour, fruit, herb, honey, ice, jar, lemon, lentils, mug, mustard, oats, oil, onion, oven, pan, patty, pepper, pickle, pot, potato, salt, soy, strainer, sugar, vinegar, water, wine. A site adds icons, or replaces Fugu's, by putting SVGs with those names in its own `assets/icons/formula/`. Icons are drawn in `currentColor`, so they follow the text colour in light and dark mode.
+The icons are SVGs in `assets/icons/formula/`, one per name: bottle, bowl, breast, bun, butter, buttermilk, can, carrot, cheese, chicken, clock, cornmeal, crumbs, cup, egg, flame, flour, fruit, herb, honey, ice, jar, knife, lemon, lentils, mug, mustard, oats, oil, onion, oven, pan, patty, pepper, pickle, pot, potato, pounder, salt, soy, strainer, sugar, vinegar, water, wine. A site adds icons, or replaces Fugu's, by putting SVGs with those names in its own `assets/icons/formula/`. Icons are drawn in `currentColor`, so they follow the text colour in light and dark mode.
 
 ## Stack diagrams
 
