@@ -2,7 +2,7 @@
 # See ../README.md.
 baseURL = "https://example.org/"
 title = "Recipes only"
-theme = ["fugu", "blowfish"]
+theme = ["fugu", "hugo-warped", "blowfish"]
 themesDir = "../../../.."
 
 [taxonomies]

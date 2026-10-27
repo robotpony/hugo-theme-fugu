@@ -16,13 +16,16 @@ on:
 env:
   HUGO_VERSION: 0.166.0
   BLOWFISH_REF: 295dae334547f6737a939a5d49f2807d6c0b73b8
+  # hugo-warped's fence module: Fugu's formula, stack and flow hooks read
+  # their blocks with its parse partials.
+  HUGO_WARPED_REF: 31eceaa7cc128d486fee14e7ce5a06965efcc4ef
 
 jobs:
   fixtures:
     runs-on: ubuntu-latest
     steps:
-      # The fixtures find their themes at ../../../.. (themesDir), so Fugu
-      # and Blowfish go side by side under themes/, as in a real site.
+      # The fixtures find their themes at ../../../.. (themesDir), so Fugu,
+      # hugo-warped and Blowfish go side by side under themes/, as in a real site.
       - uses: actions/checkout@v5
         with:
           path: themes/fugu
@@ -31,6 +34,11 @@ jobs:
           repository: nunocoracao/blowfish
           ref: ${{ env.BLOWFISH_REF }}
           path: themes/blowfish
+      - uses: actions/checkout@v5
+        with:
+          repository: robotpony/hugo-warped
+          ref: ${{ env.HUGO_WARPED_REF }}
+          path: themes/hugo-warped
       - name: Install Hugo
         run: |
           curl -sSLf -o hugo.deb "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"

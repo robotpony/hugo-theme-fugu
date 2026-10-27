@@ -9,21 +9,16 @@
     → Fry  | 12 min, then covered 10
     caption: The breading, start to finish
 
-  One step per line, `Label | note`, the note optional. A leading → or ->
-  is dropped, since the hook draws the arrows (it warns on a row's first
-  step). An optional `caption:` line, last, goes under the drawing.
+  One step per line, `Label | note`, the note optional, with an optional
+  → or -> before it (the hook draws the arrows anyway). `row: <label>`
+  lines split the steps into parallel rows, up to three, with step n of
+  each row in the same column; an optional `caption:` line goes last.
   Labels, notes, row labels and the caption are inline Markdown.
 
-  `row: <label>` lines (the label optional) split the steps into parallel
-  rows, up to three, with step n of each row in the same column. A block
-  that uses them must start with one. Without them it's one row.
-
-  A line with more than one |, an empty label, or a step after the
-  caption warns and isn't drawn; so does a keyword the block doesn't take,
-  and a second caption: (the first stands).
-  A block with nothing to draw shows its source. A `← note` on any line
-  is dropped (partials/fence/line.html). Obsidian shows the block as
-  plain text.
+  hugo-warped's parse reads the block (the shared fence spec,
+  fences/flow.md) and warns about anything it skips or doubts; this draws
+  what it keeps, regrouping its lines into rows. A block with nothing to
+  draw shows its source. Obsidian shows the block as plain text.
 
   A single row reads as one image ("Soak buttermilk, then Dredge once,
   then …"); parallel rows are one <ol> each, labelled with the row's
@@ -31,90 +26,34 @@
   stacks a single row as a column with arrows pointing down, and wraps
   each parallel row under its label.
 */}}
-{{- $rowMode := findRE `(?m)^[ \t]*row:` .Inner 1 }}
+{{- $p := partial "hugo-warped/parse.html" . }}
+{{- partial "hugo-warped/warn.html" (dict "hook" . "parse" $p) }}
+{{- /* The parse lists a row: head, then its steps; an empty row is already gone. */}}
+{{- $rowMode := false }}
 {{- $rows := slice }}
-{{- $head := "" }}
-{{- $steps := slice }}
-{{- $inRow := false }}
-{{- $rowAt := "" }}
 {{- $caption := "" }}
-{{- $hasCaption := false }}
-{{- range $n, $raw := split .Inner "\n" }}
-  {{- $line := partialCached "fence/line.html" $raw $raw }}
-  {{- $at := partial "fence/where.html" (dict "pos" $.Position "line" $n) }}
-  {{- if not $line }}{{ continue }}{{ end }}
-  {{- if hasPrefix $line "caption:" }}
-    {{- if $hasCaption }}
-      {{- warnf "flow [duplicate-keyword]: skipped a second caption: at %q" $at }}
-      {{- continue }}
-    {{- end }}
-    {{- $caption = trim (strings.TrimPrefix "caption:" $line) " " }}
-    {{- $hasCaption = true }}
+{{- range $p.lines }}
+  {{- if eq .keyword "caption" }}{{ $caption = .value }}{{ continue }}{{ end }}
+  {{- if eq .keyword "row" }}
+    {{- $rowMode = true }}
+    {{- $rows = $rows | append (dict "head" .value "steps" slice) }}
     {{- continue }}
   {{- end }}
-  {{- if $hasCaption }}
-    {{- warnf "flow [out-of-order]: skipped %q after the caption (the caption goes last) at %q" $line $at }}
-    {{- continue }}
-  {{- end }}
-  {{- if and $rowMode (hasPrefix $line "row:") }}
-    {{- if $inRow }}{{ $rows = $rows | append (dict "head" $head "steps" $steps "at" $rowAt) }}{{ end }}
-    {{- $head = trim (strings.TrimPrefix "row:" $line) " " }}
-    {{- $rowAt = $at }}
-    {{- $steps = slice }}
-    {{- $inRow = true }}
-    {{- continue }}
-  {{- end }}
-  {{- if findRE `^[a-z][a-z-]*: ` $line 1 }}
-    {{- warnf "flow [unknown-keyword]: skipped %q (takes row: and caption:) at %q" $line $at }}
-    {{- continue }}
-  {{- end }}
-  {{- if and $rowMode (not $inRow) }}
-    {{- warnf "flow [out-of-order]: skipped %q before the first row: (a block with rows starts with one) at %q" $line $at }}
-    {{- continue }}
-  {{- end }}
-  {{- with findRESubmatch `^(?:→|->)\s+(.*)$` $line 1 }}
-    {{- if not $steps }}{{ warnf "flow [stray-marker]: the first step has an arrow at %q" $at }}{{ end }}
-    {{- $line = index (index . 0) 1 }}
-  {{- end }}
-  {{- $f := split $line "|" }}
-  {{- $label := trim (index $f 0) " " }}
-  {{- if gt (len $f) 2 }}
-    {{- warnf "flow [too-many-cells]: skipped %q (want \"Label | note\") at %q" $line $at }}
-    {{- continue }}
-  {{- end }}
-  {{- if not $label }}
-    {{- warnf "flow [missing-cell]: skipped %q (want \"Label | note\") at %q" $line $at }}
-    {{- continue }}
-  {{- end }}
+  {{- if not $rows }}{{ $rows = slice (dict "head" "" "steps" slice) }}{{ end }}
+  {{- $last := index $rows (sub (len $rows) 1) }}
   {{- $note := "" }}
-  {{- if eq (len $f) 2 }}{{ $note = trim (index $f 1) " " }}{{ end }}
-  {{- $steps = $steps | append (dict "label" $label "note" $note "at" $at) }}
-{{- end }}
-{{- if $rowMode }}
-  {{- if $inRow }}{{ $rows = $rows | append (dict "head" $head "steps" $steps "at" $rowAt) }}{{ end }}
-  {{- $drawn := slice }}
-  {{- range $rows }}
-    {{- if .steps }}{{ $drawn = $drawn | append . }}{{ else }}{{ warnf "flow [empty-group]: row %q has no steps at %q" .head .at }}{{ end }}
-  {{- end }}
-  {{- $rows = $drawn }}
-  {{- if gt (len $rows) 3 }}
-    {{- warnf "flow [over-limit]: %d rows; more than three crowd the block, at %q" (len $rows) (index $rows 3).at }}
-  {{- end }}
-{{- else if $steps }}
-  {{- $rows = slice (dict "head" "" "steps" $steps) }}
+  {{- if ge (len .row) 2 }}{{ $note = index .row 1 }}{{ end }}
+  {{- $last = merge $last (dict "steps" ($last.steps | append (dict "label" (index .row 0) "note" $note))) }}
+  {{- $rows = (first (sub (len $rows) 1) $rows) | append $last }}
 {{- end }}
 {{- $cols := 0 }}
 {{- $headed := false }}
 {{- range $rows }}
-  {{- if gt (len .steps) 5 }}
-    {{- warnf "flow [over-limit]: %d steps; more than five crowd the row, at %q" (len .steps) (index .steps 5).at }}
-  {{- end }}
   {{- if gt (len .steps) $cols }}{{ $cols = len .steps }}{{ end }}
   {{- if .head }}{{ $headed = true }}{{ end }}
 {{- end }}
 
-{{- if not $rows }}
-  {{- warnf "flow [no-valid-lines]: nothing to draw, so the source shows, at %q" (partial "fence/where.html" (dict "pos" .Position "line" -1)) }}
+{{- if $p.fallback }}
 <pre><code>{{ .Inner }}</code></pre>
 {{- else if not $rowMode }}
 {{- $s0 := index $rows 0 }}

@@ -4,21 +4,13 @@
   layers drawn over the lower. Shared by render-codeblock-stack.html (the
   page) and stack-strip.html (cards and the build page's diagram).
 
-  One layer per line, `key | label | role`, plus optional lines. A key
-  can be a pair, `bun-base + mayo` (spaces optional), drawn from
-  bun-base+mayo.svg: a spread on its bun is its own drawing, not two
-  layers on top of each other, so a pair with no file warns like any
-  unknown key.
-
-    caption: Drive-in deluxe
-    repeat: 3-5 x3     (layers 3 to 5, three times: a "× 3" bracket)
-
-  The optional lines come after the layers, in either order; a layer
-  after one is skipped. Several repeat: lines may overlap or nest; a
-  second caption: is skipped. A layer with no label, or a repeat: whose
-  count isn't a whole number of 2 or more, is skipped too, and a fourth
-  cell or more is dropped. Each of those warns when pos is set (the
-  shared fence spec's readings, hugo-warped fences/stack.md).
+  One layer per line, `key | label | role`, plus optional caption: and
+  repeat: lines (`repeat: 3-5 x3`, a "× 3" bracket by layers 3 to 5).
+  A key can be a pair, `bun-base + mayo`, drawn from bun-base+mayo.svg: a
+  spread on its bun is its own drawing, not two layers on top of each
+  other. hugo-warped's parse reads the block (the shared fence spec,
+  fences/stack.md) and warns about anything it skips or doubts; this
+  draws what it keeps, and an unknown key as a dashed placeholder.
 
   The layer files share a 210-wide viewBox centred on x=105, each with its
   own height; data-edge is how far the drawing reaches right of centre, so
@@ -28,82 +20,34 @@
   CSS restyles them by class (.stack-label, .stack-role, .stack-lead,
   .stack-dot, .stack-bracket, .stack-times, .stack-cap).
 
-  Takes a dict: inner (the block's text), labels (draw leaders, labels and
-  roles on the right; layers 10 apart, but each label's middle at least
-  31 below the one before when that has a role, 18 when it hasn't, so
-  the labels never crowd), compact (for cards: tighter gaps, tighter still for
-  tall stacks, 6 for up to six layers and 0.75 less for each layer
-  after, down to 2.5; a `repeat:` draws its layers once, so it doesn't
-  count), caption (show
-  the caption), pos (the block's .Position; when set, an unknown key or a
-  bad repeat line warns, as the formula block does).
+  Takes a dict: parse (hugo-warped/parse.html's, not a fallback), labels
+  (draw leaders, labels and roles on the right; layers 10 apart, but each
+  label's middle at least 31 below the one before when that has a role,
+  18 when it hasn't, so the labels never crowd), compact (for cards:
+  tighter gaps, tighter still for tall stacks, 6 for up to six layers and
+  0.75 less for each layer after, down to 2.5; a `repeat:` draws its
+  layers once, so it doesn't count) and caption (show the caption).
 */}}
 {{- $cx := 105.0 }}
 {{- $rx := 70.0 }}
 {{- $compact := .compact | default false }}
 {{- $gap := 10.0 }}
 {{- $labels := .labels | default false }}
-{{- $pos := .pos }}
 {{- $caption := "" }}
 {{- $repeats := slice }}
 {{- $layers := slice }}
-{{- $trailer := dict }}
-{{- range $n, $raw := split .inner "\n" }}
-  {{- $line := partialCached "fence/line.html" $raw $raw }}
-  {{- $at := "" }}
-  {{- with $pos }}{{ $at = partial "fence/where.html" (dict "pos" . "line" $n) }}{{ end }}
-  {{- if not $line }}{{ continue }}{{ end }}
-  {{- if hasPrefix $line "caption:" }}
-    {{- if index $trailer "caption" }}
-      {{- with $pos }}{{ warnf "stack [duplicate-keyword]: skipped a second caption: at %q" $at }}{{ end }}
-      {{- continue }}
-    {{- end }}
-    {{- $caption = trim (strings.TrimPrefix "caption:" $line) " " }}
-    {{- $trailer = merge $trailer (dict "caption" true) }}
-    {{- continue }}
-  {{- end }}
-  {{- if hasPrefix $line "repeat:" }}
-    {{- $trailer = merge $trailer (dict "repeat" true) }}
-    {{- $spec := trim (strings.TrimPrefix "repeat:" $line) " " }}
-    {{- $m := slice }}
-    {{- with findRESubmatch `^(\d+)(?:\s*-\s*(\d+))?\s*[x×]\s*(\d+)$` $spec 1 }}{{ $m = index . 0 }}{{ end }}
-    {{- if and $m (ge (int (index $m 3)) 2) }}
-      {{- $from := int (index $m 1) }}
-      {{- $to := cond (ne (index $m 2) "") (int (index $m 2)) $from }}
-      {{- $repeats = $repeats | append (dict "from" $from "to" $to "n" (index $m 3) "at" $at) }}
-    {{- else }}
-      {{- with $pos }}{{ warnf "stack [bad-repeat]: can't read %q (want `repeat: 3-5 x3`, a count of 2 or more) at %q" $line $at }}{{ end }}
-    {{- end }}
-    {{- continue }}
-  {{- end }}
-  {{- if findRE `^[a-z][a-z-]*: ` $line 1 }}
-    {{- with $pos }}{{ warnf "stack [unknown-keyword]: skipped %q (takes caption: and repeat:) at %q" $line $at }}{{ end }}
-    {{- continue }}
-  {{- end }}
-  {{- if $trailer }}
-    {{- with $pos }}{{ warnf "stack [out-of-order]: skipped %q after the caption: or repeat: lines at %q" $line $at }}{{ end }}
-    {{- continue }}
-  {{- end }}
-  {{- $f := slice }}
-  {{- range split $line "|" }}{{ $f = $f | append (trim . " ") }}{{ end }}
-  {{- if or (lt (len $f) 2) (not (index $f 1)) }}
-    {{- with $pos }}{{ warnf "stack [missing-cell]: skipped %q, which has no label (want layer | label | role) at %q" $line $at }}{{ end }}
-    {{- continue }}
-  {{- end }}
-  {{- if gt (len $f) 3 }}
-    {{- with $pos }}{{ warnf "stack [too-many-cells]: %d cells in %q; drew the first three (layer | label | role) at %q" (len $f) $line $at }}{{ end }}
-  {{- end }}
-  {{- /* `a + b` is a pre-drawn pair (a spread on the bun), a+b.svg. */}}
-  {{- $key := replaceRE `\s*\+\s*` "+" (index $f 0) }}
-  {{- $layer := dict "key" $key "label" (index $f 1) "role" "" "svg" "" "h" 20.0 "edge" 40.0 }}
-  {{- if ge (len $f) 3 }}{{ $layer = merge $layer (dict "role" (index $f 2)) }}{{ end }}
+{{- range .parse.lines }}
+  {{- if eq .keyword "caption" }}{{ $caption = .value }}{{ continue }}{{ end }}
+  {{- if eq .keyword "repeat" }}{{ $repeats = $repeats | append (dict "from" .from "to" .to "n" .times) }}{{ continue }}{{ end }}
+  {{- $key := .layer }}
+  {{- $layer := dict "key" $key "label" (index .row 1) "role" "" "svg" "" "h" 20.0 "edge" 40.0 }}
+  {{- if ge (len .row) 3 }}{{ $layer = merge $layer (dict "role" (index .row 2)) }}{{ end }}
   {{- with and (findRE `^[a-z0-9-]+(\+[a-z0-9-]+)*$` $key) (resources.Get (printf "icons/layers/%s.svg" $key)) }}
     {{- $c := .Content }}
     {{- $h := index (index (findRESubmatch `viewBox="0 0 [0-9.]+ ([0-9.]+)"` $c 1) 0) 1 }}
     {{- $edge := index (index (findRESubmatch `data-edge="([0-9.]+)"` $c 1) 0) 1 }}
     {{- $layer = merge $layer (dict "svg" (replaceRE `(?s)^.*?<svg[^>]*>\s*|\s*</svg>\s*$` "" $c) "h" (float $h) "edge" (float $edge)) }}
   {{- else }}
-    {{- with $pos }}{{ warnf "stack [unknown-token]: no layer drawing %q (assets/icons/layers/) at %q" $key $at }}{{ end }}
     {{- $layer = merge $layer (dict "svg" (printf `<ellipse class="stack-missing" stroke="currentColor" stroke-dasharray="4 3" cx="%g" cy="10" rx="40" ry="9"/>` $cx)) }}
   {{- end }}
   {{- $layers = $layers | append $layer }}
@@ -151,27 +95,17 @@
       {{- end }}
     {{- end }}
   {{- end }}
+  {{- /* The parse has already dropped a repeat outside the layers. */}}
   {{- range $repeats }}
-    {{- $r := . }}
-    {{- if and (ge .from 1) (le .from .to) (le .to (len $placed)) }}
-      {{- $a := index $placed (sub .from 1) }}
-      {{- $b := index $placed (sub .to 1) }}
-      {{- $y2 := add $b.y $b.h }}
+    {{- $a := index $placed (sub .from 1) }}
+    {{- $b := index $placed (sub .to 1) }}
+    {{- $y2 := add $b.y $b.h }}
   <path class="stack-bracket" stroke="currentColor" stroke-width="1.2" d="{{ printf "M%.1f,%.1fH%.1fV%.1fH%.1f" (add $bracketX 6) $a.y $bracketX $y2 (add $bracketX 6) }}"/>
   <text class="stack-times" fill="currentColor" x="{{ printf "%.1f" (sub $bracketX 4) }}" y="{{ printf "%.1f" (add (div (add $a.y $y2) 2) 4) }}" font-size="12" text-anchor="end">× {{ .n }}</text>
-    {{- else }}
-      {{- with $pos }}{{ warnf "stack [bad-repeat]: repeat %d-%d is outside the %d layers at %q" $r.from $r.to (len $placed) $r.at }}{{ end }}
-    {{- end }}
   {{- end }}
 </svg>
   {{- if and $caption $.caption }}
 <figcaption class="stack-cap">{{ $caption }}</figcaption>
   {{- end }}
 </figure>
-{{- else }}
-  {{- /* Nothing to draw: the hook shows the source and warns; a card shows nothing. */}}
-  {{- with $pos }}
-    {{- warnf "stack [no-valid-lines]: nothing to draw, so the source shows, at %q" (partial "fence/where.html" (dict "pos" . "line" -1)) }}
-<pre><code>{{ $.inner }}</code></pre>
-  {{- end }}
 {{- end }}

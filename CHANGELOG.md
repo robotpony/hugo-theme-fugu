@@ -4,6 +4,10 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ## Unreleased
 
+### Trying (branch `hugo-warped-module`)
+
+- The `formula`, `stack` and `flow` hooks, and the card strips, read their blocks with hugo-warped's parse partials (`hugo-warped/parse.html`) and print warnings with its `warn.html`, instead of Fugu's own parsing; the drawing code and classes are unchanged. A site lists hugo-warped between Fugu and Blowfish: `theme = ["fugu", "hugo-warped", "blowfish"]`. Warnings now read `formula [code]: "<line>" in "<file:line:col>"`. Not yet in `docs/getting-started.md`, so CI's install job fails on this branch.
+
 ### Added
 
 - 3 formula icons: `buttermilk` (a gable-top carton), `chicken` (a drumstick), and `cornmeal` (a corn cob), for Not a Chef's cornmeal fried chicken.

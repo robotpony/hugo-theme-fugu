@@ -3,13 +3,11 @@
   icons and operators, for its card (recipe-card.html). Takes a Page.
 
   Cards don't render the body, so this finds the block in .RawContent and
-  reads each line the way render-codeblock-formula.html does, keeping only
-  the operator and icon keys, plus the quantity for a `:` ratio, where the
-  numbers are the point. Labels, swaps, the `=` result, caption and bar
-  never show here. Outputs nothing when the page has no formula block, and
-  skips quietly what the page's hook skips with a warning: unknown icon
-  keys, rows with no label, and rows after the `=` row or the trailer; a
-  marker on the first row is dropped.
+  reads it with hugo-warped's parse (partials/fence/parse.html), keeping
+  only the operator and icon keys, plus the quantity for a `:` ratio,
+  where the numbers are the point. Labels, swaps, the `=` result, caption
+  and bar never show here. Outputs nothing when the page has no formula
+  block. It never warns: the page's own hook already has.
 
   Each slot carries the rest in a native tooltip (title): label, quantity,
   and swaps on a second line. The card's stretched title link would cover
@@ -18,35 +16,22 @@
   order and hidden from screen readers, which get the role="img" label.
 */}}
 {{- with findRESubmatch "(?s)```formula[^\\n]*\\n(.*?)\\n```" .RawContent 1 }}
+  {{- $p := partial "fence/parse.html" (dict "type" "formula" "inner" (index (index . 0) 1)) }}
   {{- $slots := slice }}
   {{- $kind := "" }}
-  {{- $ended := false }}
-  {{- range split (index (index . 0) 1) "\n" }}
-    {{- $line := partialCached "fence/line.html" . . }}
-    {{- if not $line }}{{ continue }}{{ end }}
-    {{- if findRE `^(caption|bar):` $line 1 }}{{ $ended = true }}{{ continue }}{{ end }}
-    {{- if or $ended (findRE `^[a-z][a-z-]*: ` $line 1) }}{{ continue }}{{ end }}
-    {{- $op := "" }}
-    {{- with findRESubmatch `^(\+|:|→|->|=)\s+(.*)$` $line 1 }}
-      {{- $op = index (index . 0) 1 }}
-      {{- $line = index (index . 0) 2 }}
-    {{- end }}
-    {{- $f := split $line "|" }}
-    {{- if or (lt (len $f) 2) (not (trim (index $f 1) " ")) }}{{ continue }}{{ end }}
-    {{- if not $slots }}{{ $op = "" }}{{ end }}
-    {{- if eq $op "=" }}{{ $ended = true }}{{ continue }}{{ end }}
-    {{- if eq $op "->" }}{{ $op = "→" }}{{ end }}
+  {{- range $p.lines }}
+    {{- if or .keyword (eq .marker "=") }}{{ continue }}{{ end }}
+    {{- $op := .marker | default "" }}
     {{- if and $op (not $kind) }}{{ $kind = $op }}{{ end }}
-    {{- $label := "" }}
+    {{- $label := index .row 1 }}
     {{- $qty := "" }}
     {{- $swaps := "" }}
-    {{- if ge (len $f) 2 }}{{ $label = trim (index $f 1) " " }}{{ end }}
-    {{- if ge (len $f) 3 }}{{ $qty = trim (index $f 2) " " }}{{ end }}
-    {{- if ge (len $f) 4 }}{{ $swaps = trim (index $f 3) " " }}{{ end }}
+    {{- if ge (len .row) 3 }}{{ $qty = index .row 2 }}{{ end }}
+    {{- if ge (len .row) 4 }}{{ $swaps = index .row 3 }}{{ end }}
     {{- $tip := $label }}
     {{- with $qty }}{{ $tip = cond (ne $tip "") (printf "%s · %s" $tip .) . }}{{ end }}
     {{- with $swaps }}{{ $tip = printf "%s\n%s" $tip (cond (hasPrefix . "or ") . (printf "or %s" .)) }}{{ end }}
-    {{- $slots = $slots | append (dict "op" $op "icons" (findRE `[a-z-]+` (index $f 0)) "label" $label "qty" $qty "tip" $tip) }}
+    {{- $slots = $slots | append (dict "op" $op "icons" .icons "label" $label "qty" $qty "tip" $tip) }}
   {{- end }}
   {{- $ratio := eq $kind ":" }}
   {{- $words := dict "+" "plus" ":" "to" "→" "then" }}

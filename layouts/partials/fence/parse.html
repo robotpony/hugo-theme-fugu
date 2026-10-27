@@ -1,0 +1,9 @@
+{{/*
+  hugo-warped's parse of a fence body that didn't come through a render
+  hook: a card's strip finds its block in .RawContent. Takes a dict: type
+  ("formula", "stack") and inner (the block's body). Returns the parse,
+  as hugo-warped/parse.html does; the caller prints no warnings, since
+  the page's own hook already has.
+*/}}
+{{- $hook := dict "Type" .type "Inner" .inner "Attributes" dict }}
+{{- return (partial "hugo-warped/parse.html" (dict "hook" $hook "keys" (partialCached "fence/keys.html" "keys"))) }}

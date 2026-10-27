@@ -1,0 +1,12 @@
+{{/*
+  The keys Fugu can draw, for hugo-warped's parse to check (its
+  unknown-token warning): (dict "formula" <icon names> "stack" <layer
+  names>), each the file names in assets/icons/formula/ and
+  assets/icons/layers/ without .svg, a site's own included. Call it with
+  partialCached "fence/keys.html" "keys"; the list is the same on every page.
+*/}}
+{{- $formula := slice }}
+{{- range resources.Match "icons/formula/*.svg" }}{{ $formula = $formula | append (path.BaseName .Name) }}{{ end }}
+{{- $stack := slice }}
+{{- range resources.Match "icons/layers/*.svg" }}{{ $stack = $stack | append (path.BaseName .Name) }}{{ end }}
+{{- return (dict "formula" $formula "stack" $stack) }}

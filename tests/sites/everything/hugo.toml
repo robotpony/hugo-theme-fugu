@@ -1,7 +1,7 @@
 # Every optional part Fugu supports, turned on. See ../README.md.
 baseURL = "https://example.org/"
 title = "Everything"
-theme = ["fugu", "blowfish"]
+theme = ["fugu", "hugo-warped", "blowfish"]
 themesDir = "../../../.."
 buildDrafts = true  # drafts publish as pages in development
 

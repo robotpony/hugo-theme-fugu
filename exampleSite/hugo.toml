@@ -1,10 +1,10 @@
 # Fugu's example site: a few recipes and every optional part, built against
-# Fugu and Blowfish side by side in ../.. (themes/ in a site, or a folder
-# holding fugu/ and blowfish/). Build from this folder: `hugo server -D`.
+# Fugu, hugo-warped and Blowfish side by side in ../.. (themes/ in a site,
+# or a folder holding fugu/, hugo-warped/ and blowfish/). Build from this folder: `hugo server -D`.
 # The content is from Not a Chef, under CC BY-SA 4.0 (LICENSE).
 baseURL = "https://example.org/"
 title = "Fugu example"
-theme = ["fugu", "blowfish"]
+theme = ["fugu", "hugo-warped", "blowfish"]
 themesDir = "../.."
 # Drafts publish as in-development pages ([params.fugu.development]).
 buildDrafts = true

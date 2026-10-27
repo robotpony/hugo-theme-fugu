@@ -11,10 +11,17 @@
     repeat: 2-3 x2
 
   Layers are assets/icons/layers/<key>.svg; `bun-base + mayo` is a
-  pre-drawn pair, bun-base+mayo.svg. An unknown key draws a dashed
-  placeholder and warns, like the formula block. partials/stack/draw.html
-  does the work; stack-strip.html draws a page's first block on its build
-  card. A `← note` on any line is dropped (partials/fence/line.html).
-  Obsidian shows the block as plain text.
+  pre-drawn pair, bun-base+mayo.svg. hugo-warped's parse reads the block
+  (the shared fence spec, fences/stack.md) and warns; an unknown key draws
+  a dashed placeholder. partials/stack/draw.html draws it;
+  stack-strip.html draws a page's first block on its build card. A block
+  with nothing to draw shows its source. Obsidian shows the block as
+  plain text.
 */}}
-{{- partial "stack/draw.html" (dict "inner" .Inner "labels" true "caption" true "pos" .Position) }}
+{{- $p := partial "hugo-warped/parse.html" (dict "hook" . "keys" (partialCached "fence/keys.html" "keys")) }}
+{{- partial "hugo-warped/warn.html" (dict "hook" . "parse" $p) }}
+{{- if $p.fallback }}
+<pre><code>{{ .Inner }}</code></pre>
+{{- else }}
+{{- partial "stack/draw.html" (dict "parse" $p "labels" true "caption" true) }}
+{{- end }}
