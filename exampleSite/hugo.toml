@@ -31,10 +31,13 @@ summaryLength = 30
     name = "cuisine"
     weight = 80
 
+# hugo-warped, which Fugu imports, is checked out beside the themes, not
+# fetched: its module path maps to that folder (relative to themesDir).
 # static/images is also mounted as assets/images so the image render hook
 # can resize photos into thumbnails. Declaring any assets mount replaces
 # Hugo's default one, so the plain assets/ mount is restated first.
 [module]
+  replacements = "github.com/robotpony/hugo-warped -> hugo-warped"
   [[module.mounts]]
     source = "assets"
     target = "assets"

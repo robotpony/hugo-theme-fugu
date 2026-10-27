@@ -6,7 +6,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Trying (branch `hugo-warped-module`)
 
-- The `formula`, `stack` and `flow` hooks, and the card strips, read their blocks with hugo-warped's parse partials (`hugo-warped/parse.html`) and print warnings with its `warn.html`, instead of Fugu's own parsing; the drawing code and classes are unchanged. Fugu names hugo-warped as a component in its own `hugo.toml` (`theme = ["hugo-warped"]`), so a site keeps `theme = ["fugu", "blowfish"]` and adds hugo-warped as a third submodule in `themes/`, pinned (`docs/getting-started.md`). Warnings now read `formula [code]: "<line>" in "<file:line:col>"`. The Hugo Modules install doesn't work on this branch yet: in module mode Hugo can't resolve the bare `hugo-warped` name.
+- The `formula`, `stack` and `flow` hooks, and the card strips, read their blocks with hugo-warped's parse partials (`hugo-warped/parse.html`) and print warnings with its `warn.html`, instead of Fugu's own parsing; the drawing code and classes are unchanged. Fugu imports hugo-warped as a Hugo module (`[[module.imports]]` in its `hugo.toml`, pinned in `go.mod`), so a module install gets it with Fugu and a site's theme list stays `["fugu", "blowfish"]`. A submodule site checks hugo-warped out in `themes/`, pinned, and maps the path to it: `[module] replacements = "github.com/robotpony/hugo-warped -> hugo-warped"` (`docs/getting-started.md`). Warnings now read `formula [code]: "<line>" in "<file:line:col>"`.
 
 ### Added
 

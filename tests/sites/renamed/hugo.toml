@@ -6,6 +6,11 @@ title = "Renamed"
 theme = ["fugu", "blowfish"]
 themesDir = "../../../.."
 
+# hugo-warped, which Fugu imports, is checked out beside the themes, not
+# fetched: map its module path to that folder (relative to themesDir).
+[module]
+  replacements = "github.com/robotpony/hugo-warped -> hugo-warped"
+
 [taxonomies]
   tag = "tags"
   cuisine = "cuisine"

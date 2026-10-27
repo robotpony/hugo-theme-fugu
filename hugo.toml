@@ -3,10 +3,14 @@
 # tools/ read the merged values too (through `hugo config`).
 
 # hugo-warped's fence partials, which the formula, stack and flow hooks
-# read their blocks with. Fugu calls them, so Fugu names the component;
-# Hugo finds it in the site's themes/ folder (a pinned submodule beside
-# fugu/), and the site's own theme list stays ["fugu", "blowfish"].
-theme = ["hugo-warped"]
+# read their blocks with. Fugu calls them, so Fugu imports the module, at
+# the version go.mod pins. A site that takes Fugu as a Hugo module gets it
+# with Fugu; a site that uses submodules checks hugo-warped out beside
+# fugu/ and maps the path to it ([module] replacements =
+# "github.com/robotpony/hugo-warped -> hugo-warped"). Either way the
+# site's own theme list stays ["fugu", "blowfish"].
+[[module.imports]]
+  path = "github.com/robotpony/hugo-warped"
 
 [params.fugu]
   # Fugu's basic styles (assets/css/fugu.css), coloured from the site's

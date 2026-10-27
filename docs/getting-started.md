@@ -49,10 +49,15 @@ git submodule add https://github.com/nunocoracao/blowfish.git themes/blowfish
 git -C themes/blowfish checkout 295dae3
 git submodule add https://github.com/robotpony/hugo-theme-fugu.git themes/fugu
 git submodule add https://github.com/robotpony/hugo-warped.git themes/hugo-warped
-git -C themes/hugo-warped checkout 0b971b3
+git -C themes/hugo-warped checkout 4045b3f
 ```
 
-and list Fugu first in `theme`, as in the config below. Fugu reads its `formula`, `stack` and `flow` blocks with [hugo-warped](https://github.com/robotpony/hugo-warped)'s fence partials and names it in its own config, so the site's `theme` doesn't list it: Hugo finds it in `themes/`.
+List Fugu first in `theme`, as in the config below. Fugu reads its `formula`, `stack` and `flow` blocks with [hugo-warped](https://github.com/robotpony/hugo-warped)'s fence partials, which it imports as a Hugo module. A module install fetches it with Fugu; here, add this to `hugo.toml` so Hugo uses the checkout in `themes/` instead (the site's `theme` doesn't list it):
+
+```toml
+[module]
+  replacements = "github.com/robotpony/hugo-warped -> hugo-warped"
+```
 
 ## 2. The minimum config
 

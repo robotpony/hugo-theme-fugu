@@ -91,7 +91,10 @@ def install_submodules(site, doc, blowfish):
         # Local paths need file transport, which git turns off for submodules.
         line = line.replace("git submodule add", "git -c protocol.file.allow=always submodule add")
         run(line, site, shell=True)
-    (site / "hugo.toml").write_text(block_after(doc, "## 2. The minimum config"))
+    # The minimum config, plus the replacement that points Fugu's
+    # hugo-warped import at the submodule.
+    replacement = block_after(doc, "List Fugu first in `theme`")
+    (site / "hugo.toml").write_text(block_after(doc, "## 2. The minimum config") + "\n" + replacement)
 
 
 def main():

@@ -17,8 +17,8 @@ env:
   HUGO_VERSION: 0.166.0
   BLOWFISH_REF: 295dae334547f6737a939a5d49f2807d6c0b73b8
   # hugo-warped's fence module: Fugu's formula, stack and flow hooks read
-  # their blocks with its parse partials.
-  HUGO_WARPED_REF: 0b971b381eee6cfbf214466bfbe4b2a96999f2d0
+  # their blocks with its parse partials. Keep it at go.mod's version.
+  HUGO_WARPED_REF: 4045b3f61ca8bba043079c7f715873fa999ddfe1
 
 jobs:
   fixtures:
