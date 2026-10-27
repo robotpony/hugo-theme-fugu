@@ -3,7 +3,8 @@
   below 1024px; at desktop widths the sidebar has it instead
   (blueprint/lineage-side.html). Its builds on a horizontal track of
   decades, each placed by its `era` (a year) as a dot labelled with its
-  title and era, linking to its page. Builds with no `era` are left off.
+  title and era, linking to its page; a build whose `era` is a list gets
+  a dot per year. Builds with no `era` are left off.
   A build that's still a draft (a test kitchen stub with only its title
   and era) shows faint. A label sits higher (.alt) when its dot is close
   to the one before. Under 640px the CSS turns the track into a vertical
@@ -27,9 +28,10 @@
           {{ $prev = $pos }}
           {{ $prevAlt = $alt }}
           {{ $year := .year }}
+          {{ $href := .href }}
           <li class="tl-mark{{ if $alt }} alt{{ end }}{{ if .page.Draft }} todo{{ end }}" style="left:{{ printf "%.1f" $pos }}%">
             {{- with .page -}}
-              <a class="tl-name" href="{{ .RelPermalink }}" title="{{ $year }}">{{ .Title }}<span class="tl-detail"> · {{ $year }}</span></a>
+              <a class="tl-name" href="{{ $href }}" title="{{ $year }}">{{ .Title }}<span class="tl-detail"> · {{ $year }}</span></a>
             {{- end -}}
             <span class="tl-dot" aria-hidden="true"></span>
           </li>

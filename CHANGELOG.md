@@ -10,6 +10,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Added
 
+- A build's `era` can be a list of years, `era: [1991, 2015, 2026]`, for one page with iterations: a dot per year on the lineage timeline, each linking to its `## Iterations` heading when it has one, the range ("1991–2026") on its card and methods-list pill, and its place in the build order by the earliest year (`blueprint/era.html`, `docs/frontmatter.md`).
 - `drinkSection` (off by default): a second recipe section for drinks, e.g. `"drinks"` for `content/drinks/`. Its pages render as recipes, its list (`layouts/drinks/list.html`, or `type: drinks` for a renamed section) is the recipes list counting drinks, its pages are in `/recipes/index.json`, `frontmatter.py` and `drafts.py` check and list them, and the tag of the same name links to the section from its page (`docs/configuration.md`, "Sections").
 - `/recipes/index.json` entries carry a `section` field, the folder each came from.
 - Glass thumbnails on drink cards: a recipe with `glass` (and optionally `fill`, `ice`, `garnish`) in its frontmatter gets a small glass drawn beside its card's title and intro (`partials/drink/glass.html`, `docs/frontmatter.md` "Drinks"). New classes `.has-glass`, `.rcard-drink`, `.rcard-drink-text` and `.rcard-glass`, styled in `fugu.css`, with new `--fugu-kit-*` drink colours; a site with `fugu.styles = false` styles them itself.

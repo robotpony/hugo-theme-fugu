@@ -6,13 +6,20 @@
   it, and at least three decades wide. Takes the blueprint's builds
   (blueprint/info.html); returns a dict, or false with no dated builds:
 
-    entries  one dict per build with an `era`, oldest first: year, page
+    entries  one dict per year in a build's `era` (blueprint/era.html),
+             oldest first: year, page, and href, its link (to the
+             page's #iterations heading when it has several years
+             and one)
     start    the first year of the first decade
     end      the first year after the last decade
 */}}
 {{ $entries := slice }}
 {{ range $b := . }}
-  {{ with $b.Params.era }}{{ $entries = $entries | append (dict "year" (int .) "page" $b) }}{{ end }}
+  {{ with partial "blueprint/era.html" $b }}
+    {{ $href := $b.RelPermalink }}
+    {{ if and (gt (len .years) 1) ($b.Fragments.Identifiers.Contains "iterations") }}{{ $href = printf "%s#iterations" $href }}{{ end }}
+    {{ range .years }}{{ $entries = $entries | append (dict "year" . "page" $b "href" $href) }}{{ end }}
+  {{ end }}
 {{ end }}
 {{ $out := false }}
 {{ with $entries }}

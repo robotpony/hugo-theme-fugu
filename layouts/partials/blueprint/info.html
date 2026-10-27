@@ -15,7 +15,8 @@
              title: page, name (its title), n (1-based), and options
              (from its ## Options table, method/options.html)
     builds   the pages in builds/: pinned ones (`pinned: true`) first,
-             then those with an `era` (a year) oldest first, then the
+             then those with an `era` oldest first (by the earliest
+             year of a list, blueprint/era.html), then the
              rest, each by weight, date, then title. The lineage sorts
              by era itself (blueprint/lineage-span.html), so a pinned
              build keeps its place in history there.
@@ -30,11 +31,13 @@
     {{ if eq .role "part" }}
       {{ $parts = $parts | append (dict "page" $page "name" $page.Title "n" (add (len $parts) 1) "options" (partial "method/options.html" $page)) }}
     {{ else if eq .role "build" }}
-      {{ if $page.Params.era }}{{ $dated = $dated | append $page }}{{ else }}{{ $undated = $undated | append $page }}{{ end }}
+      {{ with partial "blueprint/era.html" $page }}{{ $dated = $dated | append (dict "first" .first "page" $page) }}{{ else }}{{ $undated = $undated | append $page }}{{ end }}
     {{ end }}
   {{ end }}
 {{ end }}
 {{/* sort is stable, so builds of the same era keep their weight order. */}}
-{{ $builds := (sort $dated "Params.era") | append $undated }}
+{{ $builds := slice }}
+{{ range sort $dated "first" }}{{ $builds = $builds | append .page }}{{ end }}
+{{ $builds = $builds | append $undated }}
 {{ $builds = (where $builds "Params.pinned" true) | append (where $builds "Params.pinned" "!=" true) }}
 {{ return dict "page" $bp "parts" $parts "builds" $builds }}

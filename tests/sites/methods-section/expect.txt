@@ -59,3 +59,11 @@ reference/index.html: href="/reference/essays/win-the-fridge/"
 
 # A wiki link reaches a section page by its title too, here a blueprint.
 recipes/plain-rice/index.html: <a href="/methods/rice-bowls/" class="wikilink">Rice bowls</a>
+
+# A list era ([2015, 1985]): a dot per year, each linking to the build's
+# #iterations heading, its range on cards and pills, and it sorts by 1985.
+methods/rice-bowls/index.html: href="/methods/rice-bowls/builds/plain-bowl/#iterations" title="1985">Plain rice bowl
+methods/rice-bowls/index.html: href="/methods/rice-bowls/builds/plain-bowl/#iterations" title="2015">Plain rice bowl
+methods/rice-bowls/index.html: <p class="build-origin">1985–2015</p>
+methods/index.html: Plain rice<span class="y">1985–2015</span>
+methods/rice-bowls/builds/plain-bowl/index.html: part-nav-next" href="/methods/rice-bowls/builds/patty-bowl/"

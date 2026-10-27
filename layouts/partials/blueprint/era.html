@@ -1,0 +1,22 @@
+{{/*
+  A build's `era`: a year (`era: 1960`), or a list of years for a build
+  with iterations (`era: [1991, 2015, 2026]`), one dot each on the
+  lineage timeline. Shared by the build order (blueprint/info.html), the
+  timelines (blueprint/lineage-span.html), the build card and the methods
+  list's pills. Takes the build page; returns a dict, or false with no
+  `era`:
+
+    years   the years as ints, oldest first
+    first   the oldest, which the build sorts by
+    label   the year, or the range for a list ("1991–2026")
+*/}}
+{{ $out := false }}
+{{ with .Params.era }}
+  {{ $years := slice }}
+  {{ range (cond (reflect.IsSlice .) . (slice .)) }}{{ $years = $years | append (int .) }}{{ end }}
+  {{ $years = sort $years }}
+  {{ $first := index $years 0 }}
+  {{ $last := index $years (sub (len $years) 1) }}
+  {{ $out = dict "years" $years "first" $first "label" (cond (eq $first $last) (string $first) (printf "%d–%d" $first $last)) }}
+{{ end }}
+{{ return $out }}

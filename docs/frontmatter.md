@@ -153,9 +153,11 @@ Parts are the slots every dish of the type fills; a part's name is its title. Bu
 | Field | On | What it does |
 | --- | --- | --- |
 | `weight` | part | Its place in the blueprint's part order. |
-| `era` | build | A year (`1960`) that places the build on the blueprint's lineage timeline. The blueprint's page lists dated builds oldest first, then the rest. |
+| `era` | build | A year (`1960`) that places the build on the blueprint's lineage timeline, or a list of years (`[1991, 2015, 2026]`) for a build with iterations. The blueprint's page lists dated builds oldest first (a list by its earliest year), then the rest. |
 
 When any build has an `era`, the blueprint's page shows a lineage timeline: each dated build as a dot on a track of decades, labelled with its title and era and linking to its page. Builds without an `era` are left off, and a draft build shows faint, so a build nobody has written yet can be a stub with its title, `era`, and `draft: true`. On a phone the timeline is a list.
+
+A build that changed over time can keep one page and list its years, `era: [1991, 2015, 2026]`. The timeline draws a dot for each year, every one labelled with the build's title and that year and linking to its page, or to its `## Iterations` heading when it has one, so the page can say what changed in each. The build's card and its pill on the methods list show the range, "1991–2026".
 
 A part's choices aren't pages: they're a table under `## Options` in the part's page, shown there as written. Fugu also reads the first column as the part's options for templates to use (`blueprint/info.html`, with a trailing parenthetical dropped: "Thick (170 g and up)" is "Thick"), though no page lists them elsewhere now.
 

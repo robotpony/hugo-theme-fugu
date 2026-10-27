@@ -28,7 +28,7 @@
     {{ $dy := add $top (mul (sub .year $start) $k) }}
     {{ $ly := math.Max $dy (add $last 22) | int }}
     {{ $last = $ly }}
-    {{ $rows = $rows | append (dict "page" .page "year" .year "dy" $dy "ly" $ly) }}
+    {{ $rows = $rows | append (dict "page" .page "year" .year "href" .href "dy" $dy "ly" $ly) }}
   {{ end }}
   {{ $height := add (math.Max (add $top (mul (sub $end $start) $k)) (add $last 14) | int) 8 }}
   <div class="vt" style="height:{{ $height }}px">
@@ -38,7 +38,7 @@
     {{- end }}
     {{- range $rows }}
       {{ $off := sub .dy .ly }}
-      <a class="vt-name{{ if .page.Draft }} todo{{ end }}" href="{{ .page.RelPermalink }}" style="top:{{ .ly }}px;--off:{{ $off }}px">
+      <a class="vt-name{{ if .page.Draft }} todo{{ end }}" href="{{ .href }}" style="top:{{ .ly }}px;--off:{{ $off }}px">
         <span class="ln-dot" aria-hidden="true"></span>
         {{- if lt $off 0 }}<svg class="vt-lead" aria-hidden="true" width="21" height="{{ sub 0 $off }}" style="height:{{ sub 0 $off }}px"><line x1="0" y1="0" x2="21" y2="{{ sub 0 $off }}"/></svg>{{ end -}}
         <span>{{ .page.Title }}</span><span class="y">{{ .year }}</span>

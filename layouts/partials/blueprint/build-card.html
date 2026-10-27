@@ -1,7 +1,7 @@
 {{/*
   A build's card on its blueprint's page: the shared card (.rcard) with
   .build-card, the method chip reading "Build", the build's title, its
-  `era`, and its description. When the stack diagram partial exists
+  `era` (a range for a list, blueprint/era.html), and its description. When the stack diagram partial exists
   (partials/stack-strip.html, see PLAN.md "Stack diagrams"), the build
   page's first ```stack block goes under them, compact. Takes the build
   page.
@@ -12,7 +12,7 @@
     {{ partial "method/chip.html" (dict "card" true "label" "Build") }}
   </div>
   <h3 class="rcard-title"><a class="rcard-link" href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-  {{ with .Params.era }}<p class="build-origin">{{ . }}</p>{{ end }}
+  {{ with partial "blueprint/era.html" . }}<p class="build-origin">{{ .label }}</p>{{ end }}
   {{ with .Description }}<p class="rcard-intro">{{ . }}</p>{{ end }}
   {{ if templates.Exists "partials/stack-strip.html" }}{{ partial "stack-strip.html" (dict "page" . "labels" false) }}{{ end }}
   <div class="rcard-stats">

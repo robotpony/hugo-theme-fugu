@@ -89,7 +89,7 @@
               <div class="bp-builds-inline">
                 <span class="lbl">Builds</span>
                 {{- range . }}
-                  <a class="opt-pill{{ if .Draft }} todo{{ end }}" href="{{ .RelPermalink }}">{{ partial "blueprint/short-name.html" (dict "page" . "blueprint" $bp) }}{{ with .Params.era }}<span class="y">{{ . }}</span>{{ end }}</a>
+                  <a class="opt-pill{{ if .Draft }} todo{{ end }}" href="{{ .RelPermalink }}">{{ partial "blueprint/short-name.html" (dict "page" . "blueprint" $bp) }}{{ with partial "blueprint/era.html" . }}<span class="y">{{ .label }}</span>{{ end }}</a>
                 {{- end }}
               </div>
             {{ end }}
