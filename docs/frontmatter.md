@@ -55,6 +55,24 @@ Without `buildDrafts`, drafts behave as Hugo normally treats them: they aren't b
 
 `pinned: true` floats a page to the top of its section's list, of its tag and cuisine pages, and of search results, and puts a pin on its card. A pinned build goes first among its blueprint's builds (the methods list, the build cards, and part navigation), but keeps its place by `era` on the lineage timeline. It works on recipes and on any other page. Keep it rare: it's for the two or three pages a reader should find first, not a general sort order.
 
+## Drinks
+
+Drinks are recipes (in the drink section, `drinkSection`, or anywhere recipes live) and take the same fields. Four more draw a small glass on the drink's card, beside its title and intro:
+
+```yaml
+glass: mug                     # mug, wine, highball, rocks, bottle, pitcher
+fill: [liqueur, coffee, cream] # bottom to top, one to three equal bands
+ice: true
+garnish: nutmeg                # lemon, fruit, nutmeg
+```
+
+- `glass`: the glass's shape. Without it the card has no glass; an unknown one draws none and warns.
+- `fill`: what's in it, bottom to top: `liqueur`, `coffee`, `cream`, `latte`, `tea`, `wine`, `sparkling`, `cola`. An unknown key draws no band and warns; a fourth and on are dropped.
+- `ice`: `true` draws ice cubes in the drink.
+- `garnish`: `lemon` (a wheel on the rim), `fruit` (pieces in the drink), or `nutmeg` (grated on top).
+
+The colours are the site's `--kit-liqueur`, `--kit-cream`, `--kit-latte`, `--kit-tea`, `--kit-wine`, `--kit-ice`, `--kit-yellow-top` (sparkling) and `--sear` (coffee, cola), else Fugu's own (`fugu.css`).
+
 ## Taxonomy terms
 
 A tag or cuisine can have its own page, `content/tags/<slug>/_index.md` (or `content/cuisine/<slug>/_index.md`), to give its term page a title and text.

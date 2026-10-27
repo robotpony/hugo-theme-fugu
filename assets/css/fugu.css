@@ -57,6 +57,14 @@
   --fugu-kit-red-top: #F4CDC1;
   --fugu-kit-yellow: #E3CC6C;
   --fugu-kit-yellow-top: #F1E5B4;
+  /* Drink colours, the bands in a drink card's glass (partials/drink/
+   * glass.html). A site's --kit-* win over these. */
+  --fugu-kit-liqueur: #E9D9BC;
+  --fugu-kit-cream: #FBFBF6;
+  --fugu-kit-latte: #C49A72;
+  --fugu-kit-tea: #D7A45C;
+  --fugu-kit-wine: #B4535A;
+  --fugu-kit-ice: #E6EEF1;
 
   --fugu-shadow: 0 8px 24px rgba(0, 0, 0, .12);
   --fugu-radius: 6px;
@@ -91,6 +99,12 @@
   --fugu-kit-red-top: #33201A;
   --fugu-kit-yellow: #45391A;
   --fugu-kit-yellow-top: #2F2918;
+  --fugu-kit-liqueur: #4A3E2C;
+  --fugu-kit-cream: #8A8672;
+  --fugu-kit-latte: #4B3524;
+  --fugu-kit-tea: #4E3618;
+  --fugu-kit-wine: #5A2428;
+  --fugu-kit-ice: #2A3236;
 
   --fugu-cuisine: rgb(var(--color-secondary-300));
   --fugu-cuisine-soft: rgba(var(--color-secondary-500), .18);
@@ -331,6 +345,10 @@ a.dev-chip:hover, a.dev-chip:focus-visible { border-color: var(--fugu-ink-faint)
 .rcard .rcard-title { margin: 0; font-size: 1.02rem; font-weight: 700; line-height: 1.3; text-wrap: balance; color: var(--fugu-ink); }
 .rcard .rcard-intro { margin: 0; font-size: .85rem; line-height: 1.5; color: var(--fugu-ink-muted); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
 .rcard.has-formula .rcard-intro { -webkit-line-clamp: 2; }
+/* A drink's glass (drink/glass.html), beside its title and intro. */
+.rcard-drink { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
+.rcard-drink-text { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
+.rcard-glass { flex: none; width: 56px; height: 72px; color: var(--fugu-ink); }
 /* Formula strip (formula-strip.html): takes the intro's third line. */
 .rcard-formula { display: flex; justify-content: safe center; height: 24px; min-width: 0; overflow: hidden; }
 .rcard-formula-link { position: relative; z-index: 1; display: flex; align-items: center; gap: 2px; color: var(--fugu-ink); text-decoration: none; }

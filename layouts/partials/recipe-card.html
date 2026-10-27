@@ -52,6 +52,10 @@
   A page with a ```formula block gets a small strip of its icons under
   the intro (partials/formula-strip.html), and .has-formula on the card so
   the intro can give up a line and the card keeps its height.
+
+  A recipe with a `glass` in its frontmatter, as drinks have, gets that
+  glass drawn small beside its title and intro (partials/drink/
+  glass.html), and .has-glass on the card.
 */}}
 {{ $role := partialCached "section/role.html" .Section .Section }}
 {{/* A method in its own section reads like an essay on its card. */}}
@@ -106,6 +110,10 @@
   {{ $intro = replaceRE `\[\[(?:[^\]|]*\|)?([^\]]+)\]\]` "$1" . | markdownify | plainify | htmlUnescape | truncate 240 }}
 {{ end }}
 
+{{ $glass := "" }}
+{{ if and .Params.glass (eq $role "recipe") }}{{ $glass = partial "drink/glass.html" . }}{{ end }}
+{{ $hasGlass := ne (len (trim $glass " \n\t")) 0 }}
+
 {{ $formula := partial "formula-strip.html" . }}
 {{ $hasFormula := ne (len (trim $formula " \n\t")) 0 }}
 
@@ -132,7 +140,7 @@
   {{ $stats = slice (dict "label" "Read" "value" (printf "%dm" .ReadingTime) "full" (printf "%d min" .ReadingTime)) }}
 {{ end }}
 
-<article class="rcard{{ if $hasFormula }} has-formula{{ end }}">
+<article class="rcard{{ if $hasFormula }} has-formula{{ end }}{{ if $hasGlass }} has-glass{{ end }}">
   <div class="rcard-top">
     {{ if .Draft }}{{ partial "development/mark.html" . }}{{ end }}
     {{ with $cuisine }}{{ with $.GetTerms "cuisine" }}{{ $term := index . 0 }}<a class="cuisine-chip" href="{{ $term.RelPermalink }}"{{ with $term.Params.short }} title="{{ $cuisine }}"{{ end }}>{{ $term.Params.short | default $cuisine }}</a>{{ else }}<span class="cuisine-chip">{{ . }}</span>{{ end }}{{ end }}
@@ -142,8 +150,10 @@
     {{ if gt (len $tags) $room }}<span class="tag tag-more">+{{ sub (len $tags) $room }}</span>{{ end }}
     {{ if .Params.pinned }}<span class="pin-icon" title="Pinned">{{ `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg>` | safeHTML }}</span>{{ end }}
   </div>
+  {{ if $hasGlass }}<div class="rcard-drink"><div class="rcard-drink-text">{{ end }}
   <h3 class="rcard-title"><a class="rcard-link" href="{{ .RelPermalink }}">{{ $title }}</a></h3>
   {{ with $intro }}<p class="rcard-intro">{{ . }}</p>{{ end }}
+  {{ if $hasGlass }}</div>{{ $glass }}</div>{{ end }}
   {{ if $hasFormula }}{{ $formula }}{{ end }}
   {{ with $stats }}
     <div class="rcard-stats">

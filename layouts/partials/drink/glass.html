@@ -1,0 +1,122 @@
+{{/*
+  A drink's glass, small and unlabelled, for its card (recipe-card.html),
+  after Not a Chef's mockups/drink-diagrams.html C. Takes a Page and
+  draws it from frontmatter (docs/frontmatter.md, "Drinks"):
+
+    glass: mug | wine | highball | rocks | bottle | pitcher
+    fill: [liqueur, coffee, cream]   bottom to top, one to three equal bands
+    ice: true                        cubes in the drink
+    garnish: lemon | fruit | nutmeg
+
+  Outputs nothing for a page without `glass`. An unknown glass draws
+  nothing, and an unknown fill key no band, each with a warning; a fourth
+  fill and on are dropped with a warning.
+
+  Each glass is a 70x90 box: its outline (stroked in currentColor, with
+  rounded joins), the inside the bands are clipped to, where the drink's
+  top and bottom are, and where its rim's right edge is (for a lemon
+  wheel). The clip's id comes from the page, so two cards on one page
+  don't share one; the same card twice draws the same clip.
+*/}}
+{{- with .Params.glass }}
+{{- $page := $ }}
+{{- $glasses := dict
+  "mug" (dict
+    "outline" "M18 14V74q0 4 4 4H48q4 0 4-4V14M52 30h6q5 0 5 5v14q0 5-5 5h-6"
+    "inside" "M18 14V74q0 4 4 4H48q4 0 4-4V14z"
+    "top" 24 "bottom" 78 "cx" 35 "rimx" 50 "rimy" 14)
+  "wine" (dict
+    "outline" "M16 10q-2 30 19 38q21-8 19-38M35 48V78M24 80h22"
+    "inside" "M16 10h38q2 30-19 38q-21-8-19-38z"
+    "top" 18 "bottom" 48 "cx" 35 "rimx" 52 "rimy" 10)
+  "highball" (dict
+    "outline" "M20 10L22 80q0 2 2 2H46q2 0 2-2L50 10"
+    "inside" "M20 10L22 82H48L50 10z"
+    "top" 20 "bottom" 82 "cx" 35 "rimx" 50 "rimy" 10)
+  "rocks" (dict
+    "outline" "M13 36L16 78q0 3 3 3H51q3 0 3-3L57 36M15.5 71h39"
+    "inside" "M13 36L16 81H54L57 36z"
+    "top" 44 "bottom" 81 "cx" 35 "rimx" 55 "rimy" 36)
+  "bottle" (dict
+    "outline" "M28 8h14M30 8v13q0 4-5 8q-5 4-5 11V78q0 4 4 4H46q4 0 4-4V40q0-7-5-11q-5-4-5-8V8M20 50h30M20 68h30"
+    "inside" "M30 8v13q0 4-5 8q-5 4-5 11V82H50V40q0-7-5-11q-5-4-5-8V8z"
+    "top" 30 "bottom" 82 "cx" 35 "rimx" 40 "rimy" 8)
+  "pitcher" (dict
+    "outline" "M9 9q5 1 7 5L18 76q0 4 4 4H48q4 0 4-4L54 14M53.6 24h4.4q5 0 5 5v22q0 5-5 5h-5.2"
+    "inside" "M16 14L18 80H52L54 14z"
+    "top" 24 "bottom" 80 "cx" 35 "rimx" 52 "rimy" 14)
+}}
+{{- $colours := dict
+  "liqueur" "var(--kit-liqueur, var(--fugu-kit-liqueur))"
+  "coffee" "var(--sear, var(--fugu-sear))"
+  "cream" "var(--kit-cream, var(--fugu-kit-cream))"
+  "latte" "var(--kit-latte, var(--fugu-kit-latte))"
+  "tea" "var(--kit-tea, var(--fugu-kit-tea))"
+  "wine" "var(--kit-wine, var(--fugu-kit-wine))"
+  "sparkling" "var(--kit-yellow-top, var(--fugu-kit-yellow-top))"
+  "cola" "var(--sear, var(--fugu-sear))"
+}}
+{{- $g := index $glasses (lower (string .)) }}
+{{- if not $g }}
+  {{- warnf "glass: unknown glass %q in %q (one of mug, wine, highball, rocks, bottle, pitcher)" . $page.File.Path }}
+{{- else }}
+  {{- $fills := slice }}
+  {{- with $page.Params.fill }}
+    {{- $keys := cond (reflect.IsSlice .) . (slice .) }}
+    {{- if gt (len $keys) 3 }}
+      {{- warnf "glass: more than three fills in %q; drawing the first three" $page.File.Path }}
+      {{- $keys = first 3 $keys }}
+    {{- end }}
+    {{- range $keys }}
+      {{- with index $colours (lower (string .)) }}{{ $fills = $fills | append . }}
+      {{- else }}{{ warnf "glass: unknown fill %q in %q" . $page.File.Path }}{{ end }}
+    {{- end }}
+  {{- end }}
+  {{- $top := $g.top }}
+  {{- $bottom := $g.bottom }}
+  {{- $cx := $g.cx }}
+  {{- $mid := div (add $top $bottom) 2 }}
+  {{- $id := printf "glass-%s" (first 8 (md5 $page.RelPermalink)) }}
+  {{- $ink := `fill:none;stroke:currentColor` }}
+<svg class="rcard-glass" viewBox="0 0 70 90" aria-hidden="true">
+  <defs><clipPath id="{{ $id }}"><path d="{{ $g.inside }}"/></clipPath></defs>
+  <g clip-path="url(#{{ $id }})">
+    {{- with $fills }}
+      {{- $h := div (sub $bottom $top) (float (len .)) }}
+      {{- range $i, $fill := . }}
+    <rect x="0" y="{{ sub $bottom (mul $h (add $i 1)) }}" width="70" height="{{ $h }}" style="fill:{{ $fill | safeCSS }}"/>
+      {{- end }}
+    {{- end }}
+    {{- if eq $page.Params.garnish "fruit" }}
+    <circle cx="{{ sub $cx 7 }}" cy="{{ $mid }}" r="3" style="fill:var(--kit-red, var(--fugu-kit-red))"/>
+    <circle cx="{{ add $cx 5 }}" cy="{{ sub $mid 4 }}" r="3" style="fill:var(--kit-yellow, var(--fugu-kit-yellow))"/>
+    <circle cx="{{ sub $cx 1 }}" cy="{{ add $mid 5 }}" r="2.5" style="fill:var(--kit-red, var(--fugu-kit-red))"/>
+    {{- end }}
+    {{- if $page.Params.ice }}
+      {{- $span := sub $bottom $top }}
+    <g style="fill:var(--kit-ice, var(--fugu-kit-ice));fill-opacity:.75;stroke:currentColor;stroke-width:1">
+      {{- range slice (slice -4 0.08 -10) (slice 4 0.4 12) (slice -5 0.7 4) }}
+        {{- $x := add $cx (index . 0) }}
+        {{- $y := add $top (add 6 (mul (sub $span 12) (index . 1))) }}
+      <rect x="{{ sub $x 6 }}" y="{{ sub $y 6 }}" width="12" height="12" rx="2" transform="rotate({{ index . 2 }} {{ $x }} {{ $y }})"/>
+      {{- end }}
+    </g>
+    {{- end }}
+  </g>
+  {{- if eq $page.Params.garnish "nutmeg" }}
+  <g style="fill:var(--sear-char, var(--fugu-sear-char))">
+    {{- range slice (slice -8 2) (slice -3 1) (slice 2 2.5) (slice 7 1.5) (slice 0 4) }}
+    <circle cx="{{ add $cx (index . 0) }}" cy="{{ add $top (index . 1) }}" r="0.9"/>
+    {{- end }}
+  </g>
+  {{- end }}
+  <path style="{{ $ink | safeCSS }};stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round" d="{{ $g.outline }}"/>
+  {{- if eq $page.Params.garnish "lemon" }}
+    {{- $lx := $g.rimx }}
+    {{- $ly := add $g.rimy 6 }}
+  <circle cx="{{ $lx }}" cy="{{ $ly }}" r="8" style="fill:var(--kit-yellow, var(--fugu-kit-yellow));stroke:currentColor;stroke-width:1.4"/>
+  <path style="{{ $ink | safeCSS }};stroke-width:1" d="M{{ $lx }} {{ sub $ly 7 }}v14M{{ sub $lx 7 }} {{ $ly }}h14M{{ sub $lx 5 }} {{ sub $ly 5 }}l10 10M{{ add $lx 5 }} {{ sub $ly 5 }}l-10 10"/>
+  {{- end }}
+</svg>
+{{- end }}
+{{- end }}
