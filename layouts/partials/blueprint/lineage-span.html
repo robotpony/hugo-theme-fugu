@@ -9,7 +9,9 @@
     entries  one dict per year in a build's `era` (blueprint/era.html),
              oldest first: year, page, and href, its link (to the
              page's #iterations heading when it has several years
-             and one)
+             and one), and again, true on every year of a build
+             after its first, which the timelines label short ("↳ 2015")
+             rather than repeat its title
     start    the first year of the first decade
     end      the first year after the last decade
 */}}
@@ -24,6 +26,13 @@
 {{ $out := false }}
 {{ with $entries }}
   {{ $entries = sort . "year" }}
+  {{ $seen := slice }}
+  {{ $marked := slice }}
+  {{ range $entries }}
+    {{ $marked = $marked | append (merge . (dict "again" (in $seen .page.RelPermalink))) }}
+    {{ $seen = $seen | append .page.RelPermalink }}
+  {{ end }}
+  {{ $entries = $marked }}
   {{ $first := (index $entries 0).year }}
   {{ $last := (index $entries (sub (len $entries) 1)).year }}
   {{ $start := mul (div $first 10) 10 }}

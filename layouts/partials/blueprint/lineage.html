@@ -4,7 +4,8 @@
   (blueprint/lineage-side.html). Its builds on a horizontal track of
   decades, each placed by its `era` (a year) as a dot labelled with its
   title and era, linking to its page; a build whose `era` is a list gets
-  a dot per year. Builds with no `era` are left off.
+  a dot per year, the later ones labelled "↳ 2015" so the title isn't
+  repeated. Builds with no `era` are left off.
   A build that's still a draft (a test kitchen stub with only its title
   and era) shows faint. A label sits higher (.alt) when its dot is close
   to the one before. Under 640px the CSS turns the track into a vertical
@@ -29,9 +30,14 @@
           {{ $prevAlt = $alt }}
           {{ $year := .year }}
           {{ $href := .href }}
+          {{ $again := .again }}
           <li class="tl-mark{{ if $alt }} alt{{ end }}{{ if .page.Draft }} todo{{ end }}" style="left:{{ printf "%.1f" $pos }}%">
             {{- with .page -}}
+              {{- if $again -}}
+              <a class="tl-name" href="{{ $href }}" title="{{ .Title }}, {{ $year }}" aria-label="{{ .Title }}, {{ $year }}">↳ {{ $year }}</a>
+              {{- else -}}
               <a class="tl-name" href="{{ $href }}" title="{{ $year }}">{{ .Title }}<span class="tl-detail"> · {{ $year }}</span></a>
+              {{- end -}}
             {{- end -}}
             <span class="tl-dot" aria-hidden="true"></span>
           </li>
