@@ -2,7 +2,7 @@
 # (params.fugu.methodSection), instead of the essay section. See ../README.md.
 baseURL = "https://example.org/"
 title = "Methods section"
-theme = ["fugu", "hugo-warped", "blowfish"]
+theme = ["fugu", "blowfish"]
 themesDir = "../../../.."
 buildDrafts = true  # drafts publish as pages in development
 

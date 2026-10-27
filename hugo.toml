@@ -2,6 +2,12 @@
 # sets only what differs, in its [params.fugu]. The content tools in
 # tools/ read the merged values too (through `hugo config`).
 
+# hugo-warped's fence partials, which the formula, stack and flow hooks
+# read their blocks with. Fugu calls them, so Fugu names the component;
+# Hugo finds it in the site's themes/ folder (a pinned submodule beside
+# fugu/), and the site's own theme list stays ["fugu", "blowfish"].
+theme = ["hugo-warped"]
+
 [params.fugu]
   # Fugu's basic styles (assets/css/fugu.css), coloured from the site's
   # Blowfish scheme. false leaves every class Fugu emits unstyled, for a

@@ -3,7 +3,7 @@
 # still hardcodes a section name shows up here. See ../README.md.
 baseURL = "https://example.org/"
 title = "Renamed"
-theme = ["fugu", "hugo-warped", "blowfish"]
+theme = ["fugu", "blowfish"]
 themesDir = "../../../.."
 
 [taxonomies]
