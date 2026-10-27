@@ -25,7 +25,7 @@ Not a Chef must render exactly as before unless a change means to alter it. For 
 
 Compare builds on one Hugo version only: Hugo's word count changes between releases, which shifts reading times on cards.
 
-`python3 tests/check.py --compare` (from inside the site) does that and also builds every fixture site in `tests/sites/` and checks its pages against its `expect.txt`, the same check CI runs. Use a Hugo inside Blowfish's declared range (0.163.0–0.166.0 for `295dae3`), or the fixtures fail on its version warning; `HUGO=/path/to/hugo` picks another binary.
+`python3 tests/check.py --compare` (from inside the site) does that and also builds every fixture site in `tests/sites/` and checks its pages against its `expect.txt`, the same check CI runs. It fails a build on any Hugo warning except Blowfish's version warning (outside its declared range, 0.163.0–0.166.0 for `295dae3`), so a newer local Hugo works; CI still pins one inside the range. `HUGO=/path/to/hugo` picks another binary.
 
 For visual changes, also check in Chrome (not Safari) at desktop and phone widths, in light and dark mode. Measure rendered boxes with `getBoundingClientRect()` rather than trusting computed styles: earlier layout bugs on this site passed every grep and build check and were only caught by looking.
 

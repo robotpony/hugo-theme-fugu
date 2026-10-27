@@ -3,7 +3,8 @@
 check.py — Build every fixture site and check its pages, in one command.
 
 For each site in tests/sites/ (a folder with a hugo.toml), and the example
-site (exampleSite/), builds it with --panicOnWarning, checks that every
+site (exampleSite/), builds it, failing on any warning but Blowfish's
+Hugo version check (IGNORED_WARNINGS), checks that every
 internal link and wiki link in the built pages resolves, then checks the
 pages against the site's expect.txt. A site with an XFAIL file is expected to fail for the reason
 written in it: its problems are reported but don't fail the run. Delete the
@@ -38,15 +39,25 @@ SITES = FUGU / "tests" / "sites"
 EXAMPLE = FUGU / "exampleSite"
 
 
+# Blowfish declares the Hugo versions it was tested on and warns on any
+# other. That says nothing about whether the site renders, so it's the one
+# warning a build may carry; every other warning fails the build.
+IGNORED_WARNINGS = [
+    re.compile(r'Module "blowfish" is not compatible with this Hugo version'),
+]
+
+
 def build(site, out, hugo):
     result = subprocess.run(
         [hugo, "--source", str(site), "--destination", str(out),
-         "--panicOnWarning", "--quiet"],
+         "--logLevel", "warn"],
         capture_output=True, text=True)
-    if result.returncode == 0:
-        return []
     # A panic prints a Go stack; the ERROR/WARN lines are the useful part.
-    lines = [l for l in result.stderr.splitlines() if l.startswith(("ERROR", "WARN", "panic:"))]
+    lines = [l for l in (result.stdout + result.stderr).splitlines()
+             if l.startswith(("ERROR", "WARN", "panic:"))]
+    lines = [l for l in lines if not any(p.search(l) for p in IGNORED_WARNINGS)]
+    if result.returncode == 0 and not lines:
+        return []
     return ["build failed: " + (" / ".join(lines) or result.stderr.strip()[:500])]
 
 

@@ -17,7 +17,7 @@ HUGO=/path/to/another/hugo python3 tests/check.py
 
 All three find the themes through `themesDir = "../../../.."`, the folder that holds `fugu/` and `blowfish/` side by side. That's `themes/` inside a site like Not a Chef, and the layout CI checks out. Or build one by hand from Fugu's root:
 
-Blowfish declares the Hugo versions it supports (`295dae3`: 0.163.0–0.166.0); outside that range Hugo warns about it and `--panicOnWarning` fails.
+Blowfish declares the Hugo versions it supports (`295dae3`: 0.163.0–0.166.0); outside that range Hugo warns about it. `check.py` fails a build on any warning but that one; by hand, `--panicOnWarning` fails on it too, so drop the flag on a newer Hugo and read the warnings yourself.
 
 ```sh
 hugo --source tests/sites/everything --panicOnWarning --destination /tmp/fugu-everything

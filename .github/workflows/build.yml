@@ -5,7 +5,8 @@
 #
 # Hugo is pinned inside Blowfish's declared range for that commit
 # (295dae3 allows 0.163.0–0.166.0); outside it, Hugo warns about the
-# module and --panicOnWarning fails the build. Move both together.
+# module (check.py lets that one warning through, so a newer local Hugo
+# still runs it). Move both together.
 name: Build
 
 on:
