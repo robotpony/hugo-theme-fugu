@@ -1,10 +1,10 @@
 # Plan
 
-The work list for taking Fugu to a theme other Blowfish users can install. Finished items are removed as they land; `CHANGELOG.md` and git history record them (the last full plan is `75a3a89`, the last long one `183c807`, the last before `v0.1.0` `102abb1`). Section numbers are kept, since other files cite them.
+The work list for taking Fugu to a theme other Blowfish users can install. Finished items are removed as they land; `CHANGELOG.md` and git history record them (the last full plan is `75a3a89`, the last long one `183c807`, the last before `v0.1.0` `102abb1`, the last before this squash `13b763a`). Section numbers are kept, since other files cite them.
 
-**Release path:** `v0.1.0` is tagged (2026-10-17): installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §4–§7 and the §10 review. Features come after 1.0.
+**Release path:** `v0.1.0` is tagged (2026-10-17): installs by Hugo modules or submodules, checked by CI's install job. Unreleased has grown since (drinks, `flow` blocks, the lineage timeline, the hugo-warped module), so `v0.2.0` is due once §10's hugo-warped item is settled. `v1.0.0` needs §4–§7 and the §10 review. Features come after 1.0.
 
-**Next:** §5's class inventory (mechanical; it sizes the design split), or §4 as a smaller start.
+**Next:** settle the hugo-warped module and tag `v0.2.0`; then §5's class inventory (mechanical; it sizes the design split), or §4 as a smaller start.
 
 ## 4. Translation
 
@@ -13,7 +13,7 @@ The work list for taking Fugu to a theme other Blowfish users can install. Finis
 
 ## 5. Default design
 
-Not a Chef's `custom.css` (1,553 lines) still styles every class Fugu emits; `fugu.css` is only a baseline from `--fugu-*` tokens (`params.fugu.styles = false` turns it off, as Not a Chef does).
+Not a Chef's `custom.css` (2,063 lines, and growing with each feature) still styles every class Fugu emits; `fugu.css` is only a baseline from `--fugu-*` tokens (`params.fugu.styles = false` turns it off, as Not a Chef does).
 
 - [ ] Inventory the classes Fugu emits and their rules in `custom.css`, split into structure (layout, sidebar, formula row, popovers, check-off) and look (colour, type, spacing, borders).
 - [ ] Move structure into `fugu.css`; express the look as `--fugu-*` properties defaulting to Blowfish's `--color-primary-*`/`--color-neutral-*`.
@@ -34,7 +34,7 @@ Overrides and pinned versions are in CLAUDE.md ("Blowfish overrides").
 
 Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configuration.md`, `features.md`.
 
-- [ ] Point the 17 code comments that cite Not a Chef docs (`git grep -e SPEC.md -e DESIGN.md -e FORMAT -- layouts assets tools`) at Fugu's docs, and `blueprint/build-card.html`'s reference to a PLAN.md "Stack diagrams" section that no longer exists.
+- [ ] Point the 17 code comments that cite Not a Chef docs (`git grep -e SPEC.md -e DESIGN.md -e FORMAT -- layouts assets tools`) at Fugu's docs, and `blueprint/build-card.html`'s reference to a PLAN.md "Stack diagrams" section that no longer exists (it's `docs/recipe-format.md` now).
 - [ ] `docs/essay-format.md` from Not a Chef's `FORMAT-ESSAYS.md`, if essays stay supported.
 - [ ] `docs/customizing.md`: the three layers, overriding partials, the `--fugu-*` properties (§5), fonts.
 - [ ] `docs/tools.md`, replacing the README's paragraph: a table (tool, purpose, example, needs) for `frontmatter.py`, `drafts.py`, `add-image.sh`, `compare-builds.py`, and `$FUGU_SITE_ROOT`; an "Editing" section on using `content/` as an Obsidian vault, and Warped Command.
@@ -52,6 +52,7 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
 
 ## 10. Release
 
+- [ ] Settle the hugo-warped module: it's merged to `main` and Not a Chef builds with it, but `CHANGELOG.md` still files it under "Trying (branch `hugo-warped-module`)". Move that entry into Changed and delete the branch, or back it out. Then tag `v0.2.0`.
 - [ ] Finish checking the basic styles in Chrome: hover states (popovers, card hover); the principle chip's fill is faint on light-`primary-100` schemes (autumn); "On cards" wraps on the principle tag page's sidebar.
 - [ ] Check the README's images in GitHub's rendering, light and dark.
 - [ ] Code review in three commit series: `layouts/`, `assets/js/`, `tools/`. Bugs, dead code, Not a Chef leftovers, stale comments. One area per pass with `/code-review high`; record each finding as fixed, won't fix (why), or deferred; check template and JS fixes with `tests/check.py --compare` and Chrome at both widths, light and dark. Angles from Not a Chef (2026-10-17):
@@ -71,7 +72,6 @@ After 1.0 unless Not a Chef needs one sooner. Several cite `SPEC.md`, still in N
 - **Formula diagrams:** `/lint` checks formula blocks (unknown keys, mixed operators, over five slots) before a build; grow the icon kit as recipes need it, with a gallery page.
 - **Methods and blueprints:** `blueprint`, `role`, and `era` in a JSON index (a methods index, or methods in the recipe one; asked 2026-10-11); bring back the builds comparison table from each build's `## Picks`.
 - **Recipe format:** prototype ingredient-name canonicalization on real recipes (`SPEC.md` §6, the fragile part); a validator (`tools/validate_recipe.py`, `SPEC.md` §8) wired into `/lint`.
-- **Wiki links to section pages:** `render-link.html` matches titles against `site.RegularPages` only, so `[[Burgers]]` (a blueprint's `_index.md`) is a broken link; Not a Chef links it by path for now (2026-10-17). Include section pages with their own content, blueprints at least, and watch for title clashes with taxonomy terms.
 - **Listings:** sort and filter on the recipes list; term pages as filters; TOC behaviour on long reference pages; extra taxonomies in the header's tags row (skip them by param, or chip them like cuisine); an option to leave hidden personal notes out of the build, since today they're only hidden visually.
 - **Build-time enrichment:** parsed ingredients in `recipes/index.json` (input for the rest); per-recipe cost from site `data/ingredient_prices.yaml`; grocery departments (`data/departments.yaml`, with a Fugu default); schema.org `Recipe` JSON-LD.
 - **Cooking-time JS:** optional-ingredient toggle; print view; cook mode with Wake Lock; interactive substitutions; shopping list in department order; pantry tool (win the fridge); method check-off in `localStorage`, reusing `ingredients.js`'s key scheme.
