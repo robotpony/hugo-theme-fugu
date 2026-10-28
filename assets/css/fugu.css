@@ -900,9 +900,12 @@ a.tl-name:hover { color: var(--fugu-accent-strong); }
 .tl-ticks { position: relative; height: 28px; margin: 0 6px; }
 .tl-tick { position: absolute; top: 8px; transform: translateX(-50%); font-family: var(--fugu-font-mono); font-size: .66rem; color: var(--fugu-ink-faint); }
 .tl-tick::before { content: ""; position: absolute; left: 50%; top: -12px; width: 1px; height: 6px; background: var(--fugu-border-strong); }
+/* A zoomed run of crowded years (blueprint/lineage-zoom.html): a wider, tinted stretch of track, its years ticked '88. */
+.tl-zoom { position: absolute; top: -2px; height: 6px; border-radius: 3px; background: var(--fugu-accent-soft); box-shadow: 0 0 0 1px var(--fugu-border-strong); }
+.tl-tick.tl-yr { font-size: .6rem; }
 @media (max-width: 640px) {
   .timeline { padding: 0; }
-  .tl-ticks { display: none; }
+  .tl-ticks, .tl-zoom { display: none; }
   .tl-track { height: auto; margin: 0 0 30px; background: none; }
   .tl-list { display: flex; flex-direction: column; margin-left: 6px; border-left: 2px solid var(--fugu-border-strong); }
   .tl-mark { position: static; flex-direction: row; gap: 10px; margin-left: -7px; padding: 6px 0; transform: none; }
@@ -927,6 +930,8 @@ a.tl-name:hover { color: var(--fugu-accent-strong); }
 .vt-spine { position: absolute; left: 52px; top: 0; bottom: 0; width: 2px; background: var(--fugu-border-strong); }
 .vt-dec { position: absolute; left: 0; width: 58px; display: flex; align-items: center; gap: 6px; transform: translateY(-50%); font-family: var(--fugu-font-mono); font-size: .64rem; color: var(--fugu-ink-faint); }
 .vt-dec::after { content: ""; width: 8px; height: 1px; margin-left: auto; margin-right: 1px; background: var(--fugu-border-strong); }
+.vt-zoom { position: absolute; left: 50px; width: 6px; border-radius: 3px; background: var(--fugu-accent-soft); box-shadow: 0 0 0 1px var(--fugu-border-strong); }
+.vt-dec.vt-yr { font-size: .6rem; }
 .vt-name { position: absolute; left: 72px; right: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 2px 8px; border-radius: 4px; transform: translateY(-50%); font-size: .86rem; font-weight: 600; line-height: 1.2; white-space: nowrap; color: var(--fugu-ink); text-decoration: none; }
 .vt-name > span:not(.ln-dot) { overflow: hidden; text-overflow: ellipsis; }
 .vt-name .y { flex: none; font-family: var(--fugu-font-mono); font-size: .7rem; font-weight: 400; color: var(--fugu-ink-faint); }

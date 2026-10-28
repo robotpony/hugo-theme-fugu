@@ -11,20 +11,27 @@
   to the one before. Under 640px the CSS turns the track into a vertical
   list with each build's era.
 
-  The years it covers are blueprint/lineage-span.html's. Nothing renders
-  with no dated builds. Takes the blueprint's builds (blueprint/info.html).
+  The years it covers are blueprint/lineage-span.html's, and where each
+  dot sits blueprint/lineage-zoom.html's: a run of dots closer than 6% of
+  the track is spread out (.tl-zoom, its years ticked '88 in place of
+  the decades), the rest of the track shrinking to make room. Under 640px
+  it's a list, so nothing zooms. Nothing renders with no dated builds. Takes the blueprint's builds (blueprint/info.html).
 */}}
 {{ with partial "blueprint/lineage-span.html" . }}
   {{ $start := .start }}
   {{ $end := .end }}
-  {{ $span := float (sub $end $start) }}
+  {{ $z := partial "blueprint/lineage-zoom.html" (dict "span" . "gap" (mul (float (sub $end $start)) .06) "fit" true "clear" (mul (float (sub $end $start)) .05)) }}
+  {{ $span := $z.length }}
   <div class="timeline">
     <div class="tl-track">
+      {{- range $z.zooms }}
+      <span class="tl-zoom" aria-hidden="true" style="left:{{ printf "%.1f" (div (mul .from 100) $span) }}%;width:{{ printf "%.1f" (div (mul (sub .to .from) 100) $span) }}%"></span>
+      {{- end }}
       <ol class="tl-list">
         {{ $prev := -100.0 }}
         {{ $prevAlt := false }}
-        {{ range .entries }}
-          {{ $pos := div (mul (float (sub .year $start)) 100) $span }}
+        {{ range $z.entries }}
+          {{ $pos := div (mul .at 100) $span }}
           {{ $alt := and (lt (sub $pos $prev) 18) (not $prevAlt) }}
           {{ $prev = $pos }}
           {{ $prevAlt = $alt }}
@@ -45,9 +52,12 @@
       </ol>
     </div>
     <div class="tl-ticks" aria-hidden="true">
-      {{- range seq $start 10 (sub $end 10) -}}
-        <span class="tl-tick" style="left:{{ printf "%.1f" (div (mul (float (sub . $start)) 100) $span) }}%">{{ . }}s</span>
+      {{- range where $z.decades "year" "lt" $end -}}
+        <span class="tl-tick" style="left:{{ printf "%.1f" (div (mul .at 100) $span) }}%">{{ .year }}s</span>
       {{- end -}}
+      {{- range $z.zooms }}{{ range .years -}}
+        <span class="tl-tick tl-yr" style="left:{{ printf "%.1f" (div (mul .at 100) $span) }}%">{{ .label }}</span>
+      {{- end }}{{ end -}}
     </div>
   </div>
 {{ end }}

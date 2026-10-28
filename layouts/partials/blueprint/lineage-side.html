@@ -15,7 +15,11 @@
   hovering either is hovering the link, with no JS. A draft build is
   .todo: a hollow dot and a faint name.
 
-  Nothing renders with no dated builds. Takes the blueprint's builds
+  Where each dot sits is blueprint/lineage-zoom.html's: a run of dots
+  closer than one label row (22px) is spread out to a row apart, so each
+  sits by its own label with no leader, marked by .vt-zoom and its years
+  ticked '88 in place of the decades. The rest keeps its scale, and the
+  spine grows. Nothing renders with no dated builds. Takes the blueprint's builds
   (blueprint/info.html).
 */}}
 {{ with partial "blueprint/lineage-span.html" . }}
@@ -24,19 +28,26 @@
   {{ $start := .start }}
   {{ $end := .end }}
   {{ $last := -100 }}
+  {{ $z := partial "blueprint/lineage-zoom.html" (dict "span" . "gap" (div 22.0 $k) "fit" false "clear" (div 16.0 $k)) }}
   {{ $rows := slice }}
-  {{ range .entries }}
-    {{ $dy := add $top (mul (sub .year $start) $k) }}
+  {{ range $z.entries }}
+    {{ $dy := add $top (int (math.Round (mul .at $k))) }}
     {{ $ly := math.Max $dy (add $last 22) | int }}
     {{ $last = $ly }}
     {{ $rows = $rows | append (dict "page" .page "year" .year "href" .href "again" .again "dy" $dy "ly" $ly) }}
   {{ end }}
-  {{ $height := add (math.Max (add $top (mul (sub $end $start) $k)) (add $last 14) | int) 8 }}
+  {{ $height := add (math.Max (add $top (int (math.Round (mul $z.length $k)))) (add $last 14) | int) 8 }}
   <div class="vt" style="height:{{ $height }}px">
     <div class="vt-spine" aria-hidden="true"></div>
-    {{- range seq $start 10 $end }}
-      <span class="vt-dec" style="top:{{ add $top (mul (sub . $start) $k) }}px" aria-hidden="true">{{ . }}s</span>
+    {{- range $z.zooms }}
+      <div class="vt-zoom" aria-hidden="true" style="top:{{ add $top (int (math.Round (mul .from $k))) }}px;height:{{ int (math.Round (mul (sub .to .from) $k)) }}px"></div>
     {{- end }}
+    {{- range $z.decades }}
+      <span class="vt-dec" style="top:{{ add $top (int (math.Round (mul .at $k))) }}px" aria-hidden="true">{{ .year }}s</span>
+    {{- end }}
+    {{- range $z.zooms }}{{ range .years }}
+      <span class="vt-dec vt-yr" style="top:{{ add $top (int (math.Round (mul .at $k))) }}px" aria-hidden="true">{{ .label }}</span>
+    {{- end }}{{ end }}
     {{- range $rows }}
       {{ $off := sub .dy .ly }}
       <a class="vt-name{{ if .page.Draft }} todo{{ end }}" href="{{ .href }}" style="top:{{ .ly }}px;--off:{{ $off }}px"{{ if .again }} aria-label="{{ .page.Title }}, {{ .year }}"{{ end }}>
