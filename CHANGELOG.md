@@ -29,6 +29,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Changed
 
+- The intro on a blueprint's page, the methods list and a principle tag's page is set as prose (`.prose.article-content` on `.method-intro`, `.blueprint-intro` and `.principle-intro`), so a heading, table or list in it is styled like a method page's body instead of coming out raw. `fugu.css` keeps the intro's size and text colour; a site with `fugu.styles = false` may need to keep its own intro paragraph styles over prose's.
 - A wiki link can reach a section's page by its title, such as a blueprint (`[[Burgers]]`), which rendered as broken before; a regular page with the same title still wins.
 - A `formula` row with more than four cells warns during the build, rather than dropping the extra cells quietly.
 - `formula` follows hugo-warped's settled readings: a marker on the first row drawn (rows skipped before it don't count) is dropped with a warning (`stray-marker`); a row with no label (`missing-cell`), a row after the `=` row or the `caption:`/`bar:` trailer (`out-of-order`), and a second `caption:` or `bar:` (`duplicate-keyword`) are skipped with a warning; more than two icons or three swaps draw with an `over-limit` warning. A card's formula strip skips the same rows. Checked against hugo-warped's `fences/fixtures/formula/`.

@@ -32,7 +32,7 @@ the-food-log/2026-september/index.html: href="/recipes/veg-patties/"
 
 # Taxonomies: cuisine pages, and the principle tag's definition and essay.
 cuisine/american/index.html: class="rcard
-tags/win-the-fridge/index.html: class="principle-intro"
+tags/win-the-fridge/index.html: class="principle-intro prose dark:prose-invert article-content"
 tags/win-the-fridge/index.html: !definition-callout
 tags/win-the-fridge/index.html: principle-layout
 tags/win-the-fridge/index.html: recipe-meta-label">On cards</span><span class="recipe-meta-value"><a class="principle-chip principle-win-the-fridge"
@@ -96,7 +96,7 @@ essays/methods/rice-bowls/index.html: class="blueprint-lineage lg:hidden"
 essays/methods/rice-bowls/index.html: rs-label">Lineage</h2>
 essays/methods/rice-bowls/index.html: <a class="vt-name" href="/essays/methods/rice-bowls/builds/patty-bowl/"
 essays/methods/rice-bowls/index.html: <a class="vt-name todo" href="/essays/methods/rice-bowls/builds/poke-bowl/"
-essays/methods/rice-bowls/index.html: class="method-intro blueprint-intro"
+essays/methods/rice-bowls/index.html: class="method-intro blueprint-intro prose dark:prose-invert article-content"
 essays/methods/rice-bowls/index.html: !definition-callout
 essays/methods/rice-bowls/index.html: <p>A rice bowl is rice with something on it.
 essays/methods/rice-bowls/index.html: build-card

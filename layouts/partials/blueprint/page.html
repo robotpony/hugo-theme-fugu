@@ -11,7 +11,9 @@
   - the title, "Burgers blueprint", alone (the counts are in the sidebar)
   - the definition, the _index.md body up to its `## Further reading`, as
     the page's intro (.method-intro.blueprint-intro), plain text rather
-    than a callout, with a link to the methods list (.read-essay)
+    than a callout, set as prose (.prose.article-content) so a heading,
+    table or list in it matches a method page's body, with a link to the
+    methods list (.read-essay)
   - "Lineage" (#lineage, in .blueprint-lineage): the builds with an
     `era` on a timeline (blueprint/lineage.html), below 1024px only; at
     desktop widths it's in the sidebar
@@ -69,7 +71,7 @@
     <h1 class="ltitle">{{ .Title }} <span class="ltitle-kind ltitle-kind-method">blueprint</span></h1>
   </header>
   {{ if or $definition .Description }}
-    <div class="method-intro blueprint-intro">
+    <div class="method-intro blueprint-intro prose dark:prose-invert article-content">
       {{ with $definition }}{{ $.RenderString (dict "display" "block") . }}{{ else }}<p>{{ $.Description }}</p>{{ end }}
       {{ with $list }}<a class="read-essay" href="{{ .RelPermalink }}">All {{ lower .Title }} →</a>{{ end }}
     </div>

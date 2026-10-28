@@ -4,7 +4,7 @@
 methods/index.html: method-list
 methods/index.html: recipe-meta-label">Methods</span><span class="recipe-meta-value">6
 methods/index.html: reading-sidebar-wrap
-methods/index.html: class="method-intro"
+methods/index.html: class="method-intro prose dark:prose-invert article-content"
 methods/index.html: !definition-callout
 methods/index.html: href="#bp-rice-bowls"
 methods/index.html: <div class="bp-builds-inline">

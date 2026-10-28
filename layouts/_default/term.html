@@ -16,8 +16,8 @@
   A term whose own _index.md sets `principle: true` (e.g. content/tags/
   win-the-fridge/_index.md) is a principle, on the reading layout: a
   body column and the reading sidebar's wrap, like the methods list. The
-  body is the _index.md body as the page's intro (.principle-intro) with
-  a link to the full essay, then only the recipes. The sidebar has search,
+  body is the _index.md body as the page's intro (.principle-intro, set
+  as prose so a heading, table or list in it is styled) with a link to the full essay, then only the recipes. The sidebar has search,
   counts, the chip as cards show it, and everything on the tag that isn't
   a recipe, the essay first, as "Reference & further reading". The essay is the one principle/term.html finds: the
   _index.md's `essay`, else the reference essay carrying the tag.
@@ -68,7 +68,7 @@
   <header class="listing-head">
     <h1 class="ltitle">{{ .Title }} <span class="ltitle-kind ltitle-kind-principle">principle</span></h1>
   </header>
-  <div class="principle-intro">
+  <div class="principle-intro prose dark:prose-invert article-content">
     {{ .Content }}
     {{ with $essay }}<a class="read-essay" href="{{ .RelPermalink }}">Read the full essay →</a>{{ end }}
   </div>

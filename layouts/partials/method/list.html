@@ -8,7 +8,9 @@
   The body:
   - the title alone (the counts are in the sidebar)
   - the definition, the _index.md body, as the page's intro
-    (.method-intro), plain text rather than a callout
+    (.method-intro), plain text rather than a callout, set as prose
+    (.prose.article-content) so a heading, table or list in it matches a
+    method page's body
   - "Blueprints": one row per blueprint, the folders under the methods
     folder (blueprint/all.html). The block (.bp) holds links but isn't
     one: its name links to the blueprint, and its parts are a compact
@@ -63,7 +65,7 @@
   <header class="listing-head">
     <h1 class="ltitle">{{ .Title }}</h1>
   </header>
-  {{ with .Content }}<div class="method-intro">{{ . }}</div>{{ end }}
+  {{ with .Content }}<div class="method-intro prose dark:prose-invert article-content">{{ . }}</div>{{ end }}
 
   {{ with $blueprints }}
     <h3 class="subsection-title" id="blueprints">Blueprints<span class="subsection-count">{{ len . }}</span></h3>
