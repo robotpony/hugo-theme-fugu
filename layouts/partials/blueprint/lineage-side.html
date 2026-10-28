@@ -5,7 +5,8 @@
   (blueprint/lineage-span.html), with its decade labels and ticks to the
   left. To the right, its title and era as one link (.vt-name), whose
   hover fills it and lights its dot. A build's later years (a list
-  `era`) read "↳ 2015", the title kept in the link's aria-label.
+  `era`) read "↳ 2015", or "2015 BCS" when it sets a short `linkTitle`,
+  the title kept in the link's aria-label.
 
   A label sits at its dot's height, or 22px under the label before when
   that's lower; a pushed-down label gets a 1px leader (.vt-lead, an
@@ -53,7 +54,7 @@
       <a class="vt-name{{ if .page.Draft }} todo{{ end }}" href="{{ .href }}" style="top:{{ .ly }}px;--off:{{ $off }}px"{{ if .again }} aria-label="{{ .page.Title }}, {{ .year }}"{{ end }}>
         <span class="ln-dot" aria-hidden="true"></span>
         {{- if lt $off 0 }}<svg class="vt-lead" aria-hidden="true" width="21" height="{{ sub 0 $off }}" style="height:{{ sub 0 $off }}px"><line x1="0" y1="0" x2="21" y2="{{ sub 0 $off }}"/></svg>{{ end -}}
-        {{- if .again }}<span>↳ {{ .year }}</span>{{ else }}<span>{{ .page.Title }}</span><span class="y">{{ .year }}</span>{{ end }}
+        {{- if .again }}<span>{{ if ne .page.LinkTitle .page.Title }}{{ .year }} {{ .page.LinkTitle }}{{ else }}↳ {{ .year }}{{ end }}</span>{{ else }}<span>{{ .page.Title }}</span><span class="y">{{ .year }}</span>{{ end }}
       </a>
     {{- end }}
   </div>
