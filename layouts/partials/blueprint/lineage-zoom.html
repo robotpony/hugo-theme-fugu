@@ -1,43 +1,89 @@
 {{/*
-  Places a lineage's dots on its track, zooming where years cluster
-  (hugo-warped's fences/timeline.md, "Clusters"). Shared by the body's
-  track (blueprint/lineage.html) and the sidebar's
-  (blueprint/lineage-side.html), which set their own gap.
+  Places a lineage's dots on its track, cutting long empty stretches to a
+  break and zooming where years cluster (hugo-warped's
+  fences/timeline.md, "Gaps" and "Clusters"). Shared by the body's track
+  (blueprint/lineage.html) and the sidebar's
+  (blueprint/lineage-side.html), which set their own lengths.
 
-  A cluster is a run of distinct years whose neighbours sit closer than
-  the gap; it gets just the length that puts each pair one gap apart,
-  and every other year keeps the track's scale. With fit, the track keeps
-  its length and the rest of it shrinks only enough to make room (the
-  body's track is as wide as its column); without, the track grows (the
-  sidebar's runs down the page). A track with no cluster is placed
-  exactly as before: at is the year less the span's start.
+  Gaps come first. Each dot keeps the decade tick at or before its year
+  and the next one after; between two neighbouring years, the stretch
+  from the earlier's tick after to the later's tick before is a gap when
+  it's at least cut years long, and it's drawn as a break of fixed length
+  with no ticks inside it.
 
-  Takes a dict: span (blueprint/lineage-span.html), gap (in years at the
-  track's own scale), fit (bool), and clear (how near a zoomed span a
-  decade tick may sit, in the placed units; optional). Returns a dict:
+  Then clusters, on what's left: a run of distinct years whose neighbours
+  sit closer than the gap, never across a break; it gets just the length
+  that puts each pair one gap apart. Every other year keeps the track's
+  scale. With fit, the track keeps its length and the rest of it shrinks
+  only enough to make room for the zooms, or grows into what the breaks
+  free (the body's track is as wide as its column); without, the track
+  grows or shrinks (the sidebar's runs down the page). A track with no
+  gap or cluster is placed exactly as before: at is the year less the
+  span's start.
 
-    entries  the span's entries, each with at, its place in years from
-             the track's start
-    length   the track's length in the same units
+  Takes a dict: span (blueprint/lineage-span.html), gap, break (a
+  break's length, at least gap), clear (how near a zoomed span a decade
+  tick may sit; optional), cut (the shortest stretch of years that's
+  cut; 50 by default), and fit (bool). Without fit, gap, break and clear
+  are in years at the track's own scale; with fit, they're fractions of
+  the track. Returns a dict, all places in the track's units:
+
+    entries  the span's entries, each with at, its place from the
+             track's start
+    length   the track's length
     decades  one dict per decade the track shows: year, at (decades
              in a zoomed span, ends included, or within clear of one,
-             are left out: its years are ticked instead)
+             are left out: its years are ticked instead; so are
+             decades inside a break)
     zooms    one dict per zoomed span: from, to (at), and years, one
              dict per year in it: year, at, label ('88)
+    breaks   one dict per break: from, to (at), and lo, hi, the
+             decades at its ends
 */}}
 {{ $span := .span }}
 {{ $fit := .fit }}
-{{ $clear := float (.clear | default 0) }}
 {{ $start := $span.start }}
 {{ $L := float (sub $span.end $start) }}
 {{ $ys := slice }}
 {{ range $span.entries }}{{ if not (in $ys .year) }}{{ $ys = $ys | append .year }}{{ end }}{{ end }}
-{{/* No gap so wide that every dot couldn't fit on the track. */}}
-{{ $G := math.Min (float .gap) (div $L (len $ys)) }}
 
-{{/* Find clusters at the current scale. Shrinking the rest of a fitted
-  track can close a gap outside them, so look again until nothing new
-  joins (a few passes at most). */}}
+{{/* Find the gaps: lo is the earlier year's decade tick after, hi the
+  later one's tick before. */}}
+{{ $gaps := slice }}
+{{ $W := 0.0 }}
+{{ range $i, $y := after 1 $ys }}
+  {{ $prev := index $ys $i }}
+  {{ $lo := add (mul (div $prev 10) 10) 10 }}
+  {{ $hi := mul (div $y 10) 10 }}
+  {{ if ge (sub $hi $lo) ($.cut | default 50) }}
+    {{ $gaps = $gaps | append (dict "after" $prev "lo" $lo "hi" $hi) }}
+    {{ $W = add $W (float (sub $hi $lo)) }}
+  {{ end }}
+{{ end }}
+{{ $n := float (len $gaps) }}
+
+{{/* The track's length T, and the gap, break and clear in its units. A
+  fitted track is T = L less the cut years plus its breaks, each a
+  fraction b of T. */}}
+{{ $b := math.Max (float .break) (float .gap) }}
+{{ $T := add (sub $L $W) (mul $n $b) }}
+{{ if $fit }}{{ $T = div (sub $L $W) (sub 1.0 (mul $b $n)) }}{{ end }}
+{{ $gap := float .gap }}
+{{ $clear := float (.clear | default 0) }}
+{{ $B := $b }}
+{{ if $fit }}
+  {{ $gap = mul $gap $T }}
+  {{ $clear = mul $clear $T }}
+  {{ $B = mul $b $T }}
+{{ end }}
+{{/* No gap so wide that every dot couldn't fit on the track. */}}
+{{ $G := math.Min $gap (div $T (len $ys)) }}
+
+{{/* Find clusters at the current scale, never across a break. Shrinking
+  the rest of a fitted track can close a gap outside them, so look again
+  until nothing new joins (a few passes at most). */}}
+{{ $broken := slice }}
+{{ range $gaps }}{{ $broken = $broken | append .after }}{{ end }}
 {{ $s := 1.0 }}
 {{ $clusters := slice }}
 {{ range seq 4 }}
@@ -45,7 +91,7 @@
   {{ $cur := slice (index $ys 0) }}
   {{ range $i, $y := after 1 $ys }}
     {{ $prev := index $ys $i }}
-    {{ if lt (mul (float (sub $y $prev)) $s) $G }}
+    {{ if and (lt (mul (float (sub $y $prev)) $s) $G) (not (in $broken $prev)) }}
       {{ $cur = $cur | append $y }}
     {{ else }}
       {{ if gt (len $cur) 1 }}{{ $clusters = $clusters | append (dict "ys" $cur "a" (index $cur 0) "b" $prev) }}{{ end }}
@@ -60,20 +106,28 @@
       {{ $zoomed = add $zoomed (mul (float (sub (len .ys) 1)) $G) }}
       {{ $covered = add $covered (float (sub .b .a)) }}
     {{ end }}
-    {{ $s = div (sub $L $zoomed) (sub $L $covered) }}
+    {{ $s = div (sub (sub $T (mul $n $B)) $zoomed) (sub (sub $L $W) $covered) }}
   {{ end }}
 {{ end }}
 
-{{/* Where a year sits: its distance from the start at scale s, plus
-  what each cluster wholly before it gained; inside a cluster, a gap per
-  member before it. A year inside a cluster that isn't one of its dots (a
-  decade tick) has no place. */}}
+{{/* Where a year sits: its distance from the start at scale s, less the
+  years cut before it, plus a break for each of those gaps and what each
+  cluster wholly before it gained; inside a cluster, a gap per member
+  before it. A year inside a cluster that isn't one of its dots (a decade
+  tick), or inside a break, has no place. */}}
 {{ $at := dict }}
 {{ $q := $ys }}
 {{ range seq $start 10 $span.end }}{{ $q = $q | append . }}{{ end }}
 {{ range $y := $q }}
-  {{ $pos := mul (float (sub $y $start)) $s }}
+  {{ $u := float (sub $y $start) }}
+  {{ $nb := 0.0 }}
   {{ $place := true }}
+  {{ range $gaps }}
+    {{ if ge $y .hi }}{{ $u = sub $u (float (sub .hi .lo)) }}{{ $nb = add $nb 1 }}
+    {{ else if gt $y .lo }}{{ $place = false }}{{ end }}
+  {{ end }}
+  {{ $pos := mul $u $s }}
+  {{ if gt $nb 0 }}{{ $pos = add $pos (mul $nb $B) }}{{ end }}
   {{ range $c := $clusters }}
     {{ $gain := sub (mul (float (sub (len $c.ys) 1)) $G) (mul (float (sub $c.b $c.a)) $s) }}
     {{ if ge $y $c.b }}
@@ -86,7 +140,7 @@
   {{ if $place }}{{ $at = merge $at (dict (string $y) $pos) }}{{ end }}
 {{ end }}
 
-{{ $length := mul $L $s }}
+{{ $length := add (mul (sub $L $W) $s) (mul $n $B) }}
 {{ $zooms := slice }}
 {{ range $clusters }}
   {{ $length = add $length (sub (mul (float (sub (len .ys) 1)) $G) (mul (float (sub .b .a)) $s)) }}
@@ -94,18 +148,20 @@
   {{ range .ys }}{{ $years = $years | append (dict "year" . "at" (index $at (string .)) "label" (printf "'%02d" (mod . 100))) }}{{ end }}
   {{ $zooms = $zooms | append (dict "from" (index $at (string .a)) "to" (index $at (string .b)) "years" $years) }}
 {{ end }}
-{{ if $fit }}{{ $length = $L }}{{ end }}
+{{ if $fit }}{{ $length = $T }}{{ end }}
+{{ $breaks := slice }}
+{{ range $gaps }}{{ $breaks = $breaks | append (dict "from" (index $at (string .lo)) "to" (index $at (string .hi)) "lo" .lo "hi" .hi) }}{{ end }}
 
 {{ $entries := slice }}
 {{ range $span.entries }}{{ $entries = $entries | append (merge . (dict "at" (index $at (string .year)))) }}{{ end }}
 {{ $decades := slice }}
 {{ range $d := seq $start 10 $span.end }}
-  {{ $covered := false }}
+  {{ $da := index $at (string $d) }}
+  {{ $covered := not (isset $at (string $d)) }}
   {{ range $clusters }}{{ if and (ge $d .a) (le $d .b) }}{{ $covered = true }}{{ end }}{{ end }}
   {{ if not $covered }}
-    {{ $da := index $at (string $d) }}
     {{ range $zooms }}{{ if lt (math.Abs (sub $da .from)) $clear }}{{ $covered = true }}{{ end }}{{ if lt (math.Abs (sub $da .to)) $clear }}{{ $covered = true }}{{ end }}{{ end }}
   {{ end }}
-  {{ if not $covered }}{{ $decades = $decades | append (dict "year" $d "at" (index $at (string $d))) }}{{ end }}
+  {{ if not $covered }}{{ $decades = $decades | append (dict "year" $d "at" $da) }}{{ end }}
 {{ end }}
-{{ return dict "entries" $entries "length" $length "decades" $decades "zooms" $zooms }}
+{{ return dict "entries" $entries "length" $length "decades" $decades "zooms" $zooms "breaks" $breaks }}

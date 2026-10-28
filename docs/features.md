@@ -122,7 +122,7 @@ Methods explain how a kind of food or a process works in general. Any page in th
 A blueprint is a dish type made of parts, such as a burger: patty, seasoning, cooking, assembly, sauces. It's a folder under the methods, with its parts and builds in subfolders. Its page is on the reading layout, like the methods list, and shows:
 
 - Its definition, from the folder's `_index.md`, with a link to the methods list.
-- A lineage timeline: the builds placed by era, with drafts faint. At desktop widths it's in the sidebar, a vertical spine drawn to scale; narrower, a track of decades in the body (a list on a phone). Where years crowd, the track zooms slightly (see Rendering, below).
+- A lineage timeline: the builds placed by era, with drafts faint. At desktop widths it's in the sidebar, a vertical spine drawn to scale; narrower, a track of decades in the body (a list on a phone). Where years crowd, the track zooms slightly, and a long empty stretch is cut to a break (see Rendering, below).
 - Its parts in order, as numbered links, as on the methods list, under a line of lead text. Each part's description and options are on its own page.
 - Its builds, the named combinations, as cards with their era, description, and stack diagram, oldest first, under an optional lead.
 - In the sidebar: search, counts of parts and builds, the lineage, "On this page", and the pages linked from the `## Further reading` at the end of its definition.
@@ -137,6 +137,13 @@ The lineage follows hugo-warped's clusters rule (`fences/timeline.md`, "Clusters
 
 - Sidebar: the gap is 22px, one label row, so each dot sits by its own label with no leader. The rest keeps its scale of 3px a year, and the spine grows. Decade ticks keep 16px from a zoomed span.
 - Body: the gap is 6% of the track. The track is as wide as its column, so the rest of it shrinks only enough to make room. Decade ticks keep 5% from a zoomed span.
+
+### Rendering: lineage gaps
+
+The lineage also follows hugo-warped's gaps rule (`fences/timeline.md`, "Gaps"), in the same partial, before it looks for clusters. Each dot keeps the decade tick at or before its year and the next one after. Between two neighbouring years, the stretch from the earlier one's tick after to the later one's tick before is cut when it's 50 years or more: 1778 and 1970 lose 1780–1970, while 1970 and 2012 keep 1980–2010. A cut is drawn as a short break with no ticks inside it, and the decades at its two ends keep their labels. A cluster never spans a break. A track with no gap draws as before, and on a phone, where the track is a list, nothing is cut.
+
+- Sidebar: a break is 32px (the cluster gap is 22px), a gap in the spine with a `⋮` (`.vt-break`). Everything else keeps its scale of 3px a year, so the spine gets shorter.
+- Body: a break is 8% of the track (the cluster gap is 6%), a gap in the track with a `…` (`.tl-break`). The track is still as wide as its column, so the rest of it grows into the room the cut frees.
 
 ## Drafts
 

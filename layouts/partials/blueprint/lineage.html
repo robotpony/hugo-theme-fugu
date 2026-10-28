@@ -15,16 +15,22 @@
   The years it covers are blueprint/lineage-span.html's, and where each
   dot sits blueprint/lineage-zoom.html's: a run of dots closer than 6% of
   the track is spread out (.tl-zoom, its years ticked '88 in place of
-  the decades), the rest of the track shrinking to make room. Under 640px
-  it's a list, so nothing zooms. Nothing renders with no dated builds. Takes the blueprint's builds (blueprint/info.html).
+  the decades), the rest of the track shrinking to make room. An empty
+  stretch of 50 years or more between two dots is cut to a break 8% of
+  the track long (.tl-break, an ellipsis with no ticks), the rest growing
+  into the room it frees. Under 640px it's a list, so nothing zooms or
+  is cut. Nothing renders with no dated builds. Takes the blueprint's builds (blueprint/info.html).
 */}}
 {{ with partial "blueprint/lineage-span.html" . }}
   {{ $start := .start }}
   {{ $end := .end }}
-  {{ $z := partial "blueprint/lineage-zoom.html" (dict "span" . "gap" (mul (float (sub $end $start)) .06) "fit" true "clear" (mul (float (sub $end $start)) .05)) }}
+  {{ $z := partial "blueprint/lineage-zoom.html" (dict "span" . "gap" .06 "break" .08 "fit" true "clear" .05) }}
   {{ $span := $z.length }}
   <div class="timeline">
     <div class="tl-track">
+      {{- range $z.breaks }}
+      <span class="tl-break" aria-hidden="true" style="left:{{ printf "%.1f" (div (mul .from 100) $span) }}%;width:{{ printf "%.1f" (div (mul (sub .to .from) 100) $span) }}%">…</span>
+      {{- end }}
       {{- range $z.zooms }}
       <span class="tl-zoom" aria-hidden="true" style="left:{{ printf "%.1f" (div (mul .from 100) $span) }}%;width:{{ printf "%.1f" (div (mul (sub .to .from) 100) $span) }}%"></span>
       {{- end }}

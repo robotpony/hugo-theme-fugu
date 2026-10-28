@@ -20,7 +20,9 @@
   closer than one label row (22px) is spread out to a row apart, so each
   sits by its own label with no leader, marked by .vt-zoom and its years
   ticked '88 in place of the decades. The rest keeps its scale, and the
-  spine grows. Nothing renders with no dated builds. Takes the blueprint's builds
+  spine grows. An empty stretch of 50 years or more between two dots is
+  cut to a 32px break in the spine (.vt-break, a ⋮ with no ticks), the
+  decades at its ends still labelled. Nothing renders with no dated builds. Takes the blueprint's builds
   (blueprint/info.html).
 */}}
 {{ with partial "blueprint/lineage-span.html" . }}
@@ -29,7 +31,7 @@
   {{ $start := .start }}
   {{ $end := .end }}
   {{ $last := -100 }}
-  {{ $z := partial "blueprint/lineage-zoom.html" (dict "span" . "gap" (div 22.0 $k) "fit" false "clear" (div 16.0 $k)) }}
+  {{ $z := partial "blueprint/lineage-zoom.html" (dict "span" . "gap" (div 22.0 $k) "break" (div 32.0 $k) "fit" false "clear" (div 16.0 $k)) }}
   {{ $rows := slice }}
   {{ range $z.entries }}
     {{ $dy := add $top (int (math.Round (mul .at $k))) }}
@@ -40,6 +42,9 @@
   {{ $height := add (math.Max (add $top (int (math.Round (mul $z.length $k)))) (add $last 14) | int) 8 }}
   <div class="vt" style="height:{{ $height }}px">
     <div class="vt-spine" aria-hidden="true"></div>
+    {{- range $z.breaks }}
+      <div class="vt-break" aria-hidden="true" style="top:{{ add $top (int (math.Round (mul .from $k))) }}px;height:{{ int (math.Round (mul (sub .to .from) $k)) }}px">⋮</div>
+    {{- end }}
     {{- range $z.zooms }}
       <div class="vt-zoom" aria-hidden="true" style="top:{{ add $top (int (math.Round (mul .from $k))) }}px;height:{{ int (math.Round (mul (sub .to .from) $k)) }}px"></div>
     {{- end }}
