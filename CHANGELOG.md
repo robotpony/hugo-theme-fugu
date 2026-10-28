@@ -18,6 +18,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 - Glass thumbnails on drink cards: a recipe with `glass` (and optionally `fill`, `ice`, `garnish`) in its frontmatter gets a small glass drawn beside its card's title and intro (`partials/drink/glass.html`, `docs/frontmatter.md` "Drinks"). New classes `.has-glass`, `.rcard-drink`, `.rcard-drink-text` and `.rcard-glass`, styled in `fugu.css`, with new `--fugu-kit-*` drink colours; a site with `fugu.styles = false` styles them itself.
 - A `patty-chicken-breast` stack layer: a cornmeal-fried whole breast, pounded out like a schnitzel, so wider, flatter and less regular than `patty-chicken`, with a gritty crust.
 - 3 stack layers: `patty-chicken` (a breaded, fried chicken patty, an irregular cutlet with a crumb crust), `slaw` (shredded cabbage with carrot), and `marinara` (a spoonful of chunky tomato sauce), for Not a Chef's chicken sandwich builds.
+- A `fish` formula icon (a whole fish, side on), for Not a Chef's poke bowl ratio.
 - 4 formula icons: `breast` (a boneless chicken breast; `chicken` is a drumstick), `pounder` (a flat meat pounder), `knife` (a chef's knife), and `bun` (a sliced bun).
 - 4 formula icons for drinks: `bottle`, `mug` (a cup with steam), `wine` (a stemmed glass), and `ice` (two cubes).
 - 3 formula icons: `buttermilk` (a gable-top carton), `chicken` (a drumstick), and `cornmeal` (a corn cob), for Not a Chef's cornmeal fried chicken.
