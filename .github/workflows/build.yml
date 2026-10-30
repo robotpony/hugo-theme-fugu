@@ -20,7 +20,7 @@ env:
   # hugo-warped's module: Fugu's formula, stack and flow hooks read their
   # blocks with its parse partials, and the glossary its glossary
   # partials. Keep it at go.mod's version.
-  HUGO_WARPED_REF: 4d260ae44189d075fb59f4e0c0e5ab757723eb57
+  HUGO_WARPED_REF: f1846efe41f7242604b22eb9a17b2533bd2304d3
 
 jobs:
   fixtures:
