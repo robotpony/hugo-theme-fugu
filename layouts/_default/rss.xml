@@ -1,6 +1,6 @@
 {{- /*
   Full override of themes/blowfish/layouts/_default/rss.xml (Blowfish
-  295dae3). Three changes:
+  295dae3). Four changes:
 
   - Drafts are left out of every feed (home, section, and term), so a
     site that publishes drafts (buildDrafts) doesn't send half-finished
@@ -11,6 +11,8 @@
   - A blueprint's feed (blueprint/is.html) takes its pages recursively,
     so its parts and builds are in it when their folders are headless
     sections with an _index.md (blueprint/lead.html).
+  - A page with no URL of its own (build options render: never, like a
+    glossary entry) is left out, rather than sent with an empty link.
 */ -}}
 {{- $pctx := . -}}
 {{- if .IsHome -}}{{ $pctx = .Site }}{{- end -}}
@@ -21,7 +23,7 @@
 {{- else -}}
 {{- $pages = $pctx.Pages -}}
 {{- end -}}
-{{- $pages = where $pages "Draft" false -}}
+{{- $pages = where (where $pages "Draft" false) "RelPermalink" "!=" "" -}}
 {{- $limit := .Site.Config.Services.RSS.Limit -}}
 {{- if ge $limit 1 -}}
 {{- $pages = $pages | first $limit -}}

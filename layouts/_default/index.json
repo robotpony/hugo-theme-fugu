@@ -2,7 +2,9 @@
   Override of themes/blowfish/layouts/_default/index.json — same
   search index, plus a "pinned" field (frontmatter `pinned: true`) so
   assets/js/search.js (also overridden) can float pinned pages
-  to the top of matching results. See DESIGN.md.
+  to the top of matching results, and without pages that have no URL of
+  their own (build options render: never, like a glossary entry, which
+  is found on the glossary page instead). See DESIGN.md.
 */ -}}
 {{- $index := slice -}}
 {{ $pages := .Site.Pages }}
@@ -10,7 +12,7 @@
 {{ $pages = $pages | lang.Merge .Site.Pages }}
 {{ end }}
 {{- range $pages -}}
-  {{- if not .Params.excludeFromSearch -}}
+  {{- if and (not .Params.excludeFromSearch) .RelPermalink -}}
     {{- $section := .Site.GetPage "section" .Section -}}
     {{- if .Date -}}
       {{- $index = $index | append (dict

@@ -53,7 +53,7 @@ tags/method/index.html: !rcard-link" href="/methods/"
 # (referenceEssays = "reference/essays"): the principle chip finds its
 # essay there, and a wiki link to it gets the glossary popover.
 recipes/plain-rice/index.html: href="/reference/essays/win-the-fridge/"
-essays/cooking-reflections/why-ratios/index.html: <a href="/reference/essays/win-the-fridge/" class="glossary-link">
+essays/cooking-reflections/why-ratios/index.html: <a href="/reference/essays/win-the-fridge/" class="glossary-link" aria-describedby="gl-win-the-fridge-1">
 tags/win-the-fridge/index.html: read-essay
 reference/index.html: href="/reference/essays/win-the-fridge/"
 

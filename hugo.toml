@@ -41,8 +41,9 @@
 
   # Where wiki links look for glossary terms (see render-link.html): a
   # folder in the essay section whose pages are reference essays (or, with
-  # a "/", a content path in any section: "reference/essays"), and a page
-  # in the reference section whose ## headings are short entries. "" turns
+  # a "/", a content path in any section: "reference/essays"), and a
+  # folder in the reference section holding one file per entry, its
+  # _index.md the glossary page (hugo-warped's glossary spec). "" turns
   # either off.
   referenceEssays = "reference-essays"
   glossaryPage = "glossary"

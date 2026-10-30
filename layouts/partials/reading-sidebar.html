@@ -223,7 +223,8 @@
           {{ $label := index . 1 }}
           {{ with partial "section/name.html" (index . 0) }}
             {{ $to := site.GetPage . }}
-            {{ with where site.RegularPages "Section" . }}
+            {{/* Pages with a URL: a glossary entry (render: never) isn't a guide. */}}
+            {{ with where (where site.RegularPages "Section" .) "RelPermalink" "!=" "" }}
               {{ $rows = $rows | append (dict "label" $label "n" (len .) "to" $to) }}
             {{ end }}
           {{ end }}

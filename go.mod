@@ -7,8 +7,9 @@ go 1.21
 // BLOWFISH_REF and the Hugo range in CLAUDE.md.
 require github.com/nunocoracao/blowfish/v3 v3.6.1-0.20260913212648-295dae334547
 
-// hugo-warped's fence partials (4045b3f), imported in hugo.toml. Move it
-// with CI's HUGO_WARPED_REF, after running hugo-warped's
-// tools/run-hugo-fixtures.py against Fugu; 0b971b3 is the oldest the card
-// strips work with.
-require github.com/robotpony/hugo-warped v0.0.0-20261027153628-4045b3f61ca8
+// hugo-warped's fence and glossary partials (4d260ae), imported in
+// hugo.toml. Move it with CI's HUGO_WARPED_REF, after running
+// hugo-warped's tools/run-hugo-fixtures.py against Fugu and its
+// tools/test-hugo-glossary.py; 0b971b3 is the oldest the card strips work
+// with, and 4d260ae the oldest the glossary does.
+require github.com/robotpony/hugo-warped v0.0.0-20261030162808-4d260ae44189

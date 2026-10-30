@@ -5,13 +5,14 @@ tags: [reference, glossary]
 source: original
 date: 2026-09-27
 draft: false
+# One file per entry in this folder (hugo-warped glossary/README.md),
+# built into this page's list only, never a page of its own.
+cascade:
+  target: {kind: page}
+  build: {render: never, list: always}
 ---
 
 Short definitions for terms that come up more than once but don't need a page
 of their own. A term with its own page (a technique essay, a principle like
 [[Win the fridge]]) links straight there instead of to an entry below — this
 page is only for the ones that don't.
-
-## Kewpie mayonnaise
-
-Japanese mayonnaise made with only egg yolks (not whole eggs) and rice or apple vinegar, instead of the whole eggs and distilled vinegar most Western mayo uses — richer, tangier, and a shade more yellow. Traditionally sold in a soft squeeze bottle with a star-shaped nozzle.

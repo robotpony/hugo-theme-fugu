@@ -1,0 +1,6 @@
+{{- /*
+  A glossary letter heading's id (glossary/page.html): gl- and the letter
+  lowercased, gl-a; gl-other for "#", a term starting with a digit or a
+  symbol. Takes the letter.
+*/ -}}
+{{- return cond (eq . "#") "gl-other" (printf "gl-%s" (lower .)) -}}

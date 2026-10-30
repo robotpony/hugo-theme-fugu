@@ -13,15 +13,21 @@
   link opens in a new tab, as an .extlink, whatever
   article.externalLinkForceNewTab says.
 
-  Glossary popover: a [[Term]] that resolves to a reference essay (where
-  params.fugu.referenceEssays says, by default content/essays/reference-
-  essays/; see section/reference-essay.html) renders as a .glossary-link with a hover/focus popover instead of a plain
-  .wikilink — reference essays are themselves the "gets its own page" tier
-  of the glossary. A [[Term]] that resolves to no page at all falls back to
-  checking ## headings in the glossary page (params.fugu.glossaryPage in the
-  reference section, by default content/reference/glossary.md), the
-  "doesn't get its own page" tier, before giving up as a .broken-link.
-  Either tier is off when its param or section is "".
+  Glossary popover: a [[Term]] that resolves to a glossary entry renders
+  as a .glossary-link, going to the entry, with a hover/focus popover
+  (partials/glossary/pop.html): a role="tooltip" holding the term and the
+  entry's first sentence, tied to the link by aria-describedby, with no
+  link inside. Entries come from hugo-warped's glossary partials
+  (glossary/README.md): one file each in the glossary folder
+  (params.fugu.glossaryPage in the reference section, by default
+  content/reference/glossary/), plus the reference essays (where
+  params.fugu.referenceEssays says; see section/reference-essay.html),
+  entries with pages of their own (partials/glossary/args.html). The
+  site's pages are tried first and the glossary second, so a reference
+  essay is found as a page, then drawn as its entry, going to the essay.
+  A [[Term]] that resolves to neither is a .broken-link, with a build
+  warning, glossary [unresolved-mark]. Either tier is off when its param
+  or section is "".
 
   A [[Title]] matches regular pages first, then section pages, so a
   blueprint (content/methods/burgers/_index.md) can be linked by its title
@@ -51,6 +57,9 @@
   {{- $normDest := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower $destination)) -}}
   {{- $matches := slice -}}
   {{- range site.RegularPages -}}
+    {{- /* An entry file is a page with no URL of its own (its build
+      options: render never): never a link target as a page. */ -}}
+    {{- if not .RelPermalink }}{{ continue }}{{ end -}}
     {{- $normTitle := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower .Title)) -}}
     {{- if eq $normTitle $normDest -}}
       {{- $matches = $matches | append . -}}
@@ -64,44 +73,29 @@
       {{- end -}}
     {{- end -}}
   {{- end -}}
+  {{- $args := partialCached "glossary/args.html" "args" -}}
   {{- if gt (len $matches) 0 -}}
     {{- $target := index $matches 0 -}}
-    {{- $isRefEssay := partial "section/reference-essay.html" $target -}}
-    {{- if $isRefEssay -}}
-      {{- $def := $target.Params.summary | default $target.Description -}}
-      {{- if not $def -}}
-        {{- $head := index (split $target.RawContent "\n## ") 0 | strings.TrimSpace -}}
-        {{- if and $head (not (hasPrefix $head "#")) -}}
-          {{- $def = index (split $head "\n\n") 0 -}}
-        {{- end -}}
+    {{- $entry := false -}}
+    {{- if and $args (partial "section/reference-essay.html" $target) -}}
+      {{- range partial "hugo-warped/glossary/entries.html" $args -}}
+        {{- if eq .url $target.RelPermalink }}{{ $entry = . }}{{ break }}{{ end -}}
       {{- end -}}
-      {{- $def = $def | markdownify | plainify | htmlUnescape | truncate 200 -}}
-      <span class="pop-host pop-glossary"><a href="{{ $target.RelPermalink }}" class="glossary-link">{{ $text }}</a><span class="pop pop-up" role="tooltip"><span class="pop-head">{{ $target.Title }}</span><span class="pop-text">{{ $def }}</span><a class="pop-link" href="{{ $target.RelPermalink }}">Read the full essay</a></span></span>
+    {{- end -}}
+    {{- with $entry -}}
+      {{- partial "glossary/pop.html" (dict "page" $.Page "entry" . "text" $text) -}}
     {{- else -}}
       <a href="{{ $target.RelPermalink }}" class="wikilink">{{ $text }}</a>
     {{- end -}}
   {{- else -}}
-    {{- $glossary := "" -}}
-    {{- $refSection := partial "section/name.html" "reference" -}}
-    {{- with and $refSection site.Params.fugu.glossaryPage -}}
-      {{- $glossary = site.GetPage (printf "/%s/%s" $refSection .) -}}
+    {{- $entry := false -}}
+    {{- with $args -}}
+      {{- $entry = partial "hugo-warped/glossary/resolve.html" (merge . (dict "target" $destination)) -}}
     {{- end -}}
-    {{- $entry := "" -}}
-    {{- with $glossary -}}
-      {{- $chunks := split .RawContent "\n## " -}}
-      {{- range after 1 $chunks -}}
-        {{- $lines := split . "\n" -}}
-        {{- $term := strings.TrimSpace (index $lines 0) -}}
-        {{- $normTerm := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower $term)) -}}
-        {{- if eq $normTerm $normDest -}}
-          {{- $def := strings.TrimSpace (index (split . "\n\n") 1) -}}
-          {{- $entry = dict "term" $term "def" ($def | markdownify | plainify | htmlUnescape | truncate 200) "slug" (anchorize $term) -}}
-        {{- end -}}
-      {{- end -}}
-    {{- end -}}
-    {{- if $entry -}}
-      <span class="pop-host pop-glossary"><a href="{{ $glossary.RelPermalink }}#{{ $entry.slug }}" class="glossary-link">{{ $text }}</a><span class="pop pop-up" role="tooltip"><span class="pop-head">{{ $entry.term }}</span><span class="pop-text">{{ $entry.def }}</span><a class="pop-link" href="{{ $glossary.RelPermalink }}#{{ $entry.slug }}">Full entry in the glossary</a></span></span>
+    {{- with $entry -}}
+      {{- partial "glossary/pop.html" (dict "page" $.Page "entry" . "text" $text) -}}
     {{- else -}}
+      {{- warnf "glossary [unresolved-mark]: %q in %q" $destination (cond (not $.Page.File) $.Page.Path $.Page.File.Path) -}}
       <span class="broken-link" title="Not found: {{ $destination }}">{{ $text }}</span>
     {{- end -}}
   {{- end -}}

@@ -5,8 +5,16 @@
   tagline (_index.md description), search box, and the shared card grid.
   recipe-card.html drops the "reference" tag every guide carries and
   uses reading time for the stat line.
+
+  The glossary page (params.fugu.glossaryPage, a folder in this section
+  holding a file per entry) is laid out by partials/glossary/page.html
+  instead.
 */}}
 {{ .Scratch.Set "scope" "list" }}
+{{ $glossary := partialCached "glossary/args.html" "args" }}
+{{ if and $glossary (eq .Path $glossary.glossary) }}
+  {{ partial "glossary/page.html" . }}
+{{ else }}
 {{/* By title: every guide now has a `date`, and Hugo's default order
   (newest first) would put the migration-day guides in one arbitrary
   block. Alphabetical is how this list has always read. */}}
@@ -30,4 +38,5 @@
   </div>
   {{ partial "pagination.html" . }}
 </section>
+{{ end }}
 {{ end }}

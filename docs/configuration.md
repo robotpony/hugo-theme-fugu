@@ -81,7 +81,7 @@ A recipe's `cuisine` then shows as a chip on its card, linking to a page of ever
 
 ## Glossary and reference essays
 
-`[[Wiki links]]` that don't match a page title can fall back to a glossary, in two tiers:
+`[[Wiki links]]` that don't match a page title can fall back to a glossary, which follows hugo-warped's glossary spec ([`glossary/README.md`](https://github.com/robotpony/hugo-warped/blob/main/glossary/README.md)):
 
 ```toml
 [params.fugu]
@@ -89,19 +89,30 @@ A recipe's `cuisine` then shows as a chip on its card, linking to a page of ever
   glossaryPage = "glossary"
 ```
 
-- **Reference essays**: essays in this subfolder of the essay section (`content/essays/reference-essays/`) are full definitions of a term. A value with a `/` is a content path instead, in any section: `referenceEssays = "reference/essays"` means every page under `content/reference/essays/`. `""` turns them off. A wiki link to one shows a popover with its `summary` (or `description`) as well as linking to it.
-- **The glossary page**: a page with this name in the reference section (`content/reference/glossary.md`), whose `##` headings are short entries. A wiki link that matches no page title, but matches one of its headings, shows that entry in a popover.
+- **The glossary**: a folder with this name in the reference section (`content/reference/glossary/`). Its `_index.md` is the glossary page, and every other file in it is one entry: `title` is the term, `also` lists its other forms, and the body is the definition. The page's front matter cascades build options to the entries, so each builds into the list only, with no page of its own:
 
-```markdown
----
-title: Glossary
----
-## Kewpie mayonnaise
+  ```markdown
+  ---
+  title: Glossary
+  cascade:
+    target: {kind: page}
+    build: {render: never, list: local}
+  ---
+  Short definitions for terms that come up more than once.
+  ```
 
-Japanese mayonnaise made with egg yolks and rice vinegar.
-```
+  ```markdown
+  ---
+  title: Kewpie mayonnaise
+  also: [Kewpie]
+  ---
+  Japanese mayonnaise made with egg yolks and rice vinegar.
+  ```
 
-Set either to `""` to turn it off. A link that matches neither is shown as broken.
+  `list: local` keeps the entries out of the site's own lists; the spec's `list: always` works too, and Fugu leaves pages without a URL out of the search index, feeds and counts either way. An entry with an empty body is a stub, left out until it's written (with a build warning).
+- **Reference essays**: essays in this subfolder of the essay section (`content/essays/reference-essays/`) are full definitions of a term, entries with pages of their own. A value with a `/` is a content path instead, in any section: `referenceEssays = "reference/essays"` means every page under `content/reference/essays/`. Each is listed in the glossary, linking to its essay, and a wiki link to one goes to the essay.
+
+A wiki link that matches an entry's term or another form, ignoring case and punctuation, shows the entry's first sentence in a popover and goes to it on the glossary page. The glossary page lists every entry A to Z, with a search box, the pages that link to each, and `index.json` beside it for other tools. Set either param to `""` to turn it off. A link that matches nothing is shown as broken, with a build warning, `glossary [unresolved-mark]`.
 
 ## Principle tags
 

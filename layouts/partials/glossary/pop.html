@@ -1,0 +1,18 @@
+{{- /*
+  A glossary mark in the text (render-link.html): the word, a
+  .glossary-link going to the entry, and its popover, a role="tooltip"
+  with the term (.pop-head) and the entry's first sentence (.pop-text),
+  tied to the word by aria-describedby. Nothing inside it to tab to, so
+  a screen reader reads it as the word's description; on a phone a tap
+  on the word goes to the entry. popover.js places it.
+
+  The tooltip's id is the entry's anchor and a count of the page's
+  marks so far (gl-deglaze-3), so it's unique on the page however many
+  times the term is marked. Takes (dict "page" "entry" "text"), the entry
+  as hugo-warped's entries.html gives it.
+*/ -}}
+{{- $n := add (.page.Store.Get "glossaryMarks" | default 0) 1 -}}
+{{- .page.Store.Set "glossaryMarks" $n -}}
+{{- $id := printf "gl-%s-%d" .entry.anchor $n -}}
+<span class="pop-host pop-glossary"><a href="{{ .entry.url }}" class="glossary-link" aria-describedby="{{ $id }}">{{ .text }}</a><span class="pop pop-up" id="{{ $id }}" role="tooltip"><span class="pop-head">{{ .entry.term }}</span>{{ with .entry.def }}<span class="pop-text">{{ . }}</span>{{ end }}</span></span>
+{{- /**/ -}}

@@ -1,0 +1,100 @@
+{{/*
+  The glossary page (params.fugu.glossaryPage in the reference section,
+  e.g. /reference/glossary/), laid out by layouts/reference/list.html:
+  every entry A to Z, from hugo-warped's list.html (glossary/README.md,
+  "The list"), the reference essays among them (glossary/args.html).
+
+  - the title, then the intro, the _index.md body with [[wiki links]]
+    rewritten as _default/single.html does, set as prose (.glossary-intro)
+  - a search box (.gl-search), hidden until assets/js/glossary.js shows
+    it: it filters the entries by term, other forms and definition as you
+    type, with a live count (.gl-count), letters with no match marked
+    .is-empty, and a no-match line (.gl-none). Without JavaScript the page
+    is the full list.
+  - the letters, A to Z (.gl-letters, a <nav>): a link for each letter
+    with entries, a plain span for each without. "#" (a term starting
+    with a digit or a symbol) goes first, and any letter past Z last.
+  - per letter, an <h2 class="gl-letter" id="gl-a"> and a
+    <dl class="glossary">: for each entry a <dt> with its anchor as id,
+    the term in a <dfn> and its other forms (.also), then a <dd> with the
+    whole definition and "Used in" (.used), the pages marking it, the
+    first three linked and the rest in a <details> ("and 4 more"). A
+    reference essay shows its first sentence and a link to the essay
+    (.essay-link) instead.
+
+  It also writes the list as index.json beside the page (hugo-warped's
+  index.html), for other tools and sites. Takes the glossary page.
+*/}}
+{{ $args := partialCached "glossary/args.html" "args" }}
+{{ $letters := slice }}
+{{ $count := 0 }}
+{{ with $args }}
+  {{ $letters = partial "hugo-warped/glossary/list.html" . }}
+  {{ range $letters }}{{ $count = add $count (len .entries) }}{{ end }}
+  {{ $json := partial "hugo-warped/glossary/index.html" . | jsonify }}
+  {{ $at := printf "%sindex.json" (strings.TrimPrefix site.Home.RelPermalink $.RelPermalink) }}
+  {{ $published := (resources.FromString $at $json).Publish }}
+{{ end }}
+{{ $present := dict }}
+{{ range $letters }}{{ $present = merge $present (dict .letter true) }}{{ end }}
+{{ $nav := slice }}
+{{ if index $present "#" }}{{ $nav = $nav | append "#" }}{{ end }}
+{{ range split "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "" }}{{ $nav = $nav | append . }}{{ end }}
+{{ range $letters }}{{ if not (in $nav .letter) }}{{ $nav = $nav | append .letter }}{{ end }}{{ end }}
+{{ $md := .RawContent }}
+{{ $md = replaceRE `\[\[([^\]|]+?)\\?\|([^\]]+)\]\]` `[$2](<$1>)` $md }}
+{{ $md = replaceRE `\[\[([^\]]+)\]\]` `[$1](<$1>)` $md }}
+<section class="listing glossary-page">
+  <header class="listing-head">
+    <h1 class="ltitle">{{ .Title }}</h1>
+    <span class="listing-count">{{ $count }} {{ cond (eq $count 1) "entry" "entries" }}</span>
+  </header>
+  {{ with strings.TrimSpace $md }}<div class="glossary-intro prose dark:prose-invert article-content">{{ $.RenderString (dict "display" "block") . }}</div>{{ end }}
+
+  {{ with $letters }}
+    <div class="gl-search" role="search" hidden>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="7" cy="7" r="4.75"/><path d="m10.5 10.5 3.5 3.5" stroke-linecap="round"/></svg>
+      <input type="search" aria-label="Search the glossary" placeholder="Search the glossary: a word, or what it does" autocomplete="off" spellcheck="false">
+      <span class="gl-count" aria-live="polite"></span>
+    </div>
+    <nav class="gl-letters" aria-label="Jump to letter">
+      {{- range $nav }}
+        {{- if index $present . }}<a href="#{{ partial "glossary/letter-id.html" . }}">{{ . }}</a>{{ else }}<span>{{ . }}</span>{{ end }}
+      {{- end -}}
+    </nav>
+
+    {{ range . }}
+      <h2 class="gl-letter" id="{{ partial "glossary/letter-id.html" .letter }}">{{ .letter }}</h2>
+      <dl class="glossary">
+        {{ range .entries }}
+          <dt id="{{ .anchor }}"><dfn>{{ .term }}</dfn>
+            {{- with .also }} <span class="also">also {{ range $i, $a := . }}{{ if $i }}, {{ end }}<i>{{ $a }}</i>{{ end }}</span>{{ end -}}
+          </dt>
+          <dd>
+            {{- with .page }}
+              {{- $body := .RawContent }}
+              {{- $body = replaceRE `\[\[([^\]|]+?)\\?\|([^\]]+)\]\]` `[$2](<$1>)` $body }}
+              {{- $body = replaceRE `\[\[([^\]]+)\]\]` `[$1](<$1>)` $body }}
+              {{ .RenderString (dict "display" "block") $body }}
+            {{- else }}
+              <p>{{ .def }}</p>
+            {{- end }}
+            {{- if .page }}
+              {{- with .used }}
+                {{- $shown := cond (gt (len .) 4) (first 3 .) . }}
+                <div class="used">Used in {{ range $i, $p := $shown }}{{ if $i }}, {{ end }}<a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>{{ end }}
+                  {{- if gt (len .) 4 }}, <details class="used-more"><summary>and {{ sub (len .) 3 }} more</summary> {{ range $i, $p := after 3 . }}{{ if $i }}, {{ end }}<a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>{{ end }}</details>{{ end -}}
+                </div>
+              {{- end }}
+            {{- else }}
+              <div class="used"><a class="essay-link" href="{{ .url }}">Read the full essay</a></div>
+            {{- end }}
+          </dd>
+        {{ end }}
+      </dl>
+    {{ end }}
+    <p class="gl-none" hidden>No entry matches. Try a shorter word, or another form of it.</p>
+    {{ $js := resources.Get "js/glossary.js" | resources.Minify | resources.Fingerprint (site.Params.fingerprintAlgorithm | default "sha512") }}
+    <script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+  {{ end }}
+</section>

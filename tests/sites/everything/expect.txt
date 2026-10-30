@@ -211,3 +211,26 @@ recipes/plain-rice/index.html: aria-label="Stove: Rinse, then Boil covered, then
 recipes/plain-rice/index.html: aria-label="Rinse, then Cooker press start"
 reference/rice-ratios/index.html: <figure class="flow flow-rows headed" style="--cols: 5">
 reference/rice-ratios/index.html: <p class="flow-head" aria-hidden="true">Long-grain</p>
+
+# The glossary: a folder of one file per entry (hugo-warped's glossary
+# spec), listed A to Z on its page with the reference essays, and written
+# as index.json. A mark's popover is a tooltip with no link inside.
+reference/glossary/index.html: <dt id="kewpie-mayonnaise"><dfn>Kewpie mayonnaise</dfn> <span class="also">also <i>Kewpie</i></span></dt>
+reference/glossary/index.html: <div class="used">Used in <a href="/recipes/veg-patties/">Veg patties</a>
+reference/glossary/index.html: <dt id="win-the-fridge"><dfn>Win the fridge</dfn></dt>
+reference/glossary/index.html: <a class="essay-link" href="/essays/reference-essays/win-the-fridge/">Read the full essay</a>
+reference/glossary/index.html: <h2 class="gl-letter" id="gl-k">K</h2>
+reference/glossary/index.html: <a href="#gl-k">K</a>
+reference/glossary/index.html: <span>B</span>
+reference/glossary/index.html: <div class="gl-search" role="search" hidden>
+reference/glossary/index.html: class="glossary-intro
+reference/glossary/index.html: !rgrid
+reference/glossary/index.json: "url":"/reference/glossary/#kewpie-mayonnaise"
+reference/glossary/index.json: "url":"/essays/reference-essays/win-the-fridge/"
+!reference/glossary/kewpie-mayonnaise/index.html
+recipes/veg-patties/index.html: <a href="/reference/glossary/#kewpie-mayonnaise" class="glossary-link" aria-describedby="gl-kewpie-mayonnaise-1">
+recipes/veg-patties/index.html: id="gl-kewpie-mayonnaise-1" role="tooltip"
+recipes/veg-patties/index.html: !Full entry in the glossary
+index.json: !"permalink":""
+index.json: !Japanese mayonnaise made with egg yolks
+reference/glossary/index.xml: !Kewpie

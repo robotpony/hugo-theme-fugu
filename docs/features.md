@@ -70,13 +70,11 @@ A ```` ```flow ```` block draws a short sequence as boxed labels joined by arrow
 
 `[[Title]]` links any page to any other by its title, as in Obsidian, so a recipe's ingredient list can link to the recipe for its sauce ([recipe-format.md](recipe-format.md#wiki-links)).
 
-When no page has that title, the link can fall back to a definition:
+A link to a **glossary** entry, or to a **reference essay**, is marked with a dotted underline and shows the term's first sentence in a popover on hover or keyboard focus. The popover is the word's description (a `role="tooltip"`, with nothing in it to tab to); the word itself goes to the entry, or the essay. When no page has the title and no entry matches, the link is marked as broken, so it's easy to find.
 
-- A link to a **reference essay** shows its summary in a popover, as well as linking to the essay.
-- A link that matches a heading in the **glossary page** shows that entry in a popover.
-- A link that matches nothing is marked as broken, so it's easy to find.
+Popovers open on hover or keyboard focus, flip to whichever side of the window has room, slide sideways to stay inside it, and close with Escape.
 
-Popovers open on hover or keyboard focus, flip to whichever side of the window has room, and close with Escape. Setting up the glossary is in [configuration.md](configuration.md#glossary-and-reference-essays).
+The **glossary page** lists every entry A to Z, under a letter heading each, with its other forms, its whole definition, and the pages that link to it ("Used in", the first three and then "and 4 more"). Reference essays are listed too, linking to the essay. A search box at the top, shown only with JavaScript, filters the list as you type, by term, other forms, and definition. Beside it, `index.json` holds every entry's term, other forms, first sentence and URL, for other tools and sites. Setting up the glossary is in [configuration.md](configuration.md#glossary-and-reference-essays).
 
 On essays and reference pages, the recipes a page links to are also listed in its sidebar.
 

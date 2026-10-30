@@ -200,7 +200,7 @@ li:has(> input[type="checkbox"]:checked) {
   text-decoration: underline dotted;
   text-decoration-thickness: 1.5px;
   text-underline-offset: 3px;
-  text-decoration-color: var(--fugu-ink-faint);
+  text-decoration-color: color-mix(in srgb, var(--fugu-ink-faint) 65%, transparent);
   cursor: help;
 }
 .glossary-link:hover,
@@ -418,6 +418,45 @@ a.dev-chip:hover, a.dev-chip:focus-visible { border-color: var(--fugu-ink-faint)
 .list-pagination-link:hover { border-color: var(--fugu-accent); color: var(--fugu-ink); }
 .list-pagination-current { background: var(--fugu-accent-soft); border-color: var(--fugu-accent); color: var(--fugu-accent-strong); font-weight: 600; }
 .list-pagination-ellipsis { color: var(--fugu-ink-faint); padding: 0 4px; }
+
+/* ---------------------------------------------------------------------
+ * The glossary page (partials/glossary/page.html, glossary.js): a
+ * search box shown by the script, the letters A to Z, then one <dl> per
+ * letter under a small letter heading.
+ * ------------------------------------------------------------------- */
+
+.glossary-intro { max-width: 65ch; margin-bottom: 8px; }
+.gl-search { position: relative; max-width: 460px; margin: 20px 0 0; }
+.gl-search input {
+  width: 100%; font: inherit; font-size: .92rem; color: var(--fugu-ink);
+  background: var(--fugu-surface); border: 1px solid var(--fugu-border-strong); border-radius: var(--fugu-radius);
+  padding: 9px 12px 9px 36px;
+}
+.gl-search input::placeholder { color: var(--fugu-ink-faint); }
+.gl-search input:focus { outline: none; border-color: var(--fugu-accent); box-shadow: 0 0 0 3px var(--fugu-accent-soft); }
+.gl-search svg { position: absolute; left: 12px; top: 12px; width: 16px; height: 16px; color: var(--fugu-ink-faint); pointer-events: none; }
+.gl-count { display: block; min-height: 1.2em; margin-top: 6px; font-size: .74rem; color: var(--fugu-ink-faint); }
+.gl-none { font-size: .88rem; color: var(--fugu-ink-muted); margin: 24px 0; }
+.gl-letters { display: flex; flex-wrap: wrap; gap: 2px; margin: 8px 0; padding: 8px 0; border-top: 1px solid var(--fugu-border); border-bottom: 1px solid var(--fugu-border); }
+.gl-letters a, .gl-letters span { min-width: 24px; padding: 4px 0; border-radius: 4px; text-align: center; font-size: .8rem; font-weight: 600; text-decoration: none; }
+.gl-letters a { color: var(--fugu-accent-strong); }
+.gl-letters a:hover { background: var(--fugu-accent-soft); }
+.gl-letters span, .gl-letters a.is-empty { color: var(--fugu-border-strong); }
+.gl-letter { margin: 28px 0 4px; font-size: .72rem; font-weight: 700; letter-spacing: .08em; line-height: 1.2; color: var(--fugu-ink-faint); }
+dl.glossary { margin: 0; }
+dl.glossary dt { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 18px 0 4px; font-size: 1.05rem; font-weight: 700; color: var(--fugu-ink); scroll-margin-top: 80px; }
+dl.glossary dt:target { background: var(--fugu-accent-soft); border-radius: 4px; padding: 2px 6px; margin-left: -6px; }
+dl.glossary dfn { font-style: normal; }
+dl.glossary .also { font-size: .76rem; font-weight: 500; color: var(--fugu-ink-faint); }
+dl.glossary dd { max-width: 62ch; margin: 0; color: var(--fugu-ink-muted); }
+dl.glossary dd p + p { margin-top: .6em; }
+dl.glossary .used { margin-top: 6px; font-size: .76rem; line-height: 1.6; color: var(--fugu-ink-faint); }
+dl.glossary .used a { color: var(--fugu-ink-muted); text-decoration: none; border-bottom: 1px solid var(--fugu-border-strong); }
+dl.glossary .used a:hover { color: var(--fugu-accent-strong); border-bottom-color: var(--fugu-accent); }
+.used-more, .used-more summary { display: inline; }
+.used-more summary { cursor: pointer; list-style: none; }
+.used-more summary::-webkit-details-marker { display: none; }
+.used-more[open] summary::after { content: ":"; }
 
 /* ---------------------------------------------------------------------
  * Single pages: related content and previous/next

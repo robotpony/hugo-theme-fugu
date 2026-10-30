@@ -1,0 +1,41 @@
+{{/*
+  The argument every hugo-warped glossary partial takes (hugo-warped
+  glossary/README.md, "The partials"): (dict "glossary" "extra"), or
+  false when the site has no glossary.
+
+  - "glossary": the glossary page's path, params.fugu.glossaryPage in the
+    reference section ("/reference/glossary"). Its folder holds one file
+    per entry.
+  - "extra": the reference essays (section/reference-essay.html), which
+    are entries with pages of their own: (dict "term" "also" "def" "url"),
+    the term its title, other forms its `also`, and the short form the
+    first sentence of its `summary`, else its description, else its first
+    paragraph before any ## heading.
+
+  Call it cached, once a build: partialCached "glossary/args.html" "args".
+*/}}
+{{ $out := false }}
+{{ $refSection := partial "section/name.html" "reference" }}
+{{ with and $refSection site.Params.fugu.glossaryPage }}
+  {{ $path := printf "/%s/%s" $refSection (strings.Trim . "/") }}
+  {{ $extra := slice }}
+  {{ range site.Pages }}
+    {{ if not (partial "section/reference-essay.html" .) }}{{ continue }}{{ end }}
+    {{ $def := .Params.summary | default .Description }}
+    {{ if not $def }}
+      {{ $head := index (split .RawContent "\n## ") 0 | strings.TrimSpace }}
+      {{ if and $head (not (hasPrefix $head "#")) }}{{ $def = index (split $head "\n\n") 0 }}{{ end }}
+    {{ end }}
+    {{ $def = replaceRE `\[\[([^\]|]+?)\\?\|([^\]]+)\]\]` "$2" $def }}
+    {{ $def = replaceRE `\[\[([^\]]+)\]\]` "$1" $def }}
+    {{ $def = $def | markdownify | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace }}
+    {{ with findRE `^.*?[.!?]["'”’)\]]*(\s|$)` $def 1 }}{{ $def = strings.TrimSpace (index . 0) }}{{ end }}
+    {{ $also := slice }}
+    {{ with .Params.also }}
+      {{ if reflect.IsSlice . }}{{ range . }}{{ $also = $also | append (string .) }}{{ end }}{{ else }}{{ $also = slice (string .) }}{{ end }}
+    {{ end }}
+    {{ $extra = $extra | append (dict "term" .Title "also" $also "def" $def "url" .RelPermalink) }}
+  {{ end }}
+  {{ $out = dict "glossary" $path "extra" $extra }}
+{{ end }}
+{{ return $out }}

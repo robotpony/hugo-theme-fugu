@@ -214,7 +214,7 @@ start_here:
 
 These use the same `title`, `tags`, `date`, `description`, `summary`, `draft`, `working_on`, and `pinned` fields as recipes, with the same effects. The recipe-only fields (`servings`, the times, `source`, and so on) are ignored on them.
 
-A reference essay's `summary` (or `description`) is what its glossary popover shows when a `[[wiki link]]` points at it.
+A reference essay's `summary` (or `description`, or else its first paragraph) gives its glossary entry: the first sentence is what its popover shows when a `[[wiki link]]` points at it, and what the glossary page lists. An `also` list gives the term's other forms, as on a glossary entry.
 
 ## In `recipes/index.json`
 
