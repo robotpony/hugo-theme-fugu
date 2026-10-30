@@ -215,6 +215,11 @@ li:has(> input[type="checkbox"]:checked) {
  * no room on the opening side.
  * ------------------------------------------------------------------- */
 
+/* A closed popover still takes room 260px from its word, so one near the
+ * right edge of a phone would scroll the page sideways. clip (not hidden)
+ * keeps sticky sidebars working; popover.js keeps an open one inside the
+ * window. */
+html, body { overflow-x: clip; }
 .pop-host { position: relative; --pop-accent: var(--fugu-accent-strong); --pop-head: var(--fugu-ink); }
 .pop {
   position: absolute; left: 0; top: calc(100% + 8px); z-index: 5; width: 260px;
