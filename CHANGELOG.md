@@ -41,6 +41,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Fixed
 
+- A popover on a word near the side of the window (a glossary term at the right edge of a phone) slides sideways to stay at least 8px inside it, with its pointer still under the word; before, it ran off screen (`assets/js/popover.js`).
 - `params.disableImageZoom = true` now turns image zoom off. Blowfish's `head.html` (and Fugu's copy) piped `not .Site.Params.disableImageZoom` into `default true`, which turns `false` back into `true`, so zoom always loaded.
 - The ingredient options callout (`.ing-config`) closes on a click outside it, from `ingredients.js`. Not a Chef did this in its own header script; other sites' callouts stayed open.
 
