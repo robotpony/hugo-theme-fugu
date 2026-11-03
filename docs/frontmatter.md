@@ -82,8 +82,8 @@ A tag or cuisine can have its own page, `content/tags/<slug>/_index.md` (or `con
 | `title` | any term | The term's display name. |
 | `description` | any term | Text under the title on the term page. |
 | `short` | cuisine, principle tag | A shorter label for cards: `short: TH` for "Thai". The full name is still on the term page and in the chip's tooltip. |
-| `principle` | tag | `true` makes the tag a principle (below). `kind: principle` does the same. |
-| `kind` | tag | `method` makes the tag's page the methods list (see [Methods and blueprints](#methods-and-blueprints)). |
+| `principle` | tag | `true` makes the tag a principle (below). `params: {kind: principle}` does the same. |
+| `params.kind` | tag | `method` makes the tag's page the methods list (see [Methods and blueprints](#methods-and-blueprints)). It goes under `params` because Hugo 0.159 to 0.164 fail the build on a top-level `kind`. |
 | `essay` | principle tag | The page that explains the principle, as a content path: `essays/reference-essays/win-the-fridge`. |
 | `icon` | principle tag | The chip's icon, by name: an SVG in `assets/icons/principles/` (Fugu ships `leaf`; add your own there, drawn in `currentColor`). Without it, the chip has cycle arrows. |
 | `card_label` | principle tag | `false` makes the chip on cards its icon alone, with the title as its tooltip, and it takes no slot in the card's top row. Pages still spell it out. |
@@ -189,7 +189,7 @@ Cold crunch and sharp against a salty patty.
 - **Burger cooking:** Griddled hot, flipped once
 ```
 
-The methods list is the methods section's page (`content/methods/_index.md`) when the site has one, else the method tag's own page, `content/tags/method/_index.md` with `kind: method`; either way, its body is the definition at the top.
+The methods list is the methods section's page (`content/methods/_index.md`) when the site has one, else the method tag's own page, `content/tags/method/_index.md` with `params: {kind: method}`; either way, its body is the definition at the top.
 
 ## Pages at the site's root
 

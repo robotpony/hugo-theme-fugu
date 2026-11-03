@@ -75,7 +75,7 @@ recipes/veg-patties/index.html: type="application/rss+xml" href="/recipes/index.
 essays/cooking-reflections/why-ratios/index.html: type="application/rss+xml"
 recipes/index.xml: /recipes/veg-patties/
 
-# Methods: the methods list (the method tag's page, kind: method), a
+# Methods: the methods list (the method tag's page, params.kind: method), a
 # blueprint (a folder in the essay section's methods folder, laid out by
 # the essays list), its parts (by weight) and builds (by era, then
 # undated), the lineage (a draft build faint), part navigation, and the
