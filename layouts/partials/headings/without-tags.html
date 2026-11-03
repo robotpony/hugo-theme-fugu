@@ -1,0 +1,16 @@
+{{/*
+  A heading's text without its trailing vault tags: "Mexican feast #todo"
+  gives "Mexican feast". The tags stay in the Markdown for Obsidian's tag
+  pane and other tools that read them from headings, but aren't for readers.
+
+  Takes the heading's text as Hugo gives it, before any plainify, so a code
+  span ending the heading ("Using `#define`") isn't mistaken for a tag.
+
+  Only tags at the very end, after a space, and starting with a letter:
+  "Pho #1" and "#todo before dinner" stay as written, and a heading that is
+  nothing but a tag isn't left empty. Used by render-heading.html and
+  reading-sidebar/headings.html; toc.html has the same tag pattern, for the
+  links in .TableOfContents. The anchor is left alone, so links to
+  #mexican-feast-todo still work.
+*/}}
+{{ return replaceRE `(?:\s+#[A-Za-z][\w-]*)+\s*$` "" . }}

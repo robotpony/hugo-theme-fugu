@@ -29,6 +29,14 @@ essays/cooking-reflections/why-ratios/index.html: !id="recipe-sidebar"
 reference/rice-ratios/index.html: reading-sidebar
 the-food-log/2026-september/index.html: reading-sidebar
 the-food-log/2026-september/index.html: href="/recipes/veg-patties/"
+# Trailing vault tags: off the heading, the contents and the sidebar, with
+# the anchor as it was. A number or a mid-heading tag stays.
+the-food-log/2026-september/index.html: !#p0
+the-food-log/2026-september/index.html: !Recipe hunt #
+the-food-log/2026-september/index.html: Recipe hunt</a>
+the-food-log/2026-september/index.html: id="recipe-hunt-p0-todo"
+the-food-log/2026-september/index.html: Pho #1
+the-food-log/2026-september/index.html: Stock #todo first
 
 # Taxonomies: cuisine pages, and the principle tag's definition and essay.
 cuisine/american/index.html: class="rcard

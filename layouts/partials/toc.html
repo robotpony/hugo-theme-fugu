@@ -2,7 +2,11 @@
      Only change: a "Jump to" label above the desktop sticky TOC. The
      theme's own i18n "table_of_contents" label exists but is `lg:hidden`
      — used only as the mobile <summary> accordion trigger — so the
-     desktop TOC rendered with no header at all. */}}
+     desktop TOC rendered with no header at all.
+     Also: trailing vault tags left off each link's text. Hugo builds
+     .TableOfContents from the source, so the heading hook can't reach it;
+     the pattern is headings/without-tags.html's, before a link's end. */}}
+{{ $toc := replaceRE `(?:\s+#[A-Za-z][\w-]*)+\s*</a>` "</a>" .TableOfContents }}
 <details
   open
   id="TOCView"
@@ -14,7 +18,7 @@
   <div class="toc-jump-label hidden lg:block">Jump to</div>
   <div
     class="min-w-[220px] py-2 border-dotted border-s-1 -ms-5 ps-5 dark:border-neutral-600">
-    {{ replace (.TableOfContents | emojify) `id="TableOfContents"` (printf `id="TableOfContents" aria-label="%s"` (i18n "article.table_of_contents")) | safeHTML }}
+    {{ replace ($toc | emojify) `id="TableOfContents"` (printf `id="TableOfContents" aria-label="%s"` (i18n "article.table_of_contents")) | safeHTML }}
   </div>
 </details>
 <details class="toc-inside mt-0 overflow-hidden rounded-lg -ms-5 ps-5 lg:hidden">
@@ -24,7 +28,7 @@
   </summary>
   <div
     class="py-2 border-dotted border-neutral-300 border-s-1 -ms-5 ps-5 dark:border-neutral-600">
-    {{ replace (.TableOfContents | emojify) `id="TableOfContents"` (printf `id="TableOfContentsMobile" aria-label="%s"` (i18n "article.table_of_contents")) | safeHTML }}
+    {{ replace ($toc | emojify) `id="TableOfContents"` (printf `id="TableOfContentsMobile" aria-label="%s"` (i18n "article.table_of_contents")) | safeHTML }}
   </div>
 </details>
 

@@ -31,8 +31,8 @@
   Blowfish's markup is otherwise kept (the anchor div and the hover "#"
   link, still behind article.showHeadingAnchors). Added: the data-ing-
   heading, data-method-heading, data-hide-heading and data-sidebar-heading
-  attributes, the .ing-subhead class, and the "#" moved into CSS (see
-  below).
+  attributes, the .ing-subhead class, the "#" moved into CSS (see below),
+  and trailing vault tags left off the text (headings/without-tags.html).
 */}}
 {{ $anchor := anchorize .Anchor }}
 {{ $isRecipe := eq (partialCached "section/role.html" .Page.Section .Page.Section) "recipe" }}
@@ -64,7 +64,10 @@
      garnishes, nested under "## Ingredients") is never mistaken for the
      top-level "## To serve" prose section — components are always one
      level deeper. */}}
-{{ $normalized := .Text | plainify | strings.TrimSuffix ":" | strings.TrimSpace | lower }}
+{{- /* Trailing vault tags are for the source, not the page, and don't change
+     what a heading means: "## Notes #todo" is still Notes. */}}
+{{- $text := partial "headings/without-tags.html" .Text }}
+{{ $normalized := $text | plainify | strings.TrimSuffix ":" | strings.TrimSpace | lower }}
 {{ $headingRole := partialCached "headings/role.html" $normalized $normalized }}
 {{- /* "## Breading {.article}": the writer says this section is article
      prose, wherever it's written. It's never an ingredient section, never
@@ -106,7 +109,7 @@
 <h{{ .Level }} class="relative group{{ if $inIngredientSection }} ing-subhead{{ end }}"
   {{- if and $isRecipe (eq .Level 2) }} data-ing-heading="{{ $isIngredientHeading }}" data-method-heading="{{ $isMethodHeading }}"{{ if $isHiddenHeading }} data-hide-heading="true"{{ end }}{{ end -}}
   {{- with $sidebarHeading }} data-sidebar-heading="{{ . }}"{{ end -}}
->{{ .Text | safeHTML }}
+>{{ $text | safeHTML }}
     <div id="{{ $anchor }}" class="anchor"></div>
     {{ if .Page.Params.showHeadingAnchors | default (.Page.Site.Params.article.showHeadingAnchors | default true) }}
     <span
