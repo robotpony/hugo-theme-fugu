@@ -9,6 +9,11 @@ docs/images/ at 2x, plus the theme listing's images/screenshot.png
 (1500x1000) and images/tn.png (900x600). Run it again whenever the styles
 change.
 
+Chrome captures whatever it's served and exits 0, error pages included,
+so the server takes its own port from the system (nothing else can be
+answering there) and every shot's page is requested before any image is
+written. A page that isn't there stops the run with the images untouched.
+
 The server adds a small script to each page it serves for a shot, so the
 theme needs no hooks for this: it sets Blowfish's `appearance` in
 localStorage (light or dark, so the machine's own setting doesn't count),
@@ -28,11 +33,11 @@ library only.
 
 import argparse
 import functools
+import http.client
 import http.server
 import os
 import re
 import shutil
-import socket
 import struct
 import subprocess
 import sys
@@ -87,12 +92,6 @@ def find_chrome():
         if path:
             return path
     return None
-
-
-def free_port():
-    with socket.socket() as s:
-        s.bind(("127.0.0.1", 0))
-        return s.getsockname()[1]
 
 
 def shot_script(html, opts):
@@ -153,6 +152,26 @@ def page_url(base, page, opts):
     if "open" in opts:
         query.append("open=" + urllib.parse.quote(opts["open"]))
     return base + page + "?" + "&".join(query) + ("#" + anchor if anchor else "")
+
+
+def check_pages(port, pages):
+    """Request each (page, opts) from our server, as its shot will, and
+    raise if one isn't served or lacks the #anchor it scrolls to."""
+    problems = []
+    for page, opts in pages:
+        path, _, anchor = page.partition("#")
+        conn = http.client.HTTPConnection("127.0.0.1", port, timeout=10)
+        conn.request("GET", page_url("", path, opts))
+        response = conn.getresponse()
+        body = response.read().decode(errors="replace")
+        conn.close()
+        if response.status != 200:
+            problems.append(f"{page}: HTTP {response.status}")
+        elif anchor and not re.search(rf"""\bid=["']?{re.escape(anchor)}\b""", body):
+            problems.append(f"{page}: no such anchor")
+    if problems:
+        raise RuntimeError("no images written; these pages aren't in the build:\n  "
+                           + "\n  ".join(problems))
 
 
 def crop_png(path, width):
@@ -239,7 +258,7 @@ def main():
                         help="the Hugo site to build (default: exampleSite/)")
     parser.add_argument("--out", type=Path, default=FUGU / "docs" / "images",
                         help="where the docs shots go (default: docs/images/)")
-    parser.add_argument("--listing", type=Path, default=FUGU / "images",
+    parser.add_argument("--listing", type=lambda s: Path(s) if s else None, default=FUGU / "images",
                         help="where screenshot.png and tn.png go (default: images/); '' skips them")
     parser.add_argument("--only", nargs="+", metavar="NAME",
                         help="take only these shots: " + ", ".join(s[0] for s in SHOTS))
@@ -264,9 +283,12 @@ def main():
     work = Path(tempfile.mkdtemp(prefix="fugu-shots-"))
     server = None
     try:
-        port = free_port()
-        base = f"http://127.0.0.1:{port}"
         build = work / "site"
+        server = http.server.ThreadingHTTPServer(
+            ("127.0.0.1", 0), functools.partial(Handler, directory=str(build)))
+        threading.Thread(target=server.serve_forever, daemon=True).start()
+        port = server.server_address[1]
+        base = f"http://127.0.0.1:{port}"
         result = subprocess.run(
             [args.hugo, "--source", str(args.site), "--destination", str(build),
              "--baseURL", base + "/", "--quiet"],
@@ -274,9 +296,9 @@ def main():
         if result.returncode != 0:
             sys.exit("error: the build failed:\n" + result.stderr.strip())
 
-        server = http.server.ThreadingHTTPServer(
-            ("127.0.0.1", port), functools.partial(Handler, directory=str(build)))
-        threading.Thread(target=server.serve_forever, daemon=True).start()
+        take_listing = args.listing and not args.only
+        check_pages(port, [(s[1], s[4]) for s in shots]
+                    + ([(LISTING_PAGE[0], LISTING_PAGE[3])] if take_listing else []))
 
         written = []
         args.out.mkdir(parents=True, exist_ok=True)
@@ -292,7 +314,7 @@ def main():
             written.append(dest)
             print(f"{dest.relative_to(FUGU) if dest.is_relative_to(FUGU) else dest}  {page}  {width}x{height}")
 
-        if str(args.listing) and not args.only:
+        if take_listing:
             args.listing.mkdir(parents=True, exist_ok=True)
             page, width, height, opts = LISTING_PAGE
             for name, factor in LISTING:

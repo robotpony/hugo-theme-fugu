@@ -51,6 +51,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Fixed
 
+- `tools/screenshots.py` stops before writing any image if a shot's page or anchor isn't in the build, instead of saving a picture of the 404 page and exiting 0. Its server takes its port from the system before the build, closing the gap where something else could take it. `--listing ''` now skips the listing images, as its help says, instead of writing them to the current folder.
 - A page with a popover near the right edge of a phone no longer scrolls sideways: `fugu.css` clips the page's horizontal overflow (`html, body { overflow-x: clip; }`), which a closed popover took up.
 - A popover on a word near the side of the window (a glossary term at the right edge of a phone) slides sideways to stay at least 8px inside it, with its pointer still under the word; before, it ran off screen (`assets/js/popover.js`).
 - `params.disableImageZoom = true` now turns image zoom off. Blowfish's `head.html` (and Fugu's copy) piped `not .Site.Params.disableImageZoom` into `default true`, which turns `false` back into `true`, so zoom always loaded.
