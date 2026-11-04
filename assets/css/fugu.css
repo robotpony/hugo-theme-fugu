@@ -575,7 +575,7 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
    buildPercentRow). Its cells take the body cells' side padding, and the stack
    sits out by the input's padding and border, less the 3px a quantity has of
    its own, so its digits line up with the amounts below. */
-.ing-pct-row td { padding: 2px 8px 12px; vertical-align: middle; border-bottom: 0; }
+.ing-pct-row td { padding: 8px; vertical-align: middle; }
 .ing-pct-name { font-style: italic; }
 .ing-pct-stack { display: flex; align-items: center; gap: 8px; margin-left: -6px; white-space: nowrap; }
 .ing-pct-row.is-stacked .ing-pct-stack { flex-direction: column; align-items: flex-start; }

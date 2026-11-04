@@ -85,8 +85,8 @@ function method() { return clean(Array.prototype.find.call(doc().querySelectorAl
     // As written. Column 0 is the checkbox.
     eq('one row', doc().querySelectorAll('.ing-pct-row').length, 1);
     var row = q('.ing-pct-row');
-    eq('row tops the first table', doc().querySelectorAll('table')[0].tHead.rows[0] === row, true);
-    eq('a cell per column', row.children.length, doc().querySelectorAll('table')[0].tHead.rows[1].children.length);
+    same('row is under the headings', doc().querySelectorAll('table')[0].tHead.rows[1], row);
+    eq('a cell per column', row.children.length, doc().querySelectorAll('table')[0].tHead.rows[0].children.length);
     eq('name', clean(q('.ing-pct-name')), 'I have AP flour');
     same('name is over the names', row.children[1], q('.ing-pct-name'));
     same('multiplier is over the %', q('.ing-pct-mult').parentNode, row.children[2]);

@@ -956,8 +956,8 @@
     'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
     '<path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>';
 
-  // "I have ground pork [amount] [g kg lb]", the first row of the table's
-  // <thead>, so each part lines up with its column at any width: the name
+  // "I have ground pork [amount] [g kg lb]", the last row of the table's
+  // <thead>, under the headings, so each part lines up with its column at any width: the name
   // over the names, the multiplier over the %, the amount over the amounts,
   // the units over the Notes, or beside the amount if there are none. A <td>
   // row, so the <th>s are still just the table's headings. Print hides it;
@@ -1024,7 +1024,7 @@
     narrow.addEventListener('change', place);
     place();
 
-    headRow.parentNode.insertBefore(tr, headRow);
+    headRow.parentNode.appendChild(tr);
     return { input: input, unitButtons: unitButtons, mult: mult, reset: reset };
   }
 
