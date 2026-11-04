@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-percent_scaling.py: Drives the percentage table bar in headless Chrome.
+percent_scaling.py: Drives the percentage table row in headless Chrome.
 
 check.py reads built pages, which can't show what ingredients.js does to
 them. This builds the everything fixture, serves it on a port the system
-picks, loads its recipes in an iframe from a test page, types into the bar,
+picks, loads its recipes in an iframe from a test page, types into the row,
 and compares what the page then says. Needs Hugo and Google Chrome ($HUGO,
 $CHROME). Python standard library only.
 
@@ -15,7 +15,6 @@ import functools
 import http.server
 import json
 import os
-import re
 import shutil
 import subprocess
 import sys
@@ -31,7 +30,6 @@ CHROME_PATHS = [
 ]
 
 TEST_PAGE = r"""<!doctype html><meta charset="utf-8"><iframe id="f" style="width:1280px;height:900px"></iframe>
-<pre id="result">unfinished</pre>
 <script>
 var frame = document.getElementById('f'), results = [];
 function load(url) {
@@ -45,6 +43,22 @@ function q(s) { return doc().querySelector(s); }
 function clean(el) { return el ? el.textContent.replace(/\s+/g, ' ').trim() : null; }
 function eq(what, got, want) {
   if (JSON.stringify(got) !== JSON.stringify(want)) results.push(what + ': got ' + JSON.stringify(got) + ', want ' + JSON.stringify(want));
+}
+// JSON can't tell two elements apart, so these compare identity.
+function same(what, got, want) {
+  if (got !== want) results.push(what + ': got ' + (got ? got.outerHTML.slice(0, 80) : got));
+}
+function resized() {
+  // Layout runs on the frame's own schedule, so wait for the listener's work.
+  var want = frame.offsetWidth <= 680;
+  return new Promise(function (done) {
+    var tries = 0;
+    (function poll() {
+      var row = q('.ing-pct-row');
+      if ((row && row.classList.contains('is-stacked') === want) || ++tries > 100) return done();
+      setTimeout(poll, 20);
+    })();
+  });
 }
 function column(table, n) {
   return Array.prototype.map.call(doc().querySelectorAll('table')[table].querySelectorAll('tbody tr'),
@@ -69,12 +83,22 @@ function method() { return clean(Array.prototype.find.call(doc().querySelectorAl
     await load(page);
 
     // As written. Column 0 is the checkbox.
-    eq('one bar', doc().querySelectorAll('.ing-pct-bar').length, 1);
-    var next = q('.ing-pct-bar').nextElementSibling;
-    eq('bar is right above the first table', next.querySelector('table') === doc().querySelectorAll('table')[0] || next === doc().querySelectorAll('table')[0], true);
-    eq('name', clean(q('.ing-pct-name')), 'AP flour');
+    eq('one row', doc().querySelectorAll('.ing-pct-row').length, 1);
+    var row = q('.ing-pct-row');
+    eq('row tops the first table', doc().querySelectorAll('table')[0].tHead.rows[0] === row, true);
+    eq('a cell per column', row.children.length, doc().querySelectorAll('table')[0].tHead.rows[1].children.length);
+    eq('name', clean(q('.ing-pct-name')), 'I have AP flour');
+    same('name is over the names', row.children[1], q('.ing-pct-name'));
+    same('multiplier is over the %', q('.ing-pct-mult').parentNode, row.children[2]);
+    same('amount is over the amounts', q('.ing-pct-input').closest('td'), row.children[3]);
+    same('units are over the notes', q('.ing-pct-units').closest('td'), row.children[4]);
+    eq('no menu', q('.ing-config'), null);
     eq('no slider', q('.ing-scale-range'), null);
-    eq('units stay', !!q('.ing-config .ing-units'), true);
+    var amountQty = doc().querySelectorAll('table')[0].tBodies[0].rows[0].children[3].querySelector('.qty');
+    var firstAmount = amountQty.getBoundingClientRect().left + parseFloat(frame.contentWindow.getComputedStyle(amountQty).paddingLeft);
+    var input = q('.ing-pct-input'), inputStyle = frame.contentWindow.getComputedStyle(input);
+    var digits = input.getBoundingClientRect().left + parseFloat(inputStyle.paddingLeft) + parseFloat(inputStyle.borderLeftWidth);
+    eq('digits line up with the amounts', Math.abs(digits - firstAmount) <= 1, true);
     eq('field', q('.ing-pct-input').value, '600');
     eq('starts in the written unit', activeUnit(), 'g');
     eq('units offered', Array.prototype.map.call(doc().querySelectorAll('.ing-pct-units button'), clean), ['g', 'kg', 'lb']);
@@ -83,7 +107,9 @@ function method() { return clean(Array.prototype.find.call(doc().querySelectorAl
     eq('written head 2', head(1, 3), 'Example: 250 ml shoyu');
     eq('written range', column(1, 3), ['250ml', '200–250ml', '100g']);
     eq('no multiplier', q('.ing-pct-mult').hidden, true);
-    eq('no way back', q('.ing-pct-reset').hidden, true);
+    eq('no way back', frame.contentWindow.getComputedStyle(q('.ing-pct-reset')).visibility, 'hidden');
+    var unitsLeft = q('.ing-pct-units').getBoundingClientRect().left, resetGap = q('.ing-pct-reset').getBoundingClientRect().left - unitsLeft;
+    eq('revert keeps its space', resetGap > 0, true);
 
     // More: rounding, notes, the second table, the Method, the headings.
     type('900');
@@ -94,7 +120,9 @@ function method() { return clean(Array.prototype.find.call(doc().querySelectorAl
     eq('second head', head(1, 3), 'For 375ml shoyu');
     eq('method follows', method(), 'Rest 75g of the dough. Bake at 200°C (400°F).');
     eq('multiplier', clean(q('.ing-pct-mult')), '1.5×');
-    eq('way back', clean(q('.ing-pct-reset')), 'Back to 600g');
+    eq('way back', q('.ing-pct-reset').getAttribute('aria-label'), 'Back to 600g');
+    eq('way back, shown', frame.contentWindow.getComputedStyle(q('.ing-pct-reset')).visibility, 'visible');
+    eq('revert appearing moves nothing', q('.ing-pct-reset').getBoundingClientRect().left - q('.ing-pct-units').getBoundingClientRect().left, resetGap);
     eq('field keeps its text', q('.ing-pct-input').value, '900');
     eq('serves follows', doc().getElementById('recipe-meta-servings') && clean(doc().getElementById('recipe-meta-servings')), '6');
 
@@ -142,14 +170,7 @@ function method() { return clean(Array.prototype.find.call(doc().querySelectorAl
     eq('a hundred times', clean(q('.ing-pct-mult')), '100×');
     leave();
 
-    // Imperial: the table stays metric, the field starts in lb, the Method converts.
-    q('.ing-config [data-units="imperial"]').click();
-    eq('field goes to lb', activeUnit(), 'lb');
-    eq('table ignores imperial', column(0, 3)[1], '42kg');
-    eq('method converts', /Bake at 400°F/.test(method()), true);
-    q('.ing-config [data-units="original"]').click();
-
-    // Back to the written batch, from a page reload too.
+    // Back to the written batch.
     q('.ing-pct-reset').click();
     eq('back: amounts', column(0, 3), ['600g', '420g', '12.5g', '10g', '35g']);
     eq('back: head', head(0, 3), 'Per 600 g');
@@ -157,36 +178,73 @@ function method() { return clean(Array.prototype.find.call(doc().querySelectorAl
     eq('back: unit', activeUnit(), 'g');
     eq('back: nothing remembered', localStorage.getItem('ing:amount:' + q('.article-content').dataset.pageKey), null);
 
-    // Written in a unit, typed in another: a pound field from imperial.
-    q('.ing-config [data-units="imperial"]').click();
-    leave();
+    // A phone: the units stack under the amount, and come back.
+    frame.style.width = '390px';
+    await resized();
+    same('narrow: stacked', q('.ing-pct-units').closest('td'), q('.ing-pct-row').children[3]);
+    eq('narrow: under the input', q('.ing-pct-units').getBoundingClientRect().top >= q('.ing-pct-input').getBoundingClientRect().bottom, true);
+    eq('narrow: last cell empty', clean(q('.ing-pct-row').children[4]), '');
+    frame.style.width = '1280px';
+    await resized();
+    same('wide: back over the notes', q('.ing-pct-units').closest('td'), q('.ing-pct-row').children[4]);
+
+    // A saved Units setting: the table stays metric, the field starts in lb,
+    // the Method converts.
+    localStorage.setItem('ing:units', 'imperial');
+    await load(page);
+    eq('imperial: field starts in lb', activeUnit(), 'lb');
+    eq('imperial: same written amount', q('.ing-pct-input').value, '1.32');
+    eq('imperial: table ignores it', column(0, 3)[1], '420g');
+    eq('imperial: method converts', /Bake at 400°F/.test(method()), true);
     type('2');
-    eq('lb typed', column(0, 3)[0], '907g');
+    eq('imperial: lb typed', column(0, 3)[0], '907g');
     q('.ing-pct-reset').click();
-    eq('imperial back starts in lb', activeUnit(), 'lb');
-    q('.ing-config [data-units="original"]').click();
+    eq('imperial: back starts in lb', activeUnit(), 'lb');
+    localStorage.removeItem('ing:units');
+
+    // No Notes column: the units beside the amount, in its cell.
+    await load('/recipes/percent-no-notes/');
+    eq('no notes: a cell per column', q('.ing-pct-row').children.length, 4);
+    same('no notes: units with the amount', q('.ing-pct-units').closest('td'), q('.ing-pct-row').children[3]);
+    eq('no notes: beside it', q('.ing-pct-units').getBoundingClientRect().left >= q('.ing-pct-input').getBoundingClientRect().right, true);
+    eq('volume units', Array.prototype.map.call(doc().querySelectorAll('.ing-pct-units button'), clean), ['ml', 'L', 'cup']);
+    eq('no notes: lowercased', clean(q('.ing-pct-name')), 'I have shoyu (soy sauce)');
 
     // No 100% row: the slider, as ever.
     await load('/recipes/percent-no-base/');
-    eq('no base, no bar', q('.ing-pct-bar'), null);
+    eq('no base, no row', q('.ing-pct-row'), null);
+    eq('no base, menu', !!q('.ing-config'), true);
     eq('no base, slider', !!q('.ing-scale-range'), true);
     eq('no base, head as today', head(0, 3), 'Per 1kg');
 
     // An ordinary recipe keeps its slider.
     await load('/recipes/veg-patties/');
-    eq('list recipe, no bar', q('.ing-pct-bar'), null);
+    eq('list recipe, no row', q('.ing-pct-row'), null);
     eq('list recipe, slider', !!q('.ing-scale-range'), true);
   } catch (e) {
     results.push('threw: ' + e + ' ' + e.stack);
   }
-  document.getElementById('result').textContent = JSON.stringify(results);
+  fetch('/__result', { method: 'POST', body: JSON.stringify(results) });
 })();
 </script>"""
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
+    # The test page posts its findings here. Chrome runs in real time, not
+    # with --virtual-time-budget and --dump-dom: virtual time runs no rendering
+    # steps, so a media query's change event would never fire.
+    done = threading.Event()
+    failures = None
+
     def log_message(self, *args):
         pass
+
+    def do_POST(self):
+        body = self.rfile.read(int(self.headers["Content-Length"]))
+        Handler.failures = json.loads(body)
+        self.send_response(204)
+        self.end_headers()
+        Handler.done.set()
 
     def do_GET(self):
         if self.path != "/__test":
@@ -223,17 +281,17 @@ def main():
              "--baseURL", base + "/", "--quiet"], capture_output=True, text=True)
         if result.returncode != 0:
             sys.exit("error: the build failed:\n" + result.stderr.strip())
-        result = subprocess.run(
+        browser = subprocess.Popen(
             [chrome, "--headless=new", "--disable-gpu", "--no-first-run",
-             f"--user-data-dir={work / 'profile'}", "--virtual-time-budget=20000",
-             "--dump-dom", f"{base}/__test"], capture_output=True, text=True, timeout=120)
-        found = re.search(r'<pre id="result">(.*?)</pre>', result.stdout, re.S)
-        if not found:
-            sys.exit("error: no result from Chrome:\n" + result.stderr.strip()[-500:])
-        text = found.group(1).replace("&quot;", '"').replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">")
-        if text == "unfinished":
-            sys.exit("error: the test page didn't finish")
-        failures = json.loads(text)
+             f"--user-data-dir={work / 'profile'}", f"{base}/__test"],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        try:
+            if not Handler.done.wait(120):
+                sys.exit("error: the test page didn't finish")
+        finally:
+            browser.terminate()
+            browser.wait()
+        failures = Handler.failures
         for failure in failures:
             print("FAIL  " + failure)
         if failures:

@@ -781,7 +781,7 @@
     if (!/^.[A-Z]/.test(name)) name = name.charAt(0).toLowerCase() + name.slice(1);
 
     table.classList.add('ing-table--percent');
-    return { table: table, qty: qty, name: name, head: percentHead(heads[col]) };
+    return { table: table, qty: qty, name: name, pctCol: pctCol, amountCol: col, head: percentHead(heads[col]) };
   }
 
   // The amount column's heading, when it names an amount ("Per 1 kg",
@@ -852,62 +852,57 @@
   // below) — the sidebar tried Units on its own for a round, but with
   // Scale already gone it didn't earn a separate box, so it left too. One
   // combined surface again, same as before that split existed.
-  // `withScale` is false on a percentage table's page, whose bar sets the
-  // scale (buildPercentBar), leaving just Units here.
-  function buildControlSurface(withScale) {
+  function buildControlSurface() {
     var frag = document.createDocumentFragment();
-    var scaleSlider = null, scaleValue = null, scaleTicks = [], yieldLine = null;
 
-    if (withScale) {
+    // Scale: label and current value on one row, the slider, a label
+    // under each whole step, then the yield line ("Serves 4–6 · 9
+    // patties"), which only shows when the recipe's servings or portions
+    // can be scaled (scaleYield).
+    var scaleGroup = document.createElement('div');
+    scaleGroup.className = 'ing-config-group';
+    var scaleHead = document.createElement('div');
+    scaleHead.className = 'ing-config-head';
+    var scaleLabel = document.createElement('label');
+    scaleLabel.className = 'ing-config-label';
+    scaleLabel.textContent = 'Scale';
+    var scaleValue = document.createElement('span');
+    scaleValue.className = 'ing-scale-value mono';
+    scaleHead.appendChild(scaleLabel);
+    scaleHead.appendChild(scaleValue);
+    scaleGroup.appendChild(scaleHead);
 
-      // Scale: label and current value on one row, the slider, a label
-      // under each whole step, then the yield line ("Serves 4–6 · 9
-      // patties"), which only shows when the recipe's servings or portions
-      // can be scaled (scaleYield).
-      var scaleGroup = document.createElement('div');
-      scaleGroup.className = 'ing-config-group';
-      var scaleHead = document.createElement('div');
-      scaleHead.className = 'ing-config-head';
-      var scaleLabel = document.createElement('label');
-      scaleLabel.className = 'ing-config-label';
-      scaleLabel.textContent = 'Scale';
-      scaleValue = document.createElement('span');
-      scaleValue.className = 'ing-scale-value mono';
-      scaleHead.appendChild(scaleLabel);
-      scaleHead.appendChild(scaleValue);
-      scaleGroup.appendChild(scaleHead);
+    var scaleSlider = document.createElement('input');
+    scaleSlider.type = 'range';
+    scaleSlider.className = 'ing-scale-range';
+    scaleSlider.id = 'ing-scale-range';
+    scaleLabel.htmlFor = scaleSlider.id;
+    scaleSlider.min = String(SCALE_MIN);
+    scaleSlider.max = String(SCALE_MAX);
+    scaleSlider.step = String(SCALE_STEP);
+    scaleGroup.appendChild(scaleSlider);
 
-      scaleSlider = document.createElement('input');
-      scaleSlider.type = 'range';
-      scaleSlider.className = 'ing-scale-range';
-      scaleSlider.id = 'ing-scale-range';
-      scaleLabel.htmlFor = scaleSlider.id;
-      scaleSlider.min = String(SCALE_MIN);
-      scaleSlider.max = String(SCALE_MAX);
-      scaleSlider.step = String(SCALE_STEP);
-      scaleGroup.appendChild(scaleSlider);
-
-      var ticks = document.createElement('div');
-      ticks.className = 'ing-scale-ticks mono';
-      ticks.setAttribute('aria-hidden', 'true');
-      for (var t = SCALE_MIN; t <= SCALE_MAX; t++) {
-        var tick = document.createElement('span');
-        tick.textContent = String(t);
-        tick.dataset.step = String(t);
-        ticks.appendChild(tick);
-        scaleTicks.push(tick);
-      }
-      scaleGroup.appendChild(ticks);
-
-      yieldLine = document.createElement('p');
-      yieldLine.className = 'ing-yield';
-      yieldLine.hidden = true;
-      scaleGroup.appendChild(yieldLine);
-      frag.appendChild(scaleGroup);
+    var ticks = document.createElement('div');
+    ticks.className = 'ing-scale-ticks mono';
+    ticks.setAttribute('aria-hidden', 'true');
+    var scaleTicks = [];
+    for (var t = SCALE_MIN; t <= SCALE_MAX; t++) {
+      var tick = document.createElement('span');
+      tick.textContent = String(t);
+      tick.dataset.step = String(t);
+      ticks.appendChild(tick);
+      scaleTicks.push(tick);
     }
+    scaleGroup.appendChild(ticks);
+
+    var yieldLine = document.createElement('p');
+    yieldLine.className = 'ing-yield';
+    yieldLine.hidden = true;
+    scaleGroup.appendChild(yieldLine);
+    frag.appendChild(scaleGroup);
 
     var unitsGroup = document.createElement('div');
-    unitsGroup.className = 'ing-config-group' + (withScale ? ' ing-config-group--units' : '');
+    unitsGroup.className = 'ing-config-group ing-config-group--units';
     var unitsLabel = document.createElement('div');
     unitsLabel.className = 'ing-config-label';
     unitsLabel.id = 'ing-units-label';
@@ -936,7 +931,7 @@
     };
   }
 
-  // Which units the bar offers, by the base's family. The written unit is
+  // Which units the row offers, by the base's family. The written unit is
   // added if it's something else ("2 tbsp shoyu"), so the field can start in it.
   var PERCENT_UNITS = { mass: ['g', 'kg', 'lb'], volume: ['ml', 'l', 'cup'] };
 
@@ -954,30 +949,55 @@
     return parsed && parsed.kind === 'single' && parsed.value > 0 ? parsed.value : null;
   }
 
-  // "I have [amount] [g kg lb] ground pork", above a percentage table, with
-  // the multiplier and a way back once it's changed. Print hides it; the
-  // table prints at the amount shown.
-  function buildPercentBar(base) {
-    function span(className, text) {
-      var el = document.createElement('span');
+  // Below this, the units stack under the amount: beside it, they'd run off
+  // a phone's edge. They're in another cell then, so CSS alone can't do it.
+  var PERCENT_STACK_QUERY = '(max-width: 680px)';
+  var REVERT_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" ' +
+    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>';
+
+  // "I have ground pork [amount] [g kg lb]", the first row of the table's
+  // <thead>, so each part lines up with its column at any width: the name
+  // over the names, the multiplier over the %, the amount over the amounts,
+  // the units over the Notes, or beside the amount if there are none. A <td>
+  // row, so the <th>s are still just the table's headings. Print hides it;
+  // the table prints at the amount shown. Added after enhanceTable has put in
+  // the checkbox column, whose cell here stays empty. `t` is findPercentBase's.
+  function buildPercentRow(base, t) {
+    function element(tag, className) {
+      var el = document.createElement(tag);
       el.className = className;
-      if (text) el.textContent = text;
       return el;
     }
-    var bar = document.createElement('div');
-    bar.className = 'ing-pct-bar';
-    bar.appendChild(span('ing-pct-lead', 'I have'));
+    var headRow = t.table.tHead.rows[0];
+    var tr = element('tr', 'ing-pct-row');
+    var cells = Array.prototype.map.call(headRow.children, function () {
+      return tr.appendChild(document.createElement('td'));
+    });
+    // The columns findPercentBase counted, plus the checkbox column.
+    var nameCell = cells[1], multCell = cells[t.pctCol + 1], amountCell = cells[t.amountCol + 1];
+    var notesCell = cells[t.amountCol + 2] || null;
+    cells[0].className = 'ing-check-cell';
 
-    var field = span('ing-pct-field');
-    var input = document.createElement('input');
+    nameCell.className = 'ing-pct-name';
+    nameCell.textContent = 'I have ' + base.name;
+
+    var mult = element('span', 'ing-pct-mult mono');
+    mult.hidden = true;
+    multCell.appendChild(mult);
+
+    var input = element('input', 'ing-pct-input mono');
     input.type = 'text';
-    input.className = 'ing-pct-input mono';
     input.inputMode = 'decimal';
     input.autocomplete = 'off';
     input.setAttribute('aria-label', 'Amount of ' + base.name);
-    field.appendChild(input);
+    var stack = element('div', 'ing-pct-stack');
+    stack.appendChild(input);
+    amountCell.className = 'ing-pct-amount';
+    amountCell.appendChild(stack);
 
-    var unitsRow = span('ing-units ing-pct-units');
+    var controls = element('div', 'ing-pct-controls');
+    var unitsRow = element('span', 'ing-units ing-pct-units');
     unitsRow.setAttribute('role', 'group');
     unitsRow.setAttribute('aria-label', 'Unit of ' + base.name);
     var unitButtons = percentUnits(base).map(function (key) {
@@ -987,23 +1007,25 @@
       unitsRow.appendChild(btn);
       return btn;
     });
-    field.appendChild(unitsRow);
-    bar.appendChild(field);
-    bar.appendChild(span('ing-pct-name', base.name));
+    controls.appendChild(unitsRow);
 
-    var end = span('ing-pct-end');
-    var mult = span('ing-pct-mult mono');
-    mult.hidden = true;
-    var reset = document.createElement('button');
+    var reset = element('button', 'ing-pct-reset');
     reset.type = 'button';
-    reset.className = 'ing-pct-reset';
-    reset.hidden = true;
-    reset.textContent = 'Back to ' + base.written;
-    end.appendChild(mult);
-    end.appendChild(reset);
-    bar.appendChild(end);
+    reset.innerHTML = REVERT_ICON;
+    reset.title = 'Back to ' + base.written;
+    reset.setAttribute('aria-label', reset.title);
+    controls.appendChild(reset);
 
-    return { el: bar, input: input, unitButtons: unitButtons, mult: mult, reset: reset };
+    var narrow = window.matchMedia(PERCENT_STACK_QUERY);
+    function place() {
+      tr.classList.toggle('is-stacked', narrow.matches);
+      (notesCell && !narrow.matches ? notesCell : stack).appendChild(controls);
+    }
+    narrow.addEventListener('change', place);
+    place();
+
+    headRow.parentNode.insertBefore(tr, headRow);
+    return { input: input, unitButtons: unitButtons, mult: mult, reset: reset };
   }
 
   // Owns the scale/units state for the whole page (a multi-component
@@ -1044,7 +1066,7 @@
 
     var state = { scale: percent.length ? 1 : readScale(), units: readUnits() };
     var surface = null;
-    var bar = null;
+    var row = null;
 
     // The base, in its family's canonical unit (grams or ml), and the
     // cook's amount: remembered as an amount, not a scale, so it still means
@@ -1095,22 +1117,23 @@
       return String(parseFloat(value.toFixed(fine ? 1 : 2)));
     }
 
-    function syncBar() {
-      if (!bar) return;
+    function syncRow() {
+      if (!row) return;
       // Touches values only: the field being typed in keeps its text and caret.
-      if (document.activeElement !== bar.input) {
-        bar.input.value = fieldValue();
-        bar.input.removeAttribute('aria-invalid');
+      if (document.activeElement !== row.input) {
+        row.input.value = fieldValue();
+        row.input.removeAttribute('aria-invalid');
       }
-      bar.unitButtons.forEach(function (btn) {
+      row.unitButtons.forEach(function (btn) {
         var on = btn.dataset.baseUnit === state.fieldUnit;
         btn.classList.toggle('active', on);
         btn.setAttribute('aria-pressed', String(on));
       });
       var changed = state.scale !== 1;
-      bar.mult.textContent = parseFloat(state.scale.toFixed(2)) + '×';
-      bar.mult.hidden = !changed;
-      bar.reset.hidden = !changed;
+      row.mult.textContent = parseFloat(state.scale.toFixed(2)) + '×';
+      row.mult.hidden = !changed;
+      // Its space stays, so the units don't move as an amount is typed.
+      row.reset.style.visibility = changed ? '' : 'hidden';
     }
 
     // "Per 1 kg" becomes "For 1.36kg"; "Example: 250 ml shoyu", "For 400ml
@@ -1147,21 +1170,19 @@
     }
 
     function syncControls() {
-      syncBar();
+      syncRow();
       if (!surface) return;
       var s = surface.scaleSlider;
-      if (s) {
-        s.value = String(state.scale);
-        // Filled track up to the thumb (custom.css reads --fill).
-        s.style.setProperty('--fill', ((state.scale - SCALE_MIN) / (SCALE_MAX - SCALE_MIN) * 100) + '%');
-        surface.scaleValue.textContent = formatScaleValue(state.scale);
-        surface.scaleTicks.forEach(function (tick) {
-          tick.classList.toggle('is-current', Number(tick.dataset.step) === state.scale);
-        });
-        var y = yieldText();
-        surface.yieldLine.textContent = y;
-        surface.yieldLine.hidden = !y;
-      }
+      s.value = String(state.scale);
+      // Filled track up to the thumb (custom.css reads --fill).
+      s.style.setProperty('--fill', ((state.scale - SCALE_MIN) / (SCALE_MAX - SCALE_MIN) * 100) + '%');
+      surface.scaleValue.textContent = formatScaleValue(state.scale);
+      surface.scaleTicks.forEach(function (tick) {
+        tick.classList.toggle('is-current', Number(tick.dataset.step) === state.scale);
+      });
+      var y = yieldText();
+      surface.yieldLine.textContent = y;
+      surface.yieldLine.hidden = !y;
       surface.unitButtons.forEach(function (btn) {
         var on = btn.dataset.units === state.units;
         btn.classList.toggle('active', on);
@@ -1194,61 +1215,55 @@
 
     function attachSurface(s) {
       surface = s;
-      if (surface.scaleSlider) {
-        surface.scaleSlider.addEventListener('input', function () {
-          state.scale = parseFloat(surface.scaleSlider.value);
-          try { localStorage.setItem(scaleKey, String(state.scale)); } catch (e) {}
-          apply();
-        });
-      }
+      surface.scaleSlider.addEventListener('input', function () {
+        state.scale = parseFloat(surface.scaleSlider.value);
+        try { localStorage.setItem(scaleKey, String(state.scale)); } catch (e) {}
+        apply();
+      });
       surface.unitButtons.forEach(function (btn) {
         btn.addEventListener('click', function () {
           state.units = btn.dataset.units;
           try { localStorage.setItem(unitsKey, state.units); } catch (e) {}
-          if (base) {
-            state.fieldUnit = startUnit();
-            saveAmount();
-          }
           apply();
         });
       });
     }
 
-    function attachBar(b) {
-      bar = b;
-      bar.input.addEventListener('input', function () {
-        var value = parseFieldAmount(bar.input.value);
+    function attachRow(r) {
+      row = r;
+      row.input.addEventListener('input', function () {
+        var value = parseFieldAmount(row.input.value);
         if (value === null) {
-          bar.input.setAttribute('aria-invalid', 'true');
+          row.input.setAttribute('aria-invalid', 'true');
           return;
         }
-        bar.input.removeAttribute('aria-invalid');
+        row.input.removeAttribute('aria-invalid');
         state.amount = value * UNIT_INFO[state.fieldUnit].base;
         state.scale = scaleFor(state.amount);
         saveAmount();
         apply();
       });
       // Leaving the field shows the amount in force, tidied or restored.
-      bar.input.addEventListener('blur', syncBar);
+      row.input.addEventListener('blur', syncRow);
       // The same amount in another unit: nothing else on the page changes.
-      bar.unitButtons.forEach(function (btn) {
+      row.unitButtons.forEach(function (btn) {
         btn.addEventListener('click', function () {
           state.fieldUnit = btn.dataset.baseUnit;
           saveAmount();
-          syncBar();
+          syncRow();
         });
       });
-      bar.reset.addEventListener('click', function () {
+      row.reset.addEventListener('click', function () {
         state.amount = base.amount;
         state.scale = 1;
         state.fieldUnit = startUnit();
         saveAmount();
         apply();
-        bar.input.focus();
+        row.input.focus();
       });
     }
 
-    return { attachSurface: attachSurface, attachBar: attachBar, base: base, apply: apply };
+    return { attachSurface: attachSurface, attachRow: attachRow, base: base, apply: apply };
   }
 
   // The gear-icon disclosure, anchored next to the first Ingredients
@@ -1259,13 +1274,13 @@
 
     var summary = document.createElement('summary');
     summary.className = 'ing-config-btn';
-    summary.setAttribute('aria-label', 'Ingredient options: ' + (controller.base ? 'change units' : 'scale recipe or change units'));
+    summary.setAttribute('aria-label', 'Ingredient options: scale recipe or change units');
     summary.innerHTML = GEAR_ICON;
     details.appendChild(summary);
 
     var panel = document.createElement('div');
     panel.className = 'ing-config-panel';
-    var surface = buildControlSurface(!controller.base);
+    var surface = buildControlSurface();
     panel.appendChild(surface.frag);
     details.appendChild(panel);
 
@@ -1383,17 +1398,13 @@
     // Ingredients heading to anchor the popup to); the popup itself only
     // mounts when there's a heading to attach it to.
     var controller = createScaleUnitsController(pageKey, percent);
-    if (headings.length) {
-      headings[0].appendChild(buildPopupMenu(controller));
-    }
-    // One bar, above the first percentage table. Scale is page-wide, so a
-    // second table follows it from its own written amounts.
+    // A percentage page has one row in its first table and no menu: the row
+    // sets the scale, and a saved Units setting still applies. Scale is
+    // page-wide, so a second table follows from its own written amounts.
     if (controller.base) {
-      var bar = buildPercentBar(controller.base);
-      var first = percent[0].table;
-      var anchor = first.closest('.table-scroll') || first;
-      anchor.parentNode.insertBefore(bar.el, anchor);
-      controller.attachBar(bar);
+      controller.attachRow(buildPercentRow(controller.base, percent[0]));
+    } else if (headings.length) {
+      headings[0].appendChild(buildPopupMenu(controller));
     }
     controller.apply();
   }
