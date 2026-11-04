@@ -571,6 +571,22 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
 .ing-btn.active { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); text-decoration: none; } /* Blowfish underlines any .active */
 .ing-btn:focus-visible { outline: 2px solid var(--fugu-accent); outline-offset: -2px; }
 
+/* The "I have" bar above a percentage table (ingredients.js's buildPercentBar). */
+.ing-pct-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 16px 0 10px; }
+.ing-pct-field { display: inline-flex; align-items: stretch; gap: 8px; }
+.ing-pct-input {
+  width: 6em; padding: 4px 8px; font-size: 1rem; color: var(--fugu-ink); background: transparent;
+  border: 1px solid var(--fugu-border); border-radius: 4px;
+}
+.ing-pct-input:focus-visible { outline: 2px solid var(--fugu-accent); outline-offset: -1px; }
+.ing-pct-input[aria-invalid="true"] { border-color: var(--fugu-accent-strong); }
+.ing-pct-units { display: inline-grid; }
+.ing-pct-end { display: inline-flex; align-items: center; gap: 10px; margin-left: auto; }
+.ing-pct-mult { color: var(--fugu-ink-faint); }
+.ing-pct-reset { padding: 0; color: var(--fugu-accent-strong); background: none; border: 0; cursor: pointer; text-decoration: underline; }
+.ing-pct-mult[hidden], .ing-pct-reset[hidden] { display: none; }
+@media print { .ing-pct-bar { display: none !important; } }
+
 /* ---------------------------------------------------------------------
  * Recipe sidebar (single.html, filled by automagic-sidebar.js). Below lg
  * it starts collapsed behind .recipe-sidebar-toggle.
