@@ -777,7 +777,7 @@
     var nameCell = row.children[0].cloneNode(true);
     nameCell.querySelectorAll('.pop').forEach(function (pop) { pop.remove(); });
     var name = nameCell.textContent.trim().replace(/\s+/g, ' ');
-    // "Shoyu" reads "I have 250 ml shoyu"; "AP flour" keeps its capitals.
+    // "Shoyu" reads "Scale based on shoyu"; "AP flour" keeps its capitals.
     if (!/^.[A-Z]/.test(name)) name = name.charAt(0).toLowerCase() + name.slice(1);
 
     table.classList.add('ing-table--percent');
@@ -956,7 +956,7 @@
     'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
     '<path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>';
 
-  // "I have ground pork [amount] [g kg lb]", the last row of the table's
+  // "Scale based on ground pork [amount] [g kg lb]", the last row of the table's
   // <thead>, under the headings, so each part lines up with its column at any width: the name
   // over the names, the multiplier over the %, the amount over the amounts,
   // the units over the Notes, or beside the amount if there are none. A <td>
@@ -980,7 +980,7 @@
     cells[0].className = 'ing-check-cell';
 
     nameCell.className = 'ing-pct-name';
-    nameCell.textContent = 'I have ' + base.name;
+    nameCell.textContent = 'Scale based on ' + base.name;
 
     var mult = element('span', 'ing-pct-mult mono');
     mult.hidden = true;

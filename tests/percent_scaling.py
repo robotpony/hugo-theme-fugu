@@ -87,7 +87,7 @@ function method() { return clean(Array.prototype.find.call(doc().querySelectorAl
     var row = q('.ing-pct-row');
     same('row is under the headings', doc().querySelectorAll('table')[0].tHead.rows[1], row);
     eq('a cell per column', row.children.length, doc().querySelectorAll('table')[0].tHead.rows[0].children.length);
-    eq('name', clean(q('.ing-pct-name')), 'I have AP flour');
+    eq('name', clean(q('.ing-pct-name')), 'Scale based on AP flour');
     same('name is over the names', row.children[1], q('.ing-pct-name'));
     same('multiplier is over the %', q('.ing-pct-mult').parentNode, row.children[2]);
     same('amount is over the amounts', q('.ing-pct-input').closest('td'), row.children[3]);
@@ -208,7 +208,7 @@ function method() { return clean(Array.prototype.find.call(doc().querySelectorAl
     same('no notes: units with the amount', q('.ing-pct-units').closest('td'), q('.ing-pct-row').children[3]);
     eq('no notes: beside it', q('.ing-pct-units').getBoundingClientRect().left >= q('.ing-pct-input').getBoundingClientRect().right, true);
     eq('volume units', Array.prototype.map.call(doc().querySelectorAll('.ing-pct-units button'), clean), ['ml', 'L', 'cup']);
-    eq('no notes: lowercased', clean(q('.ing-pct-name')), 'I have shoyu (soy sauce)');
+    eq('no notes: lowercased', clean(q('.ing-pct-name')), 'Scale based on shoyu (soy sauce)');
 
     // No 100% row: the slider, as ever.
     await load('/recipes/percent-no-base/');
