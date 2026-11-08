@@ -31,7 +31,9 @@
 
   --fugu-accent: rgb(var(--color-primary-600));
   --fugu-accent-strong: rgb(var(--color-primary-700));
-  --fugu-accent-soft: rgb(var(--color-primary-100));
+  /* A tint of primary-500, not primary-100: some schemes (autumn) set
+     primary-100 to white, and the chips' fill vanished on a white page. */
+  --fugu-accent-soft: rgba(var(--color-primary-500), .16);
   --fugu-accent-wash: rgba(var(--color-primary-500), .14);
 
   --fugu-cuisine: rgb(var(--color-secondary-800));
@@ -657,7 +659,7 @@ h2:has(> .ing-awake):has(> .ing-config) { padding-right: 76px; }
 /* Facts list: servings, times, dates, source. */
 .recipe-meta { display: flex; flex-direction: column; gap: 5px; padding-bottom: 14px; border-bottom: 1px solid var(--fugu-border); }
 .recipe-meta-row { display: flex; gap: 10px; align-items: baseline; }
-.recipe-meta-label { flex: 0 0 58px; font-size: .62rem; }
+.recipe-meta-label { flex: 0 0 auto; min-width: 58px; white-space: nowrap; font-size: .62rem; }
 .recipe-meta-value { flex: 1; font-family: var(--fugu-font-mono); font-size: .8rem; line-height: 1.4; color: var(--fugu-ink-muted); }
 
 /* ---------------------------------------------------------------------

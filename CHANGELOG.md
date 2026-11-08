@@ -10,6 +10,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Fixed
 
+- `fugu.css`: the soft accent fill (principle and method chips, hovers, the current page) is a tint of `primary-500`, so it shows on schemes whose `primary-100` is white (autumn). Meta rail labels no longer wrap ("On cards" on a principle tag page).
 - A count of one reads "1 recipe" and "1 entry" on tag and cuisine pages, not "1 recipes" and "1 entries".
 
 ## v0.2.0 (2026-11-07)

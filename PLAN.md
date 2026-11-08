@@ -51,7 +51,6 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
 
 ## 10. Release
 
-- [ ] Finish checking the basic styles in Chrome: hover states (popovers, card hover); the principle chip's fill is faint on light-`primary-100` schemes (autumn); "On cards" wraps on the principle tag page's sidebar.
 - [ ] Check the README's images in GitHub's rendering, light and dark.
 - [ ] Code review in three commit series: `layouts/`, `assets/js/`, `tools/`. Bugs, dead code, Not a Chef leftovers, stale comments. One area per pass with `/code-review high`; record each finding as fixed, won't fix (why), or deferred; check template and JS fixes with `tests/check.py --compare` and Chrome at both widths, light and dark. Angles from Not a Chef (2026-10-17):
   - Templates and render hooks: empty sections, a page with no cuisine or no date, drafts in card lists.
