@@ -54,13 +54,6 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
 
 - [ ] Settle the hugo-warped module: it's merged to `main` and Not a Chef builds with it, but `CHANGELOG.md` still files it under "Trying (branch `hugo-warped-module`)". Move that entry into Changed and delete the branch, or back it out. Then tag `v0.2.0`.
 - [ ] Finish checking the basic styles in Chrome: hover states (popovers, card hover); the principle chip's fill is faint on light-`primary-100` schemes (autumn); "On cards" wraps on the principle tag page's sidebar.
-- [ ] Fixes from Not a Chef's visual pass (2026-11-03, handed over 2026-11-07); check each in Chrome at both widths, light and dark:
-  - Chip wording: build pages show Burgers twice ("Burgers · Build", then a "Burgers" chip); essays show "Food-Memory" where cards say "food memories"; page chips are title case where card chips are lowercase. One wording and one case everywhere.
-  - Lineage timeline repeats a close year in two forms ('57 on the left, 1957 on the right, on the burgers blueprint). Show each year once.
-  - A wiki link's trailing arrow can wrap alone onto the next line (build sidebar, "In-N-Out burger spread →"). Keep it with the last word (`&nbsp;`, or `white-space: nowrap` on a span of the last word and the arrow).
-  - The glossary search placeholder (`partials/glossary/page.html:57`, "Search the glossary: a word, or what it does") clips on phones: about 294px of text in a 258px field at 390px wide. Shorten it to "Search the glossary", or make it a param (and an `i18n` string with §4).
-  - `exampleSite/content/about.md` links the old domain, `bruce-loves-to-cook.warpedvisions.org`; it's https://bruce-loves-to-cook.ca now.
-  - A keep-screen-awake switch beside the ingredient scaling gear (Wake Lock API; hidden where unsupported), as RecipeTin Eats and Serious Eats have. The small version of Features' cook mode, and can ship first.
 - [ ] Check the README's images in GitHub's rendering, light and dark.
 - [ ] Code review in three commit series: `layouts/`, `assets/js/`, `tools/`. Bugs, dead code, Not a Chef leftovers, stale comments. One area per pass with `/code-review high`; record each finding as fixed, won't fix (why), or deferred; check template and JS fixes with `tests/check.py --compare` and Chrome at both widths, light and dark. Angles from Not a Chef (2026-10-17):
   - Templates and render hooks: empty sections, a page with no cuisine or no date, drafts in card lists.
@@ -81,6 +74,6 @@ After 1.0 unless Not a Chef needs one sooner. Several cite `SPEC.md`, still in N
 - **Recipe format:** prototype ingredient-name canonicalization on real recipes (`SPEC.md` §6, the fragile part); a validator (`tools/validate_recipe.py`, `SPEC.md` §8) wired into `/lint`.
 - **Listings:** sort and filter on the recipes list; term pages as filters; TOC behaviour on long reference pages; extra taxonomies in the header's tags row (skip them by param, or chip them like cuisine); an option to leave hidden personal notes out of the build, since today they're only hidden visually.
 - **Build-time enrichment:** parsed ingredients in `recipes/index.json` (input for the rest); per-recipe cost from site `data/ingredient_prices.yaml`; grocery departments (`data/departments.yaml`, with a Fugu default); schema.org `Recipe` JSON-LD.
-- **Cooking-time JS:** optional-ingredient toggle; print view; cook mode with Wake Lock; interactive substitutions; shopping list in department order; pantry tool (win the fridge); method check-off in `localStorage`, reusing `ingredients.js`'s key scheme.
+- **Cooking-time JS:** optional-ingredient toggle; print view; cook mode with Wake Lock (the keep-awake switch beside the gear is the small version); interactive substitutions; shopping list in department order; pantry tool (win the fridge); method check-off in `localStorage`, reusing `ingredients.js`'s key scheme.
 - **Later:** a separate test-site repo that installs tagged releases as an outsider would; possible now `v0.1.0` exists, though §9's install job covers most of it.
 - **Deferred on purpose** (`SPEC.md` §10): saved recipes, personal notes, ratings, reader-side change tracking (need a backend); nutrition (no model yet).
