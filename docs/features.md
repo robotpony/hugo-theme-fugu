@@ -164,7 +164,7 @@ These get a reading sidebar in place of the recipe one. It shows only what a pag
 - "On this page": the page's headings, grouped, on desktop. On a phone, Blowfish's own table of contents is used instead.
 - The recipes the page links to.
 - For an essay, the other essays in its folder. For a blueprint's part or build, the other parts or builds, in the blueprint's order.
-- For a log month, its days, and the other months, newest first, with a day count for each.
+- For a log month, its days, and the other months, newest first, under a label per year. A plain month drops its year ("October"); a season or a multi-month title keeps its name unless it ends in the year. A month shows its day count when it has days. The newest year and the page's own year are open; each other year folds into one row ("2024 4 months") that opens in place.
 
 A page at the site's root, such as About, can add "The cookbook in numbers" (counts of recipes, cuisines, essays, methods, and reference guides, each linking to its list) and a hand-picked "Start here" list ([frontmatter.md](frontmatter.md#pages-at-the-sites-root)).
 

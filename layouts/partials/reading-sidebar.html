@@ -186,19 +186,46 @@
     {{ end }}
   {{ end }}
 
-  {{/* Food Log months, newest first, with a day count from each page's
-    h2s. */}}
+  {{/* Food Log months, newest first, grouped under a year label. A plain
+    month drops its year ("October"); a season or multi-month title keeps
+    its full name, as only a trailing " <year>" is stripped. The day count
+    (from each page's h2s) shows only when there are days. The newest year
+    and the current page's year are open; every other year folds into a
+    <details> that opens in place. Years come from the sort key (the
+    filename), or the label's first four-digit number without one. */}}
   {{ if eq $section "log" }}
     {{ $months := slice }}
     {{ range where site.RegularPages "Section" .Section }}
       {{ $months = $months | append (partial "reading-sidebar/log-month.html" .) }}
     {{ end }}
+    {{ $years := slice }}
+    {{ $byYear := dict }}
+    {{ $curYear := "" }}
+    {{ range sort $months "key" "desc" }}
+      {{ $y := "" }}
+      {{ if .key }}{{ $y = string (div .key 100) }}{{ else }}{{ with findRE `\d{4}` .label 1 }}{{ $y = index . 0 }}{{ end }}{{ end }}
+      {{ if not (isset $byYear $y) }}
+        {{ $years = $years | append $y }}
+        {{ $byYear = merge $byYear (dict $y slice) }}
+      {{ end }}
+      {{ $byYear = merge $byYear (dict $y ((index $byYear $y) | append .)) }}
+      {{ if eq .page $page }}{{ $curYear = $y }}{{ end }}
+    {{ end }}
     <div class="rs-section">
       <h2 class="rs-label">Months</h2>
       <div class="browse-list">
-        {{ range sort $months "key" "desc" }}
-          {{ $days := len .days }}
-          <a href="{{ .page.RelPermalink }}"{{ if eq .page $page }} aria-current="page"{{ end }}>{{ .label }} <span class="n">{{ if $days }}{{ $days }} {{ cond (eq $days 1) "day" "days" }}{{ else }}undated{{ end }}</span></a>
+        {{ range $i, $y := $years }}
+          {{ $rows := index $byYear $y }}
+          {{ if or (eq $i 0) (eq $y $curYear) }}
+            <div class="rs-year">{{ $y }}</div>
+            {{ range $rows }}{{ partial "reading-sidebar/log-month-row.html" (dict "month" . "year" $y "current" $page) }}{{ end }}
+          {{ else }}
+            {{ $n := len $rows }}
+            <details class="rs-year-fold">
+              <summary>{{ $y }} <span class="n">{{ $n }} {{ cond (eq $n 1) "month" "months" }}</span></summary>
+              {{ range $rows }}{{ partial "reading-sidebar/log-month-row.html" (dict "month" . "year" $y "current" $page) }}{{ end }}
+            </details>
+          {{ end }}
         {{ end }}
       </div>
     </div>
