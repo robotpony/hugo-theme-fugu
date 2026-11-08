@@ -127,6 +127,12 @@ RECOMMENDED_FIELDS = {
 
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
+# A lineage date, in a build's `era` (or each item of a list): a year
+# (1769), an approximate year ("c. 1900"), or a decade ("1950s"). Fugu's
+# blueprint/date.html reads the same forms.
+LINEAGE_DATE_RE = re.compile(r"^(c\. )?\d{4}$|^\d{3}0s$")
+LINEAGE_SOURCES = ("builds", "table", "both")
+
 
 class FrontmatterError(Exception):
     pass
@@ -379,11 +385,31 @@ def collect_files(paths):
     return files
 
 
+def check_lineage_fields(fields, errors):
+    """`era` (a build's lineage date or dates) and `lineage` (a blueprint's
+    source: builds, table, or both)."""
+    if fields.get("era") is not None:
+        era = fields["era"]
+        for item in (era if isinstance(era, list) else [era]):
+            if isinstance(item, bool) or not LINEAGE_DATE_RE.match(str(item).strip()):
+                errors.append(f"'era' value {item!r} is not a year (1769), \"c. 1900\", or \"1950s\"")
+    if fields.get("lineage") is not None and fields["lineage"] not in LINEAGE_SOURCES:
+        errors.append(f"'lineage' is {fields['lineage']!r}, not one of: {', '.join(LINEAGE_SOURCES)}")
+
+
 def check_file(path):
     """Return (errors, warnings) lists of human-readable strings."""
     errors, warnings = [], []
     kind = classify(path)
-    if kind is None or path.name == "_index.md" or path.name.startswith("."):
+    if kind is None or path.name.startswith("."):
+        return errors, warnings
+    if path.name == "_index.md":
+        # A section's own page: only a blueprint's `lineage` is checked.
+        try:
+            fm_lines, _ = read_file(path)
+        except FrontmatterError as e:
+            return [str(e)], warnings
+        check_lineage_fields(parse_fields(fm_lines), errors)
         return errors, warnings
 
     try:
@@ -424,6 +450,8 @@ def check_file(path):
     if "title" in fields and not fields.get("title"):
         errors.append("'title' is empty")
 
+    check_lineage_fields(fields, errors)
+
     return errors, warnings
 
 
@@ -437,9 +465,14 @@ def cmd_check(args):
     for path in files:
         rel = str(path.relative_to(REPO_ROOT)) if path.is_absolute() else str(path)
         kind = classify(path if path.is_absolute() else (REPO_ROOT / path))
-        if kind is None or path.name == "_index.md" or path.name.startswith("."):
+        if kind is None or path.name.startswith("."):
             continue
         errors, warnings = check_file(path if path.is_absolute() else (REPO_ROOT / path))
+        if path.name == "_index.md":
+            if errors:
+                results[rel] = {"errors": errors, "warnings": []}
+                total_errors += len(errors)
+            continue
         if errors or warnings:
             results[rel] = {"errors": errors, "warnings": warnings}
         total_errors += len(errors)
@@ -482,7 +515,7 @@ def cmd_check(args):
                     print(f"  ERROR: {e}")
                 for w in issues["warnings"]:
                     print(f"  warn:  {w}")
-            clean = checked - len(results)
+            clean = checked - len([r for r in results if not r.endswith("_index.md")])
             print()
             print(f"{len(results)} file(s) with issues, {clean} clean, "
                   f"{total_errors} error(s), {total_warnings} warning(s).")

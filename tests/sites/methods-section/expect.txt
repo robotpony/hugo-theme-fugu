@@ -68,3 +68,15 @@ methods/rice-bowls/index.html: <span>↳ 2015</span>
 methods/rice-bowls/index.html: <p class="build-origin">1985–2015</p>
 methods/index.html: Plain rice<span class="y">1985–2015</span>
 methods/rice-bowls/builds/plain-bowl/index.html: part-nav-next" href="/methods/rice-bowls/builds/patty-bowl/"
+
+# A history table on the lineage (lineage: both): a row is history, drawn
+# lighter and linked to its name cell's link, or a span without one; an
+# approximate year and a decade; the row naming a build with an era is
+# drawn once, from its era.
+methods/rice-bowls/index.html: >Donburi<span class="tl-detail"> · c. 1900</span>
+methods/rice-bowls/index.html: <span class="tl-name" title="1950s">Bibimbap in restaurants<
+methods/rice-bowls/index.html: tl-decade
+methods/rice-bowls/index.html: vt-name hist vt-decade
+methods/rice-bowls/index.html: <span class="y">c. 1900</span>
+methods/rice-bowls/index.html: !<span>Patty bowl</span>
+methods/rice-bowls/index.html: !>Patty bowl<span class="tl-detail">

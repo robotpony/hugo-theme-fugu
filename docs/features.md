@@ -120,7 +120,7 @@ Methods explain how a kind of food or a process works in general. Any page in th
 A blueprint is a dish type made of parts, such as a burger: patty, seasoning, cooking, assembly, sauces. It's a folder under the methods, with its parts and builds in subfolders. Its page is on the reading layout, like the methods list, and shows:
 
 - Its definition, from the folder's `_index.md`, with a link to the methods list.
-- A lineage timeline: the builds placed by era, with drafts faint. At desktop widths it's in the sidebar, a vertical spine drawn to scale; narrower, a track of decades in the body (a list on a phone). Where years crowd, the track zooms slightly, and a long empty stretch is cut to a break (see Rendering, below).
+- A lineage timeline: the builds placed by era, with drafts faint, and, when the blueprint asks for it (`lineage: table` or `both`), the rows of a history table in its body, drawn lighter so the builds read as the site's own. Dates can be a year, an approximate year ("c. 1900") or a decade ("1950s", a short bar) ([frontmatter.md](frontmatter.md#history-tables)). At desktop widths it's in the sidebar, a vertical spine drawn to scale; narrower, a track of decades in the body (a list on a phone). Where years crowd, the track zooms slightly, and a long empty stretch is cut to a break (see Rendering, below).
 - Its parts in order, as numbered links, as on the methods list, under a line of lead text. Each part's description and options are on its own page.
 - Its builds, the named combinations, as cards with their era, description, and stack diagram, oldest first, under an optional lead.
 - In the sidebar: search, counts of parts and builds, the lineage, "On this page", and the pages linked from the `## Further reading` at the end of its definition.
@@ -142,6 +142,12 @@ The lineage also follows hugo-warped's gaps rule (`fences/timeline.md`, "Gaps"),
 
 - Sidebar: a break is 32px (the cluster gap is 22px), a gap in the spine with a `⋮` (`.vt-break`). Everything else keeps its scale of 3px a year, so the spine gets shorter.
 - Body: a break is 8% of the track (the cluster gap is 6%), a gap in the track with a `…` (`.tl-break`). The track is still as wide as its column, so the rest of it grows into the room the cut frees.
+
+A decade counts as its first and last years for both rules, so a cluster can form around its ends, and its bar spans whatever zoom lies between them.
+
+### Rendering: lineage labels
+
+In the body, a label sits on the first row above the track, or one row up (`.alt`) when its dot is near the one before. With many entries the labels can still collide, so `blueprint/lineage.html` estimates each one's width (about 6.4px a character, on the narrowest track, 640px) and moves a label that would overlap the one before it on its row, have its leader cross a label below it, or cover a leader from above, to the lowest of four rows that's clear (`.r2`, `.r3`; failing that, the lowest where its text at least is clear). The track grows for each row it uses (`--tl-rows`). A label near the start begins at its dot (`.tl-start`), and one near the end finishes at it (`.tl-end`), when centring it would run off the side. A track whose labels clear draws as before.
 
 ## Drafts
 

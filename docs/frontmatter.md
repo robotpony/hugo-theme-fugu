@@ -153,11 +153,39 @@ Parts are the slots every dish of the type fills; a part's name is its title. Bu
 | Field | On | What it does |
 | --- | --- | --- |
 | `weight` | part | Its place in the blueprint's part order. |
-| `era` | build | A year (`1960`) that places the build on the blueprint's lineage timeline, or a list of years (`[1991, 2015, 2026]`) for a build with iterations. The blueprint's page lists dated builds oldest first (a list by its earliest year), then the rest. |
+| `era` | build | A date that places the build on the blueprint's lineage timeline, or a list of dates (`[1991, 2015, 2026]`) for a build with iterations. A date is a year (`1960`), an approximate year (`"c. 1900"`), or a decade (`"1950s"`); see [Lineage dates](#lineage-dates). The blueprint's page lists dated builds oldest first (a list by its earliest year), then the rest. |
+| `lineage` | blueprint (`_index.md`) | Where its lineage timeline gets its entries: `builds` (each build's `era`), `table` (its history table), or `both`. Overrides `params.fugu.methods.lineage` ([configuration.md](configuration.md#methods-and-blueprints)), which is `builds` by default. |
 
 When any build has an `era`, the blueprint's page shows a lineage timeline: each dated build as a dot on a track of decades, labelled with its title and era and linking to its page. Builds without an `era` are left off, and a draft build shows faint, so a build nobody has written yet can be a stub with its title, `era`, and `draft: true`. On a phone the timeline is a list.
 
 A build that changed over time can keep one page and list its years, `era: [1991, 2015, 2026]`. The timeline draws a dot for each year, the first labelled with the build's title and its year and the later ones "↳ 2015", every one linking to its page, or to its `## Iterations` heading when it has one, so the page can say what changed in each. A build with a short `linkTitle` (`linkTitle: BCS` on "The BCS") labels its later dots with it instead, "2015 BCS"; its link's tooltip and aria-label still read "The BCS, 2015". The build's card and its pill on the methods list show the range, "1991–2026".
+
+#### History tables
+
+A blueprint can draw its type's history on the lineage without a page per dish. With `lineage: table` (or `both`), Fugu reads the first Markdown table in the blueprint's body whose first header cell is `Year`, one entry per row: its Year cell is the date, and its second column the name, a link's text when the cell is a link. A row that links one of the blueprint's builds with a `[[wiki link]]`, in any cell, is that build: a dot like any build's, linking to its page. Any other row is history, drawn lighter (a smaller grey dot and a muted name) and linked to its name cell's link when it has one, a page or any URL; without one it isn't a link.
+
+```markdown
+| Year | Casserole | What it was |
+|---|---|---|
+| 1769 | [Baked macaroni and cheese](https://en.wikipedia.org/wiki/Macaroni_and_cheese) | Elizabeth Raffald's macaroni in cream |
+| 1791 | [Cottage pie](https://en.wikipedia.org/wiki/Shepherd%27s_pie) | Leftover roast under mash (see [[Cottage pie casserole]]) |
+| c. 1900 | [Funeral potatoes](https://en.wikipedia.org/wiki/Funeral_potatoes) | Potatoes in a cheesy cream sauce |
+| 1950s | [King Ranch chicken](https://en.wikipedia.org/wiki/King_Ranch_chicken) | Chicken and tortillas in canned soup |
+```
+
+With `both`, the builds' `era` and the table are drawn together. A build named in the table and with its own `era` is drawn once, at its `era`, and the build warns when the table's date isn't one of its dates. Other tables in the body are left alone.
+
+#### Lineage dates
+
+A date, in a build's `era` or a history table's Year cell, is one of:
+
+| Form | Example | Drawn as |
+|---|---|---|
+| Year | `1769` | a dot at that year |
+| Approximate year | `c. 1900` | a dot at 1900, labelled "c. 1900" |
+| Decade | `1950s` | a short bar from 1950 to 1959 (a capsule along the track), labelled "1950s" |
+
+In frontmatter, quote the two text forms (`era: "c. 1900"`). A date that's none of these is left off the timeline with a build warning, and `frontmatter.py check` reports it as an error.
 
 A part's choices aren't pages: they're a table under `## Options` in the part's page, shown there as written. Fugu also reads the first column as the part's options for templates to use (`blueprint/info.html`, with a trailing parenthetical dropped: "Thick (170 g and up)" is "Thick"), though no page lists them elsewhere now.
 

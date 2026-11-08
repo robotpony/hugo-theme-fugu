@@ -10,6 +10,9 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Added
 
+- A blueprint's lineage can come from a history table as well as its builds: `lineage: table` or `both` in its `_index.md`, or `params.fugu.methods.lineage` for the site (`builds` by default, so nothing changes until a site asks). Fugu reads the first table in the body whose first header is `Year`; a row that wiki-links one of the blueprint's builds is that build, and any other row is history, drawn lighter (`.tl-mark.hist`, `.vt-name.hist`: a smaller grey dot and a muted name, a `span` when it has no link) and linked to its name cell's link. Lineage dates, in a build's `era` or a Year cell, can be a year, an approximate year (`"c. 1900"`, placed at 1900) or a decade (`"1950s"`, a capsule from 1950 to 1959: `.tl-decade`, `.vt-decade`, with `--w` and `--len`). A date that's none of these warns and is skipped (`blueprint/date.html`, `blueprint/lineage-entries.html`, `docs/frontmatter.md`). New classes, styled in `fugu.css`; a site with `fugu.styles = false` styles them itself.
+- `frontmatter.py check` checks `era` (each date a year, `"c. 1900"` or `"1950s"`) and a blueprint `_index.md`'s `lineage` (`builds`, `table` or `both`).
+
 - Twelve stack layers for casseroles: the slabs `mash`, `rice`, `tortilla`, `curry` and `gravy` (`data-edge` 100), and the loose layers `stuffing`, `meat-chunks`, `mince`, `veg-mixed`, `veg-roasted`, `beans` and `salsa`, drawn as their pieces packed across the layer with no slab under them (`data-edge` 102). They use the kit's existing tokens, so `fugu.css` is unchanged.
 - The glossary page lists every entry A to Z (`partials/glossary/page.html`, from `layouts/reference/list.html` for the page `glossaryPage` names): the `_index.md` body as an intro (`.glossary-intro`), a search box shown by `assets/js/glossary.js` (`.gl-search`, `.gl-count`, `.gl-none`) that filters by term, other forms and definition, the letters A to Z (`.gl-letters`, a letter with no match `.is-empty`), then per letter an `h2.gl-letter` and a `dl.glossary` of `<dt id><dfn>` with other forms (`.also`), the whole definition, and "Used in" (`.used`, the first three pages and a `details.used-more`, "and 4 more"). Reference essays are listed too, with an `.essay-link` to the essay. It also writes `index.json` beside the page (term, also, def, url). New classes, styled in `fugu.css`; a site with `fugu.styles = false` styles them itself (`docs/configuration.md`, `docs/features.md`).
 
@@ -49,6 +52,9 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 - `tests/check.py` and `tests/install.py` fail a build on any Hugo warning except Blowfish's "not compatible with this Hugo version", instead of building with `--panicOnWarning`, so they run on a Hugo newer than Blowfish's declared range.
 
 ### Fixed
+
+- Lineage labels in the body no longer overlap when there are many: a label that would collide moves up to a third or fourth row (`.r2`, `.r3`, the track taller by `--tl-rows`), and a long label near either end of the track starts or ends at its dot (`.tl-start`, `.tl-end`) instead of running off the side. Not a Chef's burgers and chicken sandwiches lineages change; a track whose labels already clear is unchanged.
+- History links on the lineage (any `http` link) open in a new tab, like other external links.
 
 - A page with a popover near the right edge of a phone no longer scrolls sideways: `fugu.css` clips the page's horizontal overflow (`html, body { overflow-x: clip; }`), which a closed popover took up.
 - A popover on a word near the side of the window (a glossary term at the right edge of a phone) slides sideways to stay at least 8px inside it, with its pointer still under the word; before, it ran off screen (`assets/js/popover.js`).

@@ -9,7 +9,11 @@
   Builds with no `era` are left off.
   A build that's still a draft (a test kitchen stub with only its title
   and era) shows faint. A label sits higher (.alt) when its dot is close
-  to the one before. Under 640px the CSS turns the track into a vertical
+  to the one before, and starts at its dot rather than centring on it
+  (.tl-start) when half of it, at about 6.4px a character, is wider than
+  the room left of its dot on the narrowest track (640px), so a long
+  label near the start doesn't run off the left; near the end, one ends
+  at its dot (.tl-end) so it doesn't run off the right. Under 640px the CSS turns the track into a vertical
   list with each build's era.
 
   The years it covers are blueprint/lineage-span.html's, and where each
@@ -19,14 +23,65 @@
   stretch of 50 years or more between two dots is cut to a break 8% of
   the track long (.tl-break, an ellipsis with no ticks), the rest growing
   into the room it frees. Under 640px it's a list, so nothing zooms or
-  is cut. Nothing renders with no dated builds. Takes the blueprint's builds (blueprint/info.html).
+  is cut. A history entry (a table row that isn't a build) is .hist, drawn
+  lighter, and a span when it has no link; a decade is .tl-decade, a
+  capsule --w wide. Nothing renders with no entries. Takes the
+  blueprint's lineage entries (blueprint/lineage-entries.html).
 */}}
 {{ with partial "blueprint/lineage-span.html" . }}
   {{ $start := .start }}
   {{ $end := .end }}
   {{ $z := partial "blueprint/lineage-zoom.html" (dict "span" . "gap" .06 "break" .08 "fit" true "clear" .05) }}
   {{ $span := $z.length }}
-  <div class="timeline">
+  {{/* Each label's row: the first (0), or one up (1, .alt) when its dot
+    is within 18% of the one before and that one isn't up. Then, by an
+    estimate on the narrowest track (640px, about 6.4px a character), a
+    label whose row clashes takes the lowest row of four (0 to 3; .r2,
+    .r3 above .alt) that doesn't: where it overlaps no label on that row,
+    its leader crosses no label below it, and it covers no leader from
+    above; failing that, the lowest where at least its text is clear. The track grows for rows 2 and 3 (--tl-rows). A track with no
+    clash draws as before. */}}
+  {{ $marks := slice }}
+  {{ $prev := -100.0 }}
+  {{ $prevAlt := false }}
+  {{ $placed := slice }}
+  {{ $rows := 2 }}
+  {{ range $z.entries }}
+    {{ $pos := div (mul .at 100) $span }}
+    {{ $alt := and (lt (sub $pos $prev) 18) (not $prevAlt) }}
+    {{ $prev = $pos }}
+    {{ $prevAlt = $alt }}
+    {{ $decade := ne .end .year }}
+    {{ $start := and (not $decade) (gt (mul (len .name) 3.2) (add (mul $pos 6.4) 6)) }}
+    {{ $text := .name }}
+    {{ $lab := .label }}
+    {{ with and .again .page }}{{ $text = cond (ne .LinkTitle .Title) (printf "%s %s" $lab .LinkTitle) (printf "↳ %s" $lab) }}{{ end }}
+    {{ $w := mul (len $text) 6.4 }}
+    {{ $x := mul $pos 6.4 }}
+    {{ if $decade }}{{ $x = add $x (div (mul (sub .to .at) 320) $span) }}{{ end }}
+    {{ $atEnd := and (not $decade) (not $start) (gt (mul (len $text) 3.2) (add (mul (sub 100 $pos) 6.4) 6)) }}
+    {{ $left := cond $start (sub $x 6) (cond $atEnd (sub (add $x 6) $w) (sub $x (div $w 2))) }}
+    {{ $right := add $left $w }}
+    {{ $base := cond $alt 1 0 }}
+    {{ $row := -1 }}
+    {{ $fallback := -1 }}
+    {{ range $r := slice $base 0 1 2 3 }}
+      {{ $text := false }}
+      {{ $lead := false }}
+      {{ range $placed }}
+        {{ if and (eq .row $r) (lt $left (add .right 8)) (gt $right (sub .left 8)) }}{{ $text = true }}{{ end }}
+        {{ if and (lt .row $r) (gt $x (sub .left 4)) (lt $x (add .right 4)) }}{{ $lead = true }}{{ end }}
+        {{ if and (gt .row $r) (gt .x (sub $left 4)) (lt .x (add $right 4)) }}{{ $lead = true }}{{ end }}
+      {{ end }}
+      {{ if and (lt $row 0) (not $text) (not $lead) }}{{ $row = $r }}{{ end }}
+      {{ if and (lt $fallback 0) (not $text) }}{{ $fallback = $r }}{{ end }}
+    {{ end }}
+    {{ if lt $row 0 }}{{ $row = cond (ge $fallback 0) $fallback $base }}{{ end }}
+    {{ $placed = $placed | append (dict "row" $row "left" $left "right" $right "x" $x) }}
+    {{ if ge $row $rows }}{{ $rows = add $row 1 }}{{ end }}
+    {{ $marks = $marks | append (merge . (dict "pos" $pos "row" $row "decade" $decade "start" $start "atEnd" $atEnd)) }}
+  {{ end }}
+  <div class="timeline"{{ if gt $rows 2 }} style="--tl-rows:{{ $rows }}"{{ end }}>
     <div class="tl-track">
       {{- range $z.breaks }}
       <span class="tl-break" aria-hidden="true" style="left:{{ printf "%.1f" (div (mul .from 100) $span) }}%;width:{{ printf "%.1f" (div (mul (sub .to .from) 100) $span) }}%">…</span>
@@ -35,23 +90,20 @@
       <span class="tl-zoom" aria-hidden="true" style="left:{{ printf "%.1f" (div (mul .from 100) $span) }}%;width:{{ printf "%.1f" (div (mul (sub .to .from) 100) $span) }}%"></span>
       {{- end }}
       <ol class="tl-list">
-        {{ $prev := -100.0 }}
-        {{ $prevAlt := false }}
-        {{ range $z.entries }}
-          {{ $pos := div (mul .at 100) $span }}
-          {{ $alt := and (lt (sub $pos $prev) 18) (not $prevAlt) }}
-          {{ $prev = $pos }}
-          {{ $prevAlt = $alt }}
-          {{ $year := .year }}
+        {{ range $marks }}
+          {{ $pos := .pos }}
+          {{ $label := .label }}
           {{ $href := .href }}
           {{ $again := .again }}
-          <li class="tl-mark{{ if $alt }} alt{{ end }}{{ if .page.Draft }} todo{{ end }}" style="left:{{ printf "%.1f" $pos }}%">
-            {{- with .page -}}
-              {{- if $again -}}
-              <a class="tl-name" href="{{ $href }}" title="{{ .Title }}, {{ $year }}" aria-label="{{ .Title }}, {{ $year }}">{{ if ne .LinkTitle .Title }}{{ $year }} {{ .LinkTitle }}{{ else }}↳ {{ $year }}{{ end }}</a>
-              {{- else -}}
-              <a class="tl-name" href="{{ $href }}" title="{{ $year }}">{{ .Title }}<span class="tl-detail"> · {{ $year }}</span></a>
+          <li class="tl-mark{{ if gt .row 0 }} alt{{ end }}{{ if gt .row 1 }} r{{ .row }}{{ end }}{{ if .draft }} todo{{ end }}{{ if .history }} hist{{ end }}{{ if .decade }} tl-decade{{ else if .start }} tl-start{{ else if .atEnd }} tl-end{{ end }}" style="left:{{ printf "%.1f" $pos }}%{{ if .decade }};--w:{{ printf "%.1f" (div (mul (sub .to .at) 100) $span) }}%{{ end }}">
+            {{- if $again -}}
+              {{- with .page -}}
+              <a class="tl-name" href="{{ $href }}" title="{{ .Title }}, {{ $label }}" aria-label="{{ .Title }}, {{ $label }}">{{ if ne .LinkTitle .Title }}{{ $label }} {{ .LinkTitle }}{{ else }}↳ {{ $label }}{{ end }}</a>
               {{- end -}}
+            {{- else if $href -}}
+              <a class="tl-name" href="{{ $href }}"{{ if hasPrefix $href "http" }} target="_blank" rel="noopener"{{ end }} title="{{ $label }}">{{ .name }}<span class="tl-detail"> · {{ $label }}</span></a>
+            {{- else -}}
+              <span class="tl-name" title="{{ $label }}">{{ .name }}<span class="tl-detail"> · {{ $label }}</span></span>
             {{- end -}}
             <span class="tl-dot" aria-hidden="true"></span>
           </li>

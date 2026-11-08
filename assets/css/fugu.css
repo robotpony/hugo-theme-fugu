@@ -932,7 +932,7 @@ a.opt-pill:hover { border-color: var(--fugu-accent); color: var(--fugu-ink); }
 
 /* A blueprint's lineage: builds as dots on a track of decades, placed by
  * era, labels above. Draft builds are faint. Under 640px, a list. */
-.timeline { position: relative; margin: 8px 0 34px; padding: 50px 0 0; }
+.timeline { position: relative; margin: 8px 0 34px; padding: calc(50px + (var(--tl-rows, 2) - 2) * 36px) 0 0; }
 .tl-track { position: relative; height: 2px; margin: 0 6px; background: var(--fugu-border-strong); }
 .tl-list { margin: 0; padding: 0; list-style: none; }
 .tl-mark { position: absolute; bottom: -6px; display: flex; flex-direction: column; align-items: center; margin: 0; transform: translateX(-50%); }
@@ -941,12 +941,36 @@ a.opt-pill:hover { border-color: var(--fugu-accent); color: var(--fugu-ink); }
 a.tl-name:hover { color: var(--fugu-accent-strong); }
 .tl-mark.alt .tl-name { margin-bottom: 24px; }
 .tl-mark.alt .tl-name::after { content: ""; display: block; width: 1px; height: 16px; margin: 2px auto 0; background: var(--fugu-border-strong); }
+/* Rows 2 and 3, for a label that would still overlap the one before it (blueprint/lineage.html, --tl-rows). */
+.tl-mark.r2 .tl-name { margin-bottom: 42px; }
+.tl-mark.r2 .tl-name::after { height: 34px; }
+.tl-mark.r3 .tl-name { margin-bottom: 60px; }
+.tl-mark.r3 .tl-name::after { height: 52px; }
 .tl-mark.todo .tl-dot { background: var(--fugu-bg); box-shadow: 0 0 0 1px var(--fugu-ink-faint); }
 .tl-mark.todo .tl-name { font-weight: 500; color: var(--fugu-ink-faint); }
 .tl-detail { display: none; font-family: var(--fugu-font-mono); font-size: .68rem; font-weight: 400; color: var(--fugu-ink-faint); }
 .tl-ticks { position: relative; height: 28px; margin: 0 6px; }
 .tl-tick { position: absolute; top: 8px; transform: translateX(-50%); font-family: var(--fugu-font-mono); font-size: .66rem; color: var(--fugu-ink-faint); }
 .tl-tick::before { content: ""; position: absolute; left: 50%; top: -12px; width: 1px; height: 6px; background: var(--fugu-border-strong); }
+/* A history entry (a row of the blueprint's history table that isn't a
+ * build): a smaller grey dot and a muted name, so builds read as ours. A
+ * decade is a capsule along the track from its first year to its last,
+ * paler than a dot so the years inside it show over it. */
+.tl-mark.hist { bottom: -5px; }
+.tl-mark.hist .tl-dot { width: 10px; height: 10px; background: var(--fugu-ink-faint); box-shadow: none; }
+.tl-mark.hist .tl-name { font-weight: 500; color: var(--fugu-ink-muted); }
+/* Near the track's start a label starts at its dot, and near its end ends at it, so it can't run off the side. */
+.tl-mark.tl-start { align-items: flex-start; transform: translateX(-6px); }
+.tl-mark.tl-start.hist { transform: translateX(-5px); }
+.tl-mark.tl-start .tl-name::after { margin-left: 5px; }
+.tl-mark.tl-end { align-items: flex-end; transform: translateX(calc(-100% + 6px)); }
+.tl-mark.tl-end.hist { transform: translateX(calc(-100% + 5px)); }
+.tl-mark.tl-end .tl-name::after { margin-right: 5px; }
+.tl-mark.tl-decade { width: calc(var(--w) + 12px); transform: translateX(-6px); }
+.tl-mark.tl-decade .tl-dot { width: 100%; border-radius: 6px; }
+.tl-mark.hist.tl-decade { width: calc(var(--w) + 10px); transform: translateX(-5px); }
+.tl-mark.tl-decade .tl-dot { background: var(--fugu-accent-soft); }
+.tl-mark.hist.tl-decade .tl-dot { border-radius: 5px; background: var(--fugu-border-strong); }
 /* A zoomed run of crowded years (blueprint/lineage-zoom.html): a wider, tinted stretch of track, its years ticked '88. */
 .tl-zoom { position: absolute; top: -2px; height: 6px; border-radius: 3px; background: var(--fugu-accent-soft); box-shadow: 0 0 0 1px var(--fugu-border-strong); }
 .tl-tick.tl-yr { font-size: .6rem; }
@@ -959,9 +983,14 @@ a.tl-name:hover { color: var(--fugu-accent-strong); }
   .tl-list { display: flex; flex-direction: column; margin-left: 6px; border-left: 2px solid var(--fugu-border-strong); }
   .tl-mark { position: static; flex-direction: row; gap: 10px; margin-left: -7px; padding: 6px 0; transform: none; }
   .tl-mark .tl-dot { order: 0; flex: none; }
-  .tl-mark .tl-name, .tl-mark.alt .tl-name { margin: 0; white-space: normal; }
+  .tl-mark.tl-end { align-items: center; }
+  .tl-mark .tl-name, .tl-mark.alt .tl-name, .tl-mark.r2 .tl-name, .tl-mark.r3 .tl-name { margin: 0; white-space: normal; }
   .tl-mark.alt .tl-name::after { display: none; }
   .tl-detail { display: inline; }
+  .tl-mark.tl-decade, .tl-mark.hist.tl-decade, .tl-mark.tl-start, .tl-mark.tl-start.hist, .tl-mark.tl-end, .tl-mark.tl-end.hist { width: auto; transform: none; }
+  .tl-mark.tl-decade .tl-dot { width: 12px; height: 22px; }
+  .tl-mark.hist.tl-decade .tl-dot { width: 10px; }
+  .tl-mark.hist .tl-dot { margin-left: 1px; }
 }
 
 /* At desktop widths the lineage is in the sidebar (below), so the body's
@@ -991,6 +1020,20 @@ a.tl-name:hover { color: var(--fugu-accent-strong); }
 .vt-lead { position: absolute; left: -19px; top: calc(50% + var(--off, 0px)); width: 21px; overflow: visible; stroke: var(--fugu-border-strong); stroke-width: 1; }
 .vt-name.todo { font-weight: 500; color: var(--fugu-ink-faint); }
 .vt-name.todo .ln-dot { background: var(--fugu-bg); box-shadow: 0 0 0 1px var(--fugu-ink-faint); }
+/* History entries and decades in the sidebar, as on the track: a smaller
+ * grey dot and a muted name (not a link without one), and a decade's dot
+ * a capsule down the spine from its first year to its last (--len), its
+ * label by its first year. */
+.vt-name.hist { font-weight: 500; color: var(--fugu-ink-muted); }
+.vt-name.hist .ln-dot { left: -24px; width: 10px; height: 10px; background: var(--fugu-ink-faint); box-shadow: none; }
+span.vt-name:hover { background: none; color: var(--fugu-ink-muted); }
+span.vt-name:hover .y { color: var(--fugu-ink-faint); }
+span.vt-name:hover .ln-dot { transform: translateY(-50%); background: var(--fugu-ink-faint); box-shadow: none; }
+.vt-name.vt-decade .ln-dot { height: calc(var(--len) + 12px); border-radius: 6px; transform: translateY(-6px); background: var(--fugu-accent-soft); z-index: 0; }
+.vt-name.vt-decade:hover .ln-dot, .vt-name.vt-decade:focus-visible .ln-dot { transform: translateY(-6px) scaleX(1.35); }
+.vt-name.hist.vt-decade .ln-dot { height: calc(var(--len) + 10px); border-radius: 5px; transform: translateY(-5px); background: var(--fugu-border-strong); }
+.vt-name.hist.vt-decade:hover .ln-dot, .vt-name.hist.vt-decade:focus-visible .ln-dot { transform: translateY(-5px) scaleX(1.35); }
+span.vt-name.vt-decade:hover .ln-dot { transform: translateY(-5px); }
 @media (prefers-reduced-motion: reduce) { .vt-name .ln-dot { transition: none; } }
 
 /* Tables in the body scroll sideways (render-table.html). */

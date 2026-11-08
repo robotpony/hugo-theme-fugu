@@ -1,40 +1,33 @@
 {{/*
   The years a blueprint's lineage covers, shared by the body's track
   (blueprint/lineage.html) and the sidebar's (blueprint/lineage-side.html).
-  The span runs from the first dated build's decade to the end of the
-  last's, a decade more at an end whose build sits within three years of
-  it, and at least three decades wide. Takes the blueprint's builds
-  (blueprint/info.html); returns a dict, or false with no dated builds:
+  The span runs from the first entry's decade to the end of the last
+  year any entry reaches (a decade's ninth), a decade more at an end
+  whose entry sits within three years of it, and at least three decades
+  wide. Takes the blueprint's lineage entries (blueprint/
+  lineage-entries.html); returns a dict, or false with none:
 
-    entries  one dict per year in a build's `era` (blueprint/era.html),
-             oldest first: year, page, and href, its link (to the
-             page's #iterations heading when it has several years
-             and one), and again, true on every year of a build
-             after its first, which the timelines label short ("↳ 2015", or "2015 BCS" with a linkTitle)
-             rather than repeat its title
+    entries  the entries, oldest first (by first year, then as given),
+             each with again, true on every date of a build after its
+             first, which the timelines label short ("↳ 2015", or
+             "2015 BCS" with a linkTitle) rather than repeat its title
     start    the first year of the first decade
     end      the first year after the last decade
 */}}
-{{ $entries := slice }}
-{{ range $b := . }}
-  {{ with partial "blueprint/era.html" $b }}
-    {{ $href := $b.RelPermalink }}
-    {{ if and (gt (len .years) 1) ($b.Fragments.Identifiers.Contains "iterations") }}{{ $href = printf "%s#iterations" $href }}{{ end }}
-    {{ range .years }}{{ $entries = $entries | append (dict "year" . "page" $b "href" $href) }}{{ end }}
-  {{ end }}
-{{ end }}
+{{ $entries := . }}
 {{ $out := false }}
 {{ with $entries }}
   {{ $entries = sort . "year" }}
   {{ $seen := slice }}
   {{ $marked := slice }}
   {{ range $entries }}
-    {{ $marked = $marked | append (merge . (dict "again" (in $seen .page.RelPermalink))) }}
-    {{ $seen = $seen | append .page.RelPermalink }}
+    {{ $marked = $marked | append (merge . (dict "again" (in $seen .key))) }}
+    {{ $seen = $seen | append .key }}
   {{ end }}
   {{ $entries = $marked }}
   {{ $first := (index $entries 0).year }}
-  {{ $last := (index $entries (sub (len $entries) 1)).year }}
+  {{ $last := 0 }}
+  {{ range $entries }}{{ if gt .end $last }}{{ $last = .end }}{{ end }}{{ end }}
   {{ $start := mul (div $first 10) 10 }}
   {{ $end := add (mul (div $last 10) 10) 10 }}
   {{/* A year in the first or last few of its decade would sit at the very

@@ -1,0 +1,28 @@
+{{/*
+  A lineage date, from a build's `era` (or one item of a list) or a
+  history table's Year cell (blueprint/lineage-entries.html): a year
+  (1769, or the string "1769"), an approximate year ("c. 1900", placed
+  at 1900), or a decade ("1950s", spanning 1950 to 1959). The pattern is
+  ^(c\. )?\d{4}$ or ^\d{3}0s$. Takes the value; returns a dict, or false
+  when it matches neither (the caller warns):
+
+    year   where it's placed, its first year, as an int
+    end    its last year: year, or year + 9 for a decade
+    label  how it reads: "1769", "c. 1900", "1950s"
+    kind   "year", "circa" or "decade"
+*/}}
+{{ $out := false }}
+{{ if not (or (reflect.IsMap .) (reflect.IsSlice .)) }}
+  {{ $s := strings.TrimSpace (string .) }}
+  {{ with findRESubmatch `^(c\. )?(\d{4})$` $s 1 }}
+    {{ $m := index . 0 }}
+    {{ $y := int (strings.TrimLeft "0" (index $m 2)) }}
+    {{ $out = dict "year" $y "end" $y "label" $s "kind" (cond (eq (index $m 1) "") "year" "circa") }}
+  {{ else }}
+    {{ with findRESubmatch `^(\d{3}0)s$` $s 1 }}
+      {{ $y := int (strings.TrimLeft "0" (index (index . 0) 1)) }}
+      {{ $out = dict "year" $y "end" (add $y 9) "label" $s "kind" "decade" }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ return $out }}

@@ -15,7 +15,9 @@
     table or list in it matches a method page's body, with a link to the
     methods list (.read-essay)
   - "Lineage" (#lineage, in .blueprint-lineage): the builds with an
-    `era` on a timeline (blueprint/lineage.html), below 1024px only; at
+    `era`, or its history table's rows, or both, as its `lineage` says
+    (blueprint/lineage-entries.html), on a timeline
+    (blueprint/lineage.html), below 1024px only; at
     desktop widths it's in the sidebar
   - "Parts" (#parts), in weight order: the methods list's compact block,
     a numbered list of whole-row links (ol.parts.parts-compact, with
@@ -77,7 +79,8 @@
     </div>
   {{ end }}
 
-  {{ $lineage := partial "blueprint/lineage.html" $info.builds }}
+  {{ $entries := partialCached "blueprint/lineage-entries.html" $info .Path }}
+  {{ $lineage := partial "blueprint/lineage.html" $entries }}
   {{ $hasLineage := ne (trim $lineage " \n\t") "" }}
   {{ if $hasLineage }}
     <div class="blueprint-lineage lg:hidden">
@@ -129,7 +132,7 @@
         </div>
       {{ end }}
 
-      {{ with trim (partial "blueprint/lineage-side.html" $info.builds) " \n\t" }}
+      {{ with trim (partial "blueprint/lineage-side.html" $entries) " \n\t" }}
         <div class="rs-section hidden lg:block">
           <h2 class="rs-label">Lineage</h2>
           {{ . | safeHTML }}

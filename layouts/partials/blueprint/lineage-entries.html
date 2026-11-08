@@ -1,0 +1,162 @@
+{{/*
+  What a blueprint's lineage draws, for both timelines (blueprint/
+  lineage.html in the body, blueprint/lineage-side.html in the sidebar,
+  by way of blueprint/lineage-span.html). Call it with partialCached,
+  keyed by the blueprint's path, so its warnings print once.
+
+  Where the entries come from is the blueprint's `lineage` (its
+  _index.md frontmatter), else params.fugu.methods.lineage, else
+  "builds":
+
+    builds  each build's `era` (blueprint/era.html), a dot per date
+    table   the blueprint's history table: the first Markdown table in
+            its body whose first header cell is `Year` (any case), one
+            entry per row. Its Year cell is a date (blueprint/date.html)
+            and its second column the entry's name: a link's text, or
+            the cell's plain text. A row with a [[wiki link]] to one of
+            the blueprint's builds, in any cell, is that build, drawn
+            and linked as one; any other row is history, linked to its
+            name cell's link when it has one (a page by title, or any
+            URL), else not linked.
+    both    the two: a build with an `era` is drawn from it, once, and a
+            table row naming it is skipped, with a warning when its date
+            isn't one of the build's.
+
+  A date that doesn't parse warns and is skipped. Takes the blueprint's
+  info (blueprint/info.html); returns a slice of dicts, in no order:
+
+    year, end, label  the date (blueprint/date.html)
+    name     what the entry reads
+    href     its link, or ""
+    page     the build, or nil for history
+    draft    the build is a draft
+    history  a table row that isn't a build
+    key      the same for every date of one build, so the timelines
+             label its later ones short
+*/}}
+{{ $bp := .page }}
+{{ $mode := $bp.Params.lineage | default (site.Params.fugu.methods.lineage | default "builds") }}
+{{ if not (in (slice "builds" "table" "both") $mode) }}
+  {{ warnf "lineage: %q in %q (want builds, table or both); using builds" $mode $bp.File.Path }}
+  {{ $mode = "builds" }}
+{{ end }}
+{{ $norm := `[^a-z0-9]+` }}
+{{ $entries := slice }}
+{{ $dated := slice }}
+
+{{ range $b := .builds }}
+  {{ if $b.Params.era }}
+    {{ range (cond (reflect.IsSlice $b.Params.era) $b.Params.era (slice $b.Params.era)) }}
+      {{ if not (partial "blueprint/date.html" .) }}{{ warnf "lineage: skipped era %q in %q (want a year, \"c. 1900\" or \"1950s\")" (string .) $b.File.Path }}{{ end }}
+    {{ end }}
+  {{ end }}
+  {{ if ne $mode "table" }}
+    {{ with partial "blueprint/era.html" $b }}
+      {{ $dated = $dated | append $b.RelPermalink }}
+      {{ $href := $b.RelPermalink }}
+      {{ if and (gt (len .dates) 1) ($b.Fragments.Identifiers.Contains "iterations") }}{{ $href = printf "%s#iterations" $href }}{{ end }}
+      {{ range .dates }}
+        {{ $entries = $entries | append (merge . (dict "name" $b.Title "href" $href "page" $b "draft" $b.Draft "history" false "key" $b.RelPermalink)) }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ if ne $mode "builds" }}
+  {{/* The history table's rows: after a header whose first cell is Year,
+    up to the first line that isn't a table row. Code fences are
+    skipped. */}}
+  {{ $rows := slice }}
+  {{ $in := false }}
+  {{ $done := false }}
+  {{ $fence := false }}
+  {{ range split $bp.RawContent "\n" }}
+    {{ $t := strings.TrimSpace . }}
+    {{ if $done }}{{ continue }}{{ end }}
+    {{ if or (hasPrefix $t "```") (hasPrefix $t "~~~") }}
+      {{ $fence = not $fence }}
+      {{ if $in }}{{ $done = true }}{{ end }}
+      {{ continue }}
+    {{ end }}
+    {{ if $fence }}{{ continue }}{{ end }}
+    {{ if $in }}
+      {{ if hasPrefix $t "|" }}
+        {{ if not (findRE `^\|[\s:|-]+$` $t) }}{{ $rows = $rows | append $t }}{{ end }}
+      {{ else }}
+        {{ $done = true }}
+      {{ end }}
+    {{ else if findRE `(?i)^\|\s*year\s*\|` $t }}
+      {{ $in = true }}
+    {{ end }}
+  {{ end }}
+
+  {{ $byTitle := dict }}
+  {{ range .builds }}{{ $byTitle = merge $byTitle (dict (strings.TrimSpace (replaceRE $norm " " (lower .Title))) .) }}{{ end }}
+
+  {{ range $rows }}
+    {{/* Split on the pipes between cells, not one escaped (\|) or inside a
+      [[wiki link|alias]]. */}}
+    {{ $row := replaceRE `\[\[([^\]|]*?)(\\?)\|([^\]]*)\]\]` "[[$1$2\u0001$3]]" . }}
+    {{ $row = replace $row `\|` "\u0002" }}
+    {{ $row = strings.TrimSuffix "|" (strings.TrimPrefix "|" $row) }}
+    {{ $cells := slice }}
+    {{ range split $row "|" }}{{ $cells = $cells | append (replace (replace . "\u0001" "|") "\u0002" `\|` | strings.TrimSpace) }}{{ end }}
+    {{ if lt (len $cells) 2 }}{{ continue }}{{ end }}
+    {{ $date := partial "blueprint/date.html" (index $cells 0) }}
+    {{ if not $date }}
+      {{ warnf "lineage: skipped %q in %q (want a year, \"c. 1900\" or \"1950s\")" (index $cells 0) $bp.File.Path }}
+      {{ continue }}
+    {{ end }}
+
+    {{/* A wiki link to one of the blueprint's builds, in any cell. */}}
+    {{ $build := false }}
+    {{ range $cells }}
+      {{ range findRESubmatch `\[\[([^\]|\\]+)` . }}
+        {{ with index $byTitle (strings.TrimSpace (replaceRE $norm " " (lower (index . 1)))) }}
+          {{ if not $build }}{{ $build = . }}{{ end }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+
+    {{ with $build }}
+      {{ if in $dated .RelPermalink }}
+        {{ $era := partial "blueprint/era.html" . }}
+        {{ $labels := slice }}
+        {{ range $era.dates }}{{ $labels = $labels | append .label }}{{ end }}
+        {{ if not (in $labels $date.label) }}
+          {{ warnf "lineage: %q in %q's history table, but %q has era %s; drawn at its era" $date.label $bp.File.Path .File.Path $era.label }}
+        {{ end }}
+      {{ else }}
+        {{ $entries = $entries | append (merge $date (dict "name" .Title "href" .RelPermalink "page" . "draft" .Draft "history" false "key" .RelPermalink)) }}
+      {{ end }}
+    {{ else }}
+      {{ $cell := index $cells 1 }}
+      {{ $name := "" }}
+      {{ $href := "" }}
+      {{ with findRESubmatch `\[\[([^\]|\\]+)(?:\\?\|([^\]]+))?\]\]` $cell 1 }}
+        {{ $m := index . 0 }}
+        {{ $name = index $m 2 | default (index $m 1) }}
+        {{ $want := strings.TrimSpace (replaceRE $norm " " (lower (index $m 1))) }}
+        {{ range site.RegularPages }}
+          {{ if and (not $href) .RelPermalink (eq (strings.TrimSpace (replaceRE $norm " " (lower .Title))) $want) }}{{ $href = .RelPermalink }}{{ end }}
+        {{ end }}
+        {{ if not $href }}
+          {{ range where site.Pages "Kind" "section" }}
+            {{ if and (not $href) (eq (strings.TrimSpace (replaceRE $norm " " (lower .Title))) $want) }}{{ $href = .RelPermalink }}{{ end }}
+          {{ end }}
+        {{ end }}
+      {{ else }}
+        {{ with findRESubmatch `\[([^\]]+)\]\(\s*<?([^)>\s]+)>?[^)]*\)` $cell 1 }}
+          {{ $m := index . 0 }}
+          {{ $name = index $m 1 }}
+          {{ $href = index $m 2 }}
+        {{ else }}
+          {{ $name = $cell }}
+        {{ end }}
+      {{ end }}
+      {{ $name = $name | markdownify | plainify | htmlUnescape | strings.TrimSpace }}
+      {{ $entries = $entries | append (merge $date (dict "name" $name "href" $href "page" nil "draft" false "history" true "key" (printf "%d %s" $date.year $name))) }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ return $entries }}

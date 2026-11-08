@@ -29,7 +29,8 @@
   the track. Returns a dict, all places in the track's units:
 
     entries  the span's entries, each with at, its place from the
-             track's start
+             track's start, and to, its last year's (a decade's end;
+             at, for a year)
     length   the track's length
     decades  one dict per decade the track shows: year, at (decades
              in a zoomed span, ends included, or within clear of one,
@@ -45,7 +46,9 @@
 {{ $start := $span.start }}
 {{ $L := float (sub $span.end $start) }}
 {{ $ys := slice }}
-{{ range $span.entries }}{{ if not (in $ys .year) }}{{ $ys = $ys | append .year }}{{ end }}{{ end }}
+{{/* A decade counts as its first and last years. */}}
+{{ range $span.entries }}{{ $ys = $ys | append .year .end }}{{ end }}
+{{ $ys = sort (uniq $ys) }}
 
 {{/* Find the gaps: lo is the earlier year's decade tick after, hi the
   later one's tick before. */}}
@@ -153,7 +156,7 @@
 {{ range $gaps }}{{ $breaks = $breaks | append (dict "from" (index $at (string .lo)) "to" (index $at (string .hi)) "lo" .lo "hi" .hi) }}{{ end }}
 
 {{ $entries := slice }}
-{{ range $span.entries }}{{ $entries = $entries | append (merge . (dict "at" (index $at (string .year)))) }}{{ end }}
+{{ range $span.entries }}{{ $entries = $entries | append (merge . (dict "at" (index $at (string .year)) "to" (index $at (string .end)))) }}{{ end }}
 {{ $decades := slice }}
 {{ range $d := seq $start 10 $span.end }}
   {{ $da := index $at (string $d) }}

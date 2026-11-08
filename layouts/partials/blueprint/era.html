@@ -1,22 +1,32 @@
 {{/*
-  A build's `era`: a year (`era: 1960`), or a list of years for a build
+  A build's `era`: a date (`era: 1960`), or a list of dates for a build
   with iterations (`era: [1991, 2015, 2026]`), one dot each on the
-  lineage timeline. Shared by the build order (blueprint/info.html), the
-  timelines (blueprint/lineage-span.html), the build card and the methods
+  lineage timeline. A date is a year, an approximate year ("c. 1900") or
+  a decade ("1950s"), blueprint/date.html; one that's neither is left
+  out here (blueprint/lineage-entries.html warns about it). Shared by
+  the build order (blueprint/info.html), the timelines
+  (blueprint/lineage-entries.html), the build card and the methods
   list's pills. Takes the build page; returns a dict, or false with no
-  `era`:
+  `era` (or none that parse):
 
-    years   the years as ints, oldest first
+    dates   the dates (blueprint/date.html), oldest first
+    years   their first years as ints, oldest first
     first   the oldest, which the build sorts by
-    label   the year, or the range for a list ("1991–2026")
+    label   the date, or the range for a list ("1991–2026")
 */}}
 {{ $out := false }}
 {{ with .Params.era }}
-  {{ $years := slice }}
-  {{ range (cond (reflect.IsSlice .) . (slice .)) }}{{ $years = $years | append (int .) }}{{ end }}
-  {{ $years = sort $years }}
-  {{ $first := index $years 0 }}
-  {{ $last := index $years (sub (len $years) 1) }}
-  {{ $out = dict "years" $years "first" $first "label" (cond (eq $first $last) (string $first) (printf "%d–%d" $first $last)) }}
+  {{ $dates := slice }}
+  {{ range (cond (reflect.IsSlice .) . (slice .)) }}
+    {{ with partial "blueprint/date.html" . }}{{ $dates = $dates | append . }}{{ end }}
+  {{ end }}
+  {{ with $dates }}
+    {{ $dates = sort . "year" }}
+    {{ $years := slice }}
+    {{ range $dates }}{{ $years = $years | append .year }}{{ end }}
+    {{ $first := index $dates 0 }}
+    {{ $last := index $dates (sub (len $dates) 1) }}
+    {{ $out = dict "dates" $dates "years" $years "first" $first.year "label" (cond (eq $first.label $last.label) $first.label (printf "%s–%s" $first.label $last.label)) }}
+  {{ end }}
 {{ end }}
 {{ return $out }}
