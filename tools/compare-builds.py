@@ -16,7 +16,9 @@ Usage:
     compare-builds.py OLD NEW          two folders you've already built
 
 The site is $FUGU_SITE_ROOT, or the nearest Hugo site at or above the
-working directory. Fugu at REV comes from `git archive` of this repo, so
+working directory, and this Fugu must be the copy in its themes/ folder
+(a site using Fugu as a Hugo module: pass OLD and NEW). Hugo is $HUGO, or
+`hugo` on the PATH. Fugu at REV comes from `git archive` of this repo, so
 uncommitted changes count as "new". Every other theme (Blowfish) is used
 as it is on disk, for both builds. Python standard library only.
 """
@@ -33,6 +35,8 @@ import tempfile
 from pathlib import Path
 
 THEME_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from frontmatter import find_site_root, hugo_bin  # noqa: E402
 TEXT_SUFFIXES = {
     ".html", ".xml", ".json", ".js", ".css", ".txt", ".svg", ".md",
     ".webmanifest", ".toml", ".yaml", ".yml",
@@ -57,27 +61,15 @@ def file_key(rel):
     return FINGERPRINT_NAME_RE.sub(r".#\1", rel)
 
 
-def find_site_root():
-    """$FUGU_SITE_ROOT if set, otherwise the nearest directory at or above
-    the working directory with a content/ folder and a Hugo config. Same
-    rule as frontmatter.py and drafts.py."""
-    if os.environ.get("FUGU_SITE_ROOT"):
-        return Path(os.environ["FUGU_SITE_ROOT"]).resolve()
-    here = Path.cwd().resolve()
-    for d in (here, *here.parents):
-        has_config = any((d / n).exists() for n in
-                         ("hugo.toml", "hugo.yaml", "hugo.json", "config.toml", "config"))
-        if (d / "content").is_dir() and has_config:
-            return d
-    sys.exit("compare-builds: no Hugo site found here; run it inside one or set FUGU_SITE_ROOT")
-
-
 def hugo_build(site, out, themes_dir=None, extra=()):
-    cmd = ["hugo", "--quiet", "--source", str(site), "--destination", str(out)]
+    cmd = [hugo_bin(), "--quiet", "--source", str(site), "--destination", str(out)]
     if themes_dir:
         cmd += ["--themesDir", str(themes_dir)]
     cmd += list(extra)
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True)
+    except OSError as e:
+        sys.exit(f"compare-builds: can't run {cmd[0]}: {e.strerror} (set HUGO to its path)")
     if result.returncode != 0:
         sys.exit(f"compare-builds: {' '.join(cmd)} failed:\n{result.stderr}")
 
@@ -198,6 +190,13 @@ def main():
         sys.exit(0 if compare(args.old, args.new, args.diff_lines) else 1)
 
     site = find_site_root()
+    # The "after" build uses the site's own themes folder, so it only tests
+    # this working tree when this is the copy the site uses.
+    themes = site / "themes"
+    if THEME_DIR.parent.resolve() != themes.resolve():
+        sys.exit(f"compare-builds: this Fugu ({THEME_DIR}) isn't the one {site} builds with "
+                 f"({themes}/); run the copy in the site's themes folder, or build both "
+                 "sides yourself and pass OLD and NEW")
     work = Path(tempfile.mkdtemp(prefix="fugu-compare-"))
     try:
         old, new = work / "old", work / "new"

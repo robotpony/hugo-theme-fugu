@@ -4,12 +4,15 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ## Unreleased
 
+After updating Fugu, restart a running `hugo server`: one started before the i18n change showed blank labels until restarted.
+
 ### Added
 
 - Fugu's English is in `i18n/en.yaml`, under `fugu`: every label, heading and count its templates write, with Hugo's plural forms for counts, and the words its scripts show (`fugu.js`), passed to them as a JSON block (`#fugu-strings`, `partials/js-strings.html`) with each script's English as the fallback. The block is built once per language. A site changes or translates any of them in its own `i18n/` (`docs/configuration.md`, "Words and translation").
 
 ### Fixed
 
+- Tools: `frontmatter.py`, `drafts.py` and `compare-builds.py` stop with a message when there's no site (or `FUGU_SITE_ROOT` isn't one) instead of reporting no issues; paths given on the command line are relative to the working directory; `check` reports files outside the sections as skipped rather than clean, and falls back to Fugu's default sections when the theme's config isn't loaded. `drafts.py` lists draft section pages, such as a blueprint. `compare-builds.py` uses `$HUGO` and refuses to run from a Fugu copy the site doesn't build with. `add-image.sh` writes a relative destination into the site wherever it runs from, and checks for ImageMagick and exiftool before starting.
 - Stack diagrams draw each layer by reference: every layer is published once as `fugu/layers/<key>.<hash>.svg` (a `<symbol id="l">`) and drawn with `<use href>`, instead of inlining the whole drawing at every use. Not a Chef's burgers page drops from 1,268 KB to 76 KB, casseroles from 888 KB to 64 KB, chicken sandwiches from 627 KB to 50 KB, and the browser caches each layer across pages. The drawings, labels and leaders are unchanged, and the theme tokens still follow dark mode. A site that styled inside a layer's drawing with CSS selectors reaching into it can't any more (a `<use>` tree is closed to page selectors); inherited properties and custom properties still apply.
 - Principle popovers show a wiki link's text, not its brackets. A leaf-bundle essay (`foo/index.md`) keeps its folder's format on its card and in its tags, and its siblings in the sidebar (`partials/section/folder.html`). "Recipes in this essay" includes drinks. An undated page shows no date in its header and has no pubDate in the feed, instead of January 1, 0001.
 - Accessibility: a principle or method chip is described by its popover's sentence (`aria-describedby`), and a popover holding a link is no longer `role="tooltip"`; the principle icon is `aria-hidden`. List pagination is a `nav` labelled "Pages", with named previous and next links and `aria-current` on the current page.

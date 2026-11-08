@@ -3,10 +3,14 @@
 # metadata (GPS included), cap the long edge, and write it to its destination.
 #
 # Usage: tools/add-image.sh <source> <destination>
-#   destination: static/images/<section>/<name>.jpg (or .png)
+#   destination: a path ending in .jpg or .png, relative to the site
+#   ($FUGU_SITE_ROOT, or the nearest Hugo site at or above the working
+#   directory), e.g. assets/images/recipes/<name>.jpg, or beside a page
+#   bundle's index.md. A photo under assets/ or in a bundle gets a
+#   thumbnail and a resized copy; one under static/ is used as it is.
 #
-# HEIC/HEIF/WebP/JPEG sources become JPEG; PNG stays PNG (screenshots, scans).
-# Refuses to overwrite an existing file.
+# The destination's extension picks the format: .jpg for photos, .png for
+# screenshots and scans. Refuses to overwrite an existing file.
 
 set -euo pipefail
 
@@ -18,6 +22,13 @@ if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
   exit 0
 fi
 
+for tool in magick exiftool; do
+  command -v "$tool" >/dev/null || {
+    echo "error: $tool not found; add-image.sh needs ImageMagick 7 (magick) and exiftool" >&2
+    exit 1
+  }
+done
+
 MAX_EDGE=2000
 QUALITY=85
 
@@ -25,6 +36,28 @@ src="${1:?usage: add-image.sh <source> <destination>}"
 dest="${2:?usage: add-image.sh <source> <destination>}"
 
 [[ -f "$src" ]] || { echo "error: source not found: $src" >&2; exit 1; }
+
+# A relative destination is in the site, wherever this runs from (the same
+# rule as frontmatter.py's).
+if [[ "$dest" != /* ]]; then
+  if [[ -n "${FUGU_SITE_ROOT:-}" ]]; then
+    root="$FUGU_SITE_ROOT"
+  else
+    root=""
+    d="$PWD"
+    while [[ -n "$d" ]]; do
+      if [[ -d "$d/content" ]]; then
+        for n in hugo.toml hugo.yaml hugo.json config.toml config; do
+          [[ -e "$d/$n" ]] && { root="$d"; break 2; }
+        done
+      fi
+      [[ "$d" == / ]] && break
+      d="$(dirname "$d")"
+    done
+  fi
+  [[ -n "$root" ]] || { echo "error: no Hugo site found at or above $PWD; run it inside one, set FUGU_SITE_ROOT, or give an absolute destination" >&2; exit 1; }
+  dest="$root/$dest"
+fi
 [[ -e "$dest" ]] && { echo "error: destination exists: $dest" >&2; exit 1; }
 
 case "${dest##*.}" in

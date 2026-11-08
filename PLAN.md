@@ -41,7 +41,6 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
 
 - [ ] Optional Claude Code commands in `claude/commands/` (not `.claude/`): `/recipe-new`, `/lint`, `/image-add` from Not a Chef, made site-neutral, with copy-in instructions.
 - [ ] `unittest` tests for the Python tools against the fixture sites, run in CI (§9).
-- [ ] `add-image.sh`: fail early with a clear message when `magick` or `exiftool` is missing (today only `--help` mentions them).
 
 ## 9. Example site and CI
 
@@ -57,6 +56,7 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
   - Deferred to §7: comments that cite `custom.css`, DESIGN.md, FORMAT.md, or Not a Chef content (the item there covers them).
   - Deferred: wiki-link lookup cost (`render-link.html` and the reading sidebar scan every page per link); measure build time before caching a title index.
   - Won't fix: the "Undated" and "Further reading" heading matches stay English; they read headings the author writes, so a translated site writes them in English or renames them in its content.
+  - `tools/` done (2026-11-07). Fixed: no site found, or a `FUGU_SITE_ROOT` that isn't one, is an error rather than "no issues" (one `find_site_root`, shared by all three Python tools); paths on the command line are relative to the working directory, and a missing one is an error, not a traceback; files outside the sections are reported as skipped, not counted clean; with Fugu's config not merged (an uninitialised theme folder) the default sections still apply, with a warning; `hugo config` runs only for `check` and `drafts.py`, not `get`/`set`/`unset`; `drafts.py` lists draft section pages (blueprints); `compare-builds.py` honours `$HUGO`, explains a missing Hugo, and refuses to run from a Fugu that isn't the site's `themes/` copy (it silently tested the wrong tree); `add-image.sh` writes relative destinations into the site, checks for `magick` and `exiftool` first (the §8 item), and its help no longer prescribes Not a Chef's `static/images/` or claims "PNG stays PNG". Stale `migrate.py` comment removed.
   - Still to do: Bugs, dead code, Not a Chef leftovers, stale comments. One area per pass with `/code-review high`; record each finding as fixed, won't fix (why), or deferred; check template and JS fixes with `tests/check.py --compare` and Chrome at both widths, light and dark. Angles from Not a Chef (2026-10-17):
   - Templates and render hooks: empty sections, a page with no cuisine or no date, drafts in card lists.
   - JS: JS off, keyboard only, screen reader, listeners attached twice.

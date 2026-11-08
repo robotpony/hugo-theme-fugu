@@ -35,7 +35,7 @@ Then fetch Fugu, which brings the Blowfish its `go.mod` requires:
 hugo mod get github.com/robotpony/hugo-theme-fugu
 ```
 
-Fetch Fugu by name like this, before the first build. A bare `hugo mod get` or `hugo mod get -u` fetches each import at its newest release, which for Blowfish may be newer than Fugu is tested against. Run the same command to update Fugu later; Blowfish moves only as far as that Fugu needs.
+Fetch Fugu by name like this, before the first build. A bare `hugo mod get` or `hugo mod get -u` fetches each import at its newest release, which for Blowfish may be newer than Fugu is tested against. Run the same command to update Fugu later; Blowfish moves only as far as that Fugu needs. Restart a running `hugo server` after updating Fugu (by either route): it doesn't reload a theme's new `i18n` files or partials reliably, and has shown blank labels until restarted.
 
 ### As git submodules
 

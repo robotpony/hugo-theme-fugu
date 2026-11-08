@@ -20,31 +20,74 @@ Subcommands:
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
 from pathlib import Path
 
 
+def hugo_bin():
+    """The Hugo to run: $HUGO if set (as tests/check.py and screenshots.py
+    read it), else `hugo` on the PATH."""
+    return os.environ.get("HUGO") or "hugo"
+
+
+def is_site(d):
+    """A folder with content/ and a Hugo config."""
+    return (d / "content").is_dir() and any(
+        (d / n).exists() for n in ("hugo.toml", "hugo.yaml", "hugo.json", "config.toml", "config"))
+
 
 def find_site_root():
     """The Hugo site this tool works on: $FUGU_SITE_ROOT if set, otherwise
     the nearest directory at or above the working directory that has a
     content/ folder and a Hugo config. The tools ship inside the theme
-    (themes/fugu/tools/), so the script's own location isn't the site."""
-    import os
+    (themes/fugu/tools/), so the script's own location isn't the site.
+    Exits with a message when there's no site, rather than checking
+    nothing and reporting success. Shared by drafts.py and
+    compare-builds.py."""
+    tool = Path(sys.argv[0]).name
     if os.environ.get("FUGU_SITE_ROOT"):
-        return Path(os.environ["FUGU_SITE_ROOT"]).resolve()
+        root = Path(os.environ["FUGU_SITE_ROOT"]).expanduser().resolve()
+        if not is_site(root):
+            sys.exit(f"{tool}: FUGU_SITE_ROOT={root} isn't a Hugo site (no content/ folder and Hugo config)")
+        return root
     here = Path.cwd().resolve()
     for d in (here, *here.parents):
-        has_config = any((d / n).exists() for n in
-                         ("hugo.toml", "hugo.yaml", "hugo.json", "config.toml", "config"))
-        if (d / "content").is_dir() and has_config:
+        if is_site(d):
             return d
-    return here
+    sys.exit(f"{tool}: no Hugo site found at or above {here}; run it inside one or set FUGU_SITE_ROOT")
 
 
-REPO_ROOT = find_site_root()
+# The site and its sections are found on first use, not at import: get,
+# set and unset work on the file they're given and need neither (finding
+# the sections runs `hugo config`, which can be slow on a fresh clone).
+_root = None
+_sections = None
+
+
+def site_root():
+    global _root
+    if _root is None:
+        _root = find_site_root()
+    return _root
+
+
+def sections():
+    global _sections
+    if _sections is None:
+        _sections = site_sections()
+    return _sections
+
+
+def __getattr__(name):
+    # fm.REPO_ROOT and fm.SECTIONS for drafts.py, found on first use.
+    if name == "REPO_ROOT":
+        return site_root()
+    if name == "SECTIONS":
+        return sections()
+    raise AttributeError(name)
 
 # Content kind -> section folder under content/, as Fugu's own hugo.toml
 # sets them. site_sections() lays the site's [params.fugu] over these.
@@ -74,21 +117,28 @@ def site_sections():
     sections = dict(DEFAULT_SECTIONS)
     try:
         out = subprocess.run(
-            ["hugo", "config", "--format", "json", "--source", str(REPO_ROOT)],
+            [hugo_bin(), "config", "--format", "json", "--source", str(site_root())],
             capture_output=True, text=True, timeout=60)
         params = json.loads(out.stdout).get("params", {}).get("fugu", {})
     except (OSError, ValueError, subprocess.SubprocessError):
         params = {}
     # `hugo config` leaves empty values out of its JSON. Fugu's hugo.toml
-    # sets every section, so once the config loads, a missing one is a
-    # section the site turned off with "".
-    if params:
+    # sets every section, and a site can't turn recipes off, so when the
+    # recipe section is there Fugu's config was merged and a missing
+    # section is one the site turned off with "". When it isn't (the theme
+    # folder is empty, as in a fresh clone without its submodules), the
+    # site's own settings go over Fugu's defaults instead.
+    if "recipesection" in params:
         for kind, key in SECTION_PARAMS.items():
             sections[kind] = (params.get(key) or "").strip("/")
+    else:
+        if params or (site_root() / "themes").is_dir():
+            print(f"{Path(sys.argv[0]).name}: Fugu's config didn't load (is the theme checked out?); "
+                  "using its default sections", file=sys.stderr)
+        for kind, key in SECTION_PARAMS.items():
+            if params.get(key):
+                sections[kind] = params[key].strip("/")
     return {kind: folder for kind, folder in sections.items() if folder}
-
-
-SECTIONS = site_sections()
 
 # The --help epilog for this tool and drafts.py.
 SITE_HELP = ("Works on $FUGU_SITE_ROOT if set, else the nearest Hugo site at or\n"
@@ -99,8 +149,8 @@ BLOCK_ITEM_RE = re.compile(r"^[ \t]{2,}-[ \t]*(.*)$")
 COMMENT_LINE_RE = re.compile(r"^[ \t]*#")
 CONTINUATION_RE = re.compile(r"^[ \t]+\S")
 
-# Output field order — same spirit as migrate.py's FIELD_ORDER, extended
-# with essay/reference-only fields. Unknown fields are appended after.
+# Output field order for fields `set` adds: recipe fields first, then
+# essay and reference ones. Unknown fields are appended after.
 FIELD_ORDER = [
     "title", "tags", "source", "author", "date", "servings", "portions",
     "prep_time", "cook_time", "total_time", "cuisine",
@@ -361,8 +411,12 @@ def infer_value(raw, type_hint=None):
 # ---------------------------------------------------------------------------
 
 def classify(path):
-    parts = path.relative_to(REPO_ROOT / "content").parts
-    for kind, folder in SECTIONS.items():
+    """The content kind of an absolute path, or None outside the sections."""
+    try:
+        parts = path.relative_to(site_root() / "content").parts
+    except ValueError:
+        return None
+    for kind, folder in sections().items():
         folder_parts = tuple(folder.split("/"))
         if parts[:len(folder_parts)] == folder_parts:
             return kind
@@ -370,18 +424,23 @@ def classify(path):
 
 
 def collect_files(paths):
+    """Absolute paths of the Markdown files to look at: those under the
+    given paths (relative to the working directory, as a shell gives
+    them), or every section's. A path that doesn't exist is an error."""
     if paths:
         files = []
         for p in paths:
-            p = Path(p)
+            p = Path(p).expanduser().resolve()
             if p.is_dir():
                 files.extend(sorted(p.rglob("*.md")))
-            else:
+            elif p.is_file():
                 files.append(p)
+            else:
+                raise FrontmatterError(f"no such file or folder: {p}")
         return files
     files = []
-    for section in SECTIONS.values():
-        files.extend(sorted((REPO_ROOT / "content" / section).rglob("*.md")))
+    for section in sections().values():
+        files.extend(sorted((site_root() / "content" / section).rglob("*.md")))
     return files
 
 
@@ -461,18 +520,24 @@ def cmd_check(args):
     titles = {}
     total_errors = 0
     total_warnings = 0
+    checked = 0
+    skipped = []
 
     for path in files:
-        rel = str(path.relative_to(REPO_ROOT)) if path.is_absolute() else str(path)
-        kind = classify(path if path.is_absolute() else (REPO_ROOT / path))
-        if kind is None or path.name.startswith("."):
+        if path.name.startswith("."):
             continue
-        errors, warnings = check_file(path if path.is_absolute() else (REPO_ROOT / path))
+        kind = classify(path)
+        if kind is None:
+            skipped.append(path)
+            continue
+        rel = str(path.relative_to(site_root()))
+        errors, warnings = check_file(path)
         if path.name == "_index.md":
             if errors:
                 results[rel] = {"errors": errors, "warnings": []}
                 total_errors += len(errors)
             continue
+        checked += 1
         if errors or warnings:
             results[rel] = {"errors": errors, "warnings": warnings}
         total_errors += len(errors)
@@ -480,12 +545,18 @@ def cmd_check(args):
 
         if kind in ("recipe", "drink"):
             try:
-                fm_lines, _ = read_file(path if path.is_absolute() else (REPO_ROOT / path))
+                fm_lines, _ = read_file(path)
                 title = parse_fields(fm_lines).get("title")
                 if title:
                     titles.setdefault(title, []).append(rel)
             except FrontmatterError:
                 pass
+
+    # Files named on the command line that no section covers aren't checked;
+    # say so, rather than counting them clean.
+    if args.paths and skipped:
+        print(f"skipped {len(skipped)} file(s) outside the site's sections "
+              f"({', '.join(f'content/{f}' for f in sections().values())})", file=sys.stderr)
 
     dupes = {t: paths for t, paths in titles.items() if len(paths) > 1}
     for title, paths in dupes.items():
@@ -495,16 +566,14 @@ def cmd_check(args):
             total_errors += 1
 
     if args.json:
-        checked_files = [f for f in files if f.name != "_index.md" and not f.name.startswith(".")]
         print(json.dumps({
-            "files_checked": len(checked_files),
+            "files_checked": checked,
             "files_with_issues": len(results),
             "total_errors": total_errors,
             "total_warnings": total_warnings,
             "issues": results,
         }, indent=2))
     else:
-        checked = len([f for f in files if f.name != "_index.md" and not f.name.startswith(".")])
         if not results:
             print(f"Checked {checked} files. No issues found.")
         else:

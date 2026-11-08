@@ -2,7 +2,8 @@
 """
 drafts.py — List content marked draft: true across a Fugu site's recipes,
 drinks, essays, methods, reference pages, and log (the sections
-frontmatter.py checks; see its --help).
+frontmatter.py checks; see its --help), section pages (_index.md, such as
+a blueprint's) included.
 
 Reuses frontmatter.py's parser (same constrained YAML subset, no
 third-party dependencies).
@@ -20,10 +21,9 @@ import frontmatter as fm  # noqa: E402
 def find_drafts(paths):
     files = fm.collect_files(paths)
     drafts = []
-    for path in files:
-        abspath = path if path.is_absolute() else (fm.REPO_ROOT / path)
+    for abspath in files:
         kind = fm.classify(abspath)
-        if kind is None or abspath.name == "_index.md" or abspath.name.startswith("."):
+        if kind is None or abspath.name.startswith("."):
             continue
         try:
             fm_lines, _ = fm.read_file(abspath)
@@ -49,7 +49,11 @@ def main():
                         help="print the drafts as a JSON list of {path, kind, title}")
     args = parser.parse_args()
 
-    drafts = find_drafts(args.paths)
+    try:
+        drafts = find_drafts(args.paths)
+    except fm.FrontmatterError as e:
+        print(f"error: {e}", file=sys.stderr)
+        return 2
 
     if args.json:
         print(json.dumps(drafts, indent=2))
