@@ -25,7 +25,7 @@
   {{ if ge (len $intro) 20 }}
     {{ $d = $intro }}
   {{ else if eq (partialCached "section/role.html" .Section .Section) "recipe" }}
-    {{ $d = printf "%s, a recipe from %s." .Title site.Title }}
+    {{ $d = i18n "fugu.description.recipe" (dict "Title" .Title "Site" site.Title) }}
   {{ else if eq (partialCached "section/role.html" .Section .Section) "log" }}
     {{/* A month of the log is a run of ### entries; list them. */}}
     {{ $entries := slice }}
@@ -37,7 +37,7 @@
 {{ end }}
 {{ if and (not $d) (eq .Kind "term") }}
   {{ if eq .Data.Plural "cuisine" }}
-    {{ $d = printf "%s recipes from %s." .Title site.Title }}
+    {{ $d = i18n "fugu.description.cuisine" (dict "Cuisine" .Title "Site" site.Title) }}
   {{ else }}
     {{ $d = i18n "fugu.description.term" (dict "Term" .Title "Site" site.Title) }}
   {{ end }}

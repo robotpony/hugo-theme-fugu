@@ -9,7 +9,7 @@
 */}}
 <button id="search-button" type="button" class="search-box">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
-  {{- if eq . "site" }}{{ partialCached "search-box/site-label.html" . "site" }}
+  {{- if eq . "site" }}{{ partialCached "search-box/site-label.html" . "site" site.Language.Lang }}
   {{- else if eq (printf "%T" .) "string" }}{{ . }}
   {{- else }}Search {{ . }} recipes, tags{{ if site.Taxonomies.cuisine }}, cuisines{{ end }}{{ end }}&hellip;
   <kbd>/</kbd>

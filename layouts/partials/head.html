@@ -84,7 +84,7 @@
       {{ if and (not $feedPage) (.OutputFormats.Get "RSS") }}{{ $feedPage = . }}{{ end }}
     {{ end }}
     {{ with $feedPage }}
-      {{ $title := cond .IsHome site.Title (printf "%s on %s" .Title site.Title) }}
+      {{ $title := cond .IsHome site.Title (i18n "fugu.feed_title" (dict "Title" .Title "Site" site.Title)) }}
       {{ with .OutputFormats.Get "RSS" }}
         {{ printf `
       <link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .RelPermalink ($title | emojify) |

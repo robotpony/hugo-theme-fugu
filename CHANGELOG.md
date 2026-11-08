@@ -6,10 +6,11 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Added
 
-- Fugu's English is in `i18n/en.yaml`, under `fugu`: every label, heading and count its templates write, with Hugo's plural forms for counts, and the words its scripts show (`fugu.js`), passed to them as a JSON block (`#fugu-strings`, `partials/js-strings.html`) with each script's English as the fallback. A site changes or translates any of them in its own `i18n/` (`docs/configuration.md`, "Words and translation").
+- Fugu's English is in `i18n/en.yaml`, under `fugu`: every label, heading and count its templates write, with Hugo's plural forms for counts, and the words its scripts show (`fugu.js`), passed to them as a JSON block (`#fugu-strings`, `partials/js-strings.html`) with each script's English as the fallback. The block is built once per language. A site changes or translates any of them in its own `i18n/` (`docs/configuration.md`, "Words and translation").
 
 ### Fixed
 
+- Recipe and cuisine page descriptions and the RSS link title are in `i18n` too (`fugu.description.recipe`, `fugu.description.cuisine`, `fugu.feed_title`); the site search placeholder is cached per language; part navigation escapes its translated labels; a recipe list called with a noun that has no `fugu.count` key prints the noun as given.
 - `fugu.css`: the soft accent fill (principle and method chips, hovers, the current page) is a tint of `primary-500`, so it shows on schemes whose `primary-100` is white (autumn). Meta rail labels no longer wrap ("On cards" on a principle tag page).
 - A count of one reads "1 recipe" and "1 entry" on tag and cuisine pages, not "1 recipes" and "1 entries".
 

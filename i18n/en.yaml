@@ -1,7 +1,8 @@
 # Fugu's English. Hugo merges this with Blowfish's i18n/en.yaml, so every
 # key is under `fugu` to stay clear of Blowfish's. A site translates Fugu by
-# adding i18n/<lang>.yaml with the same keys; a missing key falls back to
-# this file. Counts use Hugo's plural forms (one, other), with {{ .Count }}.
+# adding i18n/<lang>.yaml with the same keys. A key a language leaves out
+# falls back to the site's defaultContentLanguage, so a site whose default
+# isn't English needs every key in that language's file. Counts use Hugo's plural forms (one, other), with {{ .Count }}.
 fugu:
   # Counts, after a list's title and in the sidebars.
   count:
@@ -114,9 +115,12 @@ fugu:
 
   # Links and page descriptions.
   not_found: "Not found: {{ .Target }}"
+  feed_title: "{{ .Title }} on {{ .Site }}"
   description:
     log: "Kitchen notes from {{ .Title }}: {{ .Entries }}."
     term: "Recipes and notes tagged “{{ .Term }}” in {{ .Site }}."
+    recipe: "{{ .Title }}, a recipe from {{ .Site }}."
+    cuisine: "{{ .Cuisine }} recipes from {{ .Site }}."
 
   # Strings for Fugu's scripts, passed to them as a JSON block
   # (partials/js-strings.html), not translated in JS. {name} marks a value

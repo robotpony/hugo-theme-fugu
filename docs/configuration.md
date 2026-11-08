@@ -254,7 +254,7 @@ Fugu's stylesheet, `assets/css/fugu.css`, styles everything Fugu adds, coloured 
 
 ## Words and translation
 
-Fugu's own words (labels, headings, counts, and what its scripts show) are in `i18n/en.yaml`, under `fugu`. To change one, or to translate them, add the same keys to the site's own `i18n/<lang>.yaml`; Hugo uses the site's value first, and falls back to Fugu's English for a key the site leaves out.
+Fugu's own words (labels, headings, counts, and what its scripts show) are in `i18n/en.yaml`, under `fugu`. To change one, or to translate them, add the same keys to the site's own `i18n/<lang>.yaml`; Hugo uses the site's value first. A key the site leaves out comes from Fugu's file for the same language, then from the site's `defaultContentLanguage`; Fugu ships only English, so a site whose default language isn't English needs every key in that language's file, or those words are left blank.
 
 ```yaml
 # i18n/en.yaml in the site

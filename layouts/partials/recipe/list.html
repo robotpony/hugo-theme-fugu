@@ -1,8 +1,9 @@
 {{/*
   A list of recipes: the recipes section's page (layouts/recipes/
   list.html) and the drink section's (layouts/drinks/list.html). Takes
-  a dict: "page", the section page, and "noun", the word after the count
-  ("recipes", "drinks"). Uses the shared recipe card (partials/
+  a dict: "page", the section page, and "noun", the count's i18n key
+  under fugu.count ("recipes", "drinks"); a noun with no key there is
+  written after the number as it is. Uses the shared recipe card (partials/
   recipe-card.html) in the .rgrid, under an .ltitle / .listing-count
   header.
 
@@ -17,7 +18,7 @@
 <section class="listing">
   <header class="listing-head">
     <h1 class="ltitle">{{ $page.Title }}</h1>
-    <span class="listing-count">{{ i18n (printf "fugu.count.%s" .noun) (len $page.Pages) }}{{ if gt $pager.TotalPages 1 }} · {{ i18n "fugu.page_of" (dict "Page" $pager.PageNumber "Pages" $pager.TotalPages) }}{{ end }}</span>
+    <span class="listing-count">{{ i18n (printf "fugu.count.%s" .noun) (len $page.Pages) | default (printf "%d %s" (len $page.Pages) .noun) }}{{ if gt $pager.TotalPages 1 }} · {{ i18n "fugu.page_of" (dict "Page" $pager.PageNumber "Pages" $pager.TotalPages) }}{{ end }}</span>
   </header>
   {{ with $page.Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
   <div class="listing-search">{{ partial "search-box.html" (len $page.Pages) }}</div>
