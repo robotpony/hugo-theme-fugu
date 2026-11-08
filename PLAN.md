@@ -54,6 +54,13 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
 
 - [ ] Settle the hugo-warped module: it's merged to `main` and Not a Chef builds with it, but `CHANGELOG.md` still files it under "Trying (branch `hugo-warped-module`)". Move that entry into Changed and delete the branch, or back it out. Then tag `v0.2.0`.
 - [ ] Finish checking the basic styles in Chrome: hover states (popovers, card hover); the principle chip's fill is faint on light-`primary-100` schemes (autumn); "On cards" wraps on the principle tag page's sidebar.
+- [ ] Fixes from Not a Chef's visual pass (2026-11-03, handed over 2026-11-07); check each in Chrome at both widths, light and dark:
+  - Chip wording: build pages show Burgers twice ("Burgers · Build", then a "Burgers" chip); essays show "Food-Memory" where cards say "food memories"; page chips are title case where card chips are lowercase. One wording and one case everywhere.
+  - Lineage timeline repeats a close year in two forms ('57 on the left, 1957 on the right, on the burgers blueprint). Show each year once.
+  - A wiki link's trailing arrow can wrap alone onto the next line (build sidebar, "In-N-Out burger spread →"). Keep it with the last word (`&nbsp;`, or `white-space: nowrap` on a span of the last word and the arrow).
+  - The glossary search placeholder (`partials/glossary/page.html:57`, "Search the glossary: a word, or what it does") clips on phones: about 294px of text in a 258px field at 390px wide. Shorten it to "Search the glossary", or make it a param (and an `i18n` string with §4).
+  - `exampleSite/content/about.md` links the old domain, `bruce-loves-to-cook.warpedvisions.org`; it's https://bruce-loves-to-cook.ca now.
+  - A keep-screen-awake switch beside the ingredient scaling gear (Wake Lock API; hidden where unsupported), as RecipeTin Eats and Serious Eats have. The small version of Features' cook mode, and can ship first.
 - [ ] Check the README's images in GitHub's rendering, light and dark.
 - [ ] Code review in three commit series: `layouts/`, `assets/js/`, `tools/`. Bugs, dead code, Not a Chef leftovers, stale comments. One area per pass with `/code-review high`; record each finding as fixed, won't fix (why), or deferred; check template and JS fixes with `tests/check.py --compare` and Chrome at both widths, light and dark. Angles from Not a Chef (2026-10-17):
   - Templates and render hooks: empty sections, a page with no cuisine or no date, drafts in card lists.
