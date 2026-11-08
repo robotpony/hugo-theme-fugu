@@ -4,7 +4,7 @@ The work list for taking Fugu to a theme other Blowfish users can install. Finis
 
 **Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §5–§7 and the §10 review. Features come after 1.0.
 
-**Next:** §5's class inventory (mechanical; it sizes the design split).
+**Next:** §5's split, from `docs/design/class-inventory.md`: start with the 227 mixed rules (`.pop` first) and the `--fugu-*` counterparts for the site's 17 colour variables.
 
 ## 4. Translation
 
@@ -12,9 +12,8 @@ Done: template and script English is in `i18n/en.yaml` (`docs/configuration.md`,
 
 ## 5. Default design
 
-Not a Chef's `custom.css` (2,063 lines, and growing with each feature) still styles every class Fugu emits; `fugu.css` is only a baseline from `--fugu-*` tokens (`params.fugu.styles = false` turns it off, as Not a Chef does).
+Not a Chef's `custom.css` (2,413 lines) still styles every class Fugu emits; `docs/design/class-inventory.md` sizes the split: 310 classes, about 400 lines of structure and 700 of look, 227 rules mixing the two, 109 with hardcoded font names, and 13 dead classes; `fugu.css` is only a baseline from `--fugu-*` tokens (`params.fugu.styles = false` turns it off, as Not a Chef does).
 
-- [ ] Inventory the classes Fugu emits and their rules in `custom.css`, split into structure (layout, sidebar, formula row, popovers, check-off) and look (colour, type, spacing, borders).
 - [ ] Move structure into `fugu.css`; express the look as `--fugu-*` properties defaulting to Blowfish's `--color-primary-*`/`--color-neutral-*`.
 - [ ] Mock, then build, Fugu's own neutral look; update `docs/getting-started.md`, which says it comes later.
 - [ ] Not a Chef keeps only its look in `custom.css` and renders the same. Update the comments in 10 files that point at `custom.css` (`git grep -l custom.css -- layouts assets`).

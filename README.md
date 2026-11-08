@@ -64,6 +64,7 @@ Fugu is tested against Blowfish `295dae3` and Hugo 0.166.0, and needs at least H
 - [Frontmatter](docs/frontmatter.md): every field Fugu reads
 - [Configuration](docs/configuration.md): every `[params.fugu]` setting, and the Blowfish settings that matter
 - [Features](docs/features.md): what Fugu adds, as a reader sees it
+- [CSS class inventory](docs/design/class-inventory.md): working notes for the default design (PLAN.md §5)
 
 The index is [docs/README.md](docs/README.md). Still to come: customizing, tools, and Blowfish compatibility.
 
