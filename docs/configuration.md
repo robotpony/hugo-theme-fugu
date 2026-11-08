@@ -200,7 +200,7 @@ This is also how a site in another language names its sections: `method = ["Pré
   recipeSidebar = ["photos", "to-serve", "mechanic", "variations", "equipment", "notes"]
 ```
 
-The boxes in the recipe sidebar, top to bottom, under the search box and the recipe's facts. Each key moves the matching section (or, for `photos`, the page's images) out of the article and into the sidebar. Leave a key out to keep that section in the article. With JavaScript off, everything stays in the article.
+The boxes in the recipe sidebar, top to bottom, under the search box and the recipe's facts. Each key moves the matching section (or, for `photos`, the page's images) out of the article and into the sidebar. Leave a key out to keep that section in the article. Mechanic is the exception: left out, it stays in the article as a callout, wrapped in `div.mechanic-callout` where it was written. With JavaScript off, everything stays in the article.
 
 ## Personal notes
 

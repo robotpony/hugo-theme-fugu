@@ -29,10 +29,18 @@
     document.querySelectorAll('[data-sidebar-slot]').forEach(function (el) {
       slots[el.dataset.sidebarSlot] = el;
     });
-    if (!Object.keys(slots).length) return;
 
     article.querySelectorAll('h2[data-sidebar-heading]').forEach(function (h2) {
-      var slot = slots[h2.dataset.sidebarHeading];
+      var key = h2.dataset.sidebarHeading;
+      var slot = slots[key];
+      // A Mechanic with no sidebar slot (the site left "mechanic" out of
+      // params.fugu.recipeSidebar) stays in the article, wrapped in place
+      // as a callout. Other sections without a slot stay as written.
+      if (!slot && key === 'mechanic') {
+        slot = document.createElement('div');
+        slot.className = 'mechanic-callout';
+        h2.parentNode.insertBefore(slot, h2);
+      }
       if (!slot) return;
       var nodes = [h2];
       var el = h2.nextElementSibling;
@@ -42,6 +50,7 @@
       }
       nodes.forEach(function (node) { slot.appendChild(node); });
     });
+    if (!Object.keys(slots).length) return;
 
     // Notes and Equipment/Hardware both render as a plain <ul> today —
     // give them the em-dash-bullet list style now that they live in the

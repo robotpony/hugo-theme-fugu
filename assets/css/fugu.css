@@ -629,6 +629,12 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
 .recipe-sidebar-section .mechanic p + p { margin-top: .6em; }
 .recipe-sidebar-section .mechanic ul { margin: .6em 0 0; padding-left: 1.1em; }
 .recipe-sidebar-section .mechanic strong { color: var(--fugu-ink); }
+/* A Mechanic left in the article (no "mechanic" in recipeSidebar):
+   automagic-sidebar.js wraps it in place as a callout. */
+.article-content .mechanic-callout { border-left: 3px solid var(--fugu-accent); background: var(--fugu-surface); padding: 14px 18px 12px; margin: 0 0 28px; border-radius: 0 6px 6px 0; }
+.article-content .mechanic-callout > h2 { font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--fugu-accent-strong); margin: 0 0 6px; }
+.article-content .mechanic-callout p { margin: 0; }
+.article-content .mechanic-callout p + p { margin-top: .6em; }
 .recipe-sidebar-section .notes-list { list-style: none; padding: 0; }
 .recipe-sidebar-section .notes-list li { position: relative; padding-left: 1.3em; margin: 0 0 6px; }
 .recipe-sidebar-section .notes-list li::before { content: '\2014'; position: absolute; left: 0; color: var(--fugu-ink-faint); }
