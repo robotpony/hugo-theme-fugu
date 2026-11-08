@@ -18,7 +18,6 @@ Not a Chef's `custom.css` (2,413 lines) still styles every class Fugu emits; `do
 - [ ] Mock, then build, Fugu's own neutral look; update `docs/getting-started.md`, which says it comes later.
 - [ ] Not a Chef keeps only its look in `custom.css` and renders the same. Update the comments in 10 files that point at `custom.css` (`git grep -l custom.css -- layouts assets`).
 - [ ] Fonts: document the `partials/fonts.html` hook; consider a `fonts` param for Google Fonts plus a self-hosting recipe.
-- [ ] Contrast and focus in `fugu.css` (accessibility audit, item 7): the checkbox outline is `--border-strong` at 1.5:1 (controls need 3:1), and several `:focus-visible` rules set `outline: none` with only a tint. Not a Chef is choosing its own values (its `REVIEW.md`); match what Bruce picks.
 - [ ] Copy the formula icon kit's drawing rules (stroke, grid, size) from Not a Chef's `mockups/STYLE.md` into Fugu's docs.
 
 ## 6. Blowfish compatibility
@@ -69,7 +68,7 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
   4. Skipped heading levels: the blueprint page (h1, then h3 Lineage/Parts/Builds before the body's h2), principle term pages and list pages (h1, then h3 cards), the Food Log list (h1, then h3 months). The fix moves styles keyed to h3 (§5).
   5. `breadcrumbs.html`: `<nav aria-label="Breadcrumb">` (i18n), `aria-current="page"`, `aria-hidden` separators. The recipe and reading sidebars as `<aside aria-label>`.
   6. `ingredients.js`: a polite live region for scale and unit changes, and `aria-valuetext` ("2×") on the range. A glossary link inside an ingredient line takes the tap meant for its checkbox (beef stew's "MSG"); consider not linking inside ingredient lines.
-  7. `fugu.css` contrast and focus: in §5.
+  7. `fugu.css` contrast and focus: done, matching Not a Chef.
   8. Docs and tools nits: in §7.
 - [ ] Retake the screenshots after §5 (`python3 tools/screenshots.py`).
 - [ ] Tag `v1.0.0` after §4–§7 and the review.
