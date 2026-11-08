@@ -528,6 +528,20 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
 .ing-config > summary:hover { color: var(--fugu-ink); border-color: var(--fugu-accent); }
 .ing-config[open] > summary { color: var(--fugu-accent-strong); border-color: var(--fugu-accent); }
 .ing-config > summary svg { width: 15px; height: 15px; }
+/* Keep screen awake (ingredients.js): the gear's twin, just left of it, or
+ * in its place on a percentage page. Pressed reads like the open gear. */
+h2:has(> .ing-awake) { position: relative; padding-right: 40px; }
+h2:has(> .ing-awake):has(> .ing-config) { padding-right: 76px; }
+.ing-awake {
+  position: absolute; top: 2px; right: 36px; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; padding: 0;
+  border: 1px solid var(--fugu-border-strong); border-radius: var(--fugu-radius); background: var(--fugu-surface);
+  color: var(--fugu-ink-muted); cursor: pointer;
+}
+.ing-awake--alone { right: 0; }
+.ing-awake:hover { color: var(--fugu-ink); border-color: var(--fugu-accent); }
+.ing-awake[aria-pressed="true"] { color: var(--fugu-accent-strong); border-color: var(--fugu-accent); background: var(--fugu-accent-soft); }
+.ing-awake svg { width: 15px; height: 15px; }
+@media print { .ing-awake { display: none; } }
 .ing-config-panel {
   position: absolute; top: calc(100% + 11px); right: -8px; z-index: 20; width: 256px; max-width: calc(100vw - 32px);
   display: flex; flex-direction: column; gap: 14px; padding: 14px 16px 16px;

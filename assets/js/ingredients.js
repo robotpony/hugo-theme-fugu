@@ -1301,6 +1301,57 @@
     return details;
   }
 
+  // --- Keep the screen awake -----------------------------------------------
+  //
+  // A small switch beside the gear (.ing-awake, aria-pressed) that holds a
+  // screen Wake Lock while it's on, so the phone doesn't dim mid-recipe.
+  // The browser drops the lock whenever the page is hidden, so it's taken
+  // again when the page comes back, while the switch is still on. Not
+  // remembered: each visit starts off. Only where the API exists; without
+  // it (or without JS) there's no switch. Cook mode (PLAN.md) is the large
+  // version of this.
+  var AWAKE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<circle cx="12" cy="12" r="4"></circle>' +
+    '<path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>' +
+    '</svg>';
+
+  function buildAwakeSwitch() {
+    if (!('wakeLock' in navigator)) return null;
+    var button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'ing-awake';
+    button.setAttribute('aria-pressed', 'false');
+    button.setAttribute('aria-label', 'Keep screen awake');
+    button.title = 'Keep screen awake';
+    button.innerHTML = AWAKE_ICON;
+    var lock = null;
+    var on = false;
+
+    function acquire() {
+      navigator.wakeLock.request('screen').then(function (l) {
+        if (!on) { l.release(); return; }
+        lock = l;
+        lock.addEventListener('release', function () { lock = null; });
+      }).catch(function () {
+        // Refused (battery saver, or the page isn't visible): show it off.
+        on = false;
+        button.setAttribute('aria-pressed', 'false');
+      });
+    }
+
+    button.addEventListener('click', function () {
+      on = !on;
+      button.setAttribute('aria-pressed', String(on));
+      if (on) acquire();
+      else if (lock) { lock.release(); lock = null; }
+    });
+    document.addEventListener('visibilitychange', function () {
+      if (on && !lock && document.visibilityState === 'visible') acquire();
+    });
+    return button;
+  }
+
   // --- Personal notes ----------------------------------------------------
   //
   // A blockquote in a recipe's intro (the prose before the first H2 —
@@ -1405,6 +1456,13 @@
       controller.attachRow(buildPercentRow(controller.base, percent[0]));
     } else if (headings.length) {
       headings[0].appendChild(buildPopupMenu(controller));
+    }
+    // The awake switch sits beside the gear, or alone in its place on a
+    // percentage page, which has no gear.
+    var awake = headings.length && buildAwakeSwitch();
+    if (awake) {
+      if (controller.base) awake.classList.add('ing-awake--alone');
+      headings[0].appendChild(awake);
     }
     controller.apply();
   }
