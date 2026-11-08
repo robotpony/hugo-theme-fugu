@@ -92,7 +92,7 @@
 
       <div class="min-w-0 min-h-0 max-w-fit">
         {{ partial "series/series.html" . }}
-        <div class="article-content max-w-prose mb-20"{{ if eq (partialCached "section/role.html" .Section .Section) "recipe" }} data-page-key="{{ .RelPermalink }}" data-enable-kelvin="{{ site.Params.recipe.enableKelvin | default false }}"{{ if eq site.Params.fugu.hideIntroQuotes false }} data-show-intro-quotes="true"{{ end }}{{ end }}>
+        <div class="article-content max-w-prose mb-20"{{ if eq (partialCached "section/role.html" .Section .Section) "recipe" }} data-page-key="{{ .RelPermalink }}" data-enable-kelvin="{{ site.Params.recipe.enableKelvin | default false }}"{{ if eq site.Params.fugu.unitSpacing "spaced" }} data-unit-spacing="spaced"{{ end }}{{ if eq site.Params.fugu.hideIntroQuotes false }} data-show-intro-quotes="true"{{ end }}{{ end }}>
           {{/* Reset before every render pass through this content — Hugo's
             own automatic .Summary/.Description generation also runs the
             heading hook against the same Page/Scratch, so this pass must
@@ -226,6 +226,9 @@
           in that bundle take effect; anything new has to be a real
           custom.css rule. */}}
         <div class="recipe-sidebar-wrap order-first lg:order-last lg:ms-auto px-0 lg:ps-8 lg:max-w-2xs">
+          {{/* Only automagic-sidebar.js opens the collapsed sidebar, so with
+            JS off it's shown and its button hidden. */}}
+          <noscript><style>@media (max-width: 1023.98px) { .recipe-sidebar-wrap #recipe-sidebar { display: block !important; } .recipe-sidebar-toggle { display: none !important; } }</style></noscript>
           <button type="button" class="recipe-sidebar-toggle lg:hidden" aria-expanded="false" aria-controls="recipe-sidebar">
             <span>{{ i18n "fugu.recipe_notes" }}</span>
             {{ partial "icon.html" "chevron-down" }}

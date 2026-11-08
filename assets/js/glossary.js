@@ -53,7 +53,13 @@
       var any = !!l.dl.querySelector(':scope > dt:not([hidden])');
       l.dl.hidden = !any;
       if (l.heading) l.heading.hidden = !any;
-      if (l.link) l.link.classList.toggle('is-empty', !any);
+      if (l.link) {
+        // An empty letter's heading is hidden, so its link goes nowhere:
+        // out of the tab order and the accessibility tree until it matches.
+        l.link.classList.toggle('is-empty', !any);
+        if (any) { l.link.removeAttribute('tabindex'); l.link.removeAttribute('aria-hidden'); }
+        else { l.link.setAttribute('tabindex', '-1'); l.link.setAttribute('aria-hidden', 'true'); }
+      }
     });
     count.textContent = words.length ? countText(shown) : '';
     none.hidden = !(words.length && !shown);

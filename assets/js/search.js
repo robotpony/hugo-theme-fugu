@@ -1,8 +1,14 @@
-// Override of themes/blowfish/assets/js/search.js — identical
-// except executeQuery() stable-sorts results so pinned pages (frontmatter
-// `pinned: true`, carried through by Fugu's layouts/_default/index.json
-// override) come first among matches, ahead of Fuse's relevance order.
-// See DESIGN.md.
+// Override of themes/blowfish/assets/js/search.js (295dae3), with these
+// changes:
+// - executeQuery() stable-sorts results so pinned pages (frontmatter
+//   `pinned: true`, carried through by Fugu's layouts/_default/index.json
+//   override) come first among matches, ahead of Fuse's relevance order.
+// - Every Fugu search box (.search-box, partials/search-box.html) opens
+//   the modal, as well as Blowfish's #search-button, so a page can have
+//   both.
+// - The index is fetched once, and a query typed while it loads runs when
+//   it arrives.
+// - Arrow keys move through the results only from the input or a result.
 var fuse;
 var showButton = document.getElementById("search-button");
 var showButtonMobile = document.getElementById("search-button-mobile");
@@ -20,6 +26,9 @@ var previouslyFocused = null;
 
 // Listen for events
 showButton ? showButton.addEventListener("click", displaySearch) : null;
+document.querySelectorAll(".search-box").forEach(function (box) {
+  if (box !== showButton) box.addEventListener("click", displaySearch);
+});
 showButtonMobile ? showButtonMobile.addEventListener("click", displaySearch) : null;
 hideButton.addEventListener("click", hideSearch);
 wrapper.addEventListener("click", hideSearch);
@@ -88,8 +97,9 @@ document.addEventListener("keydown", function (event) {
         first.focus();
       } else if (document.activeElement == last) {
         last.focus();
-      } else {
-        document.activeElement.parentElement.nextSibling.firstElementChild.focus();
+      } else if (output.contains(document.activeElement)) {
+        var next = document.activeElement.parentElement.nextElementSibling;
+        if (next && next.firstElementChild) next.firstElementChild.focus();
       }
     }
   }
@@ -102,8 +112,9 @@ document.addEventListener("keydown", function (event) {
         input.focus();
       } else if (document.activeElement == first) {
         input.focus();
-      } else {
-        document.activeElement.parentElement.previousSibling.firstElementChild.focus();
+      } else if (output.contains(document.activeElement)) {
+        var prev = document.activeElement.parentElement.previousElementSibling;
+        if (prev && prev.firstElementChild) prev.firstElementChild.focus();
       }
     }
   }
@@ -169,7 +180,10 @@ function fetchJSON(path, callback) {
   httpRequest.send();
 }
 
+var indexing = false;
 function buildIndex() {
+  if (indexing) return;
+  indexing = true;
   var baseURL = wrapper.getAttribute("data-url");
   baseURL = baseURL.replace(/\/?$/, "/");
   fetchJSON(baseURL + "index.json", function (data) {
@@ -193,6 +207,7 @@ function buildIndex() {
     }*/
     fuse = new Fuse(data, options);
     indexed = true;
+    if (input.value) executeQuery(input.value);
   });
 }
 

@@ -14,7 +14,8 @@
   - It flips to open the other way (.pop-flip) when there isn't room on
     its usual side of the window (below a sticky header, at the top) and
     there's more on the other.
-  - Escape closes it, by moving focus off the trigger.
+  - Escape hides it, hovered or focused, without moving focus; it can
+    open again once the pointer and focus have left.
 
   Without it, popovers still open, with the pointer at its default spot
   near the left edge, no slide and no flip.
@@ -69,9 +70,25 @@
 
   document.addEventListener('mouseover', onEnter);
   document.addEventListener('focusin', onEnter);
+  // Escape hides an open popover, hovered or focused, and leaves focus
+  // where it is (WCAG 1.4.13: dismissible without moving the pointer or
+  // focus). It shows again once the pointer and focus have both left.
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
-    var el = document.activeElement;
-    if (el && el.closest && el.closest('.pop-host')) el.blur();
+    document.querySelectorAll('.pop-host:hover, .pop-host:focus-within').forEach(function (host) {
+      var pop = host.querySelector('.pop');
+      if (!pop || pop.style.display === 'none') return;
+      pop.style.display = 'none';
+      function restore() {
+        if (host.matches(':hover') || host.matches(':focus-within')) return;
+        pop.style.display = '';
+        host.removeEventListener('mouseleave', later);
+        host.removeEventListener('focusout', later);
+      }
+      // After the event, so :hover and :focus-within have caught up.
+      function later() { setTimeout(restore, 0); }
+      host.addEventListener('mouseleave', later);
+      host.addEventListener('focusout', later);
+    });
   });
 })();

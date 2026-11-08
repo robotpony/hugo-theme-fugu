@@ -125,9 +125,10 @@
   // Mobile-only collapse for the recipe sidebar (single.html's
   // .recipe-sidebar-wrap / .recipe-sidebar-toggle) — see that file's
   // comment for why this is a plain button + class toggle rather than
-  // <details>. No-ops (and stays hidden via the lg: media query in
-  // custom.css) above the lg breakpoint, where the button is display:none
-  // and the sidebar is always shown regardless of `.is-open`.
+  // <details>. No-ops above the lg breakpoint, where the button is
+  // display:none and the sidebar is always shown regardless of `.is-open`.
+  // With JS off, a <noscript> style in single.html shows the sidebar and
+  // hides the button, since nothing could open it.
   function initSidebarToggle() {
     var toggle = document.querySelector('.recipe-sidebar-toggle');
     var wrap = document.querySelector('.recipe-sidebar-wrap');
@@ -313,10 +314,27 @@
     };
   }
 
+  // Whether ingredients.js will hide this figure as a personal note: in an
+  // intro blockquote (hideIntroQuotes) or under a hidden heading such as
+  // "## History" (hideHiddenSections). It runs after this script, so the
+  // rule is repeated here, or a hidden section's photo would come back as a
+  // thumbnail. Only on recipe pages (data-page-key), where it runs.
+  function personalNote(fig, article) {
+    if (!article.dataset.pageKey) return false;
+    var top = fig;
+    while (top.parentElement && top.parentElement !== article) top = top.parentElement;
+    if (top.parentElement !== article) return false;
+    var h = top.previousElementSibling;
+    while (h && h.tagName !== 'H2') h = h.previousElementSibling;
+    if (!h) return top.tagName === 'BLOCKQUOTE' && article.dataset.showIntroQuotes !== 'true';
+    return h.dataset.hideHeading === 'true';
+  }
+
   function initPhotos(article) {
     var slot = document.querySelector('[data-sidebar-slot="photos"]');
     if (!slot) return;
-    var figs = article.querySelectorAll('figure[data-sidebar-photo]');
+    var figs = Array.prototype.filter.call(article.querySelectorAll('figure[data-sidebar-photo]'),
+      function (fig) { return !personalNote(fig, article); });
     if (!figs.length) return;
 
     var photos = [];
@@ -330,7 +348,9 @@
       marker.id = 'photo-' + (i + 1);
       marker.dataset.photo = i;
       marker.innerHTML = CAMERA + esc(phrase('photo', 'Photo')) + '<span class="n">' + (i + 1) + '</span>';
-      if (alt) marker.setAttribute('aria-label', phrase('photo_n', 'Photo {n}: {alt}', { n: i + 1, alt: alt }));
+      // Named in full, since the number is a separate span ("Photo1" read aloud).
+      marker.setAttribute('aria-label', alt ? phrase('photo_n', 'Photo {n}: {alt}', { n: i + 1, alt: alt })
+        : phrase('photo', 'Photo') + ' ' + (i + 1));
       fig.parentNode.insertBefore(marker, fig);
       fig.classList.add('is-relocated');
       photos.push({
@@ -347,6 +367,7 @@
     var label = document.createElement('h2');
     label.className = 'photos-label';
     label.innerHTML = esc(phrase('photos', 'Photos')) + '<span class="n">' + n + '</span>';
+    label.setAttribute('aria-label', phrase('photos', 'Photos') + ' ' + n);
     var grid = document.createElement('div');
     grid.className = 'photo-grid ' + (n === 1 ? 'n1' : (n === 2 || n === 4) ? 'n2' : 'n3');
     photos.slice(0, cap).forEach(function (p, i) {

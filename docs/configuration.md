@@ -211,6 +211,17 @@ The boxes in the recipe sidebar, top to bottom, under the search box and the rec
 
 Hides blockquotes in a recipe's intro, the text before its first `##`. They're for notes to yourself or your family. Hidden is not private: they're still in the HTML, the search index, and the RSS feed. `false` shows them. To hide whole sections, see `hidden` above.
 
+## Units
+
+Fugu's ingredient script rewrites every quantity it recognises, so it can scale and convert them, and writes a metric symbol against its number: `50 ml` in the Markdown shows as `50ml`, `1.2 kg` as `1.2kg`. Other units keep a space (`2 tbsp`, `3 cloves`). To space the metric ones too:
+
+```toml
+[params.fugu]
+  unitSpacing = "spaced"
+```
+
+With JavaScript off, quantities read as written.
+
 ## Drafts
 
 For a site that builds drafts, Fugu publishes them as pages still in development, with a banner and a mark on their cards ([frontmatter.md](frontmatter.md#draft-and-working_on)). The words are settings:

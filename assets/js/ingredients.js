@@ -254,7 +254,9 @@
   // space regardless of this setting ("5 oz", "2 tbsp", never "5oz"/
   // "2tbsp"), same as any other carried-over word (cloves, cans, ...):
   // metric symbols read fine compressed, but imperial/standard ones don't.
-  var UNIT_SPACING = 'glued'; // 'glued' ("50ml") | 'spaced' ("50 ml")
+  // 'glued' ("50ml") by default, or 'spaced' ("50 ml") when the site sets
+  // params.fugu.unitSpacing = "spaced" (single.html's data-unit-spacing).
+  var UNIT_SPACING = 'glued';
   var SYMBOL_UNITS = { g: true, kg: true, mg: true, ml: true, l: true };
 
   function spaceUnit(numText, label) {
@@ -642,6 +644,18 @@
 
   // --- Checkbox rows --------------------------------------------------
 
+  // Each row's saved check-off is keyed by its text; a line repeated on
+  // the page (the same "1 tsp salt" in two components) gets "#2", "#3" in
+  // order, so ticking one doesn't tick the other. The first keeps the
+  // plain key, so ticks saved before this still load.
+  var keyCounts = {};
+  function rowKey(base) {
+    var n = (keyCounts[base] || 0) + 1;
+    keyCounts[base] = n;
+    return n === 1 ? base : base + '#' + n;
+  }
+  var rowIds = 0;
+
   function enhanceRow(li, pageKey) {
     li.classList.add('ing');
     wrapQty(li);
@@ -663,11 +677,14 @@
 
     var checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
+    // The label names the checkbox and ticks it when tapped.
+    checkbox.id = 'ing-' + (++rowIds);
+    label.htmlFor = checkbox.id;
 
     li.appendChild(checkbox);
     li.appendChild(label);
 
-    var key = 'ing:' + pageKey + ':' + label.textContent.trim();
+    var key = rowKey('ing:' + pageKey + ':' + label.textContent.trim());
     try {
       if (localStorage.getItem(key) === '1') checkbox.checked = true;
     } catch (e) {}
@@ -745,10 +762,13 @@
       checkCell.className = 'ing-check-cell';
       var checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
+      // Named by the row's first cell, the ingredient.
+      var name = tr.children[0] && tr.children[0].textContent.trim();
+      if (name) checkbox.setAttribute('aria-label', name);
       checkCell.appendChild(checkbox);
       tr.insertBefore(checkCell, tr.firstChild);
 
-      var key = 'ing:' + pageKey + ':' + keyText;
+      var key = rowKey('ing:' + pageKey + ':' + keyText);
       try {
         if (localStorage.getItem(key) === '1') checkbox.checked = true;
       } catch (e) {}
@@ -854,6 +874,12 @@
     var prefix = m[1] || '', rest = m[4] || '';
     var lo = parseFloat(m[2]) * scale;
     function num(n) { return Number.isInteger(n) ? String(n) : String(Math.round(n * 10) / 10); }
+    // A number leading a parenthesis is the same amount another way,
+    // "about 6 L (6 qt)", so it scales too.
+    rest = rest.replace(/\(\s*((?:about|~)\s*)?(\d+(?:\.\d+)?)/g, function (all, pre, n) {
+      var v = parseFloat(n) * scale;
+      return '(' + (pre || '') + num(parseFloat(n) % 1 === 0 ? Math.max(1, Math.round(v)) : v);
+    });
     if (m[3] === undefined) {
       var one = parseFloat(m[2]) % 1 === 0 ? Math.max(1, Math.round(lo)) : lo;
       return prefix + num(one) + rest;
@@ -1344,7 +1370,8 @@
 
     function acquire() {
       navigator.wakeLock.request('screen').then(function (l) {
-        if (!on) { l.release(); return; }
+        // Off by now, or a quicker on/off/on already holds one: let it go.
+        if (!on || lock) { l.release(); return; }
         lock = l;
         lock.addEventListener('release', function () { lock = null; });
       }).catch(function () {
@@ -1407,6 +1434,7 @@
     if (!root) return;
     var pageKey = root.dataset.pageKey;
     ENABLE_KELVIN = root.dataset.enableKelvin === 'true';
+    if (root.dataset.unitSpacing === 'spaced') UNIT_SPACING = 'spaced';
 
     hideIntroQuotes(root);
     hideHiddenSections(root);
