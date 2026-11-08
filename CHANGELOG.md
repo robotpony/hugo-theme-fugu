@@ -59,6 +59,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Fixed
 
+- The sidebar lineage shows a year once inside a zoomed stretch: a label at a ticked year ('57) leaves its year to the tick, kept for screen readers (`.y.sr-only`).
 - Lineage labels in the body no longer overlap when there are many: a label that would collide moves up to a third or fourth row (`.r2`, `.r3`, the track taller by `--tl-rows`), and a long label near either end of the track starts or ends at its dot (`.tl-start`, `.tl-end`) instead of running off the side. Not a Chef's burgers and chicken sandwiches lineages change; a track whose labels already clear is unchanged.
 - History links on the lineage (any `http` link) open in a new tab, like other external links.
 - `tools/screenshots.py` stops before writing any image if a shot's page or anchor isn't in the build, instead of saving a picture of the 404 page and exiting 0. Its server takes its port from the system before the build, closing the gap where something else could take it. `--listing ''` now skips the listing images, as its help says, instead of writing them to the current folder.

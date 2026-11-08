@@ -19,7 +19,8 @@
   Where each dot sits is blueprint/lineage-zoom.html's: a run of dots
   closer than one label row (22px) is spread out to a row apart, so each
   sits by its own label with no leader, marked by .vt-zoom and its years
-  ticked '88 in place of the decades. The rest keeps its scale, and the
+  ticked '88 in place of the decades, a label there leaving its year to
+  the tick (kept for screen readers). The rest keeps its scale, and the
   spine grows. An empty stretch of 50 years or more between two dots is
   cut to a 32px break in the spine (.vt-break, a ⋮ with no ticks), the
   decades at its ends still labelled. A history entry is .hist, a smaller
@@ -35,6 +36,10 @@
   {{ $end := .end }}
   {{ $last := -100 }}
   {{ $z := partial "blueprint/lineage-zoom.html" (dict "span" . "gap" (div 22.0 $k) "break" (div 32.0 $k) "fit" false "clear" (div 16.0 $k)) }}
+  {{/* Years ticked '57 in a zoom: a label at one of them leaves its year
+    to the tick (screen readers still get it), so it isn't shown twice. */}}
+  {{ $ticked := slice }}
+  {{ range $z.zooms }}{{ range .years }}{{ $ticked = $ticked | append .year }}{{ end }}{{ end }}
   {{ $rows := slice }}
   {{ range $z.entries }}
     {{ $dy := add $top (int (math.Round (mul .at $k))) }}
@@ -71,7 +76,7 @@
       {{- end }}
         <span class="ln-dot" aria-hidden="true"></span>
         {{- if lt $off 0 }}<svg class="vt-lead" aria-hidden="true" width="21" height="{{ sub 0 $off }}" style="height:{{ sub 0 $off }}px"><line x1="0" y1="0" x2="21" y2="{{ sub 0 $off }}"/></svg>{{ end -}}
-        {{- if .again }}<span>{{ if ne .page.LinkTitle .page.Title }}{{ .label }} {{ .page.LinkTitle }}{{ else }}↳ {{ .label }}{{ end }}</span>{{ else }}<span>{{ .name }}</span><span class="y">{{ .label }}</span>{{ end }}
+        {{- if .again }}<span>{{ if ne .page.LinkTitle .page.Title }}{{ .label }} {{ .page.LinkTitle }}{{ else }}↳ {{ .label }}{{ end }}</span>{{ else }}<span>{{ .name }}</span><span class="y{{ if and (eq .end .year) (in $ticked .year) }} sr-only{{ end }}">{{ .label }}</span>{{ end }}
       {{ if .href }}</a>{{ else }}</span>{{ end }}
     {{- end }}
   </div>
