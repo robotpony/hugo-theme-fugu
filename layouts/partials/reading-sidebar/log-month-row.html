@@ -1,11 +1,12 @@
 {{/*
-  One row of the Food Log's Months list (reading-sidebar.html): the label
-  with its year stripped when it ends in it ("October 2026" under 2026
-  reads "October"; "Fall and winter 2022–23" keeps its name), and the day
-  count only when the page has days. Takes the log-month.html dict plus
+  One row of the Food Log's Months list (reading-sidebar.html): a plain
+  month's label without its year ("October 2026" under 2026 reads
+  "October"; seasons and multi-month titles, "Fall 2024", "Fall and winter
+  2022–23", keep their names), and the day count only when the page has
+  days. Takes the log-month.html dict plus
   "year" and "current" (the page being rendered).
 */}}
 {{ $label := .month.label }}
-{{ with .year }}{{ $label = strings.TrimSuffix (printf " %s" .) $label }}{{ end }}
+{{ with .year }}{{ $label = replaceRE (printf `^(January|February|March|April|May|June|July|August|September|October|November|December) %s$` .) "$1" $label }}{{ end }}
 {{ $days := len .month.days }}
 <a href="{{ .month.page.RelPermalink }}"{{ if eq .month.page .current }} aria-current="page"{{ end }}>{{ $label }} <span class="n">{{ if $days }}{{ $days }} {{ cond (eq $days 1) "day" "days" }}{{ end }}</span></a>
