@@ -154,6 +154,24 @@ Without it, `## Breading` would be read as a component and its lists as ingredie
 
 The marker is a Markdown heading attribute, which Hugo reads and leaves out of the page: the heading shows as "Breading" and its anchor is `#breading`. Obsidian shows `{.article}` as part of the heading, which is the point: anyone reading the file can see the section is placed on purpose. It works on any page with a sidebar, so an essay's `## Notes {.article}` stays in the essay and in its "On this page" list. A site that turns off Goldmark's heading attributes (`markup.goldmark.parser.attribute.title = false`) loses it.
 
+### Percentage tables
+
+An ingredient table with a column headed `%` or `% of ...`, and a row reading exactly `100%` in it, scales from what the cook has. That row is the base, and needs no other marking:
+
+```markdown
+| Ingredient | % | Weight | Notes |
+|---|---|---|---|
+| AP flour | 100% | 600 g | Canadian AP is 13.5% protein |
+| Instant yeast | 1.7% | 10 g | |
+| Lukewarm water | 70% | 420 g | |
+```
+
+The base's amount, the first filled cell after its `%`, has to be a single mass or volume. Otherwise the table scales with the slider like any other table. Amounts need a unit Fugu knows (g, kg, ml, L, cup and so on) to scale, and the written amounts are what scale, not the `%` column, so the written batch reads exactly as written. An amount in the column's heading ("Per 1 kg", "Example: 250 ml shoyu") follows along as "For 1.36kg"; a heading with no amount ("Weight") stays. See [Features](features.md).
+
+### Vault tags on a heading
+
+Obsidian tags at the end of a heading, on any page, stay in the file and off the published page: `## Mexican feast #todo` shows as "Mexican feast" in the heading, the contents, the sidebar, summaries and search. The anchor still comes from the whole source line (`#mexican-feast-todo`), and a section is recognized by its title without the tag, so `## Notes #todo` is Notes. A tag starts with a letter and follows a space, so `## Pho #1` and a tag mid-heading stay as written. A tag on a list item isn't touched.
+
 ## Wiki links
 
 Link to another page by its title, as in Obsidian:

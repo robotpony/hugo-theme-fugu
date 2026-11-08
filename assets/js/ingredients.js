@@ -217,6 +217,15 @@
     return String(parseFloat(value.toFixed(2)));
   }
 
+  // A scaled amount on a percentage table's page (see findPercentBase). Spices go on
+  // a gram scale, so small amounts keep a tenth and 1.77 g reads 1.8; big
+  // ones don't need false precision. Never rounds down to nothing.
+  function formatTableAmount(value, unit) {
+    if (value <= 0) return '0';
+    if (unit === 'kg' || unit === 'l') return String(parseFloat(value.toFixed(2)));
+    return value < 20 ? String(parseFloat(value.toFixed(1)) || 0.1) : String(Math.round(value));
+  }
+
   // --- Canonical number+unit spacing --------------------------------------
   //
   // The vault's source recipes are inconsistent about this ("50ml" vs
@@ -337,8 +346,10 @@
   // ('original' | 'metric' | 'imperial' | 'kelvin'). Always reformats to
   // the canonical spacing/number style, even at 1x/original — the source
   // recipes' own "as written" spacing is inconsistent, so the default view
-  // is a cleaned-up rendering rather than a verbatim echo.
-  function renderQty(qty, scale, unitSystem) {
+  // is a cleaned-up rendering rather than a verbatim echo. `tableRounding`
+  // uses formatTableAmount for metric values, on a page a percentage table
+  // has scaled.
+  function renderQty(qty, scale, unitSystem, tableRounding) {
     var kind = qty.dataset.qtyKind;
     if (!kind) return;
 
@@ -427,9 +438,13 @@
       return { main: nativeUnit(unitKey, raw), bracket: nativeUnit(altUnit, altValue) };
     }
 
+    function number(value, metric, unit) {
+      if (!metric) return formatFraction(value);
+      return tableRounding ? formatTableAmount(value, unit) : formatDecimal(value);
+    }
+
     function render(r) {
-      var fmt = r.metric ? formatDecimal : formatFraction;
-      return joinValueLabel(fmt(r.value), r.label, r.unit);
+      return joinValueLabel(number(r.value, r.metric, r.unit), r.label, r.unit);
     }
 
     if (kind === 'single') {
@@ -442,8 +457,8 @@
     } else {
       var hi = transform(parseFloat(qty.dataset.qtyHi));
       var lo = transform(parseFloat(qty.dataset.qtyLo), hi.unit);
-      var fmt2 = hi.metric ? formatDecimal : formatFraction;
-      qty.textContent = fmt2(lo.value) + '–' + joinValueLabel(fmt2(hi.value), hi.label, hi.unit);
+      qty.textContent = number(lo.value, hi.metric, hi.unit) + '–' +
+        joinValueLabel(number(hi.value, hi.metric, hi.unit), hi.label, hi.unit);
     }
   }
 
@@ -688,9 +703,11 @@
   // — the init() walk's non-UL branch already ran enhanceProseText(el) over
   // the whole table before TABLE got its own branch — enhanceProseText(table)
   // below just keeps that behaviour now that this function owns the walk.
+  // Returns the table's percentage base (findPercentBase), or null.
   function enhanceTable(table, pageKey) {
     table.classList.add('ing-table');
     enhanceProseText(table);
+    var percentBase = findPercentBase(table);
 
     var headRow = table.querySelector(':scope > thead > tr');
     if (headRow) {
@@ -729,6 +746,55 @@
         } catch (e) {}
       });
     });
+    return percentBase;
+  }
+
+  // A percentage table scales from what the cook has, so it needs no new
+  // syntax: a column headed "%" or "% of ...", and a row whose cell there is
+  // exactly 100%. That row is the base. Its amount, the first filled cell
+  // after the %, has to be a single mass or volume, or there's nothing to
+  // type against, and the table scales with the slider like any other. Runs
+  // before the checkbox cell goes in, and marks the table and the amount
+  // column's heading for createScaleUnitsController.
+  function findPercentBase(table) {
+    var headRow = table.querySelector(':scope > thead > tr');
+    if (!headRow) return null;
+    var heads = Array.prototype.slice.call(headRow.children);
+    var pctCol = heads.findIndex(function (th) { return th.textContent.trim().charAt(0) === '%'; });
+    if (pctCol < 1) return null;
+    var row = Array.prototype.find.call(table.querySelectorAll(':scope > tbody > tr'), function (tr) {
+      var cell = tr.children[pctCol];
+      return cell && cell.textContent.trim() === '100%';
+    });
+    if (!row) return null;
+
+    var col = pctCol + 1;
+    while (row.children[col] && !row.children[col].textContent.trim()) col++;
+    var qty = row.children[col] && row.children[col].querySelector('.qty');
+    if (!qty || qty.dataset.qtyKind !== 'single' || !UNIT_INFO[qty.dataset.qtyUnit]) return null;
+
+    // A glossary term's popover is in the cell's text, and isn't its name.
+    var nameCell = row.children[0].cloneNode(true);
+    nameCell.querySelectorAll('.pop').forEach(function (pop) { pop.remove(); });
+    var name = nameCell.textContent.trim().replace(/\s+/g, ' ');
+    // "Shoyu" reads "Scale based on shoyu"; "AP flour" keeps its capitals.
+    if (!/^.[A-Z]/.test(name)) name = name.charAt(0).toLowerCase() + name.slice(1);
+
+    table.classList.add('ing-table--percent');
+    return { table: table, qty: qty, name: name, pctCol: pctCol, amountCol: col, head: percentHead(heads[col]) };
+  }
+
+  // The amount column's heading, when it names an amount ("Per 1 kg",
+  // "Example: 250 ml shoyu"; "Weight" doesn't, and stays as it is). Kept out
+  // of apply()'s .qty walk by .ing-pct-head, so at the written amount it's
+  // back to its own words instead of the canonical "Per 1kg".
+  function percentHead(th) {
+    var qty = th && th.querySelector(':scope > .qty');
+    if (!qty) return null;
+    th.classList.add('ing-pct-head');
+    var after = document.createElement('div');
+    for (var n = qty.nextSibling; n; n = n.nextSibling) after.appendChild(n.cloneNode(true));
+    return { th: th, written: th.innerHTML, qty: qty, after: after.innerHTML };
   }
 
   // --- Config menu: scale recipe / change units ------------------------
@@ -775,11 +841,11 @@
     var lo = parseFloat(m[2]) * scale;
     function num(n) { return Number.isInteger(n) ? String(n) : String(Math.round(n * 10) / 10); }
     if (m[3] === undefined) {
-      var one = parseFloat(m[2]) % 1 === 0 ? Math.round(lo) : lo;
+      var one = parseFloat(m[2]) % 1 === 0 ? Math.max(1, Math.round(lo)) : lo;
       return prefix + num(one) + rest;
     }
     var hi = parseFloat(m[3]) * scale;
-    return prefix + Math.floor(lo) + '–' + Math.ceil(hi) + rest;
+    return prefix + Math.max(1, Math.floor(lo)) + '–' + Math.ceil(hi) + rest;
   }
 
   // Scale and units both live with the ingredient list now (buildPopupMenu
@@ -865,6 +931,103 @@
     };
   }
 
+  // Which units the row offers, by the base's family. The written unit is
+  // added if it's something else ("2 tbsp shoyu"), so the field can start in it.
+  var PERCENT_UNITS = { mass: ['g', 'kg', 'lb'], volume: ['ml', 'l', 'cup'] };
+
+  function percentUnits(base) {
+    var units = PERCENT_UNITS[base.family];
+    return units.indexOf(base.unit) === -1 ? [base.unit].concat(units) : units;
+  }
+
+  // Empty, zero, a range or a word gives null, and the table holds its last
+  // good amounts. "1,5" and ".5" are numbers; so is the "1." of a "1.36"
+  // still being typed.
+  function parseFieldAmount(text) {
+    var t = text.trim().replace(',', '.').replace(/\.$/, '').replace(/^\./, '0.');
+    var parsed = parseQtyToken(t);
+    return parsed && parsed.kind === 'single' && parsed.value > 0 ? parsed.value : null;
+  }
+
+  // Below this, the units stack under the amount: beside it, they'd run off
+  // a phone's edge. They're in another cell then, so CSS alone can't do it.
+  var PERCENT_STACK_QUERY = '(max-width: 680px)';
+  var REVERT_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" ' +
+    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>';
+
+  // "Scale based on ground pork [amount] [g kg lb]", the last row of the table's
+  // <thead>, under the headings, so each part lines up with its column at any width: the name
+  // over the names, the multiplier over the %, the amount over the amounts,
+  // the units over the Notes, or beside the amount if there are none. A <td>
+  // row, so the <th>s are still just the table's headings. Print hides it;
+  // the table prints at the amount shown. Added after enhanceTable has put in
+  // the checkbox column, whose cell here stays empty. `t` is findPercentBase's.
+  function buildPercentRow(base, t) {
+    function element(tag, className) {
+      var el = document.createElement(tag);
+      el.className = className;
+      return el;
+    }
+    var headRow = t.table.tHead.rows[0];
+    var tr = element('tr', 'ing-pct-row');
+    var cells = Array.prototype.map.call(headRow.children, function () {
+      return tr.appendChild(document.createElement('td'));
+    });
+    // The columns findPercentBase counted, plus the checkbox column.
+    var nameCell = cells[1], multCell = cells[t.pctCol + 1], amountCell = cells[t.amountCol + 1];
+    var notesCell = cells[t.amountCol + 2] || null;
+    cells[0].className = 'ing-check-cell';
+
+    nameCell.className = 'ing-pct-name';
+    nameCell.textContent = 'Scale based on ' + base.name;
+
+    var mult = element('span', 'ing-pct-mult mono');
+    mult.hidden = true;
+    multCell.appendChild(mult);
+
+    var input = element('input', 'ing-pct-input mono');
+    input.type = 'text';
+    input.inputMode = 'decimal';
+    input.autocomplete = 'off';
+    input.setAttribute('aria-label', 'Amount of ' + base.name);
+    var stack = element('div', 'ing-pct-stack');
+    stack.appendChild(input);
+    amountCell.className = 'ing-pct-amount';
+    amountCell.appendChild(stack);
+
+    var controls = element('div', 'ing-pct-controls');
+    var unitsRow = element('span', 'ing-units ing-pct-units');
+    unitsRow.setAttribute('role', 'group');
+    unitsRow.setAttribute('aria-label', 'Unit of ' + base.name);
+    var unitButtons = percentUnits(base).map(function (key) {
+      var btn = buildUnitButton(UNIT_LABELS[key][0], key);
+      delete btn.dataset.units;
+      btn.dataset.baseUnit = key;
+      unitsRow.appendChild(btn);
+      return btn;
+    });
+    controls.appendChild(unitsRow);
+
+    var reset = element('button', 'ing-pct-reset');
+    reset.type = 'button';
+    reset.innerHTML = REVERT_ICON;
+    reset.title = 'Back to ' + base.written;
+    reset.setAttribute('aria-label', reset.title);
+    controls.appendChild(reset);
+
+    var narrow = window.matchMedia(PERCENT_STACK_QUERY);
+    function place() {
+      tr.classList.toggle('is-stacked', narrow.matches);
+      (notesCell && !narrow.matches ? notesCell : stack).appendChild(controls);
+    }
+    narrow.addEventListener('change', place);
+    place();
+
+    headRow.parentNode.appendChild(tr);
+    return { input: input, unitButtons: unitButtons, mult: mult, reset: reset };
+  }
+
   // Owns the scale/units state for the whole page (a multi-component
   // recipe, e.g. dal-tadka's "## Dal" / "## Tadka", has several ingredient
   // headings, but scaling/units is a whole-recipe operation) and
@@ -873,7 +1036,15 @@
   // an earlier round of this branch also mounted a second, chrome-free
   // surface in the sidebar, which is why this is still a small
   // attach/apply object rather than a single closure.
-  function createScaleUnitsController(pageKey) {
+  //
+  // `percent` is the page's percentage tables (findPercentBase), or empty.
+  // With any, the first one's base sets the scale: amount typed / amount
+  // written, with no floor or cap. It's the written amounts that scale, not
+  // the % column (yeast is 1.7% of 600 g, or 10.2 g, and the recipe says 10
+  // g), so the written batch reads exactly as written. Their amounts ignore
+  // Units, which only picks the field's starting unit: imperial would turn
+  // 1.3 g of white pepper into 0.05 oz.
+  function createScaleUnitsController(pageKey, percent) {
     // Units are a general taste, kept site-wide (like the theme toggle);
     // scale is specific to this recipe's yield, kept per-page.
     var scaleKey = 'ing:scale:' + pageKey;
@@ -893,8 +1064,93 @@
       } catch (e) { return 'original'; }
     }
 
-    var state = { scale: readScale(), units: readUnits() };
+    var state = { scale: percent.length ? 1 : readScale(), units: readUnits() };
     var surface = null;
+    var row = null;
+
+    // The base, in its family's canonical unit (grams or ml), and the
+    // cook's amount: remembered as an amount, not a scale, so it still means
+    // what they have if the written recipe changes.
+    var amountKey = 'ing:amount:' + pageKey;
+    var base = null;
+    if (percent.length) {
+      var baseQty = percent[0].qty;
+      var written = baseQty.cloneNode(true);
+      renderQty(written, 1, 'original');
+      base = {
+        name: percent[0].name,
+        unit: baseQty.dataset.qtyUnit,
+        family: UNIT_INFO[baseQty.dataset.qtyUnit].family,
+        amount: parseFloat(baseQty.dataset.qtyValue) * UNIT_INFO[baseQty.dataset.qtyUnit].base,
+        written: written.textContent
+      };
+      state.amount = base.amount;
+      state.fieldUnit = startUnit();
+      try {
+        var saved = JSON.parse(localStorage.getItem(amountKey));
+        if (saved && saved.amount > 0 && percentUnits(base).indexOf(saved.unit) !== -1) {
+          state.amount = saved.amount;
+          state.fieldUnit = saved.unit;
+          state.scale = scaleFor(saved.amount);
+        }
+      } catch (e) {}
+    }
+
+    function startUnit() {
+      if (state.units === 'imperial') return base.family === 'mass' ? 'lb' : 'cup';
+      return base.unit;
+    }
+    // Exactly 1 at the written amount, which is what turns everything back
+    // to its written form.
+    function scaleFor(amount) {
+      return Math.abs(amount - base.amount) < base.amount * 1e-6 ? 1 : amount / base.amount;
+    }
+    function saveAmount() {
+      try {
+        if (state.scale === 1 && state.fieldUnit === startUnit()) localStorage.removeItem(amountKey);
+        else localStorage.setItem(amountKey, JSON.stringify({ amount: state.amount, unit: state.fieldUnit }));
+      } catch (e) {}
+    }
+    function fieldValue() {
+      var value = state.amount / UNIT_INFO[state.fieldUnit].base;
+      var fine = state.fieldUnit === 'g' || state.fieldUnit === 'ml';
+      return String(parseFloat(value.toFixed(fine ? 1 : 2)));
+    }
+
+    function syncRow() {
+      if (!row) return;
+      // Touches values only: the field being typed in keeps its text and caret.
+      if (document.activeElement !== row.input) {
+        row.input.value = fieldValue();
+        row.input.removeAttribute('aria-invalid');
+      }
+      row.unitButtons.forEach(function (btn) {
+        var on = btn.dataset.baseUnit === state.fieldUnit;
+        btn.classList.toggle('active', on);
+        btn.setAttribute('aria-pressed', String(on));
+      });
+      var changed = state.scale !== 1;
+      row.mult.textContent = parseFloat(state.scale.toFixed(2)) + '×';
+      row.mult.hidden = !changed;
+      // Its space stays, so the units don't move as an amount is typed.
+      row.reset.style.visibility = changed ? '' : 'hidden';
+    }
+
+    // "Per 1 kg" becomes "For 1.36kg"; "Example: 250 ml shoyu", "For 400ml
+    // shoyu". Each table's own heading amount scales, so a page's second
+    // table reads right too.
+    function renderPercentHeads() {
+      percent.forEach(function (t) {
+        var head = t.head;
+        if (!head) return;
+        if (state.scale === 1) {
+          head.th.innerHTML = head.written;
+          return;
+        }
+        renderQty(head.qty, state.scale, 'original', true);
+        head.th.innerHTML = 'For ' + head.qty.outerHTML + head.after;
+      });
+    }
 
     // The recipe's yield, from the sidebar's meta rows (single.html).
     function metaBase(id, attr) {
@@ -914,6 +1170,7 @@
     }
 
     function syncControls() {
+      syncRow();
       if (!surface) return;
       var s = surface.scaleSlider;
       s.value = String(state.scale);
@@ -935,8 +1192,13 @@
 
     function apply() {
       document.querySelectorAll('.qty').forEach(function (qty) {
-        renderQty(qty, state.scale, state.units);
+        if (qty.closest('.ing-pct-head')) return;
+        var inPercent = qty.closest('.ing-table--percent');
+        // Rounded everywhere once a typed amount scales the page: 1.67× would
+        // otherwise leave "583.33g" in the Method.
+        renderQty(qty, state.scale, inPercent ? 'original' : state.units, base && state.scale !== 1);
       });
+      renderPercentHeads();
       document.querySelectorAll('.temp').forEach(function (temp) {
         renderTemp(temp, state.units);
       });
@@ -967,7 +1229,41 @@
       });
     }
 
-    return { attachSurface: attachSurface, apply: apply };
+    function attachRow(r) {
+      row = r;
+      row.input.addEventListener('input', function () {
+        var value = parseFieldAmount(row.input.value);
+        if (value === null) {
+          row.input.setAttribute('aria-invalid', 'true');
+          return;
+        }
+        row.input.removeAttribute('aria-invalid');
+        state.amount = value * UNIT_INFO[state.fieldUnit].base;
+        state.scale = scaleFor(state.amount);
+        saveAmount();
+        apply();
+      });
+      // Leaving the field shows the amount in force, tidied or restored.
+      row.input.addEventListener('blur', syncRow);
+      // The same amount in another unit: nothing else on the page changes.
+      row.unitButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          state.fieldUnit = btn.dataset.baseUnit;
+          saveAmount();
+          syncRow();
+        });
+      });
+      row.reset.addEventListener('click', function () {
+        state.amount = base.amount;
+        state.scale = 1;
+        state.fieldUnit = startUnit();
+        saveAmount();
+        apply();
+        row.input.focus();
+      });
+    }
+
+    return { attachSurface: attachSurface, attachRow: attachRow, base: base, apply: apply };
   }
 
   // The gear-icon disclosure, anchored next to the first Ingredients
@@ -1050,6 +1346,12 @@
     hideIntroQuotes(root);
     hideHiddenSections(root);
 
+    var percent = [];
+    function addTable(table) {
+      var base = enhanceTable(table, pageKey);
+      if (base) percent.push(base);
+    }
+
     var headings = root.querySelectorAll('h2[data-ing-heading="true"]');
     headings.forEach(function (h2) {
       var el = h2.nextElementSibling;
@@ -1057,10 +1359,10 @@
         if (el.tagName === 'UL') {
           enhanceList(el, pageKey);
         } else if (el.tagName === 'TABLE') {
-          enhanceTable(el, pageKey);
+          addTable(el);
         } else if (el.classList.contains('table-scroll') && el.querySelector(':scope > table')) {
           // render-table.html wraps every table in a scroll container.
-          enhanceTable(el.querySelector(':scope > table'), pageKey);
+          addTable(el.querySelector(':scope > table'));
         } else if (!/^H[1-6]$/.test(el.tagName)) {
           // A multi-component recipe (FORMAT.md) has no separate "Method"
           // heading — the component's own heading ("## Cake", "## Icing")
@@ -1095,8 +1397,13 @@
     // quantities/temperatures rendered even on the rare recipe with no
     // Ingredients heading to anchor the popup to); the popup itself only
     // mounts when there's a heading to attach it to.
-    var controller = createScaleUnitsController(pageKey);
-    if (headings.length) {
+    var controller = createScaleUnitsController(pageKey, percent);
+    // A percentage page has one row in its first table and no menu: the row
+    // sets the scale, and a saved Units setting still applies. Scale is
+    // page-wide, so a second table follows from its own written amounts.
+    if (controller.base) {
+      controller.attachRow(buildPercentRow(controller.base, percent[0]));
+    } else if (headings.length) {
       headings[0].appendChild(buildPopupMenu(controller));
     }
     controller.apply();

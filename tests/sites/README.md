@@ -25,6 +25,8 @@ hugo --source tests/sites/everything --panicOnWarning --destination /tmp/fugu-ev
 
 The content is made up for testing, written to exercise templates rather than to be cooked from.
 
+`tests/percent_scaling.py` drives `everything`'s percentage tables in headless Chrome, since `check.py` can't see what `ingredients.js` does to a page. It needs Google Chrome, and CI doesn't run it.
+
 ## Fence spec fixtures
 
 The `formula`, `stack` and `flow` hooks follow hugo-warped's shared fence spec, which keeps a fixture for each case (`fences/fixtures/<type>/`). Its runner builds them all through Fugu's hooks and checks each one's warnings, fallback and drawn items. From a hugo-warped checkout:

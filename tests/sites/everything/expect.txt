@@ -29,6 +29,14 @@ essays/cooking-reflections/why-ratios/index.html: !id="recipe-sidebar"
 reference/rice-ratios/index.html: reading-sidebar
 the-food-log/2026-september/index.html: reading-sidebar
 the-food-log/2026-september/index.html: href="/recipes/veg-patties/"
+# Trailing vault tags: off the heading, the contents and the sidebar, with
+# the anchor as it was. A number or a mid-heading tag stays.
+the-food-log/2026-september/index.html: !#p0
+the-food-log/2026-september/index.html: !Recipe hunt #
+the-food-log/2026-september/index.html: Recipe hunt</a>
+the-food-log/2026-september/index.html: id="recipe-hunt-p0-todo"
+the-food-log/2026-september/index.html: Pho #1
+the-food-log/2026-september/index.html: Stock #todo first
 
 # Taxonomies: cuisine pages, and the principle tag's definition and essay.
 cuisine/american/index.html: class="rcard
@@ -75,7 +83,7 @@ recipes/veg-patties/index.html: type="application/rss+xml" href="/recipes/index.
 essays/cooking-reflections/why-ratios/index.html: type="application/rss+xml"
 recipes/index.xml: /recipes/veg-patties/
 
-# Methods: the methods list (the method tag's page, kind: method), a
+# Methods: the methods list (the method tag's page, params.kind: method), a
 # blueprint (a folder in the essay section's methods folder, laid out by
 # the essays list), its parts (by weight) and builds (by era, then
 # undated), the lineage (a draft build faint), part navigation, and the

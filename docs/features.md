@@ -41,6 +41,8 @@ The quantity at the start of each line is picked out, and a menu beside the firs
 
 The scale is saved per recipe; the unit choice is saved once for the whole site, since it's a reader's preference rather than a recipe's. A multi-component recipe has one menu that covers every component.
 
+A [percentage table](recipe-format.md#percentage-tables) scales from what you have instead: a row under the table's headings reads "Scale based on AP flour", with the amount over the amounts column, and typing an amount sets the scale for the page, with no 1× floor or 5× cap. The field takes g, kg or lb for a weight and ml, L or cup for a volume, and switching unit keeps the amount. Empty, zero or unreadable input holds the last good amounts. The amount is saved per recipe, and a button beside the units takes you back to the written batch. These pages have no menu. A Units setting saved on another recipe still sets the field's starting unit and converts the method, but not the table, whose amounts stay in the units they're written in (1.3 g of white pepper isn't 0.05 oz). The row doesn't print; the table prints at the amount shown.
+
 Conversion understands English unit words only (cups, tbsp, ounces, grams, and so on). An optional Kelvin setting exists, mostly as a joke: `params.recipe.enableKelvin`.
 
 ## Formula diagrams

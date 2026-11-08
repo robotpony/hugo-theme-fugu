@@ -571,6 +571,27 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
 .ing-btn.active { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); text-decoration: none; } /* Blowfish underlines any .active */
 .ing-btn:focus-visible { outline: 2px solid var(--fugu-accent); outline-offset: -2px; }
 
+/* The "Scale based on" row under a percentage table's headings (ingredients.js's
+   buildPercentRow). Its cells take the body cells' side padding, and the stack
+   sits out by the input's padding and border, less the 3px a quantity has of
+   its own, so its digits line up with the amounts below. */
+.ing-pct-row td { padding: 8px; vertical-align: middle; }
+.ing-pct-name { font-style: italic; }
+.ing-pct-stack { display: flex; align-items: center; gap: 8px; margin-left: -6px; white-space: nowrap; }
+.ing-pct-row.is-stacked .ing-pct-stack { flex-direction: column; align-items: flex-start; }
+.ing-pct-input {
+  width: 4.8em; padding: 4px 8px; font-size: 1rem; text-align: left; color: var(--fugu-ink); background: transparent;
+  border: 1px solid var(--fugu-border); border-radius: 4px;
+}
+.ing-pct-input:focus-visible { outline: 2px solid var(--fugu-accent); outline-offset: -1px; }
+.ing-pct-input[aria-invalid="true"] { border-color: var(--fugu-accent-strong); }
+.ing-pct-controls { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.ing-pct-units { display: inline-grid; }
+.ing-pct-mult { color: var(--fugu-ink-faint); }
+.ing-pct-mult[hidden] { display: none; }
+.ing-pct-reset { display: inline-flex; padding: 4px; color: var(--fugu-accent-strong); background: none; border: 0; cursor: pointer; }
+@media print { .ing-pct-row { display: none !important; } }
+
 /* ---------------------------------------------------------------------
  * Recipe sidebar (single.html, filled by automagic-sidebar.js). Below lg
  * it starts collapsed behind .recipe-sidebar-toggle.

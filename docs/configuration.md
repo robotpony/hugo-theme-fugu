@@ -135,7 +135,7 @@ Methods are pages that explain how a kind of food or a process works in general,
 | Key | What it is |
 | --- | --- |
 | `folder` | A folder in the essay section (`content/essays/methods/`). A page in it, at any depth, is a method; the folder decides, not the page's tags. |
-| `tag` | Without a methods section, the tag whose term page is the methods list, when its `content/tags/<tag>/_index.md` sets `kind: method`. The method chip links there. With one, the tag's pages that aren't methods are the list's further reading. |
+| `tag` | Without a methods section, the tag whose term page is the methods list, when its `content/tags/<tag>/_index.md` sets `params: {kind: method}`. The method chip links there. With one, the tag's pages that aren't methods are the list's further reading. |
 | `label` | The method chip's words. |
 | `icon` | An SVG in `assets/` (the site's, else Fugu's fan-out), inlined so it takes the text colour. `""` leaves the chip without one. |
 | `lineage` | Where a blueprint's lineage timeline gets its entries: `"builds"` (each build's `era`, the default), `"table"` (the history table in the blueprint's body), or `"both"`. A blueprint's own `lineage:` wins ([frontmatter.md](frontmatter.md#history-tables)). |

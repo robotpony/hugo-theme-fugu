@@ -12,3 +12,15 @@ A month of patties and rice.
 ## Tuesday, September 15th
 
 Rice ratio tests, see [[Rice ratios]].
+
+### Recipe hunt #p0 #todo
+
+Vault tags at a heading's end stay in the source and off the page.
+
+### Pho #1
+
+A number isn't a tag.
+
+### Stock #todo first
+
+A tag mid-heading stays.
