@@ -4,9 +4,9 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ## Unreleased
 
-### Trying (branch `hugo-warped-module`)
+## v0.2.0 (2026-11-07)
 
-- The `formula`, `stack` and `flow` hooks, and the card strips, read their blocks with hugo-warped's parse partials (`hugo-warped/parse.html`) and print warnings with its `warn.html`, instead of Fugu's own parsing; the drawing code and classes are unchanged. Fugu imports hugo-warped as a Hugo module (`[[module.imports]]` in its `hugo.toml`, pinned in `go.mod`), so a module install gets it with Fugu and a site's theme list stays `["fugu", "blowfish"]`. A submodule site checks hugo-warped out in `themes/`, pinned, and maps the path to it: `[module] replacements = "github.com/robotpony/hugo-warped -> hugo-warped"` (`docs/getting-started.md`). Warnings now read `formula [code]: "<line>" in "<file:line:col>"`.
+Drinks, `flow` blocks, the lineage timeline, the glossary page, percentage-table scaling, and the hugo-warped module for fence parsing, plus the Food Log, Mechanic and visual-pass changes from Not a Chef. A submodule install now needs hugo-warped checked out beside Fugu (`docs/getting-started.md`).
 
 ### Added
 
@@ -37,6 +37,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Changed
 
+- The `formula`, `stack` and `flow` hooks, and the card strips, read their blocks with hugo-warped's parse partials (`hugo-warped/parse.html`) and print warnings with its `warn.html`, instead of Fugu's own parsing; the drawing code and classes are unchanged. Fugu imports hugo-warped as a Hugo module (`[[module.imports]]` in its `hugo.toml`, pinned in `go.mod`), so a module install gets it with Fugu and a site's theme list stays `["fugu", "blowfish"]`. A submodule site checks hugo-warped out in `themes/`, pinned, and maps the path to it: `[module] replacements = "github.com/robotpony/hugo-warped -> hugo-warped"` (`docs/getting-started.md`). Warnings now read `formula [code]: "<line>" in "<file:line:col>"`.
 - A page's tag chips are worded as its card's are: the tag as written, lower case, not Hugo's title-cased name ("make-ahead", not "Make-Ahead"). An essay's format tag reads as its folder does on the card ("food memories"), and a tag naming the page's blueprint is left out beside the blueprint chip (`partials/article-meta/basic.html`).
 - A Mechanic with no sidebar slot (`mechanic` left out of `recipeSidebar`) is wrapped in place in `div.mechanic-callout` by `automagic-sidebar.js`: its heading and everything up to the next h2, styled as a callout in `fugu.css`. A site with `fugu.styles = false` styles it itself. With JavaScript off it stays a plain section.
 - The Food Log's Months list is grouped by year, newest first: a year label (`.rs-year`) over the newest year and the current page's year, and every other year folded into a `details.rs-year-fold` whose summary gives its month count. A plain month's label drops its year ("October", not "October 2026"); seasons and multi-month titles keep theirs ("Fall 2024"), and "undated" is gone: a month shows its day count only when it has days (`partials/reading-sidebar/log-month-row.html`). New classes, styled in `fugu.css`; a site with `fugu.styles = false` styles them itself.
@@ -60,6 +61,7 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Fixed
 
+- `docs/getting-started.md` pins hugo-warped at `f1846ef`, as `go.mod` and CI do; `4045b3f` was older than the glossary page needs.
 - The glossary's search placeholder is "Search the glossary", short enough not to clip at phone widths.
 - A link's trailing arrow (wiki links, popover and draft links, "N more") is joined to its last word with a no-break space, so it can't wrap onto a line alone. A site with `fugu.styles = false` makes the same change in its own CSS.
 - The sidebar lineage shows a year once inside a zoomed stretch: a label at a ticked year ('57) leaves its year to the tick, kept for screen readers (`.y.sr-only`).

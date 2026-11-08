@@ -2,9 +2,9 @@
 
 The work list for taking Fugu to a theme other Blowfish users can install. Finished items are removed as they land; `CHANGELOG.md` and git history record them (the last full plan is `75a3a89`, the last long one `183c807`, the last before `v0.1.0` `102abb1`, the last before this squash `13b763a`). Section numbers are kept, since other files cite them.
 
-**Release path:** `v0.1.0` is tagged (2026-10-17): installs by Hugo modules or submodules, checked by CI's install job. Unreleased has grown since (drinks, `flow` blocks, the lineage timeline, the hugo-warped module), so `v0.2.0` is due once §10's hugo-warped item is settled. `v1.0.0` needs §4–§7 and the §10 review. Features come after 1.0.
+**Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §4–§7 and the §10 review. Features come after 1.0.
 
-**Next:** settle the hugo-warped module and tag `v0.2.0`; then §5's class inventory (mechanical; it sizes the design split), or §4 as a smaller start.
+**Next:** §5's class inventory (mechanical; it sizes the design split), or §4 as a smaller start.
 
 ## 4. Translation
 
@@ -52,7 +52,6 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
 
 ## 10. Release
 
-- [ ] Settle the hugo-warped module: it's merged to `main` and Not a Chef builds with it, but `CHANGELOG.md` still files it under "Trying (branch `hugo-warped-module`)". Move that entry into Changed and delete the branch, or back it out. Then tag `v0.2.0`.
 - [ ] Finish checking the basic styles in Chrome: hover states (popovers, card hover); the principle chip's fill is faint on light-`primary-100` schemes (autumn); "On cards" wraps on the principle tag page's sidebar.
 - [ ] Check the README's images in GitHub's rendering, light and dark.
 - [ ] Code review in three commit series: `layouts/`, `assets/js/`, `tools/`. Bugs, dead code, Not a Chef leftovers, stale comments. One area per pass with `/code-review high`; record each finding as fixed, won't fix (why), or deferred; check template and JS fixes with `tests/check.py --compare` and Chrome at both widths, light and dark. Angles from Not a Chef (2026-10-17):
