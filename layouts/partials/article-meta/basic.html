@@ -57,7 +57,8 @@
     {{ end }}
   {{ end }}
 
-  {{ if $shouldShowDate }}
+  {{/* An undated page (a reference guide, About) shows no date, not 0001. */}}
+  {{ if and $shouldShowDate (not .Date.IsZero) }}
     {{ $meta.Add "partials" (slice (partial "meta/date.html" .Date)) }}
   {{ end }}
 
@@ -133,7 +134,7 @@
     {{ with partial "blueprint/of.html" $context }}{{ $bpTag = urlize .blueprint.Title }}{{ end }}
     {{ $folder := "" }}
     {{ if and (in (slice "essay" "method") (partialCached "section/role.html" .Section .Section)) .File }}
-      {{ $folder = path.Base (strings.TrimSuffix "/" .File.Dir) }}
+      {{ $folder = path.Base (strings.TrimSuffix "/" (partial "section/folder.html" .)) }}
       {{ if eq $folder .Section }}{{ $folder = "" }}{{ end }}
     {{ end }}
     {{/* The folder's format in the singular, the tag's usual form:

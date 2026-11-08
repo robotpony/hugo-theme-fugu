@@ -31,9 +31,9 @@
 {{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{{ if eq  .Title  .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{.}} on {{ end }}{{ .Site.Title }}{{ end }}</title>
+    <title>{{ if or (eq .Title .Site.Title) (not .Title) }}{{ .Site.Title }}{{ else }}{{ i18n "fugu.feed_title" (dict "Title" .Title "Site" .Site.Title) }}{{ end }}</title>
     <link>{{ .Permalink }}</link>
-    <description>Recent content {{ if ne  .Title  .Site.Title }}{{ with .Title }}in {{.}} {{ end }}{{ end }}on {{ .Site.Title }}</description>
+    <description>{{ if or (eq .Title .Site.Title) (not .Title) }}{{ i18n "fugu.feed_description" (dict "Site" .Site.Title) }}{{ else }}{{ i18n "fugu.feed_description_in" (dict "Title" .Title "Site" .Site.Title) }}{{ end }}</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>{{ site.Language.Locale }}</language>{{ with .Site.Params.Author.email }}
     <managingEditor>{{.}}{{ with $.Site.Params.Author.name }} ({{.}}){{end}}</managingEditor>{{end}}{{ with .Site.Params.Author.email }}
@@ -55,7 +55,7 @@
     <item>
       <title>{{ .Title }}</title>
       <link>{{ .Permalink }}</link>
-      <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
+      {{ if not .Date.IsZero }}<pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>{{ end }}
       {{ with .Site.Params.Author.email }}<author>{{.}}{{ with $.Site.Params.Author.name }} ({{.}}){{end}}</author>{{end}}
       <guid>{{ .Permalink }}</guid>
       <description>{{ .Summary | transform.XMLEscape | safeHTML }}</description>

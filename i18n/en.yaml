@@ -16,6 +16,7 @@ fugu:
     months: {one: "{{ .Count }} month", other: "{{ .Count }} months"}
     parts: {one: "{{ .Count }} part", other: "{{ .Count }} parts"}
     builds: {one: "{{ .Count }} build", other: "{{ .Count }} builds"}
+    subsections: {one: "{{ .Count }} subsection", other: "{{ .Count }} subsections"}
   page_of: "page {{ .Page }} of {{ .Pages }}"
   n_more: {one: "{{ .Count }} more", other: "{{ .Count }} more"}
   minutes: "{{ .Count }} min"
@@ -97,9 +98,14 @@ fugu:
   # Paging between pages.
   previous: Previous
   next: Next
+  pagination: Pages
+  previous_page: Previous page
+  next_page: Next page
 
   # Search.
   search_sections: "Search {{ .Sections }}"
+  search_recipes: "Search {{ .Count }} recipes, tags"
+  search_recipes_cuisines: "Search {{ .Count }} recipes, tags, cuisines"
   search_words:
     recipes: recipes
     essays: essays
@@ -111,11 +117,20 @@ fugu:
     letters: Jump to letter
     none: No entry matches. Try a shorter word, or another form of it.
     used_in: Used in
+    also: also
     and_more: {one: "and {{ .Count }} more", other: "and {{ .Count }} more"}
 
   # Links and page descriptions.
   not_found: "Not found: {{ .Target }}"
   feed_title: "{{ .Title }} on {{ .Site }}"
+  feed_description: "Recent content on {{ .Site }}"
+  feed_description_in: "Recent content in {{ .Title }} on {{ .Site }}"
+
+  # A formula diagram's spoken form, for screen readers: "flour to water".
+  formula:
+    plus: plus
+    to: to
+    then: then
   description:
     log: "Kitchen notes from {{ .Title }}: {{ .Entries }}."
     term: "Recipes and notes tagged “{{ .Term }}” in {{ .Site }}."

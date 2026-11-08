@@ -68,7 +68,7 @@
       <dl class="glossary">
         {{ range .entries }}
           <dt id="{{ .anchor }}"><dfn>{{ .term }}</dfn>
-            {{- with .also }} <span class="also">also {{ range $i, $a := . }}{{ if $i }}, {{ end }}<i>{{ $a }}</i>{{ end }}</span>{{ end -}}
+            {{- with .also }} <span class="also">{{ i18n "fugu.glossary.also" }} {{ range $i, $a := . }}{{ if $i }}, {{ end }}<i>{{ $a }}</i>{{ end }}</span>{{ end -}}
           </dt>
           <dd>
             {{- with .page }}

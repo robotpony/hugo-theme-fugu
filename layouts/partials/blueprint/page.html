@@ -75,7 +75,7 @@
   {{ if or $definition .Description }}
     <div class="method-intro blueprint-intro prose dark:prose-invert article-content">
       {{ with $definition }}{{ $.RenderString (dict "display" "block") . }}{{ else }}<p>{{ $.Description }}</p>{{ end }}
-      {{ with $list }}<a class="read-essay" href="{{ .RelPermalink }}">All {{ lower .Title }} →</a>{{ end }}
+      {{ with $list }}<a class="read-essay" href="{{ .RelPermalink }}">{{ i18n "fugu.all_of" (dict "Name" (lower .Title)) }} →</a>{{ end }}
     </div>
   {{ end }}
 

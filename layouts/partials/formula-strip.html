@@ -34,7 +34,7 @@
     {{- $slots = $slots | append (dict "op" $op "icons" .icons "label" $label "qty" $qty "tip" $tip) }}
   {{- end }}
   {{- $ratio := eq $kind ":" }}
-  {{- $words := dict "+" "plus" ":" "to" "→" "then" }}
+  {{- $words := dict "+" (i18n "fugu.formula.plus") ":" (i18n "fugu.formula.to") "→" (i18n "fugu.formula.then") }}
   {{- $aria := slice }}
   {{- range $slots }}
     {{- $part := cond $ratio (trim (printf "%s %s" .label .qty) " ") .label }}

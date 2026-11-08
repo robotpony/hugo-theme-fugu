@@ -13,7 +13,15 @@
     text     its sentence (plain text)
     note     an optional italic line under it (plain text)
     link     an optional page to link to, and more, the link's words
+
+  The trigger is described by the popover's sentence (aria-describedby on
+  its link), so a screen reader reads the definition on focus, as the
+  glossary's popovers do. A popover with a link in it isn't a tooltip
+  (tooltips hold nothing to tab to), so only one without keeps
+  role="tooltip".
 */}}
 {{- if .card }}{{ .trigger | safeHTML }}{{ else -}}
-<span class="pop-host pop-{{ .kind }}">{{ .trigger | safeHTML }}<span class="pop" role="tooltip"><span class="pop-head">{{ .head | safeHTML }}</span><span class="pop-text">{{ .text }}</span>{{ with .note }}<span class="pop-note">{{ . }}</span>{{ end }}{{ with .link }}<a class="pop-link" href="{{ .RelPermalink }}">{{ $.more }}</a>{{ end }}</span></span>
+{{- $id := printf "pop-%s-%s" .kind (substr (md5 (printf "%v%v" .head .text)) 0 8) }}
+{{- $trigger := replaceRE `^(\s*<a )` (printf `${1}aria-describedby="%s" ` $id) .trigger 1 -}}
+<span class="pop-host pop-{{ .kind }}">{{ $trigger | safeHTML }}<span class="pop"{{ if not .link }} role="tooltip"{{ end }}><span class="pop-head">{{ .head | safeHTML }}</span><span class="pop-text" id="{{ $id }}">{{ .text }}</span>{{ with .note }}<span class="pop-note">{{ . }}</span>{{ end }}{{ with .link }}<a class="pop-link" href="{{ .RelPermalink }}">{{ $.more }}</a>{{ end }}</span></span>
 {{- end }}

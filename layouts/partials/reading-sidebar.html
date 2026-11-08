@@ -14,7 +14,10 @@
 {{ $sectionTitle := "" }}
 {{ if eq $section "method" }}{{ $section = "essay" }}{{ $sectionTitle = .CurrentSection.Title }}{{ end }}
 {{ $isAbout := and (eq .Section "") (eq .Kind "page") }}
-{{ $recipes := where site.RegularPages "Section" (partial "section/name.html" "recipe") }}
+{{ $recipes := slice }}
+{{ with partial "section/name.html" "recipe" }}{{ $recipes = where site.RegularPages "Section" . }}{{ end }}
+{{/* Recipes and drinks, for matching [[wiki links]] below. */}}
+{{ $linkable := where site.RegularPages "Section" "in" (partialCached "section/recipe-sections.html" "s") }}
 {{/* Sections automagic-sidebar.js moves into the slots below (Notes,
   Mechanic, ...) are dropped from "On this page": their anchors end up in
   the sidebar itself, hidden, so a jump link would go nowhere. One marked
@@ -95,7 +98,7 @@
           <div class="rs-toc-top">
             <a href="#{{ $g.h.id }}">{{ $g.h.title }}</a>
             {{ if and $collapse $g.subs }}
-              <button type="button" class="rs-toc-toggle" aria-expanded="true" aria-controls="rs-toc-{{ $i }}" aria-label="{{ $g.h.title }}: {{ len $g.subs }} subsections" hidden>{{ len $g.subs }}</button>
+              <button type="button" class="rs-toc-toggle" aria-expanded="true" aria-controls="rs-toc-{{ $i }}" aria-label="{{ $g.h.title }}: {{ i18n "fugu.count.subsections" (len $g.subs) }}" hidden>{{ len $g.subs }}</button>
             {{ end }}
           </div>
           {{ with $g.subs }}
@@ -124,7 +127,7 @@
     {{ $linked := slice }}
     {{ range findRESubmatch `\[\[([^\]|]+)(?:\|[^\]]*)?\]\]` .RawContent -1 }}
       {{ $norm := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower (index . 1))) }}
-      {{ range $recipes }}
+      {{ range $linkable }}
         {{ if eq (strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower .Title))) $norm }}
           {{ $linked = $linked | append . }}
         {{ end }}
@@ -158,10 +161,10 @@
     blueprint's parts and builds, which keep its order (blueprint/info.html:
     parts by weight, builds by era). */}}
   {{ if eq $section "essay" }}
-    {{ $dir := .File.Dir }}
+    {{ $dir := partial "section/folder.html" . }}
     {{ $siblings := slice }}
     {{ range where site.RegularPages "Section" .Section }}
-      {{ if eq .File.Dir $dir }}{{ $siblings = $siblings | append . }}{{ end }}
+      {{ if eq (partial "section/folder.html" .) $dir }}{{ $siblings = $siblings | append . }}{{ end }}
     {{ end }}
     {{ $siblings = sort $siblings "Title" }}
     {{ with partial "blueprint/of.html" $page }}
@@ -242,7 +245,8 @@
       <h2 class="rs-label">{{ i18n "fugu.cookbook_in_numbers" }}</h2>
       <div class="rs-numbers">
         {{ $recipeSection := partial "section/name.html" "recipe" }}
-        {{ $rows := slice (dict "label" (i18n "fugu.recipes") "n" (len $recipes) "to" (cond (ne $recipeSection "") (site.GetPage $recipeSection) nil)) }}
+        {{ $rows := slice }}
+        {{ with $recipes }}{{ $rows = $rows | append (dict "label" (i18n "fugu.recipes") "n" (len .) "to" (site.GetPage $recipeSection)) }}{{ end }}
         {{ with site.Taxonomies.cuisine }}
           {{ $rows = $rows | append (dict "label" (i18n "fugu.cuisines") "n" (len .) "to" (site.GetPage "/cuisine")) }}
         {{ end }}

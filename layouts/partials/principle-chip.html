@@ -34,7 +34,7 @@
           {{ $def = index (split $head "\n\n") 0 }}
         {{ end }}
       {{ end }}
-      {{ $def = $def | markdownify | plainify | htmlUnescape | truncate 200 }}
+      {{ $def = replaceRE `\[\[(?:[^\]|]*\|)?([^\]]+)\]\]` "$1" $def | markdownify | plainify | htmlUnescape | truncate 200 }}
     {{ end }}
     {{ $chip := printf `<a class="principle-chip principle-%s" href="%s">%s%s</a>` .slug .page.RelPermalink .icon $label }}
     {{ if and $compact (not .cardLabel) }}

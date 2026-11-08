@@ -10,6 +10,9 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Fixed
 
+- Principle popovers show a wiki link's text, not its brackets. A leaf-bundle essay (`foo/index.md`) keeps its folder's format on its card and in its tags, and its siblings in the sidebar (`partials/section/folder.html`). "Recipes in this essay" includes drinks. An undated page shows no date in its header and has no pubDate in the feed, instead of January 1, 0001.
+- Accessibility: a principle or method chip is described by its popover's sentence (`aria-describedby`), and a popover holding a link is no longer `role="tooltip"`; the principle icon is `aria-hidden`. List pagination is a `nav` labelled "Pages", with named previous and next links and `aria-current` on the current page.
+- The remaining English is in `i18n`: list search placeholders, the feed's title and description, a formula diagram's spoken words, the glossary's "also", and the "N subsections" toggle label.
 - Recipe and cuisine page descriptions and the RSS link title are in `i18n` too (`fugu.description.recipe`, `fugu.description.cuisine`, `fugu.feed_title`); the site search placeholder is cached per language; part navigation escapes its translated labels; a recipe list called with a noun that has no `fugu.count` key prints the noun as given.
 - `fugu.css`: the soft accent fill (principle and method chips, hovers, the current page) is a tint of `primary-500`, so it shows on schemes whose `primary-100` is white (autumn). Meta rail labels no longer wrap ("On cards" on a principle tag page).
 - A count of one reads "1 recipe" and "1 entry" on tag and cuisine pages, not "1 recipes" and "1 entries".

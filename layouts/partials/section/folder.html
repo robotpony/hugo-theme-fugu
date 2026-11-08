@@ -1,0 +1,13 @@
+{{/*
+  The folder a page's file sits in, bundle-aware: for a leaf bundle
+  (essays/food-memories/foo/index.md) it's the bundle's parent
+  (essays/food-memories/), so a bundled essay keeps its format and its
+  siblings. "" for a page with no file. Returns the folder path, ending in
+  a slash; path.Base of it is the folder's name.
+*/}}
+{{ $dir := "" }}
+{{ with .File }}
+  {{ $dir = .Dir }}
+  {{ if eq $.BundleType "leaf" }}{{ $dir = printf "%s/" (path.Dir (strings.TrimSuffix "/" $dir)) }}{{ end }}
+{{ end }}
+{{ return $dir }}

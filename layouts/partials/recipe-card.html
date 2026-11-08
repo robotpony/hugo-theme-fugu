@@ -88,8 +88,8 @@
   {{ range $tags }}{{ if ne (urlize .) $methodTag }}{{ $own = $own | append . }}{{ end }}{{ end }}
   {{ $tags = $own }}
 {{ else if $isEssay }}
-  {{ $folder := path.Base (strings.TrimSuffix "/" .File.Dir) }}
-  {{ $tags = cond (eq $folder .Section) (slice) (slice (replace $folder "-" " ")) }}
+  {{ $folder := path.Base (strings.TrimSuffix "/" (partial "section/folder.html" .)) }}
+  {{ $tags = cond (or (eq $folder .Section) (eq $folder ".")) (slice) (slice (replace $folder "-" " ")) }}
 {{ end }}
 {{ $room := $slots }}
 {{ if $cuisine }}{{ $room = sub $room 1 }}{{ end }}

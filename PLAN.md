@@ -51,7 +51,13 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
 ## 10. Release
 
 - [ ] Check the README's images in GitHub's rendering, light and dark.
-- [ ] Code review in three commit series: `layouts/`, `assets/js/`, `tools/`. Bugs, dead code, Not a Chef leftovers, stale comments. One area per pass with `/code-review high`; record each finding as fixed, won't fix (why), or deferred; check template and JS fixes with `tests/check.py --compare` and Chrome at both widths, light and dark. Angles from Not a Chef (2026-10-17):
+- [ ] Code review in three commit series: `layouts/`, `assets/js/`, `tools/`. `layouts/` done (2026-11-07, `/code-review high`), outcomes:
+  - Fixed: wiki links shown raw in principle popovers; a leaf-bundle essay's card, format chip and siblings (`section/folder.html`); drinks missing from "Recipes in this essay" and a recipe count when the recipe section is off; an undated page's 0001 date in the header and RSS; concept popovers' ARIA (`aria-describedby`, no `role="tooltip"` around a link, the principle icon `aria-hidden`); pagination as a labelled `nav` with `aria-current` and named arrows; the last English strings (search placeholders, feed title and description, formula words, "also", subsections).
+  - Deferred to §5: heading levels on list pages (h1 then h3 card and section titles; the fix moves styles keyed to h3); the sidebars as `<aside>`.
+  - Deferred to §7: comments that cite `custom.css`, DESIGN.md, FORMAT.md, or Not a Chef content (the item there covers them).
+  - Deferred: wiki-link lookup cost (`render-link.html` and the reading sidebar scan every page per link); measure build time before caching a title index.
+  - Won't fix: the "Undated" and "Further reading" heading matches stay English; they read headings the author writes, so a translated site writes them in English or renames them in its content.
+  - Still to do: Bugs, dead code, Not a Chef leftovers, stale comments. One area per pass with `/code-review high`; record each finding as fixed, won't fix (why), or deferred; check template and JS fixes with `tests/check.py --compare` and Chrome at both widths, light and dark. Angles from Not a Chef (2026-10-17):
   - Templates and render hooks: empty sections, a page with no cuisine or no date, drafts in card lists.
   - JS: JS off, keyboard only, screen reader, listeners attached twice.
   - Tools: run from a fresh clone of a site with the submodule uninitialised.

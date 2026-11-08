@@ -17,11 +17,12 @@
 */}}
 <div class="list-pagination-spacer">
   {{- if gt .Paginator.TotalPages 1 -}}
+    <nav aria-label="{{ i18n "fugu.pagination" }}">
     <ul class="list-pagination">
       {{- .Scratch.Set "paginator.ellipsed" false -}}
       {{ if $.Paginator.HasPrev }}
         <li>
-          <a href="{{ $.Paginator.Prev.URL }}" class="list-pagination-link" rel="prev">&larr;</a>
+          <a href="{{ $.Paginator.Prev.URL }}" class="list-pagination-link" rel="prev" aria-label="{{ i18n "fugu.previous_page" }}">&larr;</a>
         </li>
       {{ end }}
       {{- range $.Paginator.Pagers -}}
@@ -37,7 +38,7 @@
         {{- end -}}
         {{- if $showNumber -}}
           <li>
-            <a href="{{ .URL }}" class="list-pagination-link{{ if eq . $.Paginator }} list-pagination-current{{ end }}">{{ .PageNumber }}</a>
+            <a href="{{ .URL }}" class="list-pagination-link{{ if eq . $.Paginator }} list-pagination-current{{ end }}"{{ if eq . $.Paginator }} aria-current="page"{{ end }}>{{ .PageNumber }}</a>
           </li>
         {{- else if ($.Scratch.Get "paginator.shouldEllipse") -}}
           <li><span class="list-pagination-ellipsis" aria-hidden="true">&hellip;</span></li>
@@ -45,9 +46,10 @@
       {{- end -}}
       {{ if $.Paginator.HasNext }}
         <li>
-          <a href="{{ $.Paginator.Next.URL }}" class="list-pagination-link" rel="next">&rarr;</a>
+          <a href="{{ $.Paginator.Next.URL }}" class="list-pagination-link" rel="next" aria-label="{{ i18n "fugu.next_page" }}">&rarr;</a>
         </li>
       {{ end }}
     </ul>
+    </nav>
   {{- end -}}
 </div>
