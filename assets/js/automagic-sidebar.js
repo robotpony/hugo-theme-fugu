@@ -13,6 +13,23 @@
 // ingredients.js fires its first scale event.
 
 (function () {
+  // The words this script shows, from the page's #fugu-strings block
+  // (partials/js-strings.html, i18n's fugu.js keys). Each call carries its
+  // English as the fallback, so a page without the block still reads.
+  // {name} in a string is filled from vars.
+  var STRINGS = (function () {
+    try {
+      var el = document.getElementById('fugu-strings');
+      return el ? JSON.parse(el.textContent) : {};
+    } catch (e) { return {}; }
+  })();
+  function phrase(key, fallback, vars) {
+    var s = STRINGS[key] || fallback;
+    return vars ? s.replace(/\{(\w+)\}/g, function (m, k) { return k in vars ? vars[k] : m; }) : s;
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; });
+  }
   // --- Sidebar relocation -------------------------------------------------
   //
   // Mechanic / To serve / Notes are simple optional top-level sections
@@ -186,7 +203,7 @@
     b.type = 'button';
     b.className = 'photo-thumb';
     b.dataset.photo = i;
-    b.setAttribute('aria-label', 'Open photo ' + (i + 1) + ' of ' + total + ': ' + photo.caption);
+    b.setAttribute('aria-label', phrase('open_photo', 'Open photo {n} of {total}: {caption}', { n: i + 1, total: total, caption: photo.caption }));
     var img = document.createElement('img');
     img.className = 'nozoom';
     img.src = photo.thumb;
@@ -200,15 +217,15 @@
   function buildViewer(photos) {
     var dlg = document.createElement('dialog');
     dlg.className = 'photo-viewer';
-    dlg.setAttribute('aria-label', 'Photo viewer');
+    dlg.setAttribute('aria-label', phrase('photo_viewer', 'Photo viewer'));
     dlg.innerHTML =
       '<div class="pv-inner">' +
         '<div class="pv-top"><span class="pv-count"></span>' +
-          '<button type="button" class="pv-btn pv-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>' +
+          '<button type="button" class="pv-btn pv-close" aria-label="' + esc(phrase('close', 'Close')) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>' +
         '<div class="pv-stage">' +
-          '<button type="button" class="pv-btn pv-prev" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>' +
+          '<button type="button" class="pv-btn pv-prev" aria-label="' + esc(phrase('previous_photo', 'Previous photo')) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>' +
           '<figure><img class="nozoom" alt=""></figure>' +
-          '<button type="button" class="pv-btn pv-next" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>' +
+          '<button type="button" class="pv-btn pv-next" aria-label="' + esc(phrase('next_photo', 'Next photo')) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>' +
         '</div>' +
         '<div class="pv-foot"><p class="pv-cap"></p><p class="pv-src"></p></div>' +
       '</div>';
@@ -232,13 +249,13 @@
       src.textContent = '';
       if (p.from) {
         var from = document.createElement('span');
-        from.textContent = 'From ' + p.from;
+        from.textContent = phrase('photo_from', 'From {source}', { source: p.from });
         src.appendChild(from);
       }
       var jump = document.createElement('a');
       jump.href = '#' + p.marker.id;
       jump.className = 'pv-jump';
-      jump.textContent = 'Jump to it in the text →';
+      jump.textContent = phrase('jump_to_text', 'Jump to it in the text →');
       src.appendChild(jump);
     }
 
@@ -312,8 +329,8 @@
       marker.className = 'photo-marker';
       marker.id = 'photo-' + (i + 1);
       marker.dataset.photo = i;
-      marker.innerHTML = CAMERA + 'Photo<span class="n">' + (i + 1) + '</span>';
-      if (alt) marker.setAttribute('aria-label', 'Photo ' + (i + 1) + ': ' + alt);
+      marker.innerHTML = CAMERA + esc(phrase('photo', 'Photo')) + '<span class="n">' + (i + 1) + '</span>';
+      if (alt) marker.setAttribute('aria-label', phrase('photo_n', 'Photo {n}: {alt}', { n: i + 1, alt: alt }));
       fig.parentNode.insertBefore(marker, fig);
       fig.classList.add('is-relocated');
       photos.push({
@@ -329,7 +346,7 @@
     var n = photos.length, cap = 6;
     var label = document.createElement('h2');
     label.className = 'photos-label';
-    label.innerHTML = 'Photos<span class="n">' + n + '</span>';
+    label.innerHTML = esc(phrase('photos', 'Photos')) + '<span class="n">' + n + '</span>';
     var grid = document.createElement('div');
     grid.className = 'photo-grid ' + (n === 1 ? 'n1' : (n === 2 || n === 4) ? 'n2' : 'n3');
     photos.slice(0, cap).forEach(function (p, i) {
@@ -357,7 +374,7 @@
       var strip = document.createElement('div');
       strip.className = 'photo-strip' + (n === 1 ? ' solo' : '');
       strip.setAttribute('role', 'group');
-      strip.setAttribute('aria-label', 'Photos');
+      strip.setAttribute('aria-label', phrase('photos', 'Photos'));
       photos.forEach(function (p, i) { strip.appendChild(thumbButton(p, i, n)); });
       header.appendChild(strip);
     }

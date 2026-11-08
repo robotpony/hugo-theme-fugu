@@ -27,13 +27,13 @@
         {{ if eq .page $page }}{{ $seen = true }}{{ end }}
       {{ end }}
     {{ end }}
-    {{ $up := printf "%s blueprint" $bp.LinkTitle | htmlEscape }}
+    {{ $up := i18n "fugu.blueprint_name" (dict "Name" $bp.LinkTitle) | htmlEscape }}
     {{ $nextHTML := "" }}
     {{ with $next }}
-      {{ $label := cond $isBuild "Next build" (printf "Part %d" $nextN) }}
+      {{ $label := cond $isBuild (i18n "fugu.next_build") (i18n "fugu.part_n" (dict "N" $nextN)) }}
       {{ $nextHTML = printf `<a class="article-pagination-link article-pagination-next part-nav-next" href="%s"><span class="article-pagination-label">%s &rarr;</span><span class="article-pagination-title">%s</span></a>` .RelPermalink $label (.Title | htmlEscape) }}
     {{ end }}
-    {{ $out = printf `<nav class="article-pagination part-nav" aria-label="%s"><a class="article-pagination-link part-nav-up" href="%s"><span class="article-pagination-label">&larr; %s</span><span class="article-pagination-title">%s</span></a>%s</nav>` $up $bp.RelPermalink $up (cond $isBuild "All builds" "All parts") $nextHTML }}
+    {{ $out = printf `<nav class="article-pagination part-nav" aria-label="%s"><a class="article-pagination-link part-nav-up" href="%s"><span class="article-pagination-label">&larr; %s</span><span class="article-pagination-title">%s</span></a>%s</nav>` $up $bp.RelPermalink $up (cond $isBuild (i18n "fugu.all_builds") (i18n "fugu.all_parts")) $nextHTML }}
   {{ end }}
 {{ end }}
 {{ return (safeHTML $out) }}

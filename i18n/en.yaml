@@ -1,0 +1,151 @@
+# Fugu's English. Hugo merges this with Blowfish's i18n/en.yaml, so every
+# key is under `fugu` to stay clear of Blowfish's. A site translates Fugu by
+# adding i18n/<lang>.yaml with the same keys; a missing key falls back to
+# this file. Counts use Hugo's plural forms (one, other), with {{ .Count }}.
+fugu:
+  # Counts, after a list's title and in the sidebars.
+  count:
+    recipes: {one: "{{ .Count }} recipe", other: "{{ .Count }} recipes"}
+    drinks: {one: "{{ .Count }} drink", other: "{{ .Count }} drinks"}
+    essays: {one: "{{ .Count }} essay", other: "{{ .Count }} essays"}
+    guides: {one: "{{ .Count }} guide", other: "{{ .Count }} guides"}
+    posts: {one: "{{ .Count }} post", other: "{{ .Count }} posts"}
+    entries: {one: "{{ .Count }} entry", other: "{{ .Count }} entries"}
+    days: {one: "{{ .Count }} day", other: "{{ .Count }} days"}
+    months: {one: "{{ .Count }} month", other: "{{ .Count }} months"}
+    parts: {one: "{{ .Count }} part", other: "{{ .Count }} parts"}
+    builds: {one: "{{ .Count }} build", other: "{{ .Count }} builds"}
+  page_of: "page {{ .Page }} of {{ .Pages }}"
+  n_more: {one: "{{ .Count }} more", other: "{{ .Count }} more"}
+  minutes: "{{ .Count }} min"
+  minutes_short: "{{ .Count }}m"
+
+  # Recipe facts: the sidebar's meta rail and the card's stat line.
+  meta:
+    source: Source
+    aka: Aka
+    serves: Serves
+    makes: Makes
+    prep: Prep
+    cook: Cook
+    total: Total
+    author: Author
+    date: Date
+    updated: Updated
+    days: Days
+    read: Read
+    undated: undated
+
+  # Sidebars.
+  recipe_notes: Recipe notes
+  on_this_page: On this page
+  this_month: This month
+  months: Months
+  jump_to: Jump to
+  recipes: Recipes
+  recipes_in_essay: Recipes in this essay
+  recipes_in_guide: Recipes in this guide
+  essays: Essays
+  methods: Methods
+  cuisines: Cuisines
+  reference_guides: Reference guides
+  cookbook_in_numbers: The cookbook in numbers
+  start_here: Start here
+  further_reading: Further reading
+  reference_further_reading: Reference & further reading
+  on_cards: On cards
+  pinned: Pinned
+
+  # What a listed page is, in "further reading" lists and "Start here".
+  kind:
+    essay: Essay
+    reference: Reference
+    method: Method
+    recipe: Recipe
+  kind_short:
+    recipe: recipe
+    essay: essay
+    method: method
+    reference: guide
+
+  # Small labels after a list's title.
+  title_kind:
+    principle: principle
+    cuisine: cuisine
+    blueprint: blueprint
+
+  # Principles and essays.
+  read_full_essay: Read the full essay
+  recipes_following_principle: Recipes that follow this principle
+
+  # Methods and blueprints.
+  blueprints: Blueprints
+  parts: Parts
+  builds: Builds
+  lineage: Lineage
+  techniques_and_ratios: Techniques and ratios
+  build: Build
+  method: Method
+  next_build: Next build
+  part_n: "Part {{ .N }}"
+  all_builds: All builds
+  all_parts: All parts
+  blueprint_name: "{{ .Name }} blueprint"
+  all_of: "All {{ .Name }}"
+
+  # Paging between pages.
+  previous: Previous
+  next: Next
+
+  # Search.
+  search_sections: "Search {{ .Sections }}"
+  search_words:
+    recipes: recipes
+    essays: essays
+    guides: guides
+
+  # The glossary page.
+  glossary:
+    search: Search the glossary
+    letters: Jump to letter
+    none: No entry matches. Try a shorter word, or another form of it.
+    used_in: Used in
+    and_more: {one: "and {{ .Count }} more", other: "and {{ .Count }} more"}
+
+  # Links and page descriptions.
+  not_found: "Not found: {{ .Target }}"
+  description:
+    log: "Kitchen notes from {{ .Title }}: {{ .Entries }}."
+    term: "Recipes and notes tagged “{{ .Term }}” in {{ .Site }}."
+
+  # Strings for Fugu's scripts, passed to them as a JSON block
+  # (partials/js-strings.html), not translated in JS. {name} marks a value
+  # the script fills in. A plural has _one and _other forms; the script
+  # picks with Intl.PluralRules for the page's language.
+  js:
+    scale: Scale
+    units: Units
+    as_written: As written
+    metric: Metric
+    imperial: Imperial
+    kelvin: Kelvin
+    scale_based_on: "Scale based on {name}"
+    amount_of: "Amount of {name}"
+    unit_of: "Unit of {name}"
+    back_to: "Back to {amount}"
+    for_amount: "For {amount}"
+    serves: "Serves {n}"
+    ingredient_options: "Ingredient options: scale recipe or change units"
+    keep_awake: Keep screen awake
+    open_photo: "Open photo {n} of {total}: {caption}"
+    photo_viewer: Photo viewer
+    close: Close
+    previous_photo: Previous photo
+    next_photo: Next photo
+    photo_from: "From {source}"
+    jump_to_text: "Jump to it in the text →"
+    photo: Photo
+    photo_n: "Photo {n}: {alt}"
+    photos: Photos
+    entries_one: "{n} entry"
+    entries_other: "{n} entries"

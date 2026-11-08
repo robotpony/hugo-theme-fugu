@@ -4,6 +4,14 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ## Unreleased
 
+### Added
+
+- Fugu's English is in `i18n/en.yaml`, under `fugu`: every label, heading and count its templates write, with Hugo's plural forms for counts, and the words its scripts show (`fugu.js`), passed to them as a JSON block (`#fugu-strings`, `partials/js-strings.html`) with each script's English as the fallback. A site changes or translates any of them in its own `i18n/` (`docs/configuration.md`, "Words and translation").
+
+### Fixed
+
+- A count of one reads "1 recipe" and "1 entry" on tag and cuisine pages, not "1 recipes" and "1 entries".
+
 ## v0.2.0 (2026-11-07)
 
 Drinks, `flow` blocks, the lineage timeline, the glossary page, percentage-table scaling, and the hugo-warped module for fence parsing, plus the Food Log, Mechanic and visual-pass changes from Not a Chef. A submodule install now needs hugo-warped checked out beside Fugu (`docs/getting-started.md`).

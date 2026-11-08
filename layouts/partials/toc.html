@@ -15,7 +15,7 @@
     class="block py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 -ms-5 ps-5 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden">
     {{ i18n "article.table_of_contents" }}
   </summary>
-  <div class="toc-jump-label hidden lg:block">Jump to</div>
+  <div class="toc-jump-label hidden lg:block">{{ i18n "fugu.jump_to" }}</div>
   <div
     class="min-w-[220px] py-2 border-dotted border-s-1 -ms-5 ps-5 dark:border-neutral-600">
     {{ replace ($toc | emojify) `id="TableOfContents"` (printf `id="TableOfContents" aria-label="%s"` (i18n "article.table_of_contents")) | safeHTML }}

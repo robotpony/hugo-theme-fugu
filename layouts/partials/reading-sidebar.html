@@ -63,7 +63,7 @@
     {{ if $undated }}{{ $days = where $headings "level" 3 }}{{ end }}
     {{ if $days }}
       <div class="rs-section hidden lg:block">
-        <h2 class="rs-label">{{ cond $undated "On this page" "This month" }}</h2>
+        <h2 class="rs-label">{{ cond $undated (i18n "fugu.on_this_page") (i18n "fugu.this_month") }}</h2>
         <div class="browse-list">
           {{ range $days }}<a href="#{{ .id }}">{{ .title }}</a>{{ end }}
         </div>
@@ -89,7 +89,7 @@
     {{ with $cur }}{{ $groups = $groups | append (dict "h" . "subs" $subs) }}{{ end }}
     {{ $collapse := gt (len $headings) 12 }}
     <div class="rs-section hidden lg:block">
-      <h2 class="rs-label">On this page</h2>
+      <h2 class="rs-label">{{ i18n "fugu.on_this_page" }}</h2>
       <div class="rs-toc">
         {{ range $i, $g := $groups }}
           <div class="rs-toc-top">
@@ -134,15 +134,15 @@
     {{ with $linked }}
       <div class="rs-section">
         {{/* Just "Recipes" on a method, whose sidebar already says "On this page". */}}
-        {{ $label := cond (eq $section "reference") "Recipes in this guide" "Recipes in this essay" }}
-        {{ if partial "method/is.html" $page }}{{ $label = "Recipes" }}{{ end }}
+        {{ $label := cond (eq $section "reference") (i18n "fugu.recipes_in_guide") (i18n "fugu.recipes_in_essay") }}
+        {{ if partial "method/is.html" $page }}{{ $label = i18n "fugu.recipes" }}{{ end }}
         <h2 class="rs-label">{{ $label }} <span class="n">{{ len . }}</span></h2>
         <div class="browse-list">
           {{ range first 8 . }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
         </div>
         {{ if gt (len .) 8 }}
           <details class="rs-more">
-            <summary>{{ sub (len .) 8 }} more</summary>
+            <summary>{{ i18n "fugu.n_more" (sub (len .) 8) }}</summary>
             <div class="browse-list">
               {{ range after 8 . }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}
             </div>
@@ -176,7 +176,7 @@
     {{ if gt (len $siblings) 1 }}
       {{ $folder := path.Base (strings.TrimSuffix "/" $dir) }}
       <div class="rs-section">
-        <h2 class="rs-label">{{ if eq $folder $page.Section }}{{ $sectionTitle | default "Essays" }}{{ else }}{{ $folder | humanize }}{{ end }} <span class="n">{{ len $siblings }}</span></h2>
+        <h2 class="rs-label">{{ if eq $folder $page.Section }}{{ $sectionTitle | default (i18n "fugu.essays") }}{{ else }}{{ $folder | humanize }}{{ end }} <span class="n">{{ len $siblings }}</span></h2>
         <div class="browse-list">
           {{ range $siblings }}
             <a href="{{ .RelPermalink }}"{{ if eq . $page }} aria-current="page"{{ end }}>{{ .Title }}</a>
@@ -212,7 +212,7 @@
       {{ if eq .page $page }}{{ $curYear = $y }}{{ end }}
     {{ end }}
     <div class="rs-section">
-      <h2 class="rs-label">Months</h2>
+      <h2 class="rs-label">{{ i18n "fugu.months" }}</h2>
       <div class="browse-list">
         {{ range $i, $y := $years }}
           {{ $rows := index $byYear $y }}
@@ -222,7 +222,7 @@
           {{ else }}
             {{ $n := len $rows }}
             <details class="rs-year-fold">
-              <summary>{{ $y }} <span class="n">{{ $n }} {{ cond (eq $n 1) "month" "months" }}</span></summary>
+              <summary>{{ $y }} <span class="n">{{ i18n "fugu.count.months" $n }}</span></summary>
               {{ range $rows }}{{ partial "reading-sidebar/log-month-row.html" (dict "month" . "year" $y "current" $page) }}{{ end }}
             </details>
           {{ end }}
@@ -239,14 +239,14 @@
   {{ if $isAbout }}
     {{ if .Params.stats }}
     <div class="rs-section">
-      <h2 class="rs-label">The cookbook in numbers</h2>
+      <h2 class="rs-label">{{ i18n "fugu.cookbook_in_numbers" }}</h2>
       <div class="rs-numbers">
         {{ $recipeSection := partial "section/name.html" "recipe" }}
-        {{ $rows := slice (dict "label" "Recipes" "n" (len $recipes) "to" (cond (ne $recipeSection "") (site.GetPage $recipeSection) nil)) }}
+        {{ $rows := slice (dict "label" (i18n "fugu.recipes") "n" (len $recipes) "to" (cond (ne $recipeSection "") (site.GetPage $recipeSection) nil)) }}
         {{ with site.Taxonomies.cuisine }}
-          {{ $rows = $rows | append (dict "label" "Cuisines" "n" (len .) "to" (site.GetPage "/cuisine")) }}
+          {{ $rows = $rows | append (dict "label" (i18n "fugu.cuisines") "n" (len .) "to" (site.GetPage "/cuisine")) }}
         {{ end }}
-        {{ range slice (slice "essay" "Essays") (slice "method" "Methods") (slice "reference" "Reference guides") }}
+        {{ range slice (slice "essay" (i18n "fugu.essays")) (slice "method" (i18n "fugu.methods")) (slice "reference" (i18n "fugu.reference_guides")) }}
           {{ $label := index . 1 }}
           {{ with partial "section/name.html" (index . 0) }}
             {{ $to := site.GetPage . }}
@@ -268,7 +268,7 @@
     {{ end }}
     {{ with .Params.start_here }}
       <div class="rs-section">
-        <h2 class="rs-label">Start here</h2>
+        <h2 class="rs-label">{{ i18n "fugu.start_here" }}</h2>
         <div class="browse-list">
           {{ range . }}
             {{ $norm := strings.TrimSpace (replaceRE `[^a-z0-9]+` " " (strings.ToLower .)) }}
@@ -279,7 +279,7 @@
               {{ end }}
             {{ end }}
             {{ with $hit }}
-              {{ $kind := dict "recipe" "recipe" "essay" "essay" "method" "method" "reference" "guide" }}
+              {{ $kind := dict "recipe" (i18n "fugu.kind_short.recipe") "essay" (i18n "fugu.kind_short.essay") "method" (i18n "fugu.kind_short.method") "reference" (i18n "fugu.kind_short.reference") }}
               <a href="{{ .RelPermalink }}">{{ .Title }} <span class="n">{{ index $kind (partialCached "section/role.html" .Section .Section) | default "" }}</span></a>
             {{ end }}
           {{ end }}

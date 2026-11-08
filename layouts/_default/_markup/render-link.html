@@ -96,7 +96,7 @@
       {{- partial "glossary/pop.html" (dict "page" $.Page "entry" . "text" $text) -}}
     {{- else -}}
       {{- warnf "glossary [unresolved-mark]: %q in %q" $destination (cond (not $.Page.File) $.Page.Path $.Page.File.Path) -}}
-      <span class="broken-link" title="Not found: {{ $destination }}">{{ $text }}</span>
+      <span class="broken-link" title="{{ i18n "fugu.not_found" (dict "Target" $destination) }}">{{ $text }}</span>
     {{- end -}}
   {{- end -}}
 {{- else -}}

@@ -42,7 +42,7 @@
       {{ $chip = printf `<a class="principle-chip principle-%s is-icon" href="%s" title="%s" aria-label="%s">%s</a>` .slug .page.RelPermalink $name $name .icon }}
     {{ end }}
     {{ if $def }}
-      {{ partial "concept/pop.html" (dict "kind" "principle" "card" $compact "trigger" $chip "head" (.page.Title | htmlEscape) "text" $def "link" $essay "more" "Read the full essay") }}
+      {{ partial "concept/pop.html" (dict "kind" "principle" "card" $compact "trigger" $chip "head" (.page.Title | htmlEscape) "text" $def "link" $essay "more" (i18n "fugu.read_full_essay")) }}
     {{ else }}
       {{ $chip | safeHTML }}
     {{ end }}

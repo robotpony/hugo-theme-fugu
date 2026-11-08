@@ -70,7 +70,7 @@
 <div class="blueprint-layout flex flex-col lg:flex-row">
 <section class="listing blueprint-page min-w-0 flex-1">
   <header class="listing-head">
-    <h1 class="ltitle">{{ .Title }} <span class="ltitle-kind ltitle-kind-method">blueprint</span></h1>
+    <h1 class="ltitle">{{ .Title }} <span class="ltitle-kind ltitle-kind-method">{{ i18n "fugu.title_kind.blueprint" }}</span></h1>
   </header>
   {{ if or $definition .Description }}
     <div class="method-intro blueprint-intro prose dark:prose-invert article-content">
@@ -84,13 +84,13 @@
   {{ $hasLineage := ne (trim $lineage " \n\t") "" }}
   {{ if $hasLineage }}
     <div class="blueprint-lineage lg:hidden">
-      <h3 class="subsection-title" id="lineage">Lineage</h3>
+      <h3 class="subsection-title" id="lineage">{{ i18n "fugu.lineage" }}</h3>
       {{ $lineage | safeHTML }}
     </div>
   {{ end }}
 
   {{ with $info.parts }}
-    <h3 class="subsection-title{{ if $hasLineage }} subsection-gap{{ end }}" id="parts">Parts<span class="subsection-count">{{ len . }}</span></h3>
+    <h3 class="subsection-title{{ if $hasLineage }} subsection-gap{{ end }}" id="parts">{{ i18n "fugu.parts" }}<span class="subsection-count">{{ len . }}</span></h3>
     <section class="bp bp-parts-only">
       {{ with partial "blueprint/lead.html" (dict "blueprint" $ "folder" "parts") }}
         <div class="bp-desc">{{ . }}</div>
@@ -106,7 +106,7 @@
   {{ end }}
 
   {{ with $info.builds }}
-    <h3 class="subsection-title{{ if or $hasLineage $info.parts }} subsection-gap{{ end }}" id="builds">Builds<span class="subsection-count">{{ len . }}</span></h3>
+    <h3 class="subsection-title{{ if or $hasLineage $info.parts }} subsection-gap{{ end }}" id="builds">{{ i18n "fugu.builds" }}<span class="subsection-count">{{ len . }}</span></h3>
     {{ with partial "blueprint/lead.html" (dict "blueprint" $ "folder" "builds") }}
       <div class="bp-desc bp-builds-lead">{{ . }}</div>
     {{ end }}
@@ -127,38 +127,38 @@
 
       {{ if or $info.parts $info.builds }}
         <div class="recipe-meta">
-          {{ with $info.parts }}<div class="recipe-meta-row"><span class="recipe-meta-label">Parts</span><span class="recipe-meta-value">{{ len . }}</span></div>{{ end }}
-          {{ with $info.builds }}<div class="recipe-meta-row"><span class="recipe-meta-label">Builds</span><span class="recipe-meta-value">{{ len . }}</span></div>{{ end }}
+          {{ with $info.parts }}<div class="recipe-meta-row"><span class="recipe-meta-label">{{ i18n "fugu.parts" }}</span><span class="recipe-meta-value">{{ len . }}</span></div>{{ end }}
+          {{ with $info.builds }}<div class="recipe-meta-row"><span class="recipe-meta-label">{{ i18n "fugu.builds" }}</span><span class="recipe-meta-value">{{ len . }}</span></div>{{ end }}
         </div>
       {{ end }}
 
       {{ with trim (partial "blueprint/lineage-side.html" $entries) " \n\t" }}
         <div class="rs-section hidden lg:block">
-          <h2 class="rs-label">Lineage</h2>
+          <h2 class="rs-label">{{ i18n "fugu.lineage" }}</h2>
           {{ . | safeHTML }}
         </div>
       {{ end }}
 
       {{ if or $info.parts $info.builds }}
         <div class="rs-section hidden lg:block">
-          <h2 class="rs-label">On this page</h2>
+          <h2 class="rs-label">{{ i18n "fugu.on_this_page" }}</h2>
           <div class="rs-toc">
-            {{ with $info.parts }}<div class="rs-toc-top"><a href="#parts">Parts</a><span class="n">{{ len . }}</span></div>{{ end }}
-            {{ with $info.builds }}<div class="rs-toc-top"><a href="#builds">Builds</a><span class="n">{{ len . }}</span></div>{{ end }}
+            {{ with $info.parts }}<div class="rs-toc-top"><a href="#parts">{{ i18n "fugu.parts" }}</a><span class="n">{{ len . }}</span></div>{{ end }}
+            {{ with $info.builds }}<div class="rs-toc-top"><a href="#builds">{{ i18n "fugu.builds" }}</a><span class="n">{{ len . }}</span></div>{{ end }}
           </div>
         </div>
       {{ end }}
 
       {{ with $further }}
         <div class="rs-section">
-          <h2 class="rs-label">Further reading <span class="n">{{ len . }}</span></h2>
+          <h2 class="rs-label">{{ i18n "fugu.further_reading" }} <span class="n">{{ len . }}</span></h2>
           <div class="browse-list">
             {{ range . }}
               {{ $role := partialCached "section/role.html" .Section .Section }}
-              {{ $label := "Essay" }}
-              {{ if eq $role "reference" }}{{ $label = "Reference" }}
-              {{ else if eq $role "recipe" }}{{ $label = "Recipe" }}
-              {{ else if partial "method/is.html" . }}{{ $label = "Method" }}{{ end }}
+              {{ $label := i18n "fugu.kind.essay" }}
+              {{ if eq $role "reference" }}{{ $label = i18n "fugu.kind.reference" }}
+              {{ else if eq $role "recipe" }}{{ $label = i18n "fugu.kind.recipe" }}
+              {{ else if partial "method/is.html" . }}{{ $label = i18n "fugu.kind.method" }}{{ end }}
               <a href="{{ .RelPermalink }}">{{ .Title }} <span class="n">{{ $label }}</span></a>
             {{ end }}
           </div>

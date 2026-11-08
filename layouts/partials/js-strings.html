@@ -1,0 +1,14 @@
+{{/*
+  The words Fugu's scripts show (ingredients.js, automagic-sidebar.js,
+  glossary.js), from i18n's fugu.js keys, as one JSON block the scripts
+  read by id. Each script keeps its own English as the fallback, so a page
+  without this block still reads. Emitted once per page, before the
+  scripts; the language is on the block for plural rules.
+*/}}
+{{ if not (.Store.Get "fuguJSStrings") }}
+  {{ .Store.Set "fuguJSStrings" true }}
+  {{ $keys := slice "scale" "units" "as_written" "metric" "imperial" "kelvin" "scale_based_on" "amount_of" "unit_of" "back_to" "for_amount" "serves" "ingredient_options" "keep_awake" "open_photo" "photo_viewer" "close" "previous_photo" "next_photo" "photo_from" "jump_to_text" "photo" "photo_n" "photos" "entries_one" "entries_other" }}
+  {{ $strings := dict }}
+  {{ range $keys }}{{ $strings = merge $strings (dict . (i18n (printf "fugu.js.%s" .))) }}{{ end }}
+  <script type="application/json" id="fugu-strings" data-lang="{{ site.Language.Locale | default site.Language.Lang }}">{{ $strings | jsonify | safeJS }}</script>
+{{ end }}

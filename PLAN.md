@@ -2,14 +2,13 @@
 
 The work list for taking Fugu to a theme other Blowfish users can install. Finished items are removed as they land; `CHANGELOG.md` and git history record them (the last full plan is `75a3a89`, the last long one `183c807`, the last before `v0.1.0` `102abb1`, the last before this squash `13b763a`). Section numbers are kept, since other files cite them.
 
-**Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §4–§7 and the §10 review. Features come after 1.0.
+**Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §5–§7 and the §10 review. Features come after 1.0.
 
-**Next:** §5's class inventory (mechanical; it sizes the design split), or §4 as a smaller start.
+**Next:** §5's class inventory (mechanical; it sizes the design split).
 
 ## 4. Translation
 
-- [ ] Move template English to `i18n/en.yaml`, with Hugo's plural forms for counts: `single.html`, `term.html`, `reading-sidebar.html`, `toc.html`, `essays/list.html` (`git grep` the visible strings; "Recipe notes", "On cards", "Jump to", the "N recipes" counts, …).
-- [ ] JS strings in `ingredients.js` and `automagic-sidebar.js`: pass them in from the template (`data-` attribute or a JSON block from `i18n`), not translated in JS.
+Done: template and script English is in `i18n/en.yaml` (`docs/configuration.md`, "Words and translation").
 
 ## 5. Default design
 

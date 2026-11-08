@@ -19,7 +19,7 @@
 <section class="listing">
   <header class="listing-head">
     <h1 class="ltitle">{{ .Title }}</h1>
-    <span class="listing-count">{{ len $months }} {{ cond (eq (len $months) 1) "post" "posts" }}{{ if gt $pager.TotalPages 1 }} · page {{ $pager.PageNumber }} of {{ $pager.TotalPages }}{{ end }}</span>
+    <span class="listing-count">{{ i18n "fugu.count.posts" (len $months) }}{{ if gt $pager.TotalPages 1 }} · {{ i18n "fugu.page_of" (dict "Page" $pager.PageNumber "Pages" $pager.TotalPages) }}{{ end }}</span>
   </header>
   {{ with .Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
   <div class="listing-search">{{ partial "search-box.html" "site" }}</div>

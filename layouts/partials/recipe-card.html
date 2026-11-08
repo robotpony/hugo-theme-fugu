@@ -118,15 +118,15 @@
 {{ $hasFormula := ne (len (trim $formula " \n\t")) 0 }}
 
 {{ $stats := slice }}
-{{ range slice (slice "Prep" .Params.prep_time) (slice "Cook" .Params.cook_time) (slice "Serves" .Params.servings) }}
+{{ range slice (slice "prep" .Params.prep_time) (slice "cook" .Params.cook_time) (slice "serves" .Params.servings) }}
   {{ $v := index . 1 }}
   {{ if $v }}
-    {{ if eq (index . 0) "Serves" }}
+    {{ if eq (index . 0) "serves" }}
       {{ $v = string $v | replaceRE `\s*\([^)]*\)?` "" | strings.TrimSpace }}
     {{ else }}
       {{ $v = partial "short-time.html" $v }}
     {{ end }}
-    {{ $stats = $stats | append (dict "label" (index . 0) "value" $v "full" (string (index . 1))) }}
+    {{ $stats = $stats | append (dict "label" (i18n (printf "fugu.meta.%s" (index . 0))) "value" $v "full" (string (index . 1))) }}
   {{ end }}
 {{ end }}
 
@@ -134,10 +134,10 @@
   {{ $month := partial "reading-sidebar/log-month.html" . }}
   {{ $days := $month.days }}
   {{ $n := cond (gt (len $days) 0) (string (len $days)) "—" }}
-  {{ $stats = slice (dict "label" "Days" "value" $n "full" (cond (gt (len $days) 0) $n "undated")) (dict "label" "Read" "value" (printf "%dm" .ReadingTime) "full" (printf "%d min" .ReadingTime)) }}
+  {{ $stats = slice (dict "label" (i18n "fugu.meta.days") "value" $n "full" (cond (gt (len $days) 0) $n (i18n "fugu.meta.undated"))) (dict "label" (i18n "fugu.meta.read") "value" (i18n "fugu.minutes_short" .ReadingTime) "full" (i18n "fugu.minutes" .ReadingTime)) }}
 {{ end }}
 {{ if or $isEssay $isRef }}
-  {{ $stats = slice (dict "label" "Read" "value" (printf "%dm" .ReadingTime) "full" (printf "%d min" .ReadingTime)) }}
+  {{ $stats = slice (dict "label" (i18n "fugu.meta.read") "value" (i18n "fugu.minutes_short" .ReadingTime) "full" (i18n "fugu.minutes" .ReadingTime)) }}
 {{ end }}
 
 <article class="rcard{{ if $hasFormula }} has-formula{{ end }}{{ if $hasGlass }} has-glass{{ end }}">
@@ -148,7 +148,7 @@
     {{ $principle | safeHTML }}
     {{ range first $room $tags }}<span class="tag">{{ . }}</span>{{ end }}
     {{ if gt (len $tags) $room }}<span class="tag tag-more">+{{ sub (len $tags) $room }}</span>{{ end }}
-    {{ if .Params.pinned }}<span class="pin-icon" title="Pinned">{{ `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg>` | safeHTML }}</span>{{ end }}
+    {{ if .Params.pinned }}<span class="pin-icon" title="{{ i18n "fugu.pinned" }}">{{ `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></svg>` | safeHTML }}</span>{{ end }}
   </div>
   {{ if $hasGlass }}<div class="rcard-drink"><div class="rcard-drink-text">{{ end }}
   <h3 class="rcard-title"><a class="rcard-link" href="{{ .RelPermalink }}">{{ $title }}</a></h3>

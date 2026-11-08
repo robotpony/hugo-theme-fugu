@@ -32,14 +32,14 @@
     {{ range findRESubmatch `(?m)^#{2,3}\s+(.+)$` .RawContent }}
       {{ $entries = $entries | append (index . 1 | plainify | strings.TrimSpace) }}
     {{ end }}
-    {{ $d = printf "Kitchen notes from %s: %s." .Title (delimit $entries ", ") }}
+    {{ $d = i18n "fugu.description.log" (dict "Title" .Title "Entries" (delimit $entries ", ")) }}
   {{ end }}
 {{ end }}
 {{ if and (not $d) (eq .Kind "term") }}
   {{ if eq .Data.Plural "cuisine" }}
     {{ $d = printf "%s recipes from %s." .Title site.Title }}
   {{ else }}
-    {{ $d = printf "Recipes and notes tagged “%s” in %s." .Title site.Title }}
+    {{ $d = i18n "fugu.description.term" (dict "Term" .Title "Site" site.Title) }}
   {{ end }}
 {{ end }}
 {{ $d = $d | default site.Params.description }}

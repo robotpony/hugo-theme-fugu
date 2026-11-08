@@ -66,13 +66,13 @@
 <div class="principle-layout flex flex-col lg:flex-row">
 <section class="listing principle-page principle-{{ .Data.Term | lower | urlize }} min-w-0 flex-1">
   <header class="listing-head">
-    <h1 class="ltitle">{{ .Title }} <span class="ltitle-kind ltitle-kind-principle">principle</span></h1>
+    <h1 class="ltitle">{{ .Title }} <span class="ltitle-kind ltitle-kind-principle">{{ i18n "fugu.title_kind.principle" }}</span></h1>
   </header>
   <div class="principle-intro prose dark:prose-invert article-content">
     {{ .Content }}
-    {{ with $essay }}<a class="read-essay" href="{{ .RelPermalink }}">Read the full essay →</a>{{ end }}
+    {{ with $essay }}<a class="read-essay" href="{{ .RelPermalink }}">{{ i18n "fugu.read_full_essay" }} →</a>{{ end }}
   </div>
-  <h3 class="subsection-title">Recipes that follow this principle</h3>
+  <h3 class="subsection-title">{{ i18n "fugu.recipes_following_principle" }}</h3>
   <div class="rgrid">
     {{ range $pager.Pages }}
       {{ partial "recipe-card.html" . }}
@@ -91,22 +91,22 @@
       {{/* "On cards": the chip as a card draws it (principle-chip.html
         reads only the page's tags, so it's handed this term alone). */}}
       <div class="recipe-meta">
-        <div class="recipe-meta-row"><span class="recipe-meta-label">Recipes</span><span class="recipe-meta-value">{{ len $recipePages }}</span></div>
-        {{ with $further }}<div class="recipe-meta-row"><span class="recipe-meta-label">Essays</span><span class="recipe-meta-value">{{ len . }}</span></div>{{ end }}
+        <div class="recipe-meta-row"><span class="recipe-meta-label">{{ i18n "fugu.recipes" }}</span><span class="recipe-meta-value">{{ len $recipePages }}</span></div>
+        {{ with $further }}<div class="recipe-meta-row"><span class="recipe-meta-label">{{ i18n "fugu.essays" }}</span><span class="recipe-meta-value">{{ len . }}</span></div>{{ end }}
         {{ with partial "principle-chip.html" (dict "page" (dict "Params" (dict "tags" (slice .Data.Term))) "compact" true) }}
-          <div class="recipe-meta-row"><span class="recipe-meta-label">On cards</span><span class="recipe-meta-value">{{ . | strings.TrimSpace | safeHTML }}</span></div>
+          <div class="recipe-meta-row"><span class="recipe-meta-label">{{ i18n "fugu.on_cards" }}</span><span class="recipe-meta-value">{{ . | strings.TrimSpace | safeHTML }}</span></div>
         {{ end }}
       </div>
 
       {{/* Further reading, each labelled by kind. */}}
       {{ with $further }}
         <div class="rs-section">
-          <h2 class="rs-label">Reference &amp; further reading <span class="n">{{ len . }}</span></h2>
+          <h2 class="rs-label">{{ i18n "fugu.reference_further_reading" }} <span class="n">{{ len . }}</span></h2>
           <div class="browse-list">
             {{ range . }}
-              {{ $label := "Essay" }}
-              {{ if eq (partialCached "section/role.html" .Section .Section) "reference" }}{{ $label = "Reference" }}
-              {{ else if partial "method/is.html" . }}{{ $label = "Method" }}{{ end }}
+              {{ $label := i18n "fugu.kind.essay" }}
+              {{ if eq (partialCached "section/role.html" .Section .Section) "reference" }}{{ $label = i18n "fugu.kind.reference" }}
+              {{ else if partial "method/is.html" . }}{{ $label = i18n "fugu.kind.method" }}{{ end }}
               <a href="{{ .RelPermalink }}">{{ .Title }} <span class="n">{{ $label }}</span></a>
             {{ end }}
           </div>
@@ -120,8 +120,8 @@
 <section class="listing">
   <header class="listing-head">
     {{/* Cuisine pages read "Canadian cuisine", the suffix in the accent red. */}}
-    <h1 class="ltitle">{{ .Title }}{{ if eq .Data.Plural "cuisine" }} <span class="ltitle-kind">cuisine</span>{{ end }}</h1>
-    <span class="listing-count">{{ len .Pages }} {{ cond $allRecipes "recipes" "entries" }}{{ if gt $pager.TotalPages 1 }} · page {{ $pager.PageNumber }} of {{ $pager.TotalPages }}{{ end }}</span>
+    <h1 class="ltitle">{{ .Title }}{{ if eq .Data.Plural "cuisine" }} <span class="ltitle-kind">{{ i18n "fugu.title_kind.cuisine" }}</span>{{ end }}</h1>
+    <span class="listing-count">{{ i18n (cond $allRecipes "fugu.count.recipes" "fugu.count.entries") (len .Pages) }}{{ if gt $pager.TotalPages 1 }} · {{ i18n "fugu.page_of" (dict "Page" $pager.PageNumber "Pages" $pager.TotalPages) }}{{ end }}</span>
   </header>
   {{/* Tagline: the term's own description (content/cuisine/<name>/_index.md)
     if one exists, else the recipe section's (content/recipes/_index.md by default),

@@ -27,13 +27,13 @@
     <div class="article-pagination">
       {{ if $prev }}
         <a class="article-pagination-link" href="{{ $prev.RelPermalink }}">
-          <span class="article-pagination-label">&larr; Previous</span>
+          <span class="article-pagination-label">&larr; {{ i18n "fugu.previous" }}</span>
           <span class="article-pagination-title">{{ $prev.Title | emojify }}</span>
         </a>
       {{ else }}<span></span>{{ end }}
       {{ if $next }}
         <a class="article-pagination-link article-pagination-next" href="{{ $next.RelPermalink }}">
-          <span class="article-pagination-label">Next &rarr;</span>
+          <span class="article-pagination-label">{{ i18n "fugu.next" }} &rarr;</span>
           <span class="article-pagination-title">{{ $next.Title | emojify }}</span>
         </a>
       {{ end }}

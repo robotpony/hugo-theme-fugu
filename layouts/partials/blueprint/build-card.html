@@ -9,13 +9,13 @@
 <article class="rcard build-card">
   <div class="rcard-top">
     {{ if .Draft }}{{ partial "development/mark.html" . }}{{ end }}
-    {{ partial "method/chip.html" (dict "card" true "label" "Build") }}
+    {{ partial "method/chip.html" (dict "card" true "label" (i18n "fugu.build")) }}
   </div>
   <h3 class="rcard-title"><a class="rcard-link" href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
   {{ with partial "blueprint/era.html" . }}<p class="build-origin">{{ .label }}</p>{{ end }}
   {{ with .Description }}<p class="rcard-intro">{{ . }}</p>{{ end }}
   {{ if templates.Exists "partials/stack-strip.html" }}{{ partial "stack-strip.html" (dict "page" . "labels" false) }}{{ end }}
   <div class="rcard-stats">
-    <div class="rcard-stat" title="Read: {{ .ReadingTime }} min"><b>Read</b><span>{{ .ReadingTime }}m</span></div>
+    <div class="rcard-stat" title="{{ i18n "fugu.meta.read" }}: {{ i18n "fugu.minutes" .ReadingTime }}"><b>{{ i18n "fugu.meta.read" }}</b><span>{{ i18n "fugu.minutes_short" .ReadingTime }}</span></div>
   </div>
 </article>

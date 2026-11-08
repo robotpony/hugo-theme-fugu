@@ -68,7 +68,7 @@
   {{ with .Content }}<div class="method-intro prose dark:prose-invert article-content">{{ . }}</div>{{ end }}
 
   {{ with $blueprints }}
-    <h3 class="subsection-title" id="blueprints">Blueprints<span class="subsection-count">{{ len . }}</span></h3>
+    <h3 class="subsection-title" id="blueprints">{{ i18n "fugu.blueprints" }}<span class="subsection-count">{{ len . }}</span></h3>
     <div class="bp-list">
       {{ range . }}
         {{ $bp := . }}
@@ -77,7 +77,7 @@
           <section class="bp">
             <div class="bp-head">
               <a class="bp-name" href="{{ .RelPermalink }}">{{ partialCached "method/icon.html" . "icon" | safeHTML }}<span>{{ .Title }}</span><span class="go" aria-hidden="true">→</span></a>
-              <span class="bp-count">{{ delimit (slice (printf "%d %s" (len $info.parts) (cond (eq (len $info.parts) 1) "part" "parts")) (printf "%d %s" (len $info.builds) (cond (eq (len $info.builds) 1) "build" "builds"))) " · " }}</span>
+              <span class="bp-count">{{ i18n "fugu.count.parts" (len $info.parts) }} · {{ i18n "fugu.count.builds" (len $info.builds) }}</span>
             </div>
             {{ with .Description }}<p class="bp-desc">{{ . }}</p>{{ end }}
             {{ with $info.parts }}
@@ -89,7 +89,7 @@
             {{ end }}
             {{ with $info.builds }}
               <div class="bp-builds-inline">
-                <span class="lbl">Builds</span>
+                <span class="lbl">{{ i18n "fugu.builds" }}</span>
                 {{- range . }}
                   <a class="opt-pill{{ if .Draft }} todo{{ end }}" href="{{ .RelPermalink }}">{{ partial "blueprint/short-name.html" (dict "page" . "blueprint" $bp) }}{{ with partial "blueprint/era.html" . }}<span class="y">{{ .label }}</span>{{ end }}</a>
                 {{- end }}
@@ -102,7 +102,7 @@
   {{ end }}
 
   {{ with $standalone }}
-    <h3 class="subsection-title{{ if $blueprints }} subsection-gap{{ end }}" id="techniques">Techniques and ratios<span class="subsection-count">{{ len . }}</span></h3>
+    <h3 class="subsection-title{{ if $blueprints }} subsection-gap{{ end }}" id="techniques">{{ i18n "fugu.techniques_and_ratios" }}<span class="subsection-count">{{ len . }}</span></h3>
     <div class="rgrid">
       {{ range . }}{{ partial "recipe-card.html" . }}{{ end }}
     </div>
@@ -119,26 +119,26 @@
       </div>
 
       <div class="recipe-meta">
-        <div class="recipe-meta-row"><span class="recipe-meta-label">Methods</span><span class="recipe-meta-value">{{ len $methods }}</span></div>
+        <div class="recipe-meta-row"><span class="recipe-meta-label">{{ i18n "fugu.methods" }}</span><span class="recipe-meta-value">{{ len $methods }}</span></div>
         {{ with $blueprints }}
-          <div class="recipe-meta-row"><span class="recipe-meta-label">Blueprints</span><span class="recipe-meta-value">{{ len . }}</span></div>
-          {{ if $nBuilds }}<div class="recipe-meta-row"><span class="recipe-meta-label">Builds</span><span class="recipe-meta-value">{{ $nBuilds }}</span></div>{{ end }}
-          {{ if $nParts }}<div class="recipe-meta-row"><span class="recipe-meta-label">Parts</span><span class="recipe-meta-value">{{ $nParts }}</span></div>{{ end }}
+          <div class="recipe-meta-row"><span class="recipe-meta-label">{{ i18n "fugu.blueprints" }}</span><span class="recipe-meta-value">{{ len . }}</span></div>
+          {{ if $nBuilds }}<div class="recipe-meta-row"><span class="recipe-meta-label">{{ i18n "fugu.builds" }}</span><span class="recipe-meta-value">{{ $nBuilds }}</span></div>{{ end }}
+          {{ if $nParts }}<div class="recipe-meta-row"><span class="recipe-meta-label">{{ i18n "fugu.parts" }}</span><span class="recipe-meta-value">{{ $nParts }}</span></div>{{ end }}
         {{ end }}
       </div>
 
       {{ if or $blueprints $standalone }}
         <div class="rs-section hidden lg:block">
-          <h2 class="rs-label">On this page</h2>
+          <h2 class="rs-label">{{ i18n "fugu.on_this_page" }}</h2>
           <div class="rs-toc">
             {{ with $blueprints }}
-              <div class="rs-toc-top"><a href="#blueprints">Blueprints</a><span class="n">{{ len . }}</span></div>
+              <div class="rs-toc-top"><a href="#blueprints">{{ i18n "fugu.blueprints" }}</a><span class="n">{{ len . }}</span></div>
               <div class="rs-toc-group">
                 {{ range . }}<a href="#bp-{{ .Title | urlize }}">{{ .Title }}</a>{{ end }}
               </div>
             {{ end }}
             {{ with $standalone }}
-              <div class="rs-toc-top"><a href="#techniques">Techniques and ratios</a><span class="n">{{ len . }}</span></div>
+              <div class="rs-toc-top"><a href="#techniques">{{ i18n "fugu.techniques_and_ratios" }}</a><span class="n">{{ len . }}</span></div>
             {{ end }}
           </div>
         </div>
@@ -147,12 +147,12 @@
       {{/* Further reading, each labelled by kind. */}}
       {{ with $further }}
         <div class="rs-section">
-          <h2 class="rs-label">Reference &amp; further reading <span class="n">{{ len . }}</span></h2>
+          <h2 class="rs-label">{{ i18n "fugu.reference_further_reading" }} <span class="n">{{ len . }}</span></h2>
           <div class="browse-list">
             {{ range . }}
-              {{ $label := "Essay" }}
-              {{ if eq (partialCached "section/role.html" .Section .Section) "reference" }}{{ $label = "Reference" }}
-              {{ else if partial "method/is.html" . }}{{ $label = "Method" }}{{ end }}
+              {{ $label := i18n "fugu.kind.essay" }}
+              {{ if eq (partialCached "section/role.html" .Section .Section) "reference" }}{{ $label = i18n "fugu.kind.reference" }}
+              {{ else if partial "method/is.html" . }}{{ $label = i18n "fugu.kind.method" }}{{ end }}
               <a href="{{ .RelPermalink }}">{{ .Title }} <span class="n">{{ $label }}</span></a>
             {{ end }}
           </div>

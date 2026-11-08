@@ -115,10 +115,12 @@
             before ingredients.js's (see automagic-sidebar.js). Every page
             with a sidebar gets it, recipe or reading. */}}
           {{ if partial "sidebar/kind.html" . }}
+            {{ partial "js-strings.html" . }}
             {{ $sidebarJS := resources.Get "js/automagic-sidebar.js" | resources.Minify | resources.Fingerprint "sha256" }}
             <script src="{{ $sidebarJS.RelPermalink }}" integrity="{{ $sidebarJS.Data.Integrity }}" defer></script>
           {{ end }}
           {{ if eq (partialCached "section/role.html" .Section .Section) "recipe" }}
+            {{ partial "js-strings.html" . }}
             {{ $ingredientsJS := resources.Get "js/ingredients.js" | resources.Minify | resources.Fingerprint "sha256" }}
             <script src="{{ $ingredientsJS.RelPermalink }}" integrity="{{ $ingredientsJS.Data.Integrity }}" defer></script>
           {{ end }}
@@ -224,7 +226,7 @@
           custom.css rule. */}}
         <div class="recipe-sidebar-wrap order-first lg:order-last lg:ms-auto px-0 lg:ps-8 lg:max-w-2xs">
           <button type="button" class="recipe-sidebar-toggle lg:hidden" aria-expanded="false" aria-controls="recipe-sidebar">
-            <span>Recipe notes</span>
+            <span>{{ i18n "fugu.recipe_notes" }}</span>
             {{ partial "icon.html" "chevron-down" }}
           </button>
           <div class="recipe-sidebar print:hidden lg:sticky {{ $topClass }}" id="recipe-sidebar">
@@ -262,18 +264,18 @@
                 {{ $full := $src }}
                 {{ if not (strings.HasPrefix $src "http") }}{{ $full = printf "https://%s" $src }}{{ end }}
                 {{ $host := strings.TrimPrefix "www." (urls.Parse $full).Host }}
-                {{ $metaRows = $metaRows | append (dict "label" "Source" "value" $host "link" $full) }}
+                {{ $metaRows = $metaRows | append (dict "label" (i18n "fugu.meta.source") "value" $host "link" $full) }}
               {{ else }}
-                {{ $metaRows = $metaRows | append (dict "label" "Source" "value" $src) }}
+                {{ $metaRows = $metaRows | append (dict "label" (i18n "fugu.meta.source") "value" $src) }}
               {{ end }}
             {{ end }}
-            {{ with .Params.aka }}{{ $metaRows = $metaRows | append (dict "label" "Aka" "value" .) }}{{ end }}
-            {{ with .Params.servings }}{{ $metaRows = $metaRows | append (dict "label" "Serves" "value" . "id" "recipe-meta-servings" "base" .) }}{{ end }}
-            {{ with .Params.portions }}{{ $metaRows = $metaRows | append (dict "label" "Makes" "value" . "id" "recipe-meta-portions" "portions" .) }}{{ end }}
-            {{ with .Params.prep_time }}{{ $metaRows = $metaRows | append (dict "label" "Prep" "value" .) }}{{ end }}
-            {{ with .Params.cook_time }}{{ $metaRows = $metaRows | append (dict "label" "Cook" "value" .) }}{{ end }}
-            {{ with .Params.total_time }}{{ $metaRows = $metaRows | append (dict "label" "Total" "value" .) }}{{ end }}
-            {{ with .Params.author }}{{ $metaRows = $metaRows | append (dict "label" "Author" "value" .) }}{{ end }}
+            {{ with .Params.aka }}{{ $metaRows = $metaRows | append (dict "label" (i18n "fugu.meta.aka") "value" .) }}{{ end }}
+            {{ with .Params.servings }}{{ $metaRows = $metaRows | append (dict "label" (i18n "fugu.meta.serves") "value" . "id" "recipe-meta-servings" "base" .) }}{{ end }}
+            {{ with .Params.portions }}{{ $metaRows = $metaRows | append (dict "label" (i18n "fugu.meta.makes") "value" . "id" "recipe-meta-portions" "portions" .) }}{{ end }}
+            {{ with .Params.prep_time }}{{ $metaRows = $metaRows | append (dict "label" (i18n "fugu.meta.prep") "value" .) }}{{ end }}
+            {{ with .Params.cook_time }}{{ $metaRows = $metaRows | append (dict "label" (i18n "fugu.meta.cook") "value" .) }}{{ end }}
+            {{ with .Params.total_time }}{{ $metaRows = $metaRows | append (dict "label" (i18n "fugu.meta.total") "value" .) }}{{ end }}
+            {{ with .Params.author }}{{ $metaRows = $metaRows | append (dict "label" (i18n "fugu.meta.author") "value" .) }}{{ end }}
             {{ $metaRows = $metaRows | append (partial "sidebar/date-rows.html" .) }}
             {{ if $metaRows }}
               <div class="recipe-meta">

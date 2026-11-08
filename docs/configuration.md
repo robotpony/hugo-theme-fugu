@@ -252,6 +252,20 @@ Drafts never appear in RSS feeds (the site's, a section's, or a tag's), so subsc
 
 Fugu's stylesheet, `assets/css/fugu.css`, styles everything Fugu adds, coloured from your Blowfish `colorScheme`, light and dark. It loads after Blowfish's CSS and before your `assets/css/custom.css`, so your rules win. To change the colours alone, set the `--fugu-*` custom properties at the top of the file in your `custom.css` (under `:root`, and `.dark` for dark mode). The stack layers' fixed colours, `--fugu-sear*` and `--fugu-kit-*` (green, red and yellow, each with a `-top`, and `--fugu-kit-green-ink`), give way to `--sear*` and `--kit-*` if your CSS sets those. `false` leaves it out, for a site that styles every class itself.
 
+## Words and translation
+
+Fugu's own words (labels, headings, counts, and what its scripts show) are in `i18n/en.yaml`, under `fugu`. To change one, or to translate them, add the same keys to the site's own `i18n/<lang>.yaml`; Hugo uses the site's value first, and falls back to Fugu's English for a key the site leaves out.
+
+```yaml
+# i18n/en.yaml in the site
+fugu:
+  recipe_notes: Kitchen notes
+  count:
+    recipes: {one: "{{ .Count }} dish", other: "{{ .Count }} dishes"}
+```
+
+Counts use Hugo's plural forms, with `{{ .Count }}`. The script strings are under `fugu.js`, with `{name}` for a value the script fills in; they reach the scripts as a JSON block on the page (`<script type="application/json" id="fugu-strings">`, from `partials/js-strings.html`), and each script keeps its English for a page without it. A script's plural (the glossary's "3 entries") has `_one` and `_other` keys, picked with the browser's plural rules for the site's language. Section names, heading names and the Test kitchen banner are params, not i18n: see above.
+
 ## Fonts
 
 Fugu loads no web fonts. To add some, override `layouts/partials/fonts.html` in your site; it's included in every page's `<head>` and is empty by default.

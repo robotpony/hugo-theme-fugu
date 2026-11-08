@@ -4,8 +4,8 @@
   "Search recipes". Called cached from search-box.html.
 */}}
 {{ $words := slice }}
-{{ range slice (slice "recipe" "recipes") (slice "essay" "essays") (slice "reference" "guides") }}
+{{ range slice (slice "recipe" (i18n "fugu.search_words.recipes")) (slice "essay" (i18n "fugu.search_words.essays")) (slice "reference" (i18n "fugu.search_words.guides")) }}
   {{ $name := partial "section/name.html" (index . 0) }}
   {{ if and $name (where site.RegularPages "Section" $name) }}{{ $words = $words | append (index . 1) }}{{ end }}
 {{ end }}
-{{ return (printf "Search %s" (delimit $words ", ")) }}
+{{ return (i18n "fugu.search_sections" (dict "Sections" (delimit $words ", "))) }}

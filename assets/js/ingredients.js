@@ -17,6 +17,20 @@
 // data-method-heading="true" by the same render hook).
 
 (function () {
+  // The words this script shows, from the page's #fugu-strings block
+  // (partials/js-strings.html, i18n's fugu.js keys). Each call carries its
+  // English as the fallback, so a page without the block still reads.
+  // {name} in a string is filled from vars.
+  var STRINGS = (function () {
+    try {
+      var el = document.getElementById('fugu-strings');
+      return el ? JSON.parse(el.textContent) : {};
+    } catch (e) { return {}; }
+  })();
+  function phrase(key, fallback, vars) {
+    var s = STRINGS[key] || fallback;
+    return vars ? s.replace(/\{(\w+)\}/g, function (m, k) { return k in vars ? vars[k] : m; }) : s;
+  }
   // Best-effort leading-quantity matcher, built from real recipes in this
   // vault (not every case in FORMAT.md's grammar — "a pinch of", "to
   // taste" etc. have no leading number and are left unstyled, which is a
@@ -865,7 +879,7 @@
     scaleHead.className = 'ing-config-head';
     var scaleLabel = document.createElement('label');
     scaleLabel.className = 'ing-config-label';
-    scaleLabel.textContent = 'Scale';
+    scaleLabel.textContent = phrase('scale', 'Scale');
     var scaleValue = document.createElement('span');
     scaleValue.className = 'ing-scale-value mono';
     scaleHead.appendChild(scaleLabel);
@@ -906,7 +920,7 @@
     var unitsLabel = document.createElement('div');
     unitsLabel.className = 'ing-config-label';
     unitsLabel.id = 'ing-units-label';
-    unitsLabel.textContent = 'Units';
+    unitsLabel.textContent = phrase('units', 'Units');
     unitsGroup.appendChild(unitsLabel);
     // A segmented control: every option on one row, one tap to switch.
     var unitsRow = document.createElement('div');
@@ -914,9 +928,9 @@
     unitsRow.setAttribute('role', 'group');
     unitsRow.setAttribute('aria-labelledby', unitsLabel.id);
     var unitOptions = [
-      ['original', 'As written'], ['metric', 'Metric'], ['imperial', 'Imperial']
+      ['original', phrase('as_written', 'As written')], ['metric', phrase('metric', 'Metric')], ['imperial', phrase('imperial', 'Imperial')]
     ];
-    if (ENABLE_KELVIN) unitOptions.push(['kelvin', 'Kelvin']);
+    if (ENABLE_KELVIN) unitOptions.push(['kelvin', phrase('kelvin', 'Kelvin')]);
     var unitButtons = unitOptions.map(function (pair) {
       var btn = buildUnitButton(pair[1], pair[0]);
       unitsRow.appendChild(btn);
@@ -980,7 +994,7 @@
     cells[0].className = 'ing-check-cell';
 
     nameCell.className = 'ing-pct-name';
-    nameCell.textContent = 'Scale based on ' + base.name;
+    nameCell.textContent = phrase('scale_based_on', 'Scale based on {name}', { name: base.name });
 
     var mult = element('span', 'ing-pct-mult mono');
     mult.hidden = true;
@@ -990,7 +1004,7 @@
     input.type = 'text';
     input.inputMode = 'decimal';
     input.autocomplete = 'off';
-    input.setAttribute('aria-label', 'Amount of ' + base.name);
+    input.setAttribute('aria-label', phrase('amount_of', 'Amount of {name}', { name: base.name }));
     var stack = element('div', 'ing-pct-stack');
     stack.appendChild(input);
     amountCell.className = 'ing-pct-amount';
@@ -999,7 +1013,7 @@
     var controls = element('div', 'ing-pct-controls');
     var unitsRow = element('span', 'ing-units ing-pct-units');
     unitsRow.setAttribute('role', 'group');
-    unitsRow.setAttribute('aria-label', 'Unit of ' + base.name);
+    unitsRow.setAttribute('aria-label', phrase('unit_of', 'Unit of {name}', { name: base.name }));
     var unitButtons = percentUnits(base).map(function (key) {
       var btn = buildUnitButton(UNIT_LABELS[key][0], key);
       delete btn.dataset.units;
@@ -1012,7 +1026,7 @@
     var reset = element('button', 'ing-pct-reset');
     reset.type = 'button';
     reset.innerHTML = REVERT_ICON;
-    reset.title = 'Back to ' + base.written;
+    reset.title = phrase('back_to', 'Back to {amount}', { amount: base.written });
     reset.setAttribute('aria-label', reset.title);
     controls.appendChild(reset);
 
@@ -1148,7 +1162,7 @@
           return;
         }
         renderQty(head.qty, state.scale, 'original', true);
-        head.th.innerHTML = 'For ' + head.qty.outerHTML + head.after;
+        head.th.innerHTML = phrase('for_amount', 'For {amount}', { amount: head.qty.outerHTML }) + head.after;
       });
     }
 
@@ -1164,7 +1178,7 @@
       var parts = [];
       var serves = scaleYield(servingsBase, state.scale);
       var makes = scaleYield(portionsBase, state.scale);
-      if (serves) parts.push('Serves ' + serves);
+      if (serves) parts.push(phrase('serves', 'Serves {n}', { n: serves }));
       if (makes) parts.push(makes);
       return parts.join(' · ');
     }
@@ -1274,7 +1288,7 @@
 
     var summary = document.createElement('summary');
     summary.className = 'ing-config-btn';
-    summary.setAttribute('aria-label', 'Ingredient options: scale recipe or change units');
+    summary.setAttribute('aria-label', phrase('ingredient_options', 'Ingredient options: scale recipe or change units'));
     summary.innerHTML = GEAR_ICON;
     details.appendChild(summary);
 
@@ -1322,8 +1336,8 @@
     button.type = 'button';
     button.className = 'ing-awake';
     button.setAttribute('aria-pressed', 'false');
-    button.setAttribute('aria-label', 'Keep screen awake');
-    button.title = 'Keep screen awake';
+    button.setAttribute('aria-label', phrase('keep_awake', 'Keep screen awake'));
+    button.title = button.getAttribute('aria-label');
     button.innerHTML = AWAKE_ICON;
     var lock = null;
     var on = false;

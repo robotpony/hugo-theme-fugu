@@ -9,4 +9,4 @@
 {{ $label := .month.label }}
 {{ with .year }}{{ $label = replaceRE (printf `^(January|February|March|April|May|June|July|August|September|October|November|December) %s$` .) "$1" $label }}{{ end }}
 {{ $days := len .month.days }}
-<a href="{{ .month.page.RelPermalink }}"{{ if eq .month.page .current }} aria-current="page"{{ end }}>{{ $label }} <span class="n">{{ if $days }}{{ $days }} {{ cond (eq $days 1) "day" "days" }}{{ end }}</span></a>
+<a href="{{ .month.page.RelPermalink }}"{{ if eq .month.page .current }} aria-current="page"{{ end }}>{{ $label }} <span class="n">{{ if $days }}{{ i18n "fugu.count.days" $days }}{{ end }}</span></a>

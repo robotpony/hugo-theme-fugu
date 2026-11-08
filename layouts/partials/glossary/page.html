@@ -47,17 +47,17 @@
 <section class="listing glossary-page">
   <header class="listing-head">
     <h1 class="ltitle">{{ .Title }}</h1>
-    <span class="listing-count">{{ $count }} {{ cond (eq $count 1) "entry" "entries" }}</span>
+    <span class="listing-count">{{ i18n "fugu.count.entries" $count }}</span>
   </header>
   {{ with strings.TrimSpace $md }}<div class="glossary-intro prose dark:prose-invert article-content">{{ $.RenderString (dict "display" "block") . }}</div>{{ end }}
 
   {{ with $letters }}
     <div class="gl-search" role="search" hidden>
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="7" cy="7" r="4.75"/><path d="m10.5 10.5 3.5 3.5" stroke-linecap="round"/></svg>
-      <input type="search" aria-label="Search the glossary" placeholder="Search the glossary" autocomplete="off" spellcheck="false">
+      <input type="search" aria-label="{{ i18n "fugu.glossary.search" }}" placeholder="{{ i18n "fugu.glossary.search" }}" autocomplete="off" spellcheck="false">
       <span class="gl-count" aria-live="polite"></span>
     </div>
-    <nav class="gl-letters" aria-label="Jump to letter">
+    <nav class="gl-letters" aria-label="{{ i18n "fugu.glossary.letters" }}">
       {{- range $nav }}
         {{- if index $present . }}<a href="#{{ partial "glossary/letter-id.html" . }}">{{ . }}</a>{{ else }}<span>{{ . }}</span>{{ end }}
       {{- end -}}
@@ -82,18 +82,19 @@
             {{- if .page }}
               {{- with .used }}
                 {{- $shown := cond (gt (len .) 4) (first 3 .) . }}
-                <div class="used">Used in {{ range $i, $p := $shown }}{{ if $i }}, {{ end }}<a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>{{ end }}
-                  {{- if gt (len .) 4 }}, <details class="used-more"><summary>and {{ sub (len .) 3 }} more</summary> {{ range $i, $p := after 3 . }}{{ if $i }}, {{ end }}<a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>{{ end }}</details>{{ end -}}
+                <div class="used">{{ i18n "fugu.glossary.used_in" }} {{ range $i, $p := $shown }}{{ if $i }}, {{ end }}<a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>{{ end }}
+                  {{- if gt (len .) 4 }}, <details class="used-more"><summary>{{ i18n "fugu.glossary.and_more" (sub (len .) 3) }}</summary> {{ range $i, $p := after 3 . }}{{ if $i }}, {{ end }}<a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>{{ end }}</details>{{ end -}}
                 </div>
               {{- end }}
             {{- else }}
-              <div class="used"><a class="essay-link" href="{{ .url }}">Read the full essay</a></div>
+              <div class="used"><a class="essay-link" href="{{ .url }}">{{ i18n "fugu.read_full_essay" }}</a></div>
             {{- end }}
           </dd>
         {{ end }}
       </dl>
     {{ end }}
-    <p class="gl-none" hidden>No entry matches. Try a shorter word, or another form of it.</p>
+    <p class="gl-none" hidden>{{ i18n "fugu.glossary.none" }}</p>
+    {{ partial "js-strings.html" $ }}
     {{ $js := resources.Get "js/glossary.js" | resources.Minify | resources.Fingerprint (site.Params.fingerprintAlgorithm | default "sha512") }}
     <script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
   {{ end }}

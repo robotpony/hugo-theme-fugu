@@ -12,6 +12,6 @@
 */}}
 {{ with partial "blueprint/of.html" . }}
   {{ $suffix := "" }}
-  {{ if eq .role "part" }}{{ $suffix = $.Title }}{{ else if eq .role "build" }}{{ $suffix = "Build" }}{{ end }}
+  {{ if eq .role "part" }}{{ $suffix = $.Title }}{{ else if eq .role "build" }}{{ $suffix = i18n "fugu.build" }}{{ end }}
   <a class="blueprint-chip" href="{{ .blueprint.RelPermalink }}">{{ .blueprint.LinkTitle }}{{ with $suffix }}<span class="blueprint-chip-part"> · {{ . }}</span>{{ end }}</a>
 {{ end }}

@@ -21,12 +21,12 @@
     {{ if eq (partialCached "section/role.html" $.Section $.Section) "log" }}
       {{ $value = cond (findRE `(?i)-(spring|summer|fall|winter)$` $.File.ContentBaseName) $.Title (. | time.Format "January 2006") }}
     {{ end }}
-    {{ $rows = $rows | append (dict "label" "Date" "value" $value) }}
+    {{ $rows = $rows | append (dict "label" (i18n "fugu.meta.date") "value" $value) }}
   {{ end }}
 {{ end }}
 {{ with .Lastmod }}
   {{ if and (not .IsZero) (ne (. | time.Format "2006-01-02") ($.Date | time.Format "2006-01-02")) }}
-    {{ $rows = $rows | append (dict "label" "Updated" "value" (. | time.Format $fmt)) }}
+    {{ $rows = $rows | append (dict "label" (i18n "fugu.meta.updated") "value" (. | time.Format $fmt)) }}
   {{ end }}
 {{ end }}
 {{ return $rows }}
