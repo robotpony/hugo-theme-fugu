@@ -59,6 +59,8 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ### Fixed
 
+- The glossary's search placeholder is "Search the glossary", short enough not to clip at phone widths.
+- A link's trailing arrow (wiki links, popover and draft links, "N more") is joined to its last word with a no-break space, so it can't wrap onto a line alone. A site with `fugu.styles = false` makes the same change in its own CSS.
 - The sidebar lineage shows a year once inside a zoomed stretch: a label at a ticked year ('57) leaves its year to the tick, kept for screen readers (`.y.sr-only`).
 - Lineage labels in the body no longer overlap when there are many: a label that would collide moves up to a third or fourth row (`.r2`, `.r3`, the track taller by `--tl-rows`), and a long label near either end of the track starts or ends at its dot (`.tl-start`, `.tl-end`) instead of running off the side. Not a Chef's burgers and chicken sandwiches lineages change; a track whose labels already clear is unchanged.
 - History links on the lineage (any `http` link) open in a new tab, like other external links.

@@ -187,7 +187,7 @@ li:has(> input[type="checkbox"]:checked) {
   color: var(--fugu-accent-strong);
   text-decoration-color: var(--fugu-accent);
 }
-.wikilink::after { content: ' \2192'; font-size: .85em; }
+.wikilink::after { content: '\00a0\2192'; font-size: .85em; }
 .extlink::after { content: ' \2197'; font-size: .75em; color: var(--fugu-ink-faint); }
 .broken-link {
   color: var(--fugu-ink-muted);
@@ -241,7 +241,7 @@ html, body { overflow-x: clip; }
   border-bottom: 1.5px solid color-mix(in srgb, var(--pop-accent) 35%, transparent);
 }
 .pop-link:hover, .pop-link:focus-visible { border-bottom-color: var(--pop-accent); }
-.pop-link::after { content: " \2192"; }
+.pop-link::after { content: "\00a0\2192"; }
 .pop::before, .pop::after { content: ""; position: absolute; left: calc(var(--pop-x, 21px) - 7px); border: 7px solid transparent; }
 .pop::before { top: -8px; border-top: 0; border-bottom: 8px solid var(--fugu-border-strong); }
 .pop::after { top: -6.6px; border-top: 0; border-bottom: 8px solid var(--fugu-surface); }
@@ -319,7 +319,7 @@ a.dev-chip:hover, a.dev-chip:focus-visible { border-color: var(--fugu-ink-faint)
 .dev-strip-msg { color: var(--fugu-ink-muted); }
 .dev-link { font-weight: 600; color: var(--fugu-accent-strong); text-decoration: none; white-space: nowrap; border-bottom: 1.5px solid color-mix(in srgb, var(--fugu-accent) 35%, transparent); }
 .dev-link:hover, .dev-link:focus-visible { border-bottom-color: var(--fugu-accent); }
-.dev-link::after { content: " \2192"; }
+.dev-link::after { content: "\00a0\2192"; }
 .dev-strip .dev-link { margin-left: 4px; }
 .dev-strip-note { display: block; margin-top: 7px; padding-top: 6px; border-top: 1px dashed var(--fugu-border-strong); font-style: italic; color: var(--fugu-ink); }
 .dev-strip-note b { font-style: normal; font-weight: 600; font-size: .8rem; margin-right: 2px; }
@@ -684,7 +684,7 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
 @media (prefers-reduced-motion: reduce) { .reading-sidebar .rs-toc-toggle::after { transition: none; } }
 .reading-sidebar .rs-more summary { list-style: none; display: inline-block; margin-top: 6px; font-size: .82rem; font-weight: 600; color: var(--fugu-accent-strong); cursor: pointer; }
 .reading-sidebar .rs-more summary::-webkit-details-marker { display: none; }
-.reading-sidebar .rs-more summary::after { content: " \2192"; }
+.reading-sidebar .rs-more summary::after { content: "\00a0\2192"; }
 .reading-sidebar .rs-more[open] summary { display: none; }
 /* Food Log Months, grouped by year: a small year label over the open
    years, and a fold for each older one. */
