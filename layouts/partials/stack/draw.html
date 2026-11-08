@@ -14,8 +14,12 @@
 
   The layer files share a 210-wide viewBox centred on x=105, each with its
   own height; data-edge is how far the drawing reaches right of centre, so
-  a leader line starts just past it. They're inlined, so currentColor and
-  the theme tokens (--accent-soft, --surface) follow dark mode. Labels,
+  a leader line starts just past it. Each layer is published once as its
+  own file (fugu/layers/<key>.<hash>.svg, a <symbol id="l">) and drawn
+  with <use href>, so a page carries a line per layer instead of the
+  drawing (some layers are 100 KB and more), and the browser caches each
+  across pages. A <use> tree inherits from the page, so currentColor and
+  the theme tokens (--accent-soft, --surface) still follow dark mode. Labels,
   leaders and the bracket carry plain defaults in currentColor; a site's
   CSS restyles them by class (.stack-label, .stack-role, .stack-lead,
   .stack-dot, .stack-bracket, .stack-times, .stack-cap).
@@ -46,7 +50,11 @@
     {{- $c := .Content }}
     {{- $h := index (index (findRESubmatch `viewBox="0 0 [0-9.]+ ([0-9.]+)"` $c 1) 0) 1 }}
     {{- $edge := index (index (findRESubmatch `data-edge="([0-9.]+)"` $c 1) 0) 1 }}
-    {{- $layer = merge $layer (dict "svg" (replaceRE `(?s)^.*?<svg[^>]*>\s*|\s*</svg>\s*$` "" $c) "h" (float $h) "edge" (float $edge)) }}
+    {{- $inner := replaceRE `(?s)^.*?<svg[^>]*>\s*|\s*</svg>\s*$` "" $c }}
+    {{- $file := printf `<svg xmlns="http://www.w3.org/2000/svg"><symbol id="l" viewBox="0 0 210 %s" overflow="visible" fill="none" stroke-linecap="round" stroke-linejoin="round">%s</symbol></svg>` $h $inner }}
+    {{- $res := resources.FromString (printf "fugu/layers/%s.svg" $key) $file | resources.Fingerprint "md5" }}
+    {{- $use := printf `<use href="%s#l" width="210" height="%s"/>` $res.RelPermalink $h }}
+    {{- $layer = merge $layer (dict "svg" $use "h" (float $h) "edge" (float $edge)) }}
   {{- else }}
     {{- $layer = merge $layer (dict "svg" (printf `<ellipse class="stack-missing" stroke="currentColor" stroke-dasharray="4 3" cx="%g" cy="10" rx="40" ry="9"/>` $cx)) }}
   {{- end }}
