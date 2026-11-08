@@ -2,7 +2,7 @@
 
 The work list for taking Fugu to a theme other Blowfish users can install. Finished items are removed as they land; `CHANGELOG.md` and git history record them (the last full plan is `75a3a89`, the last long one `183c807`, the last before `v0.1.0` `102abb1`, the last before this squash `13b763a`). Section numbers are kept, since other files cite them.
 
-**Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §5–§7 and the §10 review. Features come after 1.0.
+**Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §5–§7 and the §10 review's deferred items. Features come after 1.0.
 
 **Next:** §5's split, from `docs/design/class-inventory.md`: start with the 227 mixed rules (`.pop` first) and the `--fugu-*` counterparts for the site's 17 colour variables.
 
@@ -50,7 +50,7 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
 ## 10. Release
 
 - [ ] Check the README's images in GitHub's rendering, light and dark.
-- [ ] Code review in three commit series: `layouts/`, `assets/js/`, `tools/`. `layouts/` done (2026-11-07, `/code-review high`), outcomes:
+- [x] Code review in three commit series (`/code-review high`), done; the deferred items stay here until they land. `layouts/` done (2026-11-07, `/code-review high`), outcomes:
   - Fixed: wiki links shown raw in principle popovers; a leaf-bundle essay's card, format chip and siblings (`section/folder.html`); drinks missing from "Recipes in this essay" and a recipe count when the recipe section is off; an undated page's 0001 date in the header and RSS; concept popovers' ARIA (`aria-describedby`, no `role="tooltip"` around a link, the principle icon `aria-hidden`); pagination as a labelled `nav` with `aria-current` and named arrows; the last English strings (search placeholders, feed title and description, formula words, "also", subsections).
   - Deferred to §5: heading levels on list pages (h1 then h3 card and section titles; the fix moves styles keyed to h3); the sidebars as `<aside>`.
   - Deferred to §7: comments that cite `custom.css`, DESIGN.md, FORMAT.md, or Not a Chef content (the item there covers them).
@@ -60,11 +60,6 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
   - `assets/js/` done (2026-11-07). Fixed: ingredient checkboxes named by their label (tapping the text ticks it) and percentage-table ones by the ingredient; a repeated line's check-off keyed apart (`#2`), first key unchanged; the phone recipe sidebar shown with JS off (`<noscript>` style in `single.html`); photos in hidden personal notes left out of the sidebar and viewer; search arrow keys no longer throw outside the results, the index fetched once and a query typed while it loads run when it lands, and every `.search-box` opens search (the partial drops its duplicate `#search-button`); Escape hides a hovered or focused popover without moving focus; a yield's parenthetical scales with it ("about 12 L (12 qt)"); glued metric units are a param (`unitSpacing`); a wake-lock race; photo markers and the Photos heading named with a space; empty glossary letters out of the tab order.
   - Deferred to §7: comments citing FORMAT.md, DESIGN.md, `custom.css`, and Not a Chef recipes; `automagic-sidebar.js`'s note that its DOMContentLoaded handler runs first (script order does it).
   - Deferred: the gear menu staying open when focus tabs out; the gear and keep-awake switch inside the Ingredients heading's accessible name (moving them changes the layout, §5); the photo viewer not announcing the new photo; `hasResults`/`first` not reset when search closes (results stay shown, so resetting would break arrow keys on reopen); a yield of "1 loaf" scaling to "2 loaf" (plural words).
-  - Still to do: Bugs, dead code, Not a Chef leftovers, stale comments. One area per pass with `/code-review high`; record each finding as fixed, won't fix (why), or deferred; check template and JS fixes with `tests/check.py --compare` and Chrome at both widths, light and dark. Angles from Not a Chef (2026-10-17):
-  - Templates and render hooks: empty sections, a page with no cuisine or no date, drafts in card lists.
-  - JS: JS off, keyboard only, screen reader, listeners attached twice.
-  - Tools: run from a fresh clone of a site with the submodule uninitialised.
-  - Accessibility: popover ARIA and tap behaviour, focus order, landmarks, heading levels.
 - [ ] Retake the screenshots after §5 (`python3 tools/screenshots.py`).
 - [ ] Tag `v1.0.0` after §4–§7 and the review.
 - [ ] Optional: list on themes.gohugo.io; check how they handle themes that need a parent theme.
