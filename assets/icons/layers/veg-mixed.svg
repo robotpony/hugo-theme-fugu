@@ -1,302 +1,602 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 37.8" data-edge="102" fill="none" stroke-linecap="round" stroke-linejoin="round" overflow="visible">
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="91.4" cy="3.3" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="91.4" cy="2.3" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M143.8,3.6h5.5l1.1,-2.7v1.6l-1.1,2.7h-5.5z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M143.8,3.6h5.5l1.1,-2.7h-5.5z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="104.1" cy="3.6" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="104.1" cy="2.6" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M120.9,3.7h5.6l1.1,-2.8v1.6l-1.1,2.8h-5.6z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M120.9,3.7h5.6l1.1,-2.8h-5.6z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="161.2" cy="3.5" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="161.2" cy="2.5" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M139.7,4.4h5.1l1,-2.6v1.6l-1,2.6h-5.1z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M139.7,4.4h5.1l1,-2.6h-5.1z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="113.9" cy="3.4" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="113.9" cy="2.4" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M57,5.4h4.3l0.9,-2.2v1.6l-0.9,2.2h-4.3z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M57,5.4h4.3l0.9,-2.2h-4.3z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="192.2" cy="5.7" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="192.2" cy="4.7" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M74.4,6.1h4.3l0.9,-2.1v1.6l-0.9,2.1h-4.3z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M74.4,6.1h4.3l0.9,-2.1h-4.3z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="132" cy="4.4" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="132" cy="3.4" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M79.6,5.7h4.8l1,-2.4v1.6l-1,2.4h-4.8z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M79.6,5.7h4.8l1,-2.4h-4.8z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="184" cy="4.5" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="184" cy="3.5" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M150.6,5h5.7l1.1,-2.8v1.6l-1.1,2.8h-5.7z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M150.6,5h5.7l1.1,-2.8h-5.7z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="169.8" cy="6" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="169.8" cy="5" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M64.9,5.2h5.7l1.1,-2.8v1.6l-1.1,2.8h-5.7z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M64.9,5.2h5.7l1.1,-2.8h-5.7z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="176.9" cy="5.1" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="176.9" cy="4.1" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M160.6,5.4h5.6l1.1,-2.8v1.6l-1.1,2.8h-5.6z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M160.6,5.4h5.6l1.1,-2.8h-5.6z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="124.5" cy="5.4" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="124.5" cy="4.4" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M102,5.8h5.6l1.1,-2.8v1.6l-1.1,2.8h-5.6z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M102,5.8h5.6l1.1,-2.8h-5.6z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="92.1" cy="5.7" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="92.1" cy="4.7" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M186.4,7.6h5.2l1,-2.6v1.6l-1,2.6h-5.2z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M186.4,7.6h5.2l1,-2.6h-5.2z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="147.2" cy="7.9" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="147.2" cy="6.9" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M165.5,8.1h4.9l1,-2.4v1.6l-1,2.4h-4.9z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M165.5,8.1h4.9l1,-2.4h-4.9z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="78" cy="8.1" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="78" cy="7.1" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M68.6,7.6h5.5l1.1,-2.8v1.6l-1.1,2.8h-5.5z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M68.6,7.6h5.5l1.1,-2.8h-5.5z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="135.6" cy="7.3" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="135.6" cy="6.3" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M78.7,8.5h4.8l1,-2.4v1.6l-1,2.4h-4.8z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M78.7,8.5h4.8l1,-2.4h-4.8z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="92.3" cy="9.1" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="92.3" cy="8.1" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M172,8.9h4.5l0.9,-2.3v1.6l-0.9,2.3h-4.5z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M172,8.9h4.5l0.9,-2.3h-4.5z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="140.6" cy="7.6" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="140.6" cy="6.6" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M61.5,9.2h4.4l0.9,-2.2v1.6l-0.9,2.2h-4.4z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M61.5,9.2h4.4l0.9,-2.2h-4.4z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="179.7" cy="8.1" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="179.7" cy="7.1" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M53.7,9.6h4.2l0.8,-2.1v1.6l-0.8,2.1h-4.2z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M53.7,9.6h4.2l0.8,-2.1h-4.2z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="154.5" cy="9.8" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="154.5" cy="8.8" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M124.9,9.2h4.9l1,-2.4v1.6l-1,2.4h-4.9z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M124.9,9.2h4.9l1,-2.4h-4.9z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="100.4" cy="9.5" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="100.4" cy="8.5" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M105.3,10.6h4.3l0.9,-2.2v1.6l-0.9,2.2h-4.3z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M105.3,10.6h4.3l0.9,-2.2h-4.3z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="83.5" cy="10" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="83.5" cy="9" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M111.2,10.5h4.6l0.9,-2.3v1.6l-0.9,2.3h-4.6z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M111.2,10.5h4.6l0.9,-2.3h-4.6z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="118" cy="10.1" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="118" cy="9.1" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M152,9.5h5.6l1.1,-2.8v1.6l-1.1,2.8h-5.6z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M152,9.5h5.6l1.1,-2.8h-5.6z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="142.4" cy="11.1" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="142.4" cy="10.1" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M144.6,10.9h5.1l1,-2.6v1.6l-1,2.6h-5.1z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M144.6,10.9h5.1l1,-2.6h-5.1z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="90.6" cy="10.8" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="90.6" cy="9.8" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M73.3,12.1h4.3l0.9,-2.2v1.6l-0.9,2.2h-4.3z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M73.3,12.1h4.3l0.9,-2.2h-4.3z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="153.6" cy="11" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="153.6" cy="10" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M112.9,11h5.5l1.1,-2.8v1.6l-1.1,2.8h-5.5z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M112.9,11h5.5l1.1,-2.8h-5.5z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="53.9" cy="10.5" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="53.9" cy="9.5" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M68.7,12.3h4.3l0.9,-2.1v1.6l-0.9,2.1h-4.3z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M68.7,12.3h4.3l0.9,-2.1h-4.3z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="159.1" cy="12" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="159.1" cy="11" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M126.6,12.4h5l1,-2.5v1.6l-1,2.5h-5z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M126.6,12.4h5l1,-2.5h-5z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="121" cy="11.7" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="121" cy="10.7" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M163.5,12.2h5.3l1.1,-2.6v1.6l-1.1,2.6h-5.3z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M163.5,12.2h5.3l1.1,-2.6h-5.3z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="58.7" cy="12.2" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="58.7" cy="11.2" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M171.9,13.4h4.4l0.9,-2.2v1.6l-0.9,2.2h-4.4z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M171.9,13.4h4.4l0.9,-2.2h-4.4z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="179.2" cy="13.4" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="179.2" cy="12.4" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M43,13.7h4.2l0.8,-2.1v1.6l-0.8,2.1h-4.2z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M43,13.7h4.2l0.8,-2.1h-4.2z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="81.3" cy="13.2" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="81.3" cy="12.2" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M127.7,12.9h5.1l1,-2.5v1.6l-1,2.5h-5.1z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M127.7,12.9h5.1l1,-2.5h-5.1z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="93.2" cy="14" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="93.2" cy="13" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M103.3,13.5h4.8l1,-2.4v1.6l-1,2.4h-4.8z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M103.3,13.5h4.8l1,-2.4h-4.8z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="97.3" cy="14.3" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="97.3" cy="13.3" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M141.4,15h4.3l0.9,-2.2v1.6l-0.9,2.2h-4.3z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M141.4,15h4.3l0.9,-2.2h-4.3z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="117.6" cy="15.2" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="117.6" cy="14.2" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M47.5,14.6h5.1l1,-2.6v1.6l-1,2.6h-5.1z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M47.5,14.6h5.1l1,-2.6h-5.1z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="104.3" cy="14.1" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="104.3" cy="13.1" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M147.7,14.4h5.3l1.1,-2.7v1.6l-1.1,2.7h-5.3z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M147.7,14.4h5.3l1.1,-2.7h-5.3z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="163.2" cy="15.6" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="163.2" cy="14.6" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M71.8,15.5h4.5l0.9,-2.3v1.6l-0.9,2.3h-4.5z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M71.8,15.5h4.5l0.9,-2.3h-4.5z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="42.3" cy="14.3" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="42.3" cy="13.3" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M125.2,14.8h5.4l1.1,-2.7v1.6l-1.1,2.7h-5.4z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M125.2,14.8h5.4l1.1,-2.7h-5.4z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="97.9" cy="15.8" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="97.9" cy="14.8" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M133,14.6h5.7l1.1,-2.8v1.6l-1.1,2.8h-5.7z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M133,14.6h5.7l1.1,-2.8h-5.7z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="169.5" cy="15.2" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="169.5" cy="14.2" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M57,14.7h5.8l1.2,-2.9v1.6l-1.2,2.9h-5.8z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M57,14.7h5.8l1.2,-2.9h-5.8z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="87.9" cy="14.7" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="87.9" cy="13.7" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M170.8,15.2h5.5l1.1,-2.7v1.6l-1.1,2.7h-5.5z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M170.8,15.2h5.5l1.1,-2.7h-5.5z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="57" cy="15.1" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="57" cy="14.1" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M116.1,15.2h5.8l1.2,-2.9v1.6l-1.2,2.9h-5.8z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M116.1,15.2h5.8l1.2,-2.9h-5.8z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="82.2" cy="14.9" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="82.2" cy="13.9" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M104.3,16.4h4.7l0.9,-2.4v1.6l-0.9,2.4h-4.7z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M104.3,16.4h4.7l0.9,-2.4h-4.7z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="67.1" cy="17.3" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="67.1" cy="16.3" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M149.7,17h4.8l1,-2.4v1.6l-1,2.4h-4.8z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M149.7,17h4.8l1,-2.4h-4.8z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="72.8" cy="17.5" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="72.8" cy="16.5" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M140.6,17.2h5.7l1.1,-2.8v1.6l-1.1,2.8h-5.7z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M140.6,17.2h5.7l1.1,-2.8h-5.7z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="112.4" cy="17.2" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="112.4" cy="16.2" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M102.1,18.2h5l1,-2.5v1.6l-1,2.5h-5z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M102.1,18.2h5l1,-2.5h-5z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="83.7" cy="18.9" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="83.7" cy="17.9" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M35.5,18.7h4.6l0.9,-2.3v1.6l-0.9,2.3h-4.6z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M35.5,18.7h4.6l0.9,-2.3h-4.6z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="137.3" cy="18.6" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="137.3" cy="17.6" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M52.2,18.3h5.2l1,-2.6v1.6l-1,2.6h-5.2z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M52.2,18.3h5.2l1,-2.6h-5.2z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="121.8" cy="17.6" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="121.8" cy="16.6" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M61.3,18.2h5.3l1.1,-2.7v1.6l-1.1,2.7h-5.3z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M61.3,18.2h5.3l1.1,-2.7h-5.3z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="114.4" cy="19" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="114.4" cy="18" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M84.9,18.8h5.3l1.1,-2.7v1.6l-1.1,2.7h-5.3z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M84.9,18.8h5.3l1.1,-2.7h-5.3z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="39.7" cy="19.1" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="39.7" cy="18.1" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M153.4,19.2h5.2l1,-2.6v1.6l-1,2.6h-5.2z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M153.4,19.2h5.2l1,-2.6h-5.2z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="159.2" cy="19.7" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="159.2" cy="18.7" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M144.6,19.2h5.4l1.1,-2.7v1.6l-1.1,2.7h-5.4z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M144.6,19.2h5.4l1.1,-2.7h-5.4z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="47.6" cy="20.2" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="47.6" cy="19.2" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M122.1,19.2h5.7l1.1,-2.8v1.6l-1.1,2.8h-5.7z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M122.1,19.2h5.7l1.1,-2.8h-5.7z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="91" cy="19.6" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="91" cy="18.6" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M71.8,20.7h4.6l0.9,-2.3v1.6l-0.9,2.3h-4.6z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M71.8,20.7h4.6l0.9,-2.3h-4.6z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="164" cy="19.2" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="164" cy="18.2" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M153.3,21.1h5l1,-2.5v1.6l-1,2.5h-5z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M153.3,21.1h5l1,-2.5h-5z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="72.6" cy="20.6" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="72.6" cy="19.6" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M123.5,21.1h5.1l1,-2.5v1.6l-1,2.5h-5.1z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M123.5,21.1h5.1l1,-2.5h-5.1z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="119.3" cy="20.7" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="119.3" cy="19.7" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M99.2,22.1h4.5l0.9,-2.2v1.6l-0.9,2.2h-4.5z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M99.2,22.1h4.5l0.9,-2.2h-4.5z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="51" cy="22.1" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="51" cy="21.1" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M144.3,21.4h5.4l1.1,-2.7v1.6l-1.1,2.7h-5.4z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M144.3,21.4h5.4l1.1,-2.7h-5.4z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="73.9" cy="22" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="73.9" cy="21" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M105.4,22h5.2l1,-2.6v1.6l-1,2.6h-5.2z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M105.4,22h5.2l1,-2.6h-5.2z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="127.1" cy="22.1" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="127.1" cy="21.1" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M28.1,23.3h4.4l0.9,-2.2v1.6l-0.9,2.2h-4.4z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M28.1,23.3h4.4l0.9,-2.2h-4.4z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="95.3" cy="22.2" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="95.3" cy="21.2" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M159.7,22.6h5.2l1,-2.6v1.6l-1,2.6h-5.2z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M159.7,22.6h5.2l1,-2.6h-5.2z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="40.4" cy="22.9" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="40.4" cy="21.9" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M33.4,23.4h4.5l0.9,-2.3v1.6l-0.9,2.3h-4.5z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M33.4,23.4h4.5l0.9,-2.3h-4.5z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="138.7" cy="23.5" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="138.7" cy="22.5" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M132.5,22.7h5.4l1.1,-2.7v1.6l-1.1,2.7h-5.4z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M132.5,22.7h5.4l1.1,-2.7h-5.4z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="61.4" cy="23.5" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="61.4" cy="22.5" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M50.7,23.9h4.4l0.9,-2.2v1.6l-0.9,2.2h-4.4z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M50.7,23.9h4.4l0.9,-2.2h-4.4z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="87.9" cy="23.1" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="87.9" cy="22.1" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M77.3,23.2h5.5l1.1,-2.7v1.6l-1.1,2.7h-5.5z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M77.3,23.2h5.5l1.1,-2.7h-5.5z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="56.7" cy="25" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="56.7" cy="24" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M52,24.3h5.1l1,-2.5v1.6l-1,2.5h-5.1z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M52,24.3h5.1l1,-2.5h-5.1z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="153" cy="24.4" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="153" cy="23.4" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M71.1,24.9h4.8l1,-2.4v1.6l-1,2.4h-4.8z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M71.1,24.9h4.8l1,-2.4h-4.8z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="131.6" cy="25.1" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="131.6" cy="24.1" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M135.5,25.3h4.6l0.9,-2.3v1.6l-0.9,2.3h-4.6z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M135.5,25.3h4.6l0.9,-2.3h-4.6z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="144" cy="24.8" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="144" cy="23.8" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M73.6,24.2h5.8l1.2,-2.9v1.6l-1.2,2.9h-5.8z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M73.6,24.2h5.8l1.2,-2.9h-5.8z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="119.5" cy="23.8" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="119.5" cy="22.8" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M93.1,25h5.3l1.1,-2.6v1.6l-1.1,2.6h-5.3z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M93.1,25h5.3l1.1,-2.6h-5.3z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="124.8" cy="25.9" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="124.8" cy="24.9" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M35.1,25.6h4.8l1,-2.4v1.6l-1,2.4h-4.8z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M35.1,25.6h4.8l1,-2.4h-4.8z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="63.7" cy="25.3" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="63.7" cy="24.3" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M102.9,25.9h4.9l1,-2.4v1.6l-1,2.4h-4.9z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M102.9,25.9h4.9l1,-2.4h-4.9z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="153.8" cy="24.8" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="153.8" cy="23.8" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M42.6,26.7h4.3l0.9,-2.1v1.6l-0.9,2.1h-4.3z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M42.6,26.7h4.3l0.9,-2.1h-4.3z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="109.9" cy="25.8" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="109.9" cy="24.8" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M25.8,26.6h4.7l0.9,-2.4v1.6l-0.9,2.4h-4.7z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M25.8,26.6h4.7l0.9,-2.4h-4.7z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="23.1" cy="25.2" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="23.1" cy="24.2" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M81.2,26.9h4.7l0.9,-2.3v1.6l-0.9,2.3h-4.7z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M81.2,26.9h4.7l0.9,-2.3h-4.7z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="88.2" cy="26.4" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="88.2" cy="25.4" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M28.3,27.8h5.4l1.1,-2.7v1.6l-1.1,2.7h-5.4z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M28.3,27.8h5.4l1.1,-2.7h-5.4z"/>
-  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="18" cy="28.5" rx="2.5" ry="2.2"/>
-  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="18" cy="27.5" rx="2.5" ry="2.1"/>
-  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M19.9,30.2h4.7l0.9,-2.3v1.6l-0.9,2.3h-4.7z"/>
-  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M19.9,30.2h4.7l0.9,-2.3h-4.7z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 40.6" data-edge="102" fill="none" stroke-linecap="round" stroke-linejoin="round" overflow="visible">
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="82" cy="3.5" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="82" cy="2.5" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M117.9,3.8h5.5l1.1,-2.7v1.6l-1.1,2.7h-5.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M117.9,3.8h5.5l1.1,-2.7h-5.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="90.9" cy="3.8" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="90.9" cy="2.8" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M101.8,3.8h5.6l1.1,-2.8v1.6l-1.1,2.8h-5.6z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M101.8,3.8h5.6l1.1,-2.8h-5.6z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="130.8" cy="3.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="130.8" cy="2.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M114.9,4.7h5.1l1,-2.6v1.6l-1,2.6h-5.1z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M114.9,4.7h5.1l1,-2.6h-5.1z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="97.6" cy="3.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="97.6" cy="2.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M57.2,6h4.3l0.9,-2.2v1.6l-0.9,2.2h-4.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M57.2,6h4.3l0.9,-2.2h-4.3z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="173.5" cy="5" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="173.5" cy="4" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M166.1,4.2h5.5l1.1,-2.8v1.6l-1.1,2.8h-5.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M166.1,4.2h5.5l1.1,-2.8h-5.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="175.6" cy="5.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="175.6" cy="4.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M181.3,6.3h4.2l0.8,-2.1v1.6l-0.8,2.1h-4.2z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M181.3,6.3h4.2l0.8,-2.1h-4.2z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="163.4" cy="6.2" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="163.4" cy="5.2" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M150.1,6.2h4.5l0.9,-2.3v1.6l-0.9,2.3h-4.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M150.1,6.2h4.5l0.9,-2.3h-4.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="71.3" cy="6.5" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="71.3" cy="5.5" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M155.7,6.6h4.2l0.8,-2.1v1.6l-0.8,2.1h-4.2z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M155.7,6.6h4.2l0.8,-2.1h-4.2z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="110.1" cy="4.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="110.1" cy="3.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M72.7,5.9h4.8l1,-2.4v1.6l-1,2.4h-4.8z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M72.7,5.9h4.8l1,-2.4h-4.8z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="146.5" cy="4.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="146.5" cy="3.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M122.3,4.7h5.7l1.1,-2.8v1.6l-1.1,2.8h-5.7z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M122.3,4.7h5.7l1.1,-2.8h-5.7z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="136.5" cy="6.2" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="136.5" cy="5.2" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M62.2,4.9h5.7l1.1,-2.8v1.6l-1.1,2.8h-5.7z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M62.2,4.9h5.7l1.1,-2.8h-5.7z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="188.9" cy="6.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="188.9" cy="5.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M138.7,5.2h5.5l1.1,-2.8v1.6l-1.1,2.8h-5.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M138.7,5.2h5.5l1.1,-2.8h-5.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="132.1" cy="4.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="132.1" cy="3.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M102.2,5.6h5.3l1.1,-2.7v1.6l-1.1,2.7h-5.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M102.2,5.6h5.3l1.1,-2.7h-5.3z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="91" cy="5.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="91" cy="4.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M191.7,7.4h4.3l0.9,-2.2v1.6l-0.9,2.2h-4.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M191.7,7.4h4.3l0.9,-2.2h-4.3z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="177" cy="6.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="177" cy="5.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M79.2,5.7h5.6l1.1,-2.8v1.6l-1.1,2.8h-5.6z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M79.2,5.7h5.6l1.1,-2.8h-5.6z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="176.6" cy="7.5" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="176.6" cy="6.5" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M177.4,7.2h5.1l1,-2.6v1.6l-1,2.6h-5.1z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M177.4,7.2h5.1l1,-2.6h-5.1z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="140.3" cy="7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="140.3" cy="6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M105.6,7.2h5.2l1,-2.6v1.6l-1,2.6h-5.2z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M105.6,7.2h5.2l1,-2.6h-5.2z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="78.9" cy="7.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="78.9" cy="6.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M91,7.7h4.9l1,-2.4v1.6l-1,2.4h-4.9z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M91,7.7h4.9l1,-2.4h-4.9z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="129.6" cy="8.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="129.6" cy="7.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M181.8,7.5h5.2l1,-2.6v1.6l-1,2.6h-5.2z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M181.8,7.5h5.2l1,-2.6h-5.2z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="157.8" cy="6.5" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="157.8" cy="5.5" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M111.8,6.9h5.6l1.1,-2.8v1.6l-1.1,2.8h-5.6z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M111.8,6.9h5.6l1.1,-2.8h-5.6z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="126.4" cy="8.8" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="126.4" cy="7.8" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M68,7.1h5.5l1.1,-2.7v1.6l-1.1,2.7h-5.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M68,7.1h5.5l1.1,-2.7h-5.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="97.8" cy="8.5" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="97.8" cy="7.5" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M71.5,7.3h5.4l1.1,-2.7v1.6l-1.1,2.7h-5.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M71.5,7.3h5.4l1.1,-2.7h-5.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="101.5" cy="7.5" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="101.5" cy="6.5" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M185.7,8.3h4.9l1,-2.4v1.6l-1,2.4h-4.9z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M185.7,8.3h4.9l1,-2.4h-4.9z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="83.9" cy="9.5" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="83.9" cy="8.5" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M164.5,8.4h5l1,-2.5v1.6l-1,2.5h-5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M164.5,8.4h5l1,-2.5h-5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="161.3" cy="7.5" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="161.3" cy="6.5" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M62.4,8.7h4.9l1,-2.4v1.6l-1,2.4h-4.9z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M62.4,8.7h4.9l1,-2.4h-4.9z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="117.7" cy="8.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="117.7" cy="7.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M106,10h4.2l0.8,-2.1v1.6l-0.8,2.1h-4.2z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M106,10h4.2l0.8,-2.1h-4.2z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="133.5" cy="9.2" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="133.5" cy="8.2" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M165.2,8.8h5.1l1,-2.5v1.6l-1,2.5h-5.1z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M165.2,8.8h5.1l1,-2.5h-5.1z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="141.7" cy="10.2" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="141.7" cy="9.2" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M148.1,9.4h4.8l1,-2.4v1.6l-1,2.4h-4.8z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M148.1,9.4h4.8l1,-2.4h-4.8z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="55" cy="9.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="55" cy="8.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M55.6,9.5h4.9l1,-2.4v1.6l-1,2.4h-4.9z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M55.6,9.5h4.9l1,-2.4h-4.9z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="144.6" cy="10.4" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="144.6" cy="9.4" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M81,8.4h5.6l1.1,-2.8v1.6l-1.1,2.8h-5.6z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M81,8.4h5.6l1.1,-2.8h-5.6z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="135.4" cy="10.9" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="135.4" cy="9.9" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M184.3,10h5l1,-2.5v1.6l-1,2.5h-5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M184.3,10h5l1,-2.5h-5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="117.1" cy="11.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="117.1" cy="10.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M67.3,10.1h5.1l1,-2.6v1.6l-1,2.6h-5.1z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M67.3,10.1h5.1l1,-2.6h-5.1z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="107.8" cy="9.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="107.8" cy="8.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M137.4,9.8h5.3l1.1,-2.7v1.6l-1.1,2.7h-5.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M137.4,9.8h5.3l1.1,-2.7h-5.3z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="149" cy="11.5" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="149" cy="10.5" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M159.9,11h4.6l0.9,-2.3v1.6l-0.9,2.3h-4.6z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M159.9,11h4.6l0.9,-2.3h-4.6z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="86.6" cy="11.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="86.6" cy="10.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M61.7,10h5.4l1.1,-2.7v1.6l-1.1,2.7h-5.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M61.7,10h5.4l1.1,-2.7h-5.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="174.1" cy="10" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="174.1" cy="9" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M177.8,10.2h5.3l1.1,-2.7v1.6l-1.1,2.7h-5.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M177.8,10.2h5.3l1.1,-2.7h-5.3z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="124.2" cy="9.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="124.2" cy="8.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M101,11.6h4.5l0.9,-2.2v1.6l-0.9,2.2h-4.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M101,11.6h4.5l0.9,-2.2h-4.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="129.8" cy="9.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="129.8" cy="8.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M150.8,10.9h5l1,-2.5v1.6l-1,2.5h-5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M150.8,10.9h5l1,-2.5h-5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="76.6" cy="9.4" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="76.6" cy="8.4" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M93.4,10.2h5.5l1.1,-2.7v1.6l-1.1,2.7h-5.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M93.4,10.2h5.5l1.1,-2.7h-5.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="156.1" cy="10" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="156.1" cy="9" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M71.9,10.6h5.3l1.1,-2.7v1.6l-1.1,2.7h-5.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M71.9,10.6h5.3l1.1,-2.7h-5.3z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="163.4" cy="11.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="163.4" cy="10.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M47.3,10.8h5.3l1.1,-2.6v1.6l-1.1,2.6h-5.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M47.3,10.8h5.3l1.1,-2.6h-5.3z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="117.9" cy="9.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="117.9" cy="8.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M89.2,10.3h5.7l1.1,-2.9v1.6l-1.1,2.9h-5.7z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M89.2,10.3h5.7l1.1,-2.9h-5.7z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="109.2" cy="11.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="109.2" cy="10.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M53.2,12.3h4.4l0.9,-2.2v1.6l-0.9,2.2h-4.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M53.2,12.3h4.4l0.9,-2.2h-4.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="59" cy="12.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="59" cy="11.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M166.6,12.4h4.5l0.9,-2.2v1.6l-0.9,2.2h-4.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M166.6,12.4h4.5l0.9,-2.2h-4.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="81.4" cy="12.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="81.4" cy="11.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M138.5,12.2h4.8l1,-2.4v1.6l-1,2.4h-4.8z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M138.5,12.2h4.8l1,-2.4h-4.8z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="144.6" cy="12" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="144.6" cy="11" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M179.4,12.6h5.1l1,-2.5v1.6l-1,2.5h-5.1z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M179.4,12.6h5.1l1,-2.5h-5.1z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="177.3" cy="12.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="177.3" cy="11.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M90.4,11.9h5.7l1.1,-2.8v1.6l-1.1,2.8h-5.7z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M90.4,11.9h5.7l1.1,-2.8h-5.7z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="71.4" cy="11.9" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="71.4" cy="10.9" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M162.5,13.8h4.5l0.9,-2.2v1.6l-0.9,2.2h-4.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M162.5,13.8h4.5l0.9,-2.2h-4.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="65.9" cy="12.9" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="65.9" cy="11.9" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M49.1,14.1h4.3l0.9,-2.2v1.6l-0.9,2.2h-4.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M49.1,14.1h4.3l0.9,-2.2h-4.3z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="88.8" cy="13.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="88.8" cy="12.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M127.1,13.9h4.5l0.9,-2.3v1.6l-0.9,2.3h-4.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M127.1,13.9h4.5l0.9,-2.3h-4.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="77.9" cy="12.2" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="77.9" cy="11.2" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M142.8,13.6h5l1,-2.5v1.6l-1,2.5h-5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M142.8,13.6h5l1,-2.5h-5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="169.2" cy="12.9" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="169.2" cy="11.9" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M70.2,13.9h5l1,-2.5v1.6l-1,2.5h-5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M70.2,13.9h5l1,-2.5h-5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="53.8" cy="13" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="53.8" cy="12" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M112.5,14.8h4.4l0.9,-2.2v1.6l-0.9,2.2h-4.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M112.5,14.8h4.4l0.9,-2.2h-4.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="160.2" cy="13.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="160.2" cy="12.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M99.1,13.7h5.2l1,-2.6v1.6l-1,2.6h-5.2z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M99.1,13.7h5.2l1,-2.6h-5.2z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="103.9" cy="14.5" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="103.9" cy="13.5" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M119.3,14.4h4.8l1,-2.4v1.6l-1,2.4h-4.8z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M119.3,14.4h4.8l1,-2.4h-4.8z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="118.4" cy="14.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="118.4" cy="13.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M92.9,13.6h5.4l1.1,-2.7v1.6l-1.1,2.7h-5.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M92.9,13.6h5.4l1.1,-2.7h-5.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="136.4" cy="14.8" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="136.4" cy="13.8" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M77,13.4h5.7l1.1,-2.8v1.6l-1.1,2.8h-5.7z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M77,13.4h5.7l1.1,-2.8h-5.7z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="130.4" cy="15.2" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="130.4" cy="14.2" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M53.5,14.3h5.2l1,-2.6v1.6l-1,2.6h-5.2z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M53.5,14.3h5.2l1,-2.6h-5.2z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="154.8" cy="14.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="154.8" cy="13.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M41.9,15.3h4.6l0.9,-2.3v1.6l-0.9,2.3h-4.6z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M41.9,15.3h4.6l0.9,-2.3h-4.6z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="149.3" cy="13.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="149.3" cy="12.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M104.3,13.8h5.7l1.1,-2.8v1.6l-1.1,2.8h-5.7z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M104.3,13.8h5.7l1.1,-2.8h-5.7z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="91.4" cy="16.2" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="91.4" cy="15.2" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M87.4,15.2h5.1l1,-2.5v1.6l-1,2.5h-5.1z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M87.4,15.2h5.1l1,-2.5h-5.1z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="59.8" cy="15.2" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="59.8" cy="14.2" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M156.3,15.5h5l1,-2.5v1.6l-1,2.5h-5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M156.3,15.5h5l1,-2.5h-5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="103.2" cy="15.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="103.2" cy="14.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M141.5,16.3h4.5l0.9,-2.3v1.6l-0.9,2.3h-4.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M141.5,16.3h4.5l0.9,-2.3h-4.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="148.1" cy="16.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="148.1" cy="15.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M171.6,15h5.4l1.1,-2.7v1.6l-1.1,2.7h-5.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M171.6,15h5.4l1.1,-2.7h-5.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="152.4" cy="15.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="152.4" cy="14.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M102.3,14.7h5.8l1.2,-2.9v1.6l-1.2,2.9h-5.8z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M102.3,14.7h5.8l1.2,-2.9h-5.8z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="135.2" cy="14.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="135.2" cy="13.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M50.8,15.3h5.4l1.1,-2.7v1.6l-1.1,2.7h-5.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M50.8,15.3h5.4l1.1,-2.7h-5.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="118.6" cy="15.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="118.6" cy="14.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M136.7,17h4.4l0.9,-2.2v1.6l-0.9,2.2h-4.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M136.7,17h4.4l0.9,-2.2h-4.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="77.8" cy="16.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="77.8" cy="15.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M93.7,16.2h4.9l1,-2.5v1.6l-1,2.5h-4.9z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M93.7,16.2h4.9l1,-2.5h-4.9z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="165.2" cy="15.8" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="165.2" cy="14.8" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M37,16.4h5l1,-2.5v1.6l-1,2.5h-5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M37,16.4h5l1,-2.5h-5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="125.2" cy="16.4" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="125.2" cy="15.4" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M156.3,15.5h5.7l1.1,-2.8v1.6l-1.1,2.8h-5.7z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M156.3,15.5h5.7l1.1,-2.8h-5.7z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="82.8" cy="17.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="82.8" cy="16.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M125.9,16.7h5l1,-2.5v1.6l-1,2.5h-5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M125.9,16.7h5l1,-2.5h-5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="64.1" cy="16.2" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="64.1" cy="15.2" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M68.7,17.3h4.7l0.9,-2.4v1.6l-0.9,2.4h-4.7z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M68.7,17.3h4.7l0.9,-2.4h-4.7z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="67.5" cy="15.5" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="67.5" cy="14.5" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M45.2,17.8h4.4l0.9,-2.2v1.6l-0.9,2.2h-4.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M45.2,17.8h4.4l0.9,-2.2h-4.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="167.9" cy="17.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="167.9" cy="16.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M107.5,17.5h4.7l0.9,-2.3v1.6l-0.9,2.3h-4.7z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M107.5,17.5h4.7l0.9,-2.3h-4.7z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="45" cy="16" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="45" cy="15" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M110.5,17.1h5.1l1,-2.5v1.6l-1,2.5h-5.1z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M110.5,17.1h5.1l1,-2.5h-5.1z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="97.1" cy="17.4" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="97.1" cy="16.4" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M59.4,18.1h5l1,-2.5v1.6l-1,2.5h-5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M59.4,18.1h5l1,-2.5h-5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="40.7" cy="16.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="40.7" cy="15.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M137.9,18.9h4.4l0.9,-2.2v1.6l-0.9,2.2h-4.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M137.9,18.9h4.4l0.9,-2.2h-4.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="65.2" cy="18.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="65.2" cy="17.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M160.2,18.6h4.8l1,-2.4v1.6l-1,2.4h-4.8z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M160.2,18.6h4.8l1,-2.4h-4.8z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="112.6" cy="18.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="112.6" cy="17.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M68.1,18.9h4.7l0.9,-2.3v1.6l-0.9,2.3h-4.7z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M68.1,18.9h4.7l0.9,-2.3h-4.7z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="128" cy="18.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="128" cy="17.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M141.5,18.3h5.2l1,-2.6v1.6l-1,2.6h-5.2z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M141.5,18.3h5.2l1,-2.6h-5.2z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="169" cy="19.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="169" cy="18.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M48.9,18.5h5.1l1,-2.6v1.6l-1,2.6h-5.1z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M48.9,18.5h5.1l1,-2.6h-5.1z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="106.2" cy="18.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="106.2" cy="17.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M144,17.9h5.6l1.1,-2.8v1.6l-1.1,2.8h-5.6z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M144,17.9h5.6l1.1,-2.8h-5.6z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="37.7" cy="18.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="37.7" cy="17.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M112.9,20.1h4.3l0.9,-2.1v1.6l-0.9,2.1h-4.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M112.9,20.1h4.3l0.9,-2.1h-4.3z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="53.5" cy="18.8" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="53.5" cy="17.8" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M146.3,18.2h5.6l1.1,-2.8v1.6l-1.1,2.8h-5.6z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M146.3,18.2h5.6l1.1,-2.8h-5.6z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="162.6" cy="20.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="162.6" cy="19.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M73.9,19.6h4.9l1,-2.5v1.6l-1,2.5h-4.9z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M73.9,19.6h4.9l1,-2.5h-4.9z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="45.5" cy="19.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="45.5" cy="18.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M116.3,19.8h4.9l1,-2.5v1.6l-1,2.5h-4.9z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M116.3,19.8h4.9l1,-2.5h-4.9z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="81.4" cy="20.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="81.4" cy="19.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M150.3,19.1h5.5l1.1,-2.7v1.6l-1.1,2.7h-5.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M150.3,19.1h5.5l1.1,-2.7h-5.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="85.2" cy="20.8" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="85.2" cy="19.8" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M88.7,20.1h4.8l1,-2.4v1.6l-1,2.4h-4.8z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M88.7,20.1h4.8l1,-2.4h-4.8z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="122" cy="20.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="122" cy="19.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M68.2,19.5h5.3l1.1,-2.6v1.6l-1.1,2.6h-5.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M68.2,19.5h5.3l1.1,-2.6h-5.3z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="130.2" cy="18.8" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="130.2" cy="17.8" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M98,20.6h4.6l0.9,-2.3v1.6l-0.9,2.3h-4.6z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M98,20.6h4.6l0.9,-2.3h-4.6z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="43.1" cy="21.4" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="43.1" cy="20.4" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M71.4,22.1h4.2l0.8,-2.1v1.6l-0.8,2.1h-4.2z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M71.4,22.1h4.2l0.8,-2.1h-4.2z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="77.3" cy="21.9" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="77.3" cy="20.9" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M132.2,19.9h5.7l1.1,-2.9v1.6l-1.1,2.9h-5.7z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M132.2,19.9h5.7l1.1,-2.9h-5.7z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="32.4" cy="20.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="32.4" cy="19.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M81.8,21.6h4.6l0.9,-2.3v1.6l-0.9,2.3h-4.6z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M81.8,21.6h4.6l0.9,-2.3h-4.6z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="145.6" cy="20.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="145.6" cy="19.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M55.6,20.3h5.5l1.1,-2.8v1.6l-1.1,2.8h-5.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M55.6,20.3h5.5l1.1,-2.8h-5.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="142.2" cy="20.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="142.2" cy="19.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M32.3,20.7h5.4l1.1,-2.7v1.6l-1.1,2.7h-5.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M32.3,20.7h5.4l1.1,-2.7h-5.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="108.1" cy="20.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="108.1" cy="19.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M84.1,22.4h4.3l0.9,-2.2v1.6l-0.9,2.2h-4.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M84.1,22.4h4.3l0.9,-2.2h-4.3z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="65.4" cy="20.9" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="65.4" cy="19.9" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M118.1,22.5h4.4l0.9,-2.2v1.6l-0.9,2.2h-4.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M118.1,22.5h4.4l0.9,-2.2h-4.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="136" cy="20.4" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="136" cy="19.4" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M120,22.1h4.7l0.9,-2.4v1.6l-0.9,2.4h-4.7z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M120,22.1h4.7l0.9,-2.4h-4.7z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="94.8" cy="21.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="94.8" cy="20.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M156.3,21.1h5.4l1.1,-2.7v1.6l-1.1,2.7h-5.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M156.3,21.1h5.4l1.1,-2.7h-5.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="165.8" cy="22.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="165.8" cy="21.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M63.5,21.2h5.4l1.1,-2.7v1.6l-1.1,2.7h-5.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M63.5,21.2h5.4l1.1,-2.7h-5.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="156" cy="20.8" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="156" cy="19.8" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M88.3,21.5h5.2l1,-2.6v1.6l-1,2.6h-5.2z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M88.3,21.5h5.2l1,-2.6h-5.2z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="54" cy="21.5" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="54" cy="20.5" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M112,23.1h4.3l0.9,-2.1v1.6l-0.9,2.1h-4.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M112,23.1h4.3l0.9,-2.1h-4.3z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="148.8" cy="22.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="148.8" cy="21.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M40.8,22.2h5l1,-2.5v1.6l-1,2.5h-5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M40.8,22.2h5l1,-2.5h-5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="49.5" cy="22.9" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="49.5" cy="21.9" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M100,22.4h5.1l1,-2.5v1.6l-1,2.5h-5.1z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M100,22.4h5.1l1,-2.5h-5.1z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="127.6" cy="22.8" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="127.6" cy="21.8" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M95,22.6h5.1l1,-2.5v1.6l-1,2.5h-5.1z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M95,22.6h5.1l1,-2.5h-5.1z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="119.6" cy="23.4" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="119.6" cy="22.4" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M39.2,23.2h5.2l1,-2.6v1.6l-1,2.6h-5.2z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M39.2,23.2h5.2l1,-2.6h-5.2z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="29.4" cy="23.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="29.4" cy="22.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M158.2,24.3h4.5l0.9,-2.3v1.6l-0.9,2.3h-4.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M158.2,24.3h4.5l0.9,-2.3h-4.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="142.6" cy="24" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="142.6" cy="23" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M55.7,22.7h5.7l1.1,-2.9v1.6l-1.1,2.9h-5.7z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M55.7,22.7h5.7l1.1,-2.9h-5.7z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="33.1" cy="22.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="33.1" cy="21.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M46.3,24.7h4.4l0.9,-2.2v1.6l-0.9,2.2h-4.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M46.3,24.7h4.4l0.9,-2.2h-4.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="113.3" cy="24.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="113.3" cy="23.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M130.4,24.2h4.8l1,-2.4v1.6l-1,2.4h-4.8z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M130.4,24.2h4.8l1,-2.4h-4.8z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="151" cy="23.2" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="151" cy="22.2" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M33.3,24h5l1,-2.5v1.6l-1,2.5h-5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M33.3,24h5l1,-2.5h-5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="122" cy="24.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="122" cy="23.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M78.8,25.3h4.2l0.8,-2.1v1.6l-0.8,2.1h-4.2z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M78.8,25.3h4.2l0.8,-2.1h-4.2z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="99.1" cy="24.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="99.1" cy="23.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M41.8,24.4h4.9l1,-2.5v1.6l-1,2.5h-4.9z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M41.8,24.4h4.9l1,-2.5h-4.9z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="148" cy="23.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="148" cy="22.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M75.5,23.7h5.4l1.1,-2.7v1.6l-1.1,2.7h-5.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M75.5,23.7h5.4l1.1,-2.7h-5.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="53.3" cy="24.4" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="53.3" cy="23.4" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M67.6,24.8h5l1,-2.5v1.6l-1,2.5h-5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M67.6,24.8h5l1,-2.5h-5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="106.6" cy="24.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="106.6" cy="23.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M87,24h5.6l1.1,-2.8v1.6l-1.1,2.8h-5.6z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M87,24h5.6l1.1,-2.8h-5.6z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="63.7" cy="25" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="63.7" cy="24" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M150.6,24.7h5.2l1,-2.6v1.6l-1,2.6h-5.2z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M150.6,24.7h5.2l1,-2.6h-5.2z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="67.3" cy="25.5" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="67.3" cy="24.5" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M89.3,24h5.8l1.2,-2.9v1.6l-1.2,2.9h-5.8z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M89.3,24h5.8l1.2,-2.9h-5.8z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="126.1" cy="26.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="126.1" cy="25.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M81,24.8h5.3l1.1,-2.7v1.6l-1.1,2.7h-5.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M81,24.8h5.3l1.1,-2.7h-5.3z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="104.2" cy="24.8" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="104.2" cy="23.8" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M133.9,25h5.3l1.1,-2.6v1.6l-1.1,2.6h-5.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M133.9,25h5.3l1.1,-2.6h-5.3z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="46.9" cy="26.4" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="46.9" cy="25.4" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M79.5,27.3h4.4l0.9,-2.2v1.6l-0.9,2.2h-4.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M79.5,27.3h4.4l0.9,-2.2h-4.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="143.8" cy="26.2" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="143.8" cy="25.2" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M65.5,26.9h4.8l1,-2.4v1.6l-1,2.4h-4.8z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M65.5,26.9h4.8l1,-2.4h-4.8z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="90.4" cy="27.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="90.4" cy="26.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M22.9,26.8h5l1,-2.5v1.6l-1,2.5h-5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M22.9,26.8h5l1,-2.5h-5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="35.9" cy="26.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="35.9" cy="25.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M52.1,26.8h5.1l1,-2.6v1.6l-1,2.6h-5.1z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M52.1,26.8h5.1l1,-2.6h-5.1z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="39.2" cy="27.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="39.2" cy="26.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M121.1,26.1h5.7l1.1,-2.9v1.6l-1.1,2.9h-5.7z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M121.1,26.1h5.7l1.1,-2.9h-5.7z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="126.4" cy="26.9" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="126.4" cy="25.9" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M28.6,27.2h5l1,-2.5v1.6l-1,2.5h-5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M28.6,27.2h5l1,-2.5h-5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="108" cy="26.8" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="108" cy="25.8" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M99.4,26.5h5.5l1.1,-2.8v1.6l-1.1,2.8h-5.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M99.4,26.5h5.5l1.1,-2.8h-5.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="83.6" cy="27" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="83.6" cy="26" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M53.8,28.2h4.5l0.9,-2.3v1.6l-0.9,2.3h-4.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M53.8,28.2h4.5l0.9,-2.3h-4.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="99.1" cy="28.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="99.1" cy="27.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M141.7,27.1h5.3l1.1,-2.6v1.6l-1.1,2.6h-5.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M141.7,27.1h5.3l1.1,-2.6h-5.3z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="77.4" cy="25.9" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="77.4" cy="24.9" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M91.8,26.7h5.6l1.1,-2.8v1.6l-1.1,2.8h-5.6z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M91.8,26.7h5.6l1.1,-2.8h-5.6z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="115.7" cy="28.8" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="115.7" cy="27.8" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M67.3,27.6h5l1,-2.5v1.6l-1,2.5h-5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M67.3,27.6h5l1,-2.5h-5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="19.2" cy="28.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="19.2" cy="27.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M128.9,28.7h4.4l0.9,-2.2v1.6l-0.9,2.2h-4.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M128.9,28.7h4.4l0.9,-2.2h-4.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="60.2" cy="26.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="60.2" cy="25.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M145.7,28.8h4.5l0.9,-2.2v1.6l-0.9,2.2h-4.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M145.7,28.8h4.5l0.9,-2.2h-4.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="152.9" cy="28.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="152.9" cy="27.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M133.7,27.5h5.4l1.1,-2.7v1.6l-1.1,2.7h-5.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M133.7,27.5h5.4l1.1,-2.7h-5.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="111.1" cy="27.6" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="111.1" cy="26.6" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M46.1,28.8h4.6l0.9,-2.3v1.6l-0.9,2.3h-4.6z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M46.1,28.8h4.6l0.9,-2.3h-4.6z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="113.7" cy="28" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="113.7" cy="27" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M102.3,28.1h5.7l1.1,-2.8v1.6l-1.1,2.8h-5.7z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M102.3,28.1h5.7l1.1,-2.8h-5.7z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="129.6" cy="29.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="129.6" cy="28.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M18.5,30.2h4.4l0.9,-2.2v1.6l-0.9,2.2h-4.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M18.5,30.2h4.4l0.9,-2.2h-4.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="45.5" cy="28.9" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="45.5" cy="27.9" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M48.1,29.3h5.1l1,-2.6v1.6l-1,2.6h-5.1z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M48.1,29.3h5.1l1,-2.6h-5.1z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="54.7" cy="28.3" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="54.7" cy="27.3" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M134.8,30.4h4.4l0.9,-2.2v1.6l-0.9,2.2h-4.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M134.8,30.4h4.4l0.9,-2.2h-4.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="81.1" cy="30.8" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="81.1" cy="29.8" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M86.5,29h5.5l1.1,-2.7v1.6l-1.1,2.7h-5.5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M86.5,29h5.5l1.1,-2.7h-5.5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="119.4" cy="29.4" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="119.4" cy="28.4" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M130.8,29.8h5l1,-2.5v1.6l-1,2.5h-5z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M130.8,29.8h5l1,-2.5h-5z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="95.9" cy="28.5" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="95.9" cy="27.5" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M21.1,30.9h4.4l0.9,-2.2v1.6l-0.9,2.2h-4.4z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M21.1,30.9h4.4l0.9,-2.2h-4.4z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="108.8" cy="31.1" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="108.8" cy="30.1" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M148.2,29.4h5.6l1.1,-2.8v1.6l-1.1,2.8h-5.6z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M148.2,29.4h5.6l1.1,-2.8h-5.6z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="121.9" cy="31" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="121.9" cy="30" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M53.4,29.5h5.6l1.1,-2.8v1.6l-1.1,2.8h-5.6z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M53.4,29.5h5.6l1.1,-2.8h-5.6z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="138.6" cy="29.9" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="138.6" cy="28.9" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M34.7,29.3h5.8l1.2,-2.9v1.6l-1.2,2.9h-5.8z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M34.7,29.3h5.8l1.2,-2.9h-5.8z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="83.4" cy="31.4" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="83.4" cy="30.4" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M66.4,30.1h5.3l1.1,-2.6v1.6l-1.1,2.6h-5.3z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M66.4,30.1h5.3l1.1,-2.6h-5.3z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="35.1" cy="29.9" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="35.1" cy="28.9" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M14.4,31.1h4.7l0.9,-2.3v1.6l-0.9,2.3h-4.7z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M14.4,31.1h4.7l0.9,-2.3h-4.7z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="59.7" cy="31.8" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="59.7" cy="30.8" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M61.1,30.4h5.2l1,-2.6v1.6l-1,2.6h-5.2z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M61.1,30.4h5.2l1,-2.6h-5.2z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="144.3" cy="29.9" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="144.3" cy="28.9" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M73.5,30.5h5.2l1,-2.6v1.6l-1,2.6h-5.2z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M73.5,30.5h5.2l1,-2.6h-5.2z"/>
+  <ellipse style="fill:var(--kit-green, var(--fugu-kit-green))" stroke="currentColor" stroke-width="1.2" cx="27.7" cy="31.7" rx="2.5" ry="2.2"/>
+  <ellipse style="fill:var(--kit-green-top, var(--fugu-kit-green-top))" stroke="currentColor" stroke-width="1.2" cx="27.7" cy="30.7" rx="2.5" ry="2.1"/>
+  <path style="fill:var(--accent-soft, var(--fugu-accent-soft))" stroke="currentColor" stroke-width="1.2" d="M96.7,31.2h4.9l1,-2.4v1.6l-1,2.4h-4.9z"/>
+  <path style="fill:var(--surface, var(--fugu-surface))" stroke="currentColor" stroke-width="0.9" d="M96.7,31.2h4.9l1,-2.4h-4.9z"/>
 </svg>
