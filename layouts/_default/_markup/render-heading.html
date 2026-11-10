@@ -1,11 +1,11 @@
 {{/*
   Full override of themes/blowfish/layouts/_default/_markup/render-heading.html.
 
-  FORMAT.md's headings are freeform by design ("Ingredients", "What you
+  Recipe headings are freeform (docs/recipe-format.md) by design ("Ingredients", "What you
   need", a component's own name like "Tadka" all precede an ingredient
-  list) — confirmed against the real 230-recipe corpus, which also uses
+  list) — confirmed against Not a Chef's 230 real recipes, which also uses
   "Ingredients:", "Directions:", one-off component names, and non-recipe
-  h3s far messier than FORMAT.md's clean examples. Rather than trying to
+  h3s far messier than the format's clean examples. Rather than trying to
   positively recognize "this is an ingredients heading", this flags h2
   sections NEGATIVELY: ingredient by default, unless the heading contains a
   known non-ingredient word (checked per-word, not as a whole-phrase match —

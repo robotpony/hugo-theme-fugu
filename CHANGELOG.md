@@ -8,6 +8,7 @@ After updating Fugu, restart a running `hugo server`: one started before the i18
 
 ### Added
 
+- `docs/customizing.md`: the three layers, the `--fugu-*` properties with their defaults, the `fugu` scheme, fonts from a service or self-hosted, overriding a rule or a template, and replacing icons.
 - `tools/compare-styles.py`: renders a site's pages in headless Chrome before and after a change (Fugu at a ref and the site's styling files at a ref, against the working trees) at desktop and phone widths, light and dark, and lists every element whose box or computed look changed, grouped by change. The CSS counterpart of `compare-builds.py`, for §5's split of Not a Chef's styles. Needs Chrome (`$CHROME`).
 - `params.fugu.unitSpacing = "spaced"` writes rewritten metric quantities as `50 ml` instead of `50ml` (`docs/configuration.md`, "Units").
 - Fugu's English is in `i18n/en.yaml`, under `fugu`: every label, heading and count its templates write, with Hugo's plural forms for counts, and the words its scripts show (`fugu.js`), passed to them as a JSON block (`#fugu-strings`, `partials/js-strings.html`) with each script's English as the fallback. The block is built once per language. A site changes or translates any of them in its own `i18n/` (`docs/configuration.md`, "Words and translation").
@@ -23,6 +24,9 @@ After updating Fugu, restart a running `hugo server`: one started before the i18
 
 ### Fixed
 
+- The formula icons fall back to `--fugu-accent-soft` and `--fugu-surface` when the site doesn't set `--accent-soft` and `--surface`, as the stack layers already did; on a site without them (the example site) they drew with no fill.
+- The Test kitchen strip (`.dev-strip`) measures its width in `--fugu-font-body`, not Lora, so its right edge meets the body text's in any font.
+- `fugu.css` no longer colours Not a Chef's `win-the-fridge` principle blue; that rule is the site's now. A site colours a principle through its `principle-<slug>` class (`docs/customizing.md`).
 - Accessibility, from Not a Chef's 2026-11-08 audit: a heading's "#" link shows on keyboard focus as well as hover, and is named for its section ("Link to section: Method", `fugu.heading_anchor`) instead of "Anchor". Search reads out the result count or "No matches" (a polite status line), its close button is a named `type="button"` with its icon hidden, and the buttons that open it say they open a dialog. Breadcrumbs are a `nav` labelled "Breadcrumb", with `aria-current` on the page and the "/" separators hidden. The recipe and reading sidebars are named `<aside>`s. List pages (recipes, drinks, essays, guides, the Food Log, tag and cuisine pages) have a visually hidden `<h2>` with their count before the cards, so the outline doesn't jump from `h1` to the cards' `h3`. Scaling and switching units are read out ("Scaled to 2×. Serves 8–12"), and the scale slider has `aria-valuetext`. An ingredient checkbox's name leaves out a glossary popover's definition, and a tap on an open popover no longer ticks it. The gear menu closes when focus leaves it, and the photo viewer reads out each photo as you move between them.
 - Search no longer keeps stale results for the arrow keys after it closes.
 - `add-image.sh --help` and its usage errors show the path the script was run by. `frontmatter.py check --help` lists the required and recommended fields for each kind of section, and what else it checks.

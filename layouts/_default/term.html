@@ -41,7 +41,7 @@
 {{ $allRecipes := eq (len $recipePages) (len .Pages) }}
 {{/* Pinned pages (frontmatter `pinned: true`) float to the top of a term
   listing too; everything else keeps its existing relative order. See
-  DESIGN.md. */}}
+  docs/features.md, "Pinned pages". */}}
 {{ $recipePages = (where $recipePages "Params.pinned" true) | append (where $recipePages "Params.pinned" "!=" true) }}
 {{ $allPages := (where .Pages "Params.pinned" true) | append (where .Pages "Params.pinned" "!=" true) }}
 {{ $pager := "" }}

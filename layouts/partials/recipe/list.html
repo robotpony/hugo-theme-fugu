@@ -10,7 +10,7 @@
   16 = four rows of four, so pagination stays near the fold; overrides the
   site-wide pagerSize (12) for these pages only. Pinned pages (frontmatter
   `pinned: true`) float to the top; everything else keeps its existing
-  relative order. See DESIGN.md.
+  relative order. See docs/features.md, "Pinned pages".
 */}}
 {{ $page := .page }}
 {{ $sorted := (where $page.Pages "Params.pinned" true) | append (where $page.Pages "Params.pinned" "!=" true) }}

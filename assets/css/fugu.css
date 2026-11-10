@@ -12,9 +12,11 @@
  *   :root, .dark { --fugu-accent: #A8865A; --fugu-font-body: Georgia, serif; }
  *
  * (docs/customizing.md lists them). Dark mode follows Blowfish's .dark
- * class on <html>. The rules after the tokens came from Not a Chef's design
- * (https://bruce-loves-to-cook.ca), where they were written, so their
- * comments cite its mockups and decisions.
+ * class on <html>. The rules after the tokens were written for Not a Chef
+ * (https://bruce-loves-to-cook.ca), so many comments cite its design
+ * record, "Not a Chef's STYLE.md" and "mockups/" meaning the files of that
+ * name in https://github.com/robotpony/not-a-chef. Fugu's own docs say
+ * what the components do; those files say why they look the way they do.
  *
  * None of these rules sit in a cascade layer, so they beat Blowfish's
  * Tailwind utilities and Typography's .prose rules, which do.
@@ -187,7 +189,7 @@ main {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  /* Page bottom (STYLE.md "Spacing & radius"): 40px from the last thing on
+  /* Page bottom (Not a Chef's STYLE.md "Spacing & radius"): 40px from the last thing on
    * any page to the footer, owned here rather than borrowed from whichever
    * block comes last, so the blocks below that used to supply it
    * (.article-pagination, the last .home-section, .list-pagination-spacer)
@@ -238,9 +240,10 @@ main > header + section {
   background-color: var(--fugu-surface);
 }
 
-/* Lora for prose body text only — STYLE.md's split is by role (headings/UI
- * vs. body text), not by container, so headings inside recipe/essay content
- * stay Libre Franklin like every other heading on the site. Found by
+/* The body face (--fugu-font-body) for prose text only — the split is by
+ * role (headings/UI vs. body text, as in Not a Chef's STYLE.md), not by
+ * container, so headings inside recipe/essay content stay in the sans face
+ * (--fugu-font-sans) like every other heading on the site. Found by
  * checking a recipe page's "Mechanic" h2, which had silently gone serif. */
 .prose {
   font-family: var(--fugu-font-body);
@@ -249,7 +252,7 @@ main > header + section {
    * that value actually lives: `<li>` has no line-height of its own, so
    * tightening it here tightens list items too, without needing a
    * separate `.prose li` rule. Headings aren't touched — they keep
-   * Tailwind's own tighter per-level values (STYLE.md's "Headings:
+   * Tailwind's own tighter per-level values (Not a Chef's STYLE.md, "Headings:
    * 1.05–1.3" guidance), which is a different rhythm on purpose. */
   line-height: 1.5;
 }
@@ -286,7 +289,7 @@ main > header + section {
   margin-bottom: 0.25em;
 }
 
-/* Wikilink/extlink, from mockups/style.html §3. Unlayered here beats
+/* Wikilink/extlink, from Not a Chef's mockups/style.html §3. Unlayered here beats
  * Tailwind Typography's layered `.prose a { color: var(--tw-prose-links) }`
  * regardless of specificity (same mechanism as the token bridge above), so
  * these colors win without needing a `.prose` prefix. */
@@ -341,13 +344,13 @@ main > header + section {
   cursor: help;
 }
 
-/* Glossary link (mockups/win-the-fridge.html) — a second inline-reference
+/* Glossary link (Not a Chef's mockups/win-the-fridge.html) — a second inline-reference
  * style alongside .wikilink, for terms rather than pages: dotted underline
  * instead of wikilink's solid one, no trailing arrow (nothing to "go to"
  * at rest), hover/focus reveals a short definition. Emitted by the same
  * render hook (render-link.html) when a [[Term]] doesn't match a page
  * title but does match a heading in content/reference/glossary.md. */
-/* Rule at 65% of --ink-faint, a shade under the full token (mockups/glossary.html, 2026-10-30), so a page of marked terms stays quiet. */
+/* Rule at 65% of --ink-faint, a shade under the full token (Not a Chef's mockups/glossary.html, 2026-10-30), so a page of marked terms stays quiet. */
 .glossary-link { text-decoration: underline dotted; text-decoration-thickness: 1.5px; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, var(--fugu-ink-faint) 65%, transparent); color: inherit; cursor: help; }
 .glossary-link:hover, .glossary-link:focus-visible { text-decoration-color: var(--fugu-ink); color: var(--fugu-ink); }
 /* In the sidebar's smaller italic text the 65% rule all but vanished (2026-10-30), so it's full --ink-faint there. */
@@ -356,7 +359,7 @@ main > header + section {
 /* Popover — one component for glossary terms in prose and the concept
  * chips in a page's tags row; never on cards (2026-10-11: a card's chips
  * are plain links to the page that explains them) (Fugu: .pop-host wraps a trigger and
- * its .pop; assets/js/popover.js). The shared look from STYLE.md
+ * its .pop; assets/js/popover.js). The shared look from Not a Chef's STYLE.md
  * ("Scaling callout"): --surface, --border-strong, 8px radius, soft
  * shadow, a 7px pointer on the side facing the trigger. Behaviour, the
  * same everywhere (2026-10-07):
@@ -413,7 +416,7 @@ main > header + section {
 html, body { overflow-x: clip; }
 
 /* Glossary page (Fugu partials/glossary/page.html, glossary.js), from
- * mockups/glossary.html §3: a search box the script shows, the letters A
+ * Not a Chef's mockups/glossary.html §3: a search box the script shows, the letters A
  * to Z, then one <dl> per letter under a small letter heading. */
 .glossary-intro { max-width: 65ch; margin-bottom: 8px; }
 .gl-search { position: relative; max-width: 460px; margin: 20px 0 0; }
@@ -466,10 +469,9 @@ dl.glossary .used a.essay-link::after { content: "\00a0\2192"; }
 .used-more summary::-webkit-details-marker { display: none; }
 .used-more[open] summary::after { content: ":"; }
 
-/* Ingredient list (check), sub-head, and sub-note, from mockups/style.html
+/* Ingredient list (check), sub-head, and sub-note, from Not a Chef's mockups/style.html
  * §3. Applied client-side by themes/fugu/assets/js/ingredients.js, not by Hugo — see
- * render-heading.html and docs/PLAN.md 6.2b for why (no list render hook
- * exists). Real markup is <ul class="ing-list"><li class="ing"> (the
+ * render-heading.html for why (Hugo has no list render hook). Real markup is <ul class="ing-list"><li class="ing"> (the
  * mockup used bare <div>s since it had no real markdown to render), so
  * these target real list elements instead of the mockup's divs. */
 .ing-list {
@@ -609,15 +611,15 @@ li:has(> input[type="checkbox"]:checked) {
  * unit-bearing quantities and temperatures it finds in Directions/Method
  * prose the same way. Accent text marks these as the numbers the units
  * toggle actually acts on, matching the formula diagrams' quantities
- * (2026-11-01, mockups/soft-colour.html; was a 25% --accent wash). */
+ * (2026-11-01, Not a Chef's mockups/soft-colour.html; was a 25% --accent wash). */
 .qty,
 .temp {
   color: var(--fugu-accent-strong);
   background: none;
   padding: 0;
 }
-/* Sub-note: a tab-indented sub-item under an ingredient (docs/FORMAT.md's
- * "add split peas for more texture" example) — non-checkable, no checkbox
+/* Sub-note: a tab-indented sub-item under an ingredient (docs/recipe-format.md:
+ * "an indented sub-item under a line") — non-checkable, no checkbox
  * at all (enhanceSubRow never adds one) and no list marker (list-style:
  * none comes from .ing-list; these are real <li> siblings of it, not a
  * nested <ul>). Left edge matches the parent row's label text — checkbox
@@ -630,7 +632,7 @@ li:has(> input[type="checkbox"]:checked) {
   color: var(--fugu-ink-muted);
 }
 /* Ingredient sub-head: a "#### Dry" / "#### Wet" label inside an
- * Ingredients section (docs/FORMAT.md's grouping convention). Compound selector
+ * Ingredients section (docs/recipe-format.md, "Grouping ingredients"). Compound selector
  * (element + class) so this beats Tailwind Typography's own h3/h4 rules —
  * those are written with :where() specifically to make them easy to
  * override, but only if the overriding selector is at least as specific. */
@@ -704,7 +706,7 @@ h4.ing-subhead {
 .ing-awake svg { width: 15px; height: 15px; }
 @media print { .ing-awake { display: none; } }
 
-/* The scale callout (mockups/scale-callout.html, STYLE.md "Scaling
+/* The scale callout (Not a Chef's mockups/scale-callout.html, STYLE.md "Scaling
  * callout"): the shared popover look (surface, border-strong, 8px radius)
  * with a ^ pointer up to the gear. The gear is 28px wide at right:0 and
  * the callout sits 8px further right, so the pointer's tip (right: 15px +
@@ -769,7 +771,7 @@ h4.ing-subhead {
 .ing-yield { margin: 0; font-family: var(--fugu-font-body); font-style: italic; font-size: .76rem; color: var(--fugu-ink-muted); }
 
 /* Units: a segmented control, every option on one row. Square-ish 5px
- * corners (STYLE.md's "checkbox, buttons, chip base" bucket), not the
+ * corners (the "checkbox, buttons, chip base" bucket in Not a Chef's STYLE.md), not the
  * 14px pill a filter uses: this is a setting, not a filter. The active
  * segment borrows .filter-pill's accent-soft fill. */
 .ing-units {
@@ -794,7 +796,7 @@ h4.ing-subhead {
 .ing-btn:focus-visible { outline: 2px solid var(--fugu-accent); outline-offset: -2px; }
 
 /* The "Scale based on" row between a percentage table's headings and its body (Fugu's
- * buildPercentRow, mockups/percent-scaling.html round 2, STYLE.md "Scaling
+ * buildPercentRow, Not a Chef's mockups/percent-scaling.html round 2, STYLE.md "Scaling
  * callout"): a row of the table, so each part sits in its column. Under
  * 680px Fugu moves the units into the amount cell (.is-stacked). Its unit
  * segments are the Units control's .ing-units and .ing-btn, inline. Fugu's
@@ -852,7 +854,7 @@ h4.ing-subhead {
 h2.block-title { font-size: 1.35rem; font-weight: 700; letter-spacing: -.005em; margin-bottom: 6px; text-wrap: balance; }
 
 .rgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 16px; margin-top: 4px; }
-/* Recipe card v2 (mockups/recipe-card-v2.html): one-line taxonomy row,
+/* Recipe card v2 (Not a Chef's mockups/recipe-card-v2.html): one-line taxonomy row,
  * intro paragraph in the middle, compact stat line pinned to the bottom so
  * cards in a row line up regardless of intro length. */
 .rcard { background: var(--fugu-surface); border: 1px solid var(--fugu-border); border-radius: 6px; padding: 14px 16px 12px; display: flex; flex-direction: column; gap: 8px; min-width: 0; text-decoration: none; position: relative; }
@@ -873,7 +875,7 @@ h2.block-title { font-size: 1.35rem; font-weight: 700; letter-spacing: -.005em; 
  * stretched link (.rcard-link::after) so its tag links take clicks. */
 .rcard-title { font-family: var(--fugu-font-sans); font-size: 1.02rem; font-weight: 700; line-height: 1.3; letter-spacing: -.005em; text-wrap: balance; color: var(--fugu-ink); }
 .rcard-intro { font-family: var(--fugu-font-body); font-size: .84rem; line-height: 1.5; color: var(--fugu-ink-muted); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
-/* Formula strip (formula-strip.html, STYLE.md "Formula diagram"): a 24px
+/* Formula strip (Not a Chef's formula-strip.html, STYLE.md "Formula diagram"): a 24px
  * row of the recipe's formula icons. It takes the intro's third line, so a
  * card with one is the same height as a card without. */
 .rcard.has-formula .rcard-intro { -webkit-line-clamp: 2; }
@@ -912,7 +914,7 @@ h2.block-title { font-size: 1.35rem; font-weight: 700; letter-spacing: -.005em; 
 .rcard-stat b { font-family: var(--fugu-font-sans); font-size: .56rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--fugu-ink-muted); }
 .rcard-stat span { font-family: var(--fugu-font-mono); font-variant-numeric: tabular-nums; font-size: .72rem; font-weight: 600; color: var(--fugu-ink); overflow: hidden; text-overflow: ellipsis; }
 
-/* Listing page header (STYLE.md .ltitle / .listing-count), with the same
+/* Listing page header (Not a Chef's STYLE.md .ltitle / .listing-count), with the same
  * 1100px column + 20px gutter as .home-section. */
 .listing { max-width: 1100px; margin: 0 auto; padding: 32px 20px 0; }
 .listing-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
@@ -934,7 +936,7 @@ h2.block-title { font-size: 1.35rem; font-weight: 700; letter-spacing: -.005em; 
  * the title's own spacing above the row — `gap` only ever applies
  * between siblings, never before the first or after the last. */
 .tags-row { gap: 8px; }
-/* The method chip (mockups/STYLE.md Method chip, Fugu method/chip.html):
+/* The method chip (Not a Chef's STYLE.md Method chip, Fugu method/chip.html):
  * a concept chip like .principle-chip, in the accent, on a method's card
  * and leading its page's tags row. */
 .method-chip { font-family: var(--fugu-font-sans); font-size: .7rem; font-weight: 600; background: none; color: var(--fugu-accent-strong); padding: 3px 0; display: inline-flex; align-items: center; gap: 4px; }
@@ -942,7 +944,7 @@ h2.block-title { font-size: 1.35rem; font-weight: 700; letter-spacing: -.005em; 
 a.method-chip { text-decoration: none; }
 a.method-chip:hover, a.method-chip:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
 .rcard a.method-chip { position: relative; z-index: 1; }
-/* The blueprint chip (STYLE.md Blueprint chip, Fugu blueprint/chip.html):
+/* The blueprint chip (Not a Chef's STYLE.md Blueprint chip, Fugu blueprint/chip.html):
  * an accent outline, so it ranks below the filled chips and reads as
  * "belongs to"; the part or build name lighter. Page header only. */
 .blueprint-chip { font-family: var(--fugu-font-sans); font-size: .7rem; font-weight: 600; color: var(--fugu-accent-strong); border: 1px solid color-mix(in srgb, var(--fugu-accent) 55%, transparent); padding: 2px 7px; border-radius: 3px; display: inline-flex; align-items: center; text-decoration: none; white-space: nowrap; }
@@ -958,12 +960,12 @@ a.tag:hover { border-color: var(--fugu-accent); color: var(--fugu-ink); }
  * rather than an accent colour, so it stays cuisine-only. */
 a.cuisine-chip { text-decoration: none; }
 a.cuisine-chip:hover, a.cuisine-chip:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
-/* Principle chip (mockups/win-the-fridge.html) — one tag only, win-the-fridge.
- * Same shape as .cuisine-chip so it reads as the same kind of thing ("a fact
- * about this recipe"), but green and sentence case instead of yellow/
- * uppercase. On a recipe card it abbreviates to "WTF" (title attr carries
- * the full name) so it fits the card's existing 2-slot top row without a
- * layout change; everywhere else it spells out "Win the fridge". */
+/* Principle chip (Not a Chef's mockups/win-the-fridge.html): a tag marked
+ * as a principle (docs/configuration.md, "Principle tags"). Same shape as
+ * .cuisine-chip so it reads as the same kind of thing ("a fact about this
+ * recipe"), but in --fugu-principle and sentence case instead of
+ * --fugu-highlight and uppercase. A tag with `card_label: false` is its
+ * icon alone on a card (.is-icon, below). */
 .principle-chip { font-family: var(--fugu-font-sans); font-size: .7rem; font-weight: 600; background: none; color: var(--fugu-principle-strong); padding: 3px 0; display: inline-flex; align-items: center; gap: 4px; }
 .principle-chip svg { width: 10px; height: 10px; flex: none; }
 a.principle-chip { text-decoration: none; }
@@ -973,19 +975,15 @@ a.principle-chip { text-decoration: none; }
 .principle-chip.is-icon, .rcard-top .principle-chip.is-icon { padding-inline: 0; gap: 0; }
 .principle-chip.is-icon::after { content: "\200b"; }
 .principle-chip.is-icon svg { width: 12px; height: 12px; }
-/* Principles are told apart by colour (STYLE.md §4, 2026-10-14): green means
- * plant-based, and Win the fridge takes the test kitchen's blue. Done by
- * re-pointing the --principle tokens in Win the fridge's chip and its tag
- * page's own header bits (not the page, whose cards carry green leaves).
- * Fugu marks chips and the tag page with `principle-<slug>`. */
-.principle-chip.principle-win-the-fridge,
-.principle-page.principle-win-the-fridge :is(.ltitle-kind-principle, .read-essay) {
-  --fugu-principle: var(--fugu-flag); --fugu-principle-strong: var(--fugu-flag); --fugu-principle-soft: var(--fugu-flag-soft);
-}
+/* Every chip, and its tag page, carries `principle-<slug>`, so a site can
+ * give one principle its own colour by re-pointing the --fugu-principle
+ * tokens on `.principle-chip.principle-<slug>` and on the tag page's
+ * `.principle-page.principle-<slug> :is(.ltitle-kind-principle, .read-essay)`
+ * (the header bits only; the page's cards keep their own chips). */
 a.principle-chip:hover, a.principle-chip:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
 /* Test kitchen: drafts, published while they're still changing (Fugu
  * partials/development/, params.toml [fugu.development],
- * mockups/in-development.html). The flag blue is shared with Win the fridge (see the principle chips above). */
+ * Not a Chef's mockups/in-development.html). */
 /* The mark: an inlined SVG (assets/icons/development/pot-steam.svg) or,
  * without one, a dot. */
 .dev-icon { width: 18px; height: 18px; flex: none; color: var(--fugu-flag); }
@@ -994,14 +992,14 @@ a.principle-chip:hover, a.principle-chip:focus-visible { text-decoration: underl
 .dev-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--fugu-flag); flex: none; }
 /* The strip under a draft's title and tags (the end of #single_header).
  * Two blue hairlines take it out of the flow of the content (a filled
- * box until 2026-11-01, mockups/soft-colour.html); the page's
+ * box until 2026-11-01, Not a Chef's mockups/soft-colour.html); the page's
  * `working_on` note sits under a dotted line.
- * Width: the body column's own measure, 65ch of Lora at 16px (Tailwind's
- * max-w-prose on .article-content), so its right edge lines up with the
- * body text. The header's own max-w-prose is 65ch of 18px Franklin,
- * ~160px wider, which put the strip into the sidebar's lane. The font
+ * Width: the body column's own measure, 65ch of the 16px body face
+ * (Tailwind's max-w-prose on .article-content), so its right edge lines up
+ * with the body text. The header's own max-w-prose is 65ch of the 18px
+ * sans face, wider, which put the strip into the sidebar's lane. The font
  * is set here only to size the ch; the text sets its own below. */
-.dev-strip { display: flex; gap: 10px; align-items: flex-start; max-width: 65ch; font: 16px/1 'Lora', Georgia, serif; background: none; border: 0; border-radius: 0; border-top: 1px solid color-mix(in srgb, var(--fugu-flag) 45%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--fugu-flag) 45%, transparent); padding: 10px 0; margin: -4px 0 20px; }
+.dev-strip { display: flex; gap: 10px; align-items: flex-start; max-width: 65ch; font: 16px/1 var(--fugu-font-body); background: none; border: 0; border-radius: 0; border-top: 1px solid color-mix(in srgb, var(--fugu-flag) 45%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--fugu-flag) 45%, transparent); padding: 10px 0; margin: -4px 0 20px; }
 /* 20px above (the meta row's 24px bottom margin, less 4) and 20px below,
  * at every width. Below lg the recipe sidebar's "Recipe notes" toggle
  * comes next, inside a flex column, so its own 20px top margin would add
@@ -1037,14 +1035,14 @@ a.dev-chip:hover, a.dev-chip:focus-visible { text-decoration: underline; text-un
 .rcard-top .principle-chip, .rcard-top .method-chip, .rcard-top .dev-chip { display: inline-flex; align-items: center; gap: 4px; }
 .rcard-top .tag { border-color: var(--fugu-border-strong); }
 .rcard-top .tag-more { border-style: dashed; }
-/* The concept chips are coloured text (2026-11-01, mockups/soft-colour.html):
+/* The concept chips are coloured text (2026-11-01, Not a Chef's mockups/soft-colour.html):
  * no fill, so no side padding; tags keep theirs inside their outline. */
 .rcard-top .cuisine-chip, .rcard-top .principle-chip, .rcard-top .method-chip, .rcard-top .dev-chip { padding-inline: 0; }
 /* The list of drafts at the end of the test kitchen page
  * (partials/development/list.html) takes the Related section's place and
  * its .related-section styles; nothing extra needed. */
 /* Pin icon (partials/recipe-card.html) — marks a pinned page (frontmatter
- * `pinned: true`, see docs/DESIGN.md). Unlinked, minimal-contrast, sits at the
+ * `pinned: true`, docs/frontmatter.md). Unlinked, minimal-contrast, sits at the
  * end of the top row after tags/+N. */
 .pin-icon { display: inline-flex; align-items: center; color: var(--fugu-ink-faint); flex: none; opacity: .7; }
 .pin-icon svg { width: 11px; height: 11px; }
@@ -1095,7 +1093,7 @@ footer.pt-8.max-w-prose { padding-top: 0; }
 .article-content > :first-child { margin-top: 0; }
 .article-content > :last-child { margin-bottom: 0; }
 
-/* Prose heading rhythm (STYLE.md "Prose vertical rhythm"): 3:1 top to
+/* Prose heading rhythm (Not a Chef's STYLE.md "Prose vertical rhythm"): 3:1 top to
  * bottom margin per level, so a heading binds to the section it titles,
  * and a tighter line-height than Tailwind Typography's, whose air under
  * the glyphs stacked on the margin. Set 2026-09-18, bottoms cut again
@@ -1150,7 +1148,7 @@ article > footer {
  * .prose h3 rule, which .not-prose doesn't reach. */
 .related-section .rgrid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
 /* One right edge under the prose: Related and prev/next stop where the
- * text does (.article-content, 65ch of 16px Lora, about 40.4rem). They ran
+ * text does (.article-content, 65ch of the 16px body face; about 40.4rem in Not a Chef's Lora). They ran
  * 84px and 119px past it (visual pass, 2026-11-03). Three 200px cards
  * still fit. */
 .related-section,
@@ -1209,9 +1207,7 @@ article > footer {
  * themes/fugu/assets/js/automagic-sidebar.js (moveSidebarSections); slots start `hidden`
  * in markup and are only revealed once populated. Scale/Units stay with
  * the ingredient list instead (the popup gear, unchanged) — tried Units
- * alone here for a round, cut once Scale left. Not yet in
- * mockups/STYLE.md — this is exploratory, see that file before promoting
- * any of it to the ratified component list. */
+ * alone here for a round, cut once Scale left. */
 /* Mobile: the sidebar starts collapsed behind `.recipe-sidebar-toggle`
  * (a real button, not a native <details> — see single.html's comment for
  * why); themes/fugu/assets/js/automagic-sidebar.js's initSidebarToggle flips
@@ -1332,7 +1328,7 @@ article > footer {
 }
 .recipe-sidebar-section h2 .anchor,
 .recipe-sidebar-section h2 a[href^="#"] { display: none; }
-/* Variation blocks (docs/FORMAT.md's "## Variations" -> "### <name>" per
+/* Variation blocks (docs/recipe-format.md's "## Variations" -> "### <name>" per
  * variation) carry an h3 per variation — unstyled by default at this
  * width, so it needs the same compact treatment as the section h2 above,
  * one notch smaller/lighter since it's a subheading within the section. */
@@ -1355,7 +1351,7 @@ article > footer {
 }
 .recipe-sidebar-section > p + p { margin-top: .6em; }
 
-/* Notes list (mockups/STYLE.md's "Notes list") — em-dash bullets instead
+/* Notes list (Not a Chef's STYLE.md, "Notes list") — em-dash bullets instead
  * of a native marker, ported verbatim from mockups/style.html. */
 .recipe-sidebar-section .notes-list {
   list-style: none;
@@ -1376,7 +1372,7 @@ article > footer {
 }
 .recipe-sidebar-section .notes-list li:last-child { margin-bottom: 0; }
 
-/* Meta rail (mockups/STYLE.md's "Stat rail" component, adapted): recipe
+/* Meta rail (Not a Chef's STYLE.md, "Stat rail", adapted): recipe
  * facts that exist in frontmatter but otherwise never render anywhere on
  * the page itself (article.showDate/showAuthor/showReadingTime are all
  * off site-wide, config/_default/params.toml) — servings, prep/cook/total
@@ -1416,7 +1412,7 @@ article > footer {
 }
 .list-pagination-ellipsis { color: var(--fugu-ink-muted); padding: 0 4px; }
 
-/* Reading sidebar (mockups/reading-sidebar.html) — essays, reference,
+/* Reading sidebar (Not a Chef's mockups/reading-sidebar.html) — essays, reference,
  * the Food Log, and About (themes/fugu/layouts/partials/reading-sidebar.html, placed
  * by _default/single.html). Reuses .search-box, .browse-list, and
  * .section-caveat. Content column is 18.6rem, as in
@@ -1451,7 +1447,7 @@ article:not(:has(.article-pagination)) .reading-sidebar-wrap { margin-bottom: 0;
 .recipe-sidebar .search-box:hover { border-color: var(--fugu-accent); }
 .reading-sidebar .browse-list { margin: 0 -8px; }
 .reading-sidebar .browse-list a { font-size: .86rem; line-height: 1.35; padding: 5px 8px; align-items: baseline; }
-/* "On this page" (variant C in mockups/reading-sidebar.html): sections with
+/* "On this page" (variant C in Not a Chef's mockups/reading-sidebar.html): sections with
  * a subsection count that opens a hairline rail of subsections. Rows are
  * tight (1px), so hover is a colour change, not .browse-list's pill. */
 .reading-sidebar .rs-toc { display: flex; flex-direction: column; font-family: var(--fugu-font-sans); line-height: 1.3; }
@@ -1500,7 +1496,7 @@ article:not(:has(.article-pagination)) .reading-sidebar-wrap { margin-bottom: 0;
 .reading-sidebar a.rs-number:hover { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); box-shadow: -8px 0 0 var(--fugu-accent-soft), 8px 0 0 var(--fugu-accent-soft); }
 .reading-sidebar .rs-number b { font-family: var(--fugu-font-mono); font-variant-numeric: tabular-nums; font-weight: 600; color: var(--fugu-accent-strong); }
 
-/* Photos (mockups/sidebar-images.html). render-image.html renders each
+/* Photos (Not a Chef's mockups/sidebar-images.html). render-image.html renders each
  * markdown image as figure.page-photo; automagic-sidebar.js (initPhotos)
  * builds the sidebar module, the mobile strip, the "Photo N" markers, and
  * the viewer from them, then hides the figures on screen. They still
@@ -1592,7 +1588,7 @@ article:not(:has(.article-pagination)) .reading-sidebar-wrap { margin-bottom: 0;
 }
 
 /* ---------------------------------------------------------------------------
- * Formula diagram (mockups/formula-diagrams.html, STYLE.md "Formula
+ * Formula diagram (Not a Chef's mockups/formula-diagrams.html, STYLE.md "Formula
  * diagram"): a ```formula block drawn by render-codeblock-formula.html as
  * one row of icons joined by +, : or →. Icons are inline SVG on a 48-unit
  * grid, stroked in currentColor with one --accent-soft fill, so dark mode
@@ -1664,7 +1660,7 @@ article:not(:has(.article-pagination)) .reading-sidebar-wrap { margin-bottom: 0;
 .recipe-sidebar-section .formula-ratio .f-num { font-size: 1.1rem; }
 .recipe-sidebar-section .formula-ratio .f-op { font-size: 1.1rem; }
 
-/* Methods and blueprints (mockups/methods-pages.html, STYLE.md "Methods
+/* Methods and blueprints (Not a Chef's mockups/methods-pages.html, STYLE.md "Methods
  * and blueprint pages"; Fugu partials/method/ and partials/blueprint/):
  * the methods list at /methods/ and a blueprint's page. */
 .bp-list { display: flex; flex-direction: column; gap: 24px; }
@@ -1685,7 +1681,7 @@ article:not(:has(.article-pagination)) .reading-sidebar-wrap { margin-bottom: 0;
 .parts li::before { content: counter(part, decimal-leading-zero); font-family: var(--fugu-font-mono); font-size: .72rem; color: var(--fugu-accent); grid-row: span 2; }
 .parts-compact li { padding: 6px 0; grid-template-columns: 24px 1fr; }
 
-/* The methods list (mockups/methods-list-builds.html §1): the blueprint
+/* The methods list (Not a Chef's mockups/methods-list-builds.html §1): the blueprint
  * block holds links but isn't one, so it doesn't react; each written part
  * row does, with a soft fill and a → sliding in. */
 .parts-compact li:has(.part-row) { display: block; padding: 0; }
@@ -1697,7 +1693,7 @@ a.part-row:hover, a.part-row:focus-visible { background: var(--fugu-accent-soft)
 a.part-row:hover::after, a.part-row:focus-visible::after { opacity: 1; transform: none; }
 
 /* The methods list, principle, and blueprint pages on the reading layout
- * (mockups/methods-list-sidebar.html, principle-page-sidebar.html, decided
+ * (Not a Chef's mockups/methods-list-sidebar.html, principle-page-sidebar.html, decided
  * 2026-10-11): a body column and the reading sidebar, so nothing
  * runs past the body column. The definition is the page's intro as plain
  * text, not a callout. Each blueprint stacks: its block, with the parts in
@@ -1759,7 +1755,7 @@ a.part-row:hover::after, a.part-row:focus-visible::after { opacity: 1; transform
 }
 .reading-sidebar .rs-toc-top .n { font-family: var(--fugu-font-mono); font-weight: 400; font-size: .72rem; color: var(--fugu-ink-muted); }
 
-/* A blueprint's builds on the methods list (mockups/methods-list-and-
+/* A blueprint's builds on the methods list (Not a Chef's mockups/methods-list-and-
  * blueprint.html, 2026-10-12): one line of name pills at the foot of its
  * block, under a hairline; the cards are on the blueprint's page. A draft
  * build's pill is dashed and faint, and its era is mono. */
@@ -1807,7 +1803,7 @@ a.tl-name:hover { color: var(--fugu-accent-strong); }
 .tl-mark.todo .tl-dot { background: var(--fugu-bg); box-shadow: 0 0 0 1px var(--fugu-ink-faint); }
 .tl-mark.todo .tl-name { color: var(--fugu-ink-muted); font-weight: 500; }
 /* The sidebar's lineage at desktop widths (Fugu blueprint/lineage-side.html;
- * STYLE.md "Lineage in the sidebar", mockups/blueprint-lineage-sidebar.html):
+ * Not a Chef's STYLE.md "Lineage in the sidebar", mockups/blueprint-lineage-sidebar.html):
  * a spine to scale, decades on the left, a link row per build on the right.
  * Fugu places each row and decade by an inline `top`; the dot and leader sit
  * inside the link, offset by --off, so hovering a row lights its dot. The
@@ -1900,11 +1896,10 @@ span.vt-name.vt-decade:hover .ln-dot { transform: translateY(-5px); }
 /* Tables that scroll sideways on phones (Fugu render-table.html). */
 .table-scroll { overflow-x: auto; }
 
-/* Flow diagram (STYLE.md "Flow diagram"): a ```flow block drawn by
+/* Flow diagram (Not a Chef's STYLE.md "Flow diagram"): a ```flow block drawn by
  * Fugu's render-codeblock-flow.html (spec: hugo-warped fences/flow.md).
- * Copied from fugu.css's "Flow diagrams" block, since fugu.styles is off
- * here, and set in the formula diagram's type: Franklin labels in
- * --border-strong boxes, italic Lora notes, --accent arrows. The figure is
+ * Set in the formula diagram's type: sans labels in --border-strong
+ * boxes, italic body-face notes, --accent arrows. The figure is
  * a size container, so under 560px of its own width (a phone, the recipe
  * sidebar) each row becomes a list down the page; keep those rules. */
 .flow { container-type: inline-size; contain-intrinsic-inline-size: 40rem; margin: 1.75rem 0; font-style: normal; }
@@ -1954,7 +1949,7 @@ span.vt-name.vt-decade:hover .ln-dot { transform: translateY(-5px); }
   .flow .flow-grid ol.flow-row + ol.flow-row { margin-top: 18px; }
 }
 
-/* Stack diagram (STYLE.md "Exploded build diagram"): a ```stack block
+/* Stack diagram (Not a Chef's STYLE.md "Exploded build diagram"): a ```stack block
  * drawn by Fugu's partials/stack/draw.html. The layers carry their own
  * ink and fills; this sets the labels, leaders and bracket in the site's
  * type and tokens. Full size in a page,
@@ -1970,7 +1965,7 @@ span.vt-name.vt-decade:hover .ln-dot { transform: translateY(-5px); }
 .stack-missing { stroke: var(--fugu-ink-faint); }
 .stack-cap { font-family: var(--fugu-font-sans); font-size: .74rem; color: var(--fugu-ink-muted); margin-top: 12px; text-align: center; }
 /* On the base: every stack sits on the stats rule, so bottom buns line up
-   across a row and a short burger looks short (mockups/even-cards.html,
+   across a row and a short burger looks short (Not a Chef's mockups/even-cards.html,
    approved 2026-11-07). Was margin: auto, which centred each one. */
 .build-card .stack { width: 150px; margin: auto auto 0; padding: 4px 0; }
 /* Centre the diagram in the space between the intro and the stats, since
@@ -1980,7 +1975,7 @@ span.vt-name.vt-decade:hover .ln-dot { transform: translateY(-5px); }
 
 /* --- Approved 2026-11-07 (docs/REVIEW.md) ------------------------------- */
 
-/* Even cards (mockups/even-cards.html): the formula row sits just above
+/* Even cards (Not a Chef's mockups/even-cards.html): the formula row sits just above
    the stats rule, so formulas in a row share a line and the spare height
    falls between the intro and the formula. A card with no times still ends
    on its rule, drawn here since there's no stats line to carry it. */
@@ -1991,7 +1986,7 @@ span.vt-name.vt-decade:hover .ln-dot { transform: translateY(-5px); }
 }
 .rcard:not(.build-card):has(.rcard-formula):not(:has(.rcard-stats))::after { margin-top: 0; }
 
-/* Recipe mechanic (mockups/recipe-mechanic.html): the Mechanic opens the
+/* Recipe mechanic (Not a Chef's mockups/recipe-mechanic.html): the Mechanic opens the
    recipe as STYLE.md's Mechanic callout, above Ingredients. Fugu wraps the
    section in .mechanic-callout when "mechanic" isn't a sidebar slot. */
 .article-content .mechanic-callout {
@@ -2021,7 +2016,7 @@ span.vt-name.vt-decade:hover .ln-dot { transform: translateY(-5px); }
 }
 
 /* Food Log months grouped by year, older years folded (Fugu's
-   reading-sidebar.html; mockups/food-log-sidebar.html, approved 2026-11-07). */
+   reading-sidebar.html; Not a Chef's mockups/food-log-sidebar.html, approved 2026-11-07). */
 .reading-sidebar .rs-year { font-family: var(--fugu-font-sans); font-size: .7rem; font-weight: 600; letter-spacing: .08em; color: var(--fugu-ink-muted); margin: 12px 8px 2px; }
 .reading-sidebar .rs-year:first-child { margin-top: 0; }
 .reading-sidebar .rs-year-fold > summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 14px; font-family: var(--fugu-font-sans); font-size: .7rem; font-weight: 600; letter-spacing: .08em; color: var(--fugu-ink-muted); padding: 7px 8px; border-radius: 4px; }

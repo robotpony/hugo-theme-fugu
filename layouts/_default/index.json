@@ -4,7 +4,7 @@
   assets/js/search.js (also overridden) can float pinned pages
   to the top of matching results, and without pages that have no URL of
   their own (build options render: never, like a glossary entry, which
-  is found on the glossary page instead). See DESIGN.md.
+  is found on the glossary page instead). See docs/features.md, "Search" and "Pinned pages".
 */ -}}
 {{- $index := slice -}}
 {{ $pages := .Site.Pages }}

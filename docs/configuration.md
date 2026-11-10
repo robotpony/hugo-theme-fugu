@@ -261,7 +261,7 @@ Drafts never appear in RSS feeds (the site's, a section's, or a tag's), so subsc
   styles = true
 ```
 
-Fugu's stylesheet, `assets/css/fugu.css`, styles everything Fugu adds. Its look is monochrome: every colour is a step of your Blowfish `colorScheme`'s neutral ramp, light and dark, so it sits in any scheme, and the type is the system sans, with the system mono for quantities. Fugu also ships a pure-grey scheme to go with it, `colorScheme = "fugu"`, which the example site uses. It loads after Blowfish's CSS and before your `assets/css/custom.css`, so your rules win. To give Fugu colour, or other faces, set the `--fugu-*` custom properties at the top of the file in your `custom.css` (under `:root`, and `.dark` for dark mode): the surfaces and ink, `--fugu-accent*` (links, quantities, active controls), `--fugu-flag*`, `--fugu-principle*`, `--fugu-highlight*`, `--fugu-cuisine*`, `--fugu-focus`, and `--fugu-font-sans`, `--fugu-font-body` (reading text: prose, card intros, definitions, captions) and `--fugu-font-mono`. The stack layers' fixed colours, `--fugu-sear*` and `--fugu-kit-*` (green, red and yellow, each with a `-top`, and `--fugu-kit-green-ink`), give way to `--sear*` and `--kit-*` if your CSS sets those. `false` leaves it out, for a site that styles every class itself.
+Fugu's stylesheet, `assets/css/fugu.css`, styles everything Fugu adds. Its look is monochrome: every colour is a step of your Blowfish `colorScheme`'s neutral ramp, light and dark, so it sits in any scheme, and the type is the system sans, with the system mono for quantities. Fugu also ships a pure-grey scheme to go with it, `colorScheme = "fugu"`, which the example site uses. Your `assets/css/custom.css` loads after it, so your rules win; to give Fugu colour or other faces, set its `--fugu-*` properties there ([customizing.md](customizing.md) lists them). `false` leaves the stylesheet out, for a site that styles every class itself.
 
 ## Words and translation
 
@@ -279,4 +279,4 @@ Counts use Hugo's plural forms, with `{{ .Count }}`. The script strings are unde
 
 ## Fonts
 
-Fugu loads no web fonts. To add some, override `layouts/partials/fonts.html` in your site; it's included in every page's `<head>` and is empty by default.
+Fugu loads no web fonts. To add some, override `layouts/partials/fonts.html` in your site; it's included in every page's `<head>` and is empty by default. [customizing.md](customizing.md#fonts) has examples, from a font service and self-hosted.

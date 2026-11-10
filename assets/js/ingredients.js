@@ -31,13 +31,13 @@
     var s = STRINGS[key] || fallback;
     return vars ? s.replace(/\{(\w+)\}/g, function (m, k) { return k in vars ? vars[k] : m; }) : s;
   }
-  // Best-effort leading-quantity matcher, built from real recipes in this
-  // vault (not every case in FORMAT.md's grammar — "a pinch of", "to
+  // Best-effort leading-quantity matcher, built from Not a Chef's real
+  // recipes (not every case in docs/recipe-format.md's grammar — "a pinch of", "to
   // taste" etc. have no leading number and are left unstyled, which is a
   // harmless fallback, not a broken layout).
   //
   // A mixed number's fraction is usually glued to the whole number ("1½",
-  // FORMAT.md's own style), but real files sometimes type it with a space
+  // docs/recipe-format.md's house style), but real files sometimes type it with a space
   // ("2 ¼") — the \s? here tolerates that. The unit's leading \s* (not \s?)
   // similarly tolerates a stray double space before the unit word, seen in
   // some migrated recipes.
@@ -243,7 +243,7 @@
   // --- Canonical number+unit spacing --------------------------------------
   //
   // The vault's source recipes are inconsistent about this ("50ml" vs
-  // "50 ml" — FORMAT.md's own examples disagree with each other too), so
+  // "50 ml"; Not a Chef's FORMAT.md examples disagreed too), so
   // rather than echo whichever style a given file happened to use, every
   // rendered quantity — including the untouched "as written" default —
   // goes through one canonical rule. Only a JS-level constant for now, not
@@ -739,8 +739,8 @@
     });
   }
 
-  // A %-based ingredient table (baker's percentage — FORMAT.md's Mechanic
-  // section covers the convention, e.g. lazy-pizza-dough-2022's flour/
+  // A %-based ingredient table (baker's percentage — docs/recipe-format.md,
+  // "Percentage tables", covers the convention, e.g. lazy-pizza-dough-2022's flour/
   // water/salt breakdown) is still an ingredient list, just laid out as a
   // <table> instead of a <ul> — Goldmark's table extension renders a plain
   // <table>/<thead>/<tbody>, so this gives each body row the same
@@ -1398,7 +1398,7 @@
   // The browser drops the lock whenever the page is hidden, so it's taken
   // again when the page comes back, while the switch is still on. Not
   // remembered: each visit starts off. Only where the API exists; without
-  // it (or without JS) there's no switch. Cook mode (PLAN.md) is the large
+  // it (or without JS) there's no switch. Cook mode (PLAN.md, Features) is the large
   // version of this.
   var AWAKE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
     'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
@@ -1507,7 +1507,7 @@
           // render-table.html wraps every table in a scroll container.
           addTable(el.querySelector(':scope > table'));
         } else if (!/^H[1-6]$/.test(el.tagName)) {
-          // A multi-component recipe (FORMAT.md) has no separate "Method"
+          // A multi-component recipe (docs/recipe-format.md) has no separate "Method"
           // heading — the component's own heading ("## Cake", "## Icing")
           // covers both its ingredients list and its prose method, so any
           // non-list, non-heading content here (the method paragraphs) needs
@@ -1520,7 +1520,7 @@
     });
 
     // Unlike the ingredient walk above, this doesn't stop only at the next
-    // H2 — FORMAT.md's own optional sections ("## Variations", "## Notes")
+    // H2 — docs/recipe-format.md's optional sections ("## Variations", "## Notes")
     // are meant to be H2 siblings, but real recipes sometimes use a lower
     // heading level for them (H3 "### Variations"), and Method has no
     // documented convention for sub-headings the way an ingredient

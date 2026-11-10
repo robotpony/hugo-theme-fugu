@@ -16,9 +16,8 @@
 {{/* Untitled pages (no frontmatter yet, e.g. edgar-wright-style-cookery.md)
   would render as blank cards, so they're left out until they get a title. */}}
 {{ $essays := where .Pages "Title" "!=" "" }}
-{{/* Pinned essays (frontmatter `pinned: true`, e.g. the win-the-fridge
-  reference essay) float to the top, ahead of the normal date order;
-  everything else keeps its existing relative order. See DESIGN.md. */}}
+{{/* Pinned essays (frontmatter `pinned: true`) float to the top, ahead of the normal date order;
+  everything else keeps its existing relative order. See docs/features.md, "Pinned pages". */}}
 {{ $essays = (where $essays "Params.pinned" true) | append (where $essays "Params.pinned" "!=" true) }}
 {{ $pager := .Paginate $essays 16 }}
 {{ $count := i18n "fugu.count.essays" (len $essays) }}

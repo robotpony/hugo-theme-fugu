@@ -33,7 +33,7 @@
   // --- Sidebar relocation -------------------------------------------------
   //
   // Mechanic / To serve / Notes are simple optional top-level sections
-  // (FORMAT.md) — render-heading.html flags each one's H2 with
+  // (docs/recipe-format.md) — render-heading.html flags each one's H2 with
   // data-sidebar-heading so this can walk forward to the next H2 (same
   // "walk from a marked heading" approach as the ingredient/method walks
   // in ingredients.js, for the same reason: Hugo's heading-only render hook

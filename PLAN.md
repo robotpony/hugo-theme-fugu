@@ -4,7 +4,7 @@ The work list for taking Fugu to a theme other Blowfish users can install. Finis
 
 **Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §5–§7 and §10's open items; the code review and Not a Chef's accessibility audit are done (CHANGELOG, Unreleased). Features come after 1.0.
 
-**Next:** §5's docs (`customizing.md`, the icon kit rules) and its comment pass.
+**Next:** close §5 (the icon kit rules, the unused tokens, compare-styles' batches), then §6's `blowfish.md` and §7.
 
 ## 4. Translation
 
@@ -14,10 +14,9 @@ Done: template and script English is in `i18n/en.yaml` (`docs/configuration.md`,
 
 Done 2026-11-10: `fugu.css` carries every component's design, moved from Not a Chef's `custom.css` (2,382 lines down to 529: its tokens, header, homepage, footer, 404 and paper grain), and Fugu's own look is direction A of three mocked (monochrome from the scheme's neutral ramp, system fonts, a pure-grey `fugu` scheme). Not a Chef sets every token and renders as before (`compare-styles.py`: no differences). Left:
 
-- [ ] The rules' comments in `fugu.css` cite Not a Chef's mockups and `STYLE.md`; point them at Fugu's docs where one exists, or say they're Not a Chef's.
-- [ ] `docs/customizing.md` (§7): the tokens, overriding a rule, `styles = false`, the `fugu` scheme, and the fonts hook (`partials/fonts.html`) with a self-hosting recipe; a `fonts` param only if another site wants one.
-- [ ] Copy the formula icon kit's drawing rules (stroke, grid, size) from Not a Chef's `mockups/STYLE.md` into Fugu's docs.
-- [ ] `compare-styles.py --open` over all 33 pages ran past Chrome's 15-minute limit, though one page takes seconds: find the page that stalls.
+- [ ] Copy the icon kits' drawing rules from Not a Chef's `STYLE.md` ("Formula diagram", "Exploded build diagram") into Fugu's docs; proposed 2026-11-10, waiting on where they go and how much of the layer kit's detail to keep.
+- [ ] Nine tokens are declared and nothing reads them: `--fugu-focus`, `--fugu-cuisine(-soft)`, `--fugu-accent-wash`, `--fugu-shadow`, `--fugu-radius`, `--fugu-principle`, `--fugu-principle-soft`, `--fugu-highlight-soft`. Wire each into the rules that hard-code its value, or remove it (`customizing.md` lists only the working ones). Wiring `--fugu-focus` changes Not a Chef's focus rings, which use `--accent-strong` today though the site sets `--focus`.
+- [ ] `compare-styles.py --open` hangs on the full sample: no page stalls (each takes 0.5–2.7s, 2026-11-10), but one Chrome run that returns more than about 100MB of measurements never finishes (22 pages open: 99.7MB in 20s; 24: hung at 0% CPU). Run Chrome over batches of pages, sized by views (about 40 a run), with a timeout per batch that names its pages; `--all` needs the same.
 
 ## 6. Blowfish compatibility
 
@@ -29,11 +28,9 @@ Overrides and pinned versions are in CLAUDE.md ("Blowfish overrides").
 
 ## 7. Docs
 
-Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configuration.md`, `features.md`.
+Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configuration.md`, `customizing.md`, `features.md`.
 
-- [ ] Point the 17 code comments that cite Not a Chef docs (`git grep -e SPEC.md -e DESIGN.md -e FORMAT -- layouts assets tools`) at Fugu's docs, and `blueprint/build-card.html`'s reference to a PLAN.md "Stack diagrams" section that no longer exists (it's `docs/recipe-format.md` now).
 - [ ] `docs/essay-format.md` from Not a Chef's `FORMAT-ESSAYS.md`, if essays stay supported.
-- [ ] `docs/customizing.md`: the three layers, overriding partials, the `--fugu-*` properties (§5), fonts.
 - [ ] `docs/tools.md`, replacing the README's paragraph: a table (tool, purpose, example, needs) for `frontmatter.py`, `drafts.py`, `add-image.sh`, `compare-builds.py`, and `$FUGU_SITE_ROOT`; an "Editing" section on using `content/` as an Obsidian vault, and Warped Command.
 
 ## 8. Tooling
@@ -52,10 +49,9 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
 - [ ] Left from the code review (2026-11-07) and the accessibility audit (2026-11-10), both otherwise done:
   - Wiki-link lookup cost: `render-link.html` and the reading sidebar scan every page per link. Measure build time before caching a title index.
   - Won't fix: the "Undated" and "Further reading" heading matches stay English; they read headings the author writes, so a translated site writes them in English or renames them in its content.
-  - The comments citing `custom.css`, DESIGN.md, FORMAT.md and Not a Chef content, and `automagic-sidebar.js`'s note that its DOMContentLoaded handler runs first (script order does it), are §7's comments item.
+  - `automagic-sidebar.js`'s note that its DOMContentLoaded handler runs first: script order does it, so say so.
 - [ ] Scaled yields keep the singular: "1 loaf" at 2× reads "2 loaf" (`scaleYield` in `ingredients.js`, also the sidebar's Serves row). Pluralize the word after a scaled count, or have the frontmatter give both forms; check a range ("1–2 loaves") and words that don't take an s.
 - [ ] Ingredient group labels skip a heading level: `recipe-format.md` puts `#### Dry` straight under `## Ingredients`, so 43 of Not a Chef's recipes go h2 → h4. In `render-heading.html`, render a group label that follows an h2 one level up (an `<h3 class="ing-subhead">`), keeping `####` in the source and the same look (`h3.ing-subhead`/`h4.ing-subhead` share their rules). A group inside a `###` component stays h4. The content skips (Food Log months, a reference page) went to the Not a Chef content agent, 2026-11-10.
-- [ ] Retake the screenshots after §5 (`python3 tools/screenshots.py`).
 - [ ] Tag `v1.0.0` after §5–§7 and the items above.
 - [ ] Optional: list on themes.gohugo.io; check how they handle themes that need a parent theme.
 

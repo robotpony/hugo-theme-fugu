@@ -20,7 +20,7 @@
   block. Alphabetical is how this list has always read. */}}
 {{/* Pinned guides (frontmatter `pinned: true`) float to the top, ahead
   of the alphabetical order; everything else keeps sorting by title. See
-  DESIGN.md. */}}
+  docs/features.md, "Pinned pages". */}}
 {{ $sorted := .Pages.ByTitle }}
 {{ $sorted = (where $sorted "Params.pinned" true) | append (where $sorted "Params.pinned" "!=" true) }}
 {{ $pager := .Paginate $sorted 16 }}
