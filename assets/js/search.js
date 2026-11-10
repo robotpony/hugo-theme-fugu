@@ -9,6 +9,11 @@
 // - The index is fetched once, and a query typed while it loads runs when
 //   it arrives.
 // - Arrow keys move through the results only from the input or a result.
+// - Accessibility: a polite status line reads out the result count or "No
+//   matches"; the close button is a named type="button" with its icon
+//   hidden; openers say they open a dialog. Set here, not in Blowfish's
+//   partials/search.html, so Fugu doesn't override another file.
+// - Words from the page's #fugu-strings block (partials/js-strings.html).
 var fuse;
 var showButton = document.getElementById("search-button");
 var showButtonMobile = document.getElementById("search-button-mobile");
@@ -24,12 +29,52 @@ var indexed = false;
 var hasResults = false;
 var previouslyFocused = null;
 
+var searchStrings = (function () {
+  try {
+    var el = document.getElementById("fugu-strings");
+    return el ? JSON.parse(el.textContent) : {};
+  } catch (e) { return {}; }
+})();
+function searchPhrase(key, fallback, vars) {
+  var s = searchStrings[key] || fallback;
+  return vars ? s.replace(/\{(\w+)\}/g, function (m, k) { return k in vars ? vars[k] : m; }) : s;
+}
+function searchResultsText(n) {
+  if (!n) return searchPhrase("no_results", "No matches");
+  var el = document.getElementById("fugu-strings");
+  var form = n === 1 ? "one" : "other";
+  try { form = new Intl.PluralRules((el && el.dataset.lang) || "en").select(n); } catch (e) {}
+  var key = searchStrings["results_" + form] ? "results_" + form : (n === 1 ? "results_one" : "results_other");
+  return searchPhrase(key, n === 1 ? "{n} result" : "{n} results", { n: n });
+}
+
+// The status line, read out after each query; visually hidden.
+var searchStatus = document.createElement("p");
+searchStatus.id = "search-status";
+searchStatus.className = "sr-only";
+searchStatus.setAttribute("role", "status");
+searchStatus.setAttribute("aria-live", "polite");
+output.parentNode.insertBefore(searchStatus, output);
+var statusTimer = null;
+function announceResults(text) {
+  // Typing fires a query per key; only the count after a pause is read.
+  clearTimeout(statusTimer);
+  statusTimer = setTimeout(function () { searchStatus.textContent = text; }, 400);
+}
+
+hideButton.type = "button";
+hideButton.setAttribute("aria-label", searchPhrase("search_close", "Close search"));
+hideButton.querySelectorAll("svg").forEach(function (svg) { svg.setAttribute("aria-hidden", "true"); });
+
 // Listen for events
 showButton ? showButton.addEventListener("click", displaySearch) : null;
 document.querySelectorAll(".search-box").forEach(function (box) {
   if (box !== showButton) box.addEventListener("click", displaySearch);
 });
 showButtonMobile ? showButtonMobile.addEventListener("click", displaySearch) : null;
+[showButton, showButtonMobile].concat(Array.prototype.slice.call(document.querySelectorAll(".search-box"))).forEach(function (b) {
+  if (b) b.setAttribute("aria-haspopup", "dialog");
+});
 hideButton.addEventListener("click", hideSearch);
 wrapper.addEventListener("click", hideSearch);
 modal.addEventListener("click", function (event) {
@@ -156,6 +201,11 @@ function hideSearch() {
     wrapper.style.visibility = "hidden";
     input.value = "";
     output.innerHTML = "";
+    clearTimeout(statusTimer);
+    searchStatus.textContent = "";
+    // The results are gone, so the arrow keys have nothing to move to.
+    hasResults = false;
+    first = last = null;
     if (previouslyFocused && typeof previouslyFocused.focus === "function" && document.contains(previouslyFocused)) {
       previouslyFocused.focus();
     } else if (document.activeElement) {
@@ -267,6 +317,7 @@ function executeQuery(term) {
   }
 
   output.innerHTML = resultsHTML;
+  announceResults(term.trim() ? searchResultsText(results.length) : "");
   if (results.length > 0 && output.firstChild) {
     first = output.firstChild.firstElementChild;
     last = output.lastChild.firstElementChild;

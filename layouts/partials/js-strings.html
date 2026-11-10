@@ -1,17 +1,17 @@
 {{/*
   The words Fugu's scripts show (ingredients.js, automagic-sidebar.js,
-  glossary.js), from i18n's fugu.js keys, as one JSON block the scripts
+  glossary.js, search.js), from i18n's fugu.js keys, as one JSON block the scripts
   read by id. Each script keeps its own English as the fallback, so a page
   without this block still reads. The block is the same on every page of a
   language, so call it cached per language:
 
     {{ partialCached "js-strings.html" site.Language.Lang site.Language.Lang }}
 
-  once per page, before the scripts (single.html, glossary/page.html). A
+  once per page, before the scripts (head.html does). A
   key added under fugu.js in i18n/en.yaml has to be added to $keys too:
   Hugo can't list a file's i18n keys.
 */}}
-{{ $keys := slice "scale" "units" "as_written" "metric" "imperial" "kelvin" "scale_based_on" "amount_of" "unit_of" "back_to" "for_amount" "serves" "ingredient_options" "keep_awake" "open_photo" "photo_viewer" "close" "previous_photo" "next_photo" "photo_from" "jump_to_text" "photo" "photo_n" "photos" "entries_one" "entries_other" }}
+{{ $keys := slice "scale" "units" "as_written" "metric" "imperial" "kelvin" "scale_based_on" "amount_of" "unit_of" "back_to" "for_amount" "serves" "ingredient_options" "keep_awake" "open_photo" "photo_viewer" "close" "previous_photo" "next_photo" "photo_from" "jump_to_text" "photo" "photo_n" "photos" "entries_one" "entries_other" "search_close" "results_one" "results_other" "no_results" "scale_now" "units_now" "photo_shown" }}
 {{ $strings := dict }}
 {{ range $keys }}{{ $strings = merge $strings (dict . (i18n (printf "fugu.js.%s" .))) }}{{ end }}
 <script type="application/json" id="fugu-strings" data-lang="{{ site.Language.Locale | default site.Language.Lang }}">{{ $strings | jsonify | safeJS }}</script>

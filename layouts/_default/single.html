@@ -114,9 +114,6 @@
           {{/* Sidebar first: its DOMContentLoaded handler has to run
             before ingredients.js's (see automagic-sidebar.js). Every page
             with a sidebar gets it, recipe or reading. */}}
-          {{ if or (partial "sidebar/kind.html" .) (eq (partialCached "section/role.html" .Section .Section) "recipe") }}
-            {{ partialCached "js-strings.html" site.Language.Lang site.Language.Lang }}
-          {{ end }}
           {{ if partial "sidebar/kind.html" . }}
             {{ $sidebarJS := resources.Get "js/automagic-sidebar.js" | resources.Minify | resources.Fingerprint "sha256" }}
             <script src="{{ $sidebarJS.RelPermalink }}" integrity="{{ $sidebarJS.Data.Integrity }}" defer></script>
@@ -197,11 +194,11 @@
         sidebar; reference pages can run it taller than a screen, so
         custom.css caps its height and lets it scroll on its own. */}}
       {{ if $reading }}
-        <div class="reading-sidebar-wrap lg:ms-auto px-0 lg:ps-8 print:hidden">
+        <aside class="reading-sidebar-wrap lg:ms-auto px-0 lg:ps-8 print:hidden" aria-label="{{ i18n "fugu.sidebar" }}">
           <div class="reading-sidebar-pin lg:sticky {{ $topClass }}">
             {{ partial "reading-sidebar.html" . }}
           </div>
-        </div>
+        </aside>
       {{ end }}
 
       {{ if eq (partialCached "section/role.html" .Section .Section) "recipe" }}
@@ -225,7 +222,8 @@
           "order-last" does elsewhere in this file — only classes already
           in that bundle take effect; anything new has to be a real
           custom.css rule. */}}
-        <div class="recipe-sidebar-wrap order-first lg:order-last lg:ms-auto px-0 lg:ps-8 lg:max-w-2xs">
+        {{/* An <aside>, named, so a screen reader can find or skip it. */}}
+        <aside class="recipe-sidebar-wrap order-first lg:order-last lg:ms-auto px-0 lg:ps-8 lg:max-w-2xs" aria-label="{{ i18n "fugu.recipe_notes" }}">
           {{/* Only automagic-sidebar.js opens the collapsed sidebar, so with
             JS off it's shown and its button hidden. */}}
           <noscript><style>@media (max-width: 1023.98px) { .recipe-sidebar-wrap #recipe-sidebar { display: block !important; } .recipe-sidebar-toggle { display: none !important; } }</style></noscript>
@@ -302,7 +300,7 @@
               {{ end }}
             {{ end }}
           </div>
-        </div>
+        </aside>
       {{ end }}
     </section>
 

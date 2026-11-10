@@ -153,6 +153,8 @@ h4.ing-subhead {
 /* render-heading.html's anchor; the "#" lives here so it stays out of
  * .Summary text. */
 .heading-anchor-link::before { content: '#'; }
+/* Shown on keyboard focus as well as hover (Blowfish's group-hover). */
+.heading-anchor:focus-within { opacity: 1; }
 
 /* Markdown task lists (- [ ], - [x]): the checkbox is the marker. */
 .prose li:has(> input[type="checkbox"]) { list-style: none; }
@@ -518,7 +520,15 @@ h4.ing-subhead { margin: 14px 0 4px; }
 
 /* Scale and units: a gear beside the first ingredients heading, opening a
  * panel (a <details>, so no JS to open it). */
-h2:has(> .ing-config) { position: relative; padding-right: 40px; }
+/* ingredients.js wraps the heading and its controls in .ing-heading; the
+ * controls sit at its top right, beside the heading's first line. Its
+ * margins pass through to the h2, so the prose rules that space an h2 by
+ * its neighbours are repeated for the wrapper, at the same weight. */
+.ing-heading { position: relative; }
+.prose :where(.ing-heading + *) { margin-top: 0; }
+.prose :where(.prose > .ing-heading:first-child > h2) { margin-top: 0; }
+.article-content > .ing-heading:first-child > h2 { margin-top: 0; }
+.ing-heading:has(> .ing-config) > h2 { padding-right: 40px; }
 .ing-config { position: absolute; top: 2px; right: 0; }
 .ing-config > summary {
   list-style: none; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px;
@@ -532,8 +542,8 @@ h2:has(> .ing-config) { position: relative; padding-right: 40px; }
 .ing-config > summary svg { width: 15px; height: 15px; }
 /* Keep screen awake (ingredients.js): the gear's twin, just left of it, or
  * in its place on a percentage page. Pressed reads like the open gear. */
-h2:has(> .ing-awake) { position: relative; padding-right: 40px; }
-h2:has(> .ing-awake):has(> .ing-config) { padding-right: 76px; }
+.ing-heading:has(> .ing-awake) > h2 { padding-right: 40px; }
+.ing-heading:has(> .ing-awake):has(> .ing-config) > h2 { padding-right: 76px; }
 .ing-awake {
   position: absolute; top: 2px; right: 36px; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; padding: 0;
   border: 1px solid var(--fugu-border-strong); border-radius: var(--fugu-radius); background: var(--fugu-surface);
@@ -794,7 +804,8 @@ h2:has(> .ing-awake):has(> .ing-config) { padding-right: 76px; }
  * ------------------------------------------------------------------- */
 
 .formula { margin: 1.75rem 0; font-style: normal; }
-.article-content .formula + :is(h2, h3) { margin-top: 2.5rem; }
+.article-content .formula + :is(h2, h3),
+.article-content .formula + .ing-heading > h2 { margin-top: 2.5rem; }
 .formula .ic {
   fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   overflow: visible; width: 48px; height: 48px; flex: none;

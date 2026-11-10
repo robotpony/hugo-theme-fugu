@@ -29,7 +29,8 @@
   at a time, and there's no "end of section" hook to close the div.
 
   Blowfish's markup is otherwise kept (the anchor div and the hover "#"
-  link, still behind article.showHeadingAnchors). Added: the data-ing-
+  link, still behind article.showHeadingAnchors), with the link named
+  for its section and shown on keyboard focus. Added: the data-ing-
   heading, data-method-heading, data-hide-heading and data-sidebar-heading
   attributes, the .ing-subhead class, the "#" moved into CSS (see below),
   and trailing vault tags left off the text (headings/without-tags.html).
@@ -112,12 +113,16 @@
 >{{ $text | safeHTML }}
     <div id="{{ $anchor }}" class="anchor"></div>
     {{ if .Page.Params.showHeadingAnchors | default (.Page.Site.Params.article.showHeadingAnchors | default true) }}
+    {{/* .heading-anchor shows the link on keyboard focus too (fugu.css),
+         not only on hover: an invisible tab stop is a trap. Its name says
+         which section it links to, where Blowfish's says "Anchor" at every
+         heading. */}}
     <span
-        class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
+        class="heading-anchor absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100 select-none">
         {{/* The "#" comes from CSS (.heading-anchor-link::before), not a text
              node: Hugo builds .Summary from rendered HTML, so a literal "#"
              leaked into every card summary as "Mechanic # 1 part lentils…". */}}
-        <a class="heading-anchor-link text-primary-300 dark:text-neutral-700 !no-underline" href="#{{ $anchor }}" aria-label="{{ i18n "article.anchor_label" }}"></a>
+        <a class="heading-anchor-link text-primary-300 dark:text-neutral-700 !no-underline" href="#{{ $anchor }}" aria-label="{{ i18n "fugu.heading_anchor" (dict "Heading" ($text | plainify | htmlUnescape | strings.TrimSpace)) }}"></a>
     </span>
     {{ end }}
 </h{{ .Level }}>

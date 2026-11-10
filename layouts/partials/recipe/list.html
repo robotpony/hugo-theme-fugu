@@ -15,13 +15,17 @@
 {{ $page := .page }}
 {{ $sorted := (where $page.Pages "Params.pinned" true) | append (where $page.Pages "Params.pinned" "!=" true) }}
 {{ $pager := $page.Paginate $sorted 16 }}
+{{ $count := i18n (printf "fugu.count.%s" .noun) (len $page.Pages) | default (printf "%d %s" (len $page.Pages) .noun) }}
 <section class="listing">
   <header class="listing-head">
     <h1 class="ltitle">{{ $page.Title }}</h1>
-    <span class="listing-count">{{ i18n (printf "fugu.count.%s" .noun) (len $page.Pages) | default (printf "%d %s" (len $page.Pages) .noun) }}{{ if gt $pager.TotalPages 1 }} · {{ i18n "fugu.page_of" (dict "Page" $pager.PageNumber "Pages" $pager.TotalPages) }}{{ end }}</span>
+    <span class="listing-count">{{ $count }}{{ if gt $pager.TotalPages 1 }} · {{ i18n "fugu.page_of" (dict "Page" $pager.PageNumber "Pages" $pager.TotalPages) }}{{ end }}</span>
   </header>
   {{ with $page.Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
   <div class="listing-search">{{ partial "search-box.html" (len $page.Pages) }}</div>
+  {{/* The cards' titles are h3s; this names the list for screen readers
+       so the outline doesn't skip from the h1 to them. */}}
+  <h2 class="sr-only">{{ $count }}</h2>
   <div class="rgrid">
     {{ range $pager.Pages }}
       {{ partial "recipe-card.html" . }}

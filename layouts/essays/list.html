@@ -21,13 +21,17 @@
   everything else keeps its existing relative order. See DESIGN.md. */}}
 {{ $essays = (where $essays "Params.pinned" true) | append (where $essays "Params.pinned" "!=" true) }}
 {{ $pager := .Paginate $essays 16 }}
+{{ $count := i18n "fugu.count.essays" (len $essays) }}
 <section class="listing">
   <header class="listing-head">
     <h1 class="ltitle">{{ .Title }}</h1>
-    <span class="listing-count">{{ i18n "fugu.count.essays" (len $essays) }}{{ if gt $pager.TotalPages 1 }} · {{ i18n "fugu.page_of" (dict "Page" $pager.PageNumber "Pages" $pager.TotalPages) }}{{ end }}</span>
+    <span class="listing-count">{{ $count }}{{ if gt $pager.TotalPages 1 }} · {{ i18n "fugu.page_of" (dict "Page" $pager.PageNumber "Pages" $pager.TotalPages) }}{{ end }}</span>
   </header>
   {{ with .Description }}<p class="listing-dek">{{ . }}</p>{{ end }}
   <div class="listing-search">{{ partial "search-box.html" "site" }}</div>
+  {{/* The cards' titles are h3s; this names the list for screen readers
+       so the outline doesn't skip from the h1 to them. */}}
+  <h2 class="sr-only">{{ $count }}</h2>
   <div class="rgrid">
     {{ range $pager.Pages }}
       {{ partial "recipe-card.html" . }}

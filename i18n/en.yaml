@@ -95,6 +95,13 @@ fugu:
   blueprint_name: "{{ .Name }} blueprint"
   all_of: "All {{ .Name }}"
 
+  # A heading's "#" link, for screen readers.
+  heading_anchor: "Link to section: {{ .Heading }}"
+
+  # Landmarks, for screen readers.
+  breadcrumb: Breadcrumb
+  sidebar: Sidebar
+
   # Paging between pages.
   previous: Previous
   next: Next
@@ -168,3 +175,10 @@ fugu:
     photos: Photos
     entries_one: "{n} entry"
     entries_other: "{n} entries"
+    search_close: Close search
+    results_one: "{n} result"
+    results_other: "{n} results"
+    no_results: No matches
+    scale_now: "Scaled to {n}"
+    units_now: "Units: {name}"
+    photo_shown: "Photo {n} of {total}"

@@ -684,6 +684,21 @@
     li.appendChild(checkbox);
     li.appendChild(label);
 
+    // A glossary term in the line (beef stew's "MSG") brings its popover
+    // into the label: the definition would be read as part of the
+    // checkbox's name, and a tap on the open popover would tick the box.
+    // The name leaves the popover out; a tap on the term follows the link
+    // as before, and one on the popover does nothing. The storage key below
+    // keeps the full text, so lines ticked before this stay ticked.
+    if (label.querySelector('.pop')) {
+      var named = label.cloneNode(true);
+      named.querySelectorAll('.pop').forEach(function (pop) { pop.remove(); });
+      checkbox.setAttribute('aria-label', named.textContent.replace(/\s+/g, ' ').trim());
+      label.addEventListener('click', function (e) {
+        if (e.target.closest && e.target.closest('.pop')) e.preventDefault();
+      });
+    }
+
     var key = rowKey('ing:' + pageKey + ':' + label.textContent.trim());
     try {
       if (localStorage.getItem(key) === '1') checkbox.checked = true;
@@ -762,8 +777,11 @@
       checkCell.className = 'ing-check-cell';
       var checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
-      // Named by the row's first cell, the ingredient.
-      var name = tr.children[0] && tr.children[0].textContent.trim();
+      // Named by the row's first cell, the ingredient, less any glossary
+      // popover's definition (see enhanceRow).
+      var nameCell = tr.children[0] && tr.children[0].cloneNode(true);
+      if (nameCell) nameCell.querySelectorAll('.pop').forEach(function (pop) { pop.remove(); });
+      var name = nameCell && nameCell.textContent.replace(/\s+/g, ' ').trim();
       if (name) checkbox.setAttribute('aria-label', name);
       checkCell.appendChild(checkbox);
       tr.insertBefore(checkCell, tr.firstChild);
@@ -1084,6 +1102,24 @@
   // g), so the written batch reads exactly as written. Their amounts ignore
   // Units, which only picks the field's starting unit: imperial would turn
   // 1.3 g of white pepper into 0.05 oz.
+  // A polite status line, visually hidden, for changes made away from
+  // where they show: scaling or switching units rewrites amounts all over
+  // the page, which a screen reader otherwise doesn't hear. Debounced, so
+  // dragging the slider reads only where it stops.
+  var liveRegion = null;
+  var liveTimer = null;
+  function announce(text) {
+    if (!liveRegion) {
+      liveRegion = document.createElement('p');
+      liveRegion.className = 'sr-only';
+      liveRegion.setAttribute('role', 'status');
+      liveRegion.setAttribute('aria-live', 'polite');
+      document.body.appendChild(liveRegion);
+    }
+    clearTimeout(liveTimer);
+    liveTimer = setTimeout(function () { liveRegion.textContent = text; }, 500);
+  }
+
   function createScaleUnitsController(pageKey, percent) {
     // Units are a general taste, kept site-wide (like the theme toggle);
     // scale is specific to this recipe's yield, kept per-page.
@@ -1214,6 +1250,7 @@
       if (!surface) return;
       var s = surface.scaleSlider;
       s.value = String(state.scale);
+      s.setAttribute('aria-valuetext', formatScaleValue(state.scale));
       // Filled track up to the thumb (custom.css reads --fill).
       s.style.setProperty('--fill', ((state.scale - SCALE_MIN) / (SCALE_MAX - SCALE_MIN) * 100) + '%');
       surface.scaleValue.textContent = formatScaleValue(state.scale);
@@ -1253,18 +1290,26 @@
       syncControls();
     }
 
+    // "Scaled to 2×", with the yield when there is one ("Serves 8").
+    function announceScale() {
+      var y = yieldText();
+      announce(phrase('scale_now', 'Scaled to {n}', { n: formatScaleValue(state.scale) }) + (y ? '. ' + y.replace(/ · /g, ', ') : ''));
+    }
+
     function attachSurface(s) {
       surface = s;
       surface.scaleSlider.addEventListener('input', function () {
         state.scale = parseFloat(surface.scaleSlider.value);
         try { localStorage.setItem(scaleKey, String(state.scale)); } catch (e) {}
         apply();
+        announceScale();
       });
       surface.unitButtons.forEach(function (btn) {
         btn.addEventListener('click', function () {
           state.units = btn.dataset.units;
           try { localStorage.setItem(unitsKey, state.units); } catch (e) {}
           apply();
+          announce(phrase('units_now', 'Units: {name}', { name: btn.textContent }));
         });
       });
     }
@@ -1282,6 +1327,7 @@
         state.scale = scaleFor(state.amount);
         saveAmount();
         apply();
+        announceScale();
       });
       // Leaving the field shows the amount in force, tidied or restored.
       row.input.addEventListener('blur', syncRow);
@@ -1335,6 +1381,10 @@
     // <details> alone stays open. Clicks inside are left to the browser.
     document.addEventListener('click', function (e) {
       if (details.open && !details.contains(e.target)) details.open = false;
+    });
+    // So does tabbing out of it, or it stays open over the ingredients.
+    details.addEventListener('focusout', function (e) {
+      if (details.open && e.relatedTarget && !details.contains(e.relatedTarget)) details.open = false;
     });
 
     controller.attachSurface(surface);
@@ -1491,20 +1541,36 @@
     // Ingredients heading to anchor the popup to); the popup itself only
     // mounts when there's a heading to attach it to.
     var controller = createScaleUnitsController(pageKey, percent);
+    // The gear and the awake switch sit beside the first ingredients
+    // heading, not in it: a heading can't hold a <details>, and their
+    // labels would be read as part of its name. The heading and its
+    // controls share a .ing-heading wrapper, made only now, after the walks
+    // above (and automagic-sidebar.js's), which step from heading to
+    // heading through its siblings. The CSS places the controls as before.
+    var tools = null;
+    function headingTools() {
+      if (tools) return tools;
+      var h2 = headings[0];
+      tools = document.createElement('div');
+      tools.className = 'ing-heading';
+      h2.parentNode.insertBefore(tools, h2);
+      tools.appendChild(h2);
+      return tools;
+    }
     // A percentage page has one row in its first table and no menu: the row
     // sets the scale, and a saved Units setting still applies. Scale is
     // page-wide, so a second table follows from its own written amounts.
     if (controller.base) {
       controller.attachRow(buildPercentRow(controller.base, percent[0]));
     } else if (headings.length) {
-      headings[0].appendChild(buildPopupMenu(controller));
+      headingTools().appendChild(buildPopupMenu(controller));
     }
     // The awake switch sits beside the gear, or alone in its place on a
     // percentage page, which has no gear.
     var awake = headings.length && buildAwakeSwitch();
     if (awake) {
       if (controller.base) awake.classList.add('ing-awake--alone');
-      headings[0].appendChild(awake);
+      headingTools().appendChild(awake);
     }
     controller.apply();
   }

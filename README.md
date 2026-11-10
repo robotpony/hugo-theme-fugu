@@ -90,6 +90,7 @@ python3 "$fugu/tools/drafts.py"
 - [x] Fixture sites and CI against pinned Hugo and Blowfish versions (`tests/`)
 - [ ] Docs: five written; customizing, tools, and Blowfish compatibility to come
 - [x] English text moved into `i18n/` for translation
+- [x] Accessibility pass: named landmarks and controls, a heading outline without gaps, and read-out changes for scaling, units, search and the photo viewer
 - [x] Basic styles that follow the site's Blowfish colour scheme, light and dark (`params.fugu.styles`)
 - [ ] A default design of its own, with Not a Chef's CSS split into structure and look
 - [x] An example site, `exampleSite/`, built and link-checked in CI

@@ -68,7 +68,7 @@
   {{ with .Content }}<div class="method-intro prose dark:prose-invert article-content">{{ . }}</div>{{ end }}
 
   {{ with $blueprints }}
-    <h3 class="subsection-title" id="blueprints">{{ i18n "fugu.blueprints" }}<span class="subsection-count">{{ len . }}</span></h3>
+    <h2 class="subsection-title" id="blueprints">{{ i18n "fugu.blueprints" }}<span class="subsection-count">{{ len . }}</span></h2>
     <div class="bp-list">
       {{ range . }}
         {{ $bp := . }}
@@ -102,7 +102,7 @@
   {{ end }}
 
   {{ with $standalone }}
-    <h3 class="subsection-title{{ if $blueprints }} subsection-gap{{ end }}" id="techniques">{{ i18n "fugu.techniques_and_ratios" }}<span class="subsection-count">{{ len . }}</span></h3>
+    <h2 class="subsection-title{{ if $blueprints }} subsection-gap{{ end }}" id="techniques">{{ i18n "fugu.techniques_and_ratios" }}<span class="subsection-count">{{ len . }}</span></h2>
     <div class="rgrid">
       {{ range . }}{{ partial "recipe-card.html" . }}{{ end }}
     </div>

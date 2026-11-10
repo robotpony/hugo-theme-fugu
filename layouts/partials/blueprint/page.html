@@ -84,13 +84,13 @@
   {{ $hasLineage := ne (trim $lineage " \n\t") "" }}
   {{ if $hasLineage }}
     <div class="blueprint-lineage lg:hidden">
-      <h3 class="subsection-title" id="lineage">{{ i18n "fugu.lineage" }}</h3>
+      <h2 class="subsection-title" id="lineage">{{ i18n "fugu.lineage" }}</h2>
       {{ $lineage | safeHTML }}
     </div>
   {{ end }}
 
   {{ with $info.parts }}
-    <h3 class="subsection-title{{ if $hasLineage }} subsection-gap{{ end }}" id="parts">{{ i18n "fugu.parts" }}<span class="subsection-count">{{ len . }}</span></h3>
+    <h2 class="subsection-title{{ if $hasLineage }} subsection-gap{{ end }}" id="parts">{{ i18n "fugu.parts" }}<span class="subsection-count">{{ len . }}</span></h2>
     <section class="bp bp-parts-only">
       {{ with partial "blueprint/lead.html" (dict "blueprint" $ "folder" "parts") }}
         <div class="bp-desc">{{ . }}</div>
@@ -106,7 +106,7 @@
   {{ end }}
 
   {{ with $info.builds }}
-    <h3 class="subsection-title{{ if or $hasLineage $info.parts }} subsection-gap{{ end }}" id="builds">{{ i18n "fugu.builds" }}<span class="subsection-count">{{ len . }}</span></h3>
+    <h2 class="subsection-title{{ if or $hasLineage $info.parts }} subsection-gap{{ end }}" id="builds">{{ i18n "fugu.builds" }}<span class="subsection-count">{{ len . }}</span></h2>
     {{ with partial "blueprint/lead.html" (dict "blueprint" $ "folder" "builds") }}
       <div class="bp-desc bp-builds-lead">{{ . }}</div>
     {{ end }}

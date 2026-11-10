@@ -1,5 +1,5 @@
 {{/*
-  Full override of themes/blowfish/layouts/partials/head.html. Seven
+  Full override of themes/blowfish/layouts/partials/head.html. Eight
   changes, everything else as Blowfish has it:
 
   - Feed link on pages: a regular page links its nearest section's RSS
@@ -24,6 +24,8 @@
   - Image zoom: params.disableImageZoom = true turns it off. Blowfish's
     `not .Site.Params.disableImageZoom | default true` pipes the `not`
     into `default`, so zoom always loaded; the parentheses fix that.
+  - Script strings: the #fugu-strings block (partials/js-strings.html)
+    on every page, since search.js runs on every page.
 */}}
 <head>
   <meta charset="utf-8">
@@ -217,6 +219,10 @@
       src="{{ $jsReadingProgress.RelPermalink }}"
       integrity="{{ $jsReadingProgress.Data.Integrity }}"></script>
   {{ end }}
+
+  {{/* The words Fugu's scripts show. Here rather than beside each script,
+       since search runs on every page. */}}
+  {{ partialCached "js-strings.html" site.Language.Lang site.Language.Lang }}
 
   {{/* JS deferred */}}
   {{ $jsResources := slice }}

@@ -94,7 +94,6 @@
       </dl>
     {{ end }}
     <p class="gl-none" hidden>{{ i18n "fugu.glossary.none" }}</p>
-    {{ partialCached "js-strings.html" site.Language.Lang site.Language.Lang }}
     {{ $js := resources.Get "js/glossary.js" | resources.Minify | resources.Fingerprint (site.Params.fingerprintAlgorithm | default "sha512") }}
     <script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
   {{ end }}

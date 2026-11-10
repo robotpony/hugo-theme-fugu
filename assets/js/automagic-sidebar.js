@@ -229,6 +229,7 @@
           '<button type="button" class="pv-btn pv-next" aria-label="' + esc(phrase('next_photo', 'Next photo')) + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>' +
         '</div>' +
         '<div class="pv-foot"><p class="pv-cap"></p><p class="pv-src"></p></div>' +
+        '<p class="pv-live sr-only" role="status" aria-live="polite"></p>' +
       '</div>';
     document.body.appendChild(dlg);
 
@@ -239,9 +240,16 @@
     // single photo still sits centred.
     if (!multi) dlg.classList.add('is-single');
 
-    function show(i) {
+    // Moving to another photo is read out ("Photo 2 of 5: Browned onions"),
+    // since focus stays on the arrow; opening the viewer isn't, as the
+    // dialog's own name and the focused button already are.
+    var live = dlg.querySelector('.pv-live');
+    function show(i, announce) {
       idx = (i + photos.length) % photos.length;
       var p = photos[idx];
+      var said = phrase('photo_shown', 'Photo {n} of {total}', { n: idx + 1, total: photos.length });
+      var what = p.caption || p.alt;
+      live.textContent = announce && multi ? said + (what ? ': ' + what : '') : '';
       img.src = p.full;
       img.alt = p.alt;
       dlg.querySelector('.pv-cap').textContent = p.caption;
@@ -261,12 +269,12 @@
     }
 
     dlg.querySelector('.pv-close').addEventListener('click', function () { dlg.close(); });
-    dlg.querySelector('.pv-prev').addEventListener('click', function () { show(idx - 1); });
-    dlg.querySelector('.pv-next').addEventListener('click', function () { show(idx + 1); });
+    dlg.querySelector('.pv-prev').addEventListener('click', function () { show(idx - 1, true); });
+    dlg.querySelector('.pv-next').addEventListener('click', function () { show(idx + 1, true); });
     dlg.addEventListener('keydown', function (e) {
       if (!multi) return;
-      if (e.key === 'ArrowRight') show(idx + 1);
-      if (e.key === 'ArrowLeft') show(idx - 1);
+      if (e.key === 'ArrowRight') show(idx + 1, true);
+      if (e.key === 'ArrowLeft') show(idx - 1, true);
     });
     dlg.addEventListener('click', function (e) {
       var jump = e.target.closest('.pv-jump');
@@ -298,7 +306,7 @@
       if (Math.abs(dx) > 50) {
         swiped = true;
         setTimeout(function () { swiped = false; }, 400);
-        show(idx + (dx < 0 ? 1 : -1));
+        show(idx + (dx < 0 ? 1 : -1), true);
       }
     });
     dlg.addEventListener('click', function (e) {

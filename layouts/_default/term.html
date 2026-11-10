@@ -72,7 +72,7 @@
     {{ .Content }}
     {{ with $essay }}<a class="read-essay" href="{{ .RelPermalink }}">{{ i18n "fugu.read_full_essay" }} →</a>{{ end }}
   </div>
-  <h3 class="subsection-title">{{ i18n "fugu.recipes_following_principle" }}</h3>
+  <h2 class="subsection-title">{{ i18n "fugu.recipes_following_principle" }}</h2>
   <div class="rgrid">
     {{ range $pager.Pages }}
       {{ partial "recipe-card.html" . }}
@@ -117,11 +117,12 @@
 </div>
 </div>
 {{ else }}
+{{ $count := i18n (cond $allRecipes "fugu.count.recipes" "fugu.count.entries") (len .Pages) }}
 <section class="listing">
   <header class="listing-head">
     {{/* Cuisine pages read "Canadian cuisine", the suffix in the accent red. */}}
     <h1 class="ltitle">{{ .Title }}{{ if eq .Data.Plural "cuisine" }} <span class="ltitle-kind">{{ i18n "fugu.title_kind.cuisine" }}</span>{{ end }}</h1>
-    <span class="listing-count">{{ i18n (cond $allRecipes "fugu.count.recipes" "fugu.count.entries") (len .Pages) }}{{ if gt $pager.TotalPages 1 }} · {{ i18n "fugu.page_of" (dict "Page" $pager.PageNumber "Pages" $pager.TotalPages) }}{{ end }}</span>
+    <span class="listing-count">{{ $count }}{{ if gt $pager.TotalPages 1 }} · {{ i18n "fugu.page_of" (dict "Page" $pager.PageNumber "Pages" $pager.TotalPages) }}{{ end }}</span>
   </header>
   {{/* Tagline: the term's own description (content/cuisine/<name>/_index.md)
     if one exists, else the recipe section's (content/recipes/_index.md by default),
@@ -136,6 +137,9 @@
   {{ $dek := .Description | default (site.GetPage (printf "/%s" $recipeSection)).Description }}
   {{ if or $dek $drinks }}<p class="listing-dek">{{ $dek }}{{ with $drinks }}{{ if $dek }} {{ end }}<a class="listing-section-link" href="{{ .RelPermalink }}">{{ .Title }} →</a>{{ end }}</p>{{ end }}
   <div class="listing-search">{{ partial "search-box.html" (len (where site.RegularPages "Section" $recipeSection)) }}</div>
+  {{/* The cards' titles are h3s; this names the list for screen readers
+       so the outline doesn't skip from the h1 to them. */}}
+  <h2 class="sr-only">{{ $count }}</h2>
   <div class="rgrid">
     {{ range $pager.Pages }}
       {{ partial "recipe-card.html" . }}

@@ -175,6 +175,27 @@ RECOMMENDED_FIELDS = {
     "drink": ["source", "draft"],
 }
 
+
+
+def fields_help():
+    """`check --help`'s epilog: the fields each kind of page needs, from
+    the tables above, so the help can't drift from the check."""
+    width = max(len(k) for k in REQUIRED_FIELDS)
+    lines = ["Fields, by the section a page is in (a missing required one is an",
+             "error, a missing recommended one a warning):", ""]
+    for kind in REQUIRED_FIELDS:
+        rec = ", ".join(RECOMMENDED_FIELDS[kind]) or "none"
+        lines.append(f"  {kind:<{width}}  required: {', '.join(REQUIRED_FIELDS[kind])}; recommended: {rec}")
+    lines += ["",
+              "Also checked: tags are a list of plain strings (no leading #), date is",
+              "YYYY-MM-DD, draft is true or false, and a build's era and a blueprint's",
+              "lineage take their allowed values. _index.md is checked only for",
+              "lineage; dotfiles are skipped. Exits 1 on any error, 0 on warnings",
+              "alone.", "",
+              SITE_HELP]
+    return "\n".join(lines)
+
+
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 # A lineage date, in a build's `era` (or each item of a list): a year
@@ -642,7 +663,9 @@ def main():
         epilog=SITE_HELP)
     sub = parser.add_subparsers(dest="command", required=True)
 
-    p_check = sub.add_parser("check", help="validate frontmatter across content/")
+    p_check = sub.add_parser("check", help="validate frontmatter across content/",
+                             formatter_class=argparse.RawDescriptionHelpFormatter,
+                             epilog=fields_help())
     p_check.add_argument("paths", nargs="*", help="specific files or dirs (default: all content)")
     p_check.add_argument("--json", action="store_true", help="print the issues as JSON")
     p_check.set_defaults(func=cmd_check)

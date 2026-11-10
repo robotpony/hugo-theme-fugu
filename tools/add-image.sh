@@ -15,8 +15,9 @@
 set -euo pipefail
 
 if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
-  # The header comment above is the help text.
-  sed -n '2,/^$/{/^$/q;s/^# \{0,1\}//;p;}' "$0"
+  # The header comment above is the help text, with the script's path as
+  # it was run (from a site, themes/fugu/tools/add-image.sh).
+  sed -n '2,/^$/{/^$/q;s/^# \{0,1\}//;p;}' "$0" | awk -v me="$0" '{ sub(/tools\/add-image\.sh/, me); print }'
   echo
   echo "Needs ImageMagick 7 (magick) and exiftool."
   exit 0
@@ -32,8 +33,8 @@ done
 MAX_EDGE=2000
 QUALITY=85
 
-src="${1:?usage: add-image.sh <source> <destination>}"
-dest="${2:?usage: add-image.sh <source> <destination>}"
+src="${1:?usage: $0 <source> <destination>}"
+dest="${2:?usage: $0 <source> <destination>}"
 
 [[ -f "$src" ]] || { echo "error: source not found: $src" >&2; exit 1; }
 
