@@ -1,8 +1,8 @@
 # Plan
 
-The work list for taking Fugu to a theme other Blowfish users can install. Finished items are removed as they land; `CHANGELOG.md` and git history record them (the last full plan is `75a3a89`, the last long one `183c807`, the last before `v0.1.0` `102abb1`, the last before this squash `13b763a`). Section numbers are kept, since other files cite them.
+The work list for taking Fugu to a theme other Blowfish users can install. Finished items are removed as they land; `CHANGELOG.md` and git history record them (the last full plan is `75a3a89`, the last long one `183c807`, the last before `v0.1.0` `102abb1`, the last before `v0.2.0`'s squash `13b763a`, the last before the review and audit squash `5014763`). Section numbers are kept, since other files cite them.
 
-**Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §5–§7 and the §10 review's deferred items. Not a Chef's 2026-11-08 accessibility audit is done (2026-11-10; CHANGELOG, Unreleased). Features come after 1.0.
+**Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §5–§7 and §10's open items; the code review and Not a Chef's accessibility audit are done (CHANGELOG, Unreleased). Features come after 1.0.
 
 **Next:** §5's split, from `docs/design/class-inventory.md`: start with the 227 mixed rules (`.pop` first) and the `--fugu-*` counterparts for the site's 17 colour variables.
 
@@ -50,20 +50,14 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
 ## 10. Release
 
 - [ ] Check the README's images in GitHub's rendering, light and dark.
-- [x] Code review in three commit series (`/code-review high`), done; the deferred items stay here until they land. `layouts/` done (2026-11-07, `/code-review high`), outcomes:
-  - Fixed: wiki links shown raw in principle popovers; a leaf-bundle essay's card, format chip and siblings (`section/folder.html`); drinks missing from "Recipes in this essay" and a recipe count when the recipe section is off; an undated page's 0001 date in the header and RSS; concept popovers' ARIA (`aria-describedby`, no `role="tooltip"` around a link, the principle icon `aria-hidden`); pagination as a labelled `nav` with `aria-current` and named arrows; the last English strings (search placeholders, feed title and description, formula words, "also", subsections).
-  - Heading levels on list pages and the sidebars as `<aside>`: fixed with the accessibility audit (2026-11-10).
-  - Deferred to §7: comments that cite `custom.css`, DESIGN.md, FORMAT.md, or Not a Chef content (the item there covers them).
-  - Deferred: wiki-link lookup cost (`render-link.html` and the reading sidebar scan every page per link); measure build time before caching a title index.
+- [ ] Left from the code review (2026-11-07) and the accessibility audit (2026-11-10), both otherwise done:
+  - Wiki-link lookup cost: `render-link.html` and the reading sidebar scan every page per link. Measure build time before caching a title index.
   - Won't fix: the "Undated" and "Further reading" heading matches stay English; they read headings the author writes, so a translated site writes them in English or renames them in its content.
-  - `tools/` done (2026-11-07). Fixed: no site found, or a `FUGU_SITE_ROOT` that isn't one, is an error rather than "no issues" (one `find_site_root`, shared by all three Python tools); paths on the command line are relative to the working directory, and a missing one is an error, not a traceback; files outside the sections are reported as skipped, not counted clean; with Fugu's config not merged (an uninitialised theme folder) the default sections still apply, with a warning; `hugo config` runs only for `check` and `drafts.py`, not `get`/`set`/`unset`; `drafts.py` lists draft section pages (blueprints); `compare-builds.py` honours `$HUGO`, explains a missing Hugo, and refuses to run from a Fugu that isn't the site's `themes/` copy (it silently tested the wrong tree); `add-image.sh` writes relative destinations into the site, checks for `magick` and `exiftool` first (the §8 item), and its help no longer prescribes Not a Chef's `static/images/` or claims "PNG stays PNG". Stale `migrate.py` comment removed.
-  - `assets/js/` done (2026-11-07). Fixed: ingredient checkboxes named by their label (tapping the text ticks it) and percentage-table ones by the ingredient; a repeated line's check-off keyed apart (`#2`), first key unchanged; the phone recipe sidebar shown with JS off (`<noscript>` style in `single.html`); photos in hidden personal notes left out of the sidebar and viewer; search arrow keys no longer throw outside the results, the index fetched once and a query typed while it loads run when it lands, and every `.search-box` opens search (the partial drops its duplicate `#search-button`); Escape hides a hovered or focused popover without moving focus; a yield's parenthetical scales with it ("about 12 L (12 qt)"); glued metric units are a param (`unitSpacing`); a wake-lock race; photo markers and the Photos heading named with a space; empty glossary letters out of the tab order.
-  - Deferred to §7: comments citing FORMAT.md, DESIGN.md, `custom.css`, and Not a Chef recipes; `automagic-sidebar.js`'s note that its DOMContentLoaded handler runs first (script order does it).
-  - The gear menu, photo viewer and search-reset items were fixed with the accessibility audit (2026-11-10).
+  - The comments citing `custom.css`, DESIGN.md, FORMAT.md and Not a Chef content, and `automagic-sidebar.js`'s note that its DOMContentLoaded handler runs first (script order does it), are §7's comments item.
 - [ ] Scaled yields keep the singular: "1 loaf" at 2× reads "2 loaf" (`scaleYield` in `ingredients.js`, also the sidebar's Serves row). Pluralize the word after a scaled count, or have the frontmatter give both forms; check a range ("1–2 loaves") and words that don't take an s.
 - [ ] Ingredient group labels skip a heading level: `recipe-format.md` puts `#### Dry` straight under `## Ingredients`, so 43 of Not a Chef's recipes go h2 → h4. In `render-heading.html`, render a group label that follows an h2 one level up (an `<h3 class="ing-subhead">`), keeping `####` in the source and the same look (`h3.ing-subhead`/`h4.ing-subhead` share their rules). A group inside a `###` component stays h4. The content skips (Food Log months, a reference page) went to the Not a Chef content agent, 2026-11-10.
 - [ ] Retake the screenshots after §5 (`python3 tools/screenshots.py`).
-- [ ] Tag `v1.0.0` after §4–§7 and the review.
+- [ ] Tag `v1.0.0` after §5–§7 and the items above.
 - [ ] Optional: list on themes.gohugo.io; check how they handle themes that need a parent theme.
 
 ## Features
