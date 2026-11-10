@@ -22,6 +22,7 @@ Not a Chef must render exactly as before unless a change means to alter it. For 
 1. Make the change, uncommitted.
 2. Run `python3 tools/compare-builds.py` from inside the site. It builds the site with Fugu at `HEAD` and with the working tree, compares every file with whitespace stripped, and prints the differences (identical diffs across pages are grouped). Use `--ref REV` to compare against an older commit, or `compare-builds.py OLD NEW` for two folders you built yourself.
 3. The only differences should be the ones intended.
+4. For a CSS change, or one that touches Not a Chef's `custom.css`, also run `python3 tools/compare-styles.py` from inside the site. It builds "before" from Fugu at `HEAD` and the site's styling files at its `HEAD` (content as on disk), renders about 30 pages in headless Chrome at 1280 and 390px, light and dark, and compares every element's box and computed look. A style change shows as "color: A -> B (N elements)". `--ref`/`--site-ref` pick other commits, `--page` adds pages. It skips hover, focus and open states, so check those by hand.
 
 Compare builds on one Hugo version only: Hugo's word count changes between releases, which shifts reading times on cards.
 
@@ -37,7 +38,7 @@ After any edit while `hugo server -D` is running, restart it before trusting pag
 - `assets/js/`: plain, dependency-free, progressive JS. `ingredients.js` (check-off, scaling, unit conversion), `automagic-sidebar.js` (moves Mechanic/To serve/Notes/photos into the sidebar, photo viewer), `search.js` (Fuse.js search, pinned results first). Pages must still read and print with JS off.
 - `assets/icons/formula/`: the formula diagram icon kit, one SVG per key.
 - `archetypes/`: `recipes.md`, and a YAML default (in place of Hugo's TOML one; Blowfish's would Title Case the title).
-- `tools/`: `frontmatter.py`, `drafts.py`, `compare-builds.py` (Python standard library only), `add-image.sh` (ImageMagick 7 and `exiftool`). They work on the Hugo site containing the working directory, or `$FUGU_SITE_ROOT`.
+- `tools/`: `frontmatter.py`, `drafts.py`, `compare-builds.py`, `compare-styles.py` (Python standard library only; the last needs Chrome), `add-image.sh` (ImageMagick 7 and `exiftool`). They work on the Hugo site containing the working directory, or `$FUGU_SITE_ROOT`.
 
 ## Blowfish overrides
 

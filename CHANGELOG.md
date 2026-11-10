@@ -8,6 +8,7 @@ After updating Fugu, restart a running `hugo server`: one started before the i18
 
 ### Added
 
+- `tools/compare-styles.py`: renders a site's pages in headless Chrome before and after a change (Fugu at a ref and the site's styling files at a ref, against the working trees) at desktop and phone widths, light and dark, and lists every element whose box or computed look changed, grouped by change. The CSS counterpart of `compare-builds.py`, for §5's split of Not a Chef's styles. Needs Chrome (`$CHROME`).
 - `params.fugu.unitSpacing = "spaced"` writes rewritten metric quantities as `50 ml` instead of `50ml` (`docs/configuration.md`, "Units").
 - Fugu's English is in `i18n/en.yaml`, under `fugu`: every label, heading and count its templates write, with Hugo's plural forms for counts, and the words its scripts show (`fugu.js`), passed to them as a JSON block (`#fugu-strings`, `partials/js-strings.html`) with each script's English as the fallback. The block is built once per language. A site changes or translates any of them in its own `i18n/` (`docs/configuration.md`, "Words and translation").
 

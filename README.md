@@ -33,7 +33,7 @@ Recipe pages with a sidebar for the Mechanic, To serve, Notes, and photos; ingre
 
 The screenshots are of [exampleSite/](exampleSite/README.md), with Fugu's basic styles and Blowfish's default scheme; `tools/screenshots.py` retakes them ([docs/images/README.md](docs/images/README.md)).
 
-Content tools live in `tools/`: `frontmatter.py` (check and edit frontmatter), `drafts.py` (list drafts), `add-image.sh` (prepare photos), `compare-builds.py` (check a theme change doesn't alter a site's pages), and `screenshots.py` (retake the docs screenshots). The Python tools use the standard library only; every tool explains itself with `--help`.
+Content tools live in `tools/`: `frontmatter.py` (check and edit frontmatter), `drafts.py` (list drafts), `add-image.sh` (prepare photos), `compare-builds.py` (check a theme change doesn't alter a site's pages), `compare-styles.py` (the same for how they look, in headless Chrome), and `screenshots.py` (retake the docs screenshots). The Python tools use the standard library only; every tool explains itself with `--help`.
 
 ## Install
 
@@ -103,6 +103,7 @@ Fugu's changes are checked against the sites that use it, so they don't alter a 
 
 ```sh
 python3 themes/fugu/tools/compare-builds.py    # the site with Fugu at HEAD vs. the working tree
+python3 themes/fugu/tools/compare-styles.py    # the same pages rendered in Chrome, box by box and style by style
 python3 themes/fugu/tests/check.py --compare   # that, plus every fixture site in tests/sites/
 ```
 

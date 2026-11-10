@@ -4,7 +4,7 @@ The work list for taking Fugu to a theme other Blowfish users can install. Finis
 
 **Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §5–§7 and §10's open items; the code review and Not a Chef's accessibility audit are done (CHANGELOG, Unreleased). Features come after 1.0.
 
-**Next:** §5's split, from `docs/design/class-inventory.md`: start with the 227 mixed rules (`.pop` first) and the `--fugu-*` counterparts for the site's 17 colour variables.
+**Next:** §5's second step: fill `fugu.css`'s gaps (page shells, font and colour tokens), then switch Not a Chef on to it.
 
 ## 4. Translation
 
@@ -12,13 +12,15 @@ Done: template and script English is in `i18n/en.yaml` (`docs/configuration.md`,
 
 ## 5. Default design
 
-Not a Chef's `custom.css` (2,413 lines) still styles every class Fugu emits; `docs/design/class-inventory.md` sizes the split: 310 classes, about 400 lines of structure and 700 of look, 227 rules mixing the two, 109 with hardcoded font names, and 13 dead classes; `fugu.css` is only a baseline from `--fugu-*` tokens (`params.fugu.styles = false` turns it off, as Not a Chef does).
+Not a Chef's `custom.css` (2,382 lines) restyles every class Fugu emits, with `fugu.css` switched off (`params.fugu.styles = false`). `fugu.css` (1,118 lines, `--fugu-*` tokens) already names 268 of the 310 classes; `docs/design/class-inventory.md` sizes the rest: the page shells only `custom.css` has, 227 rules mixing structure and look, 109 with font names written out, and 17 site colour tokens with no `--fugu-*` counterpart. The plan (agreed 2026-11-10) is to switch Not a Chef on to `fugu.css` and shrink `custom.css` to its own look, checked with `tools/compare-styles.py` at every step, then design Fugu's default.
 
-- [ ] Move structure into `fugu.css`; express the look as `--fugu-*` properties defaulting to Blowfish's `--color-primary-*`/`--color-neutral-*`.
-- [ ] Mock, then build, Fugu's own neutral look; update `docs/getting-started.md`, which says it comes later.
-- [ ] Not a Chef keeps only its look in `custom.css` and renders the same. Update the comments in 10 files that point at `custom.css` (`git grep -l custom.css -- layouts assets`).
-- [ ] Fonts: document the `partials/fonts.html` hook; consider a `fonts` param for Google Fonts plus a self-hosting recipe.
-- [ ] Copy the formula icon kit's drawing rules (stroke, grid, size) from Not a Chef's `mockups/STYLE.md` into Fugu's docs.
+- [x] `tools/compare-styles.py`: renders ~30 pages before and after in headless Chrome, 1280 and 390px, light and dark, and diffs every element's box and computed look (2026-11-10). Stable over repeated runs; hover, focus and open states aren't covered.
+- [ ] Fill `fugu.css`'s gaps: the page shells (`blueprint-layout`, `method-list-layout`, `principle-layout`, `glossary-page`, `listing`, `blueprint-page`, `build-grid`, `method-list`, `principle-page`, the inventory's hard case 6); `--fugu-font-serif`/`-sans`/`-mono` in place of written-out families; `--fugu-*` tokens for the colours it lacks (flag, principle, highlight, the pop accents).
+- [ ] Switch Not a Chef on: map its tokens to Fugu's (`--fugu-ink: var(--ink)` and the rest, light and dark), set `styles = true`, and get `compare-styles.py` to no differences, with `custom.css` overriding where it must.
+- [ ] Shrink `custom.css` one area per commit pair (Fugu, then the site), each at no differences: popovers (`.pop`) first, then ingredients and the gear panel, cards and lists, sidebars, the lineage timeline, the glossary, the diagrams. Split mixed rules into structure (`fugu.css`) and look (tokens, or a site override). Fix the Blowfish workarounds on Fugu markup in the templates rather than carrying them over (inventory hard case 5). Update the comments in 10 files that point at `custom.css` (`git grep -l custom.css -- layouts assets`) as their areas move.
+- [ ] Mock Fugu's own neutral look (two or three directions on example-site pages, light and dark) for Bruce to choose, then build it as `fugu.css`'s token defaults; update `docs/getting-started.md`, which says it comes later.
+- [ ] Fonts: document the `partials/fonts.html` hook and a self-hosting recipe; a `fonts` param for Google Fonts only if another site wants one.
+- [ ] Docs: `docs/customizing.md` (§7) lists the tokens; copy the formula icon kit's drawing rules (stroke, grid, size) from Not a Chef's `mockups/STYLE.md`; retake the screenshots (§10).
 
 ## 6. Blowfish compatibility
 
