@@ -79,7 +79,7 @@ summaryLength = 30
     weight = 60
 
 [params]
-  colorScheme = "blowfish"
+  colorScheme = "fugu"
   defaultAppearance = "light"
   autoSwitchAppearance = true
   enableSearch = true

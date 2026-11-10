@@ -361,11 +361,28 @@ def themes_at_ref(ref, site_themes, into):
 NUM_RE = re.compile(r"-?\d+(?:\.\d+)?")
 
 
+COLOR_FN_RE = re.compile(r"color\(srgb ([\d.]+) ([\d.]+) ([\d.]+)(?: / ([\d.]+))?\)")
+
+
+def srgb_to_rgb(v):
+    """color(srgb 0.12 0.12 0.12 / 0.5) -> rgba(30.6, 30.6, 30.6, 0.5): Chrome
+    reports color-mix() results in that form, the same colour as an rgb()."""
+    def rgb(m):
+        r, g, b = (float(x) * 255 for x in m.groups()[:3])
+        return f"rgba({r:g}, {g:g}, {b:g}, {m.group(4)})" if m.group(4) else f"rgb({r:g}, {g:g}, {b:g})"
+    return COLOR_FN_RE.sub(rgb, v)
+
+
 def same_value(a, b, tolerance):
     """Equal, or the same apart from numbers within `tolerance` (8.48438px
-    and 8.46875px: font metrics differ in the last decimal between runs)."""
+    and 8.46875px: font metrics differ in the last decimal between runs).
+    A color(srgb ...) counts as the rgb() it names, within 1 of each channel."""
     if a == b:
         return True
+    if "color(srgb" in a or "color(srgb" in b:
+        a, b = srgb_to_rgb(a), srgb_to_rgb(b)
+        tolerance = max(tolerance, 1)
+        a, b = a.replace("rgba(", "rgb(").replace(", 1)", ")"), b.replace("rgba(", "rgb(").replace(", 1)", ")")
     if NUM_RE.sub("#", a) != NUM_RE.sub("#", b):
         return False
     return all(abs(float(x) - float(y)) <= tolerance for x, y in zip(NUM_RE.findall(a), NUM_RE.findall(b)))

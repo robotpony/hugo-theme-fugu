@@ -5,11 +5,11 @@
  * = false leaves it out, for a site that styles every class itself.
  *
  * The look comes from the --fugu-* tokens below: colours, which default to
- * the site's Blowfish colour scheme (--color-primary-*, --color-secondary-*,
- * --color-neutral-*, each an "r, g, b" triplet), and three type faces. A
+ * greys from the site's Blowfish colour scheme (--color-neutral-*, each an
+ * "r, g, b" triplet), and three type faces, the system's by default. A
  * site restyles Fugu by setting the tokens alone, in its own custom.css:
  *
- *   :root, .dark { --fugu-accent: #A8865A; --fugu-font-serif: 'Lora', serif; }
+ *   :root, .dark { --fugu-accent: #A8865A; --fugu-font-body: Georgia, serif; }
  *
  * (docs/customizing.md lists them). Dark mode follows Blowfish's .dark
  * class on <html>. The rules after the tokens came from Not a Chef's design
@@ -20,24 +20,38 @@
  * Tailwind utilities and Typography's .prose rules, which do.
  */
 :root {
+  /* Monochrome by default: every colour is a step of the scheme's neutral
+   * ramp, so Fugu's pieces sit in any Blowfish scheme without competing
+   * with it, and Fugu's own scheme (colorScheme = "fugu") makes them pure
+   * grey. Links, chips and quantities are told apart by weight and
+   * underline. A site gives Fugu colour by setting these. */
   --fugu-bg: rgb(var(--color-neutral));
   --fugu-surface: rgb(var(--color-neutral-50));
   --fugu-surface-2: rgb(var(--color-neutral-100));
-  --fugu-ink: rgb(var(--color-neutral-800));
+  --fugu-ink: rgb(var(--color-neutral-900));
   --fugu-ink-muted: rgb(var(--color-neutral-600));
   --fugu-ink-faint: rgb(var(--color-neutral-500));
   --fugu-border: rgb(var(--color-neutral-200));
   --fugu-border-strong: rgb(var(--color-neutral-300));
 
-  --fugu-accent: rgb(var(--color-primary-600));
-  --fugu-accent-strong: rgb(var(--color-primary-700));
-  /* A tint of primary-500, not primary-100: some schemes (autumn) set
-     primary-100 to white, and the chips' fill vanished on a white page. */
-  --fugu-accent-soft: rgba(var(--color-primary-500), .16);
-  --fugu-accent-wash: rgba(var(--color-primary-500), .14);
+  /* The accent: links, quantities, active controls. */
+  --fugu-accent: rgb(var(--color-neutral-900));
+  --fugu-accent-strong: rgb(0, 0, 0);
+  --fugu-accent-soft: rgba(0, 0, 0, .07);
+  --fugu-accent-wash: rgba(0, 0, 0, .05);
 
-  --fugu-cuisine: rgb(var(--color-secondary-800));
-  --fugu-cuisine-soft: rgb(var(--color-secondary-100));
+  /* Roles a site may colour apart from the accent: flags (drafts, notices),
+   * principles, highlights (the cuisine chip), cuisines, focus rings. */
+  --fugu-flag: rgb(var(--color-neutral-700));
+  --fugu-flag-soft: rgba(0, 0, 0, .06);
+  --fugu-principle: rgb(var(--color-neutral-800));
+  --fugu-principle-strong: rgb(0, 0, 0);
+  --fugu-principle-soft: rgba(0, 0, 0, .06);
+  --fugu-highlight: rgb(0, 0, 0);
+  --fugu-highlight-soft: rgba(0, 0, 0, .06);
+  --fugu-cuisine: rgb(var(--color-neutral-800));
+  --fugu-cuisine-soft: rgba(0, 0, 0, .06);
+  --fugu-focus: var(--fugu-accent);
 
   /* A patty's seared top in the stack layers (assets/icons/layers/patty-*):
    * the crust, its flecks, and grill char. Fixed browns, not the scheme's:
@@ -70,37 +84,40 @@
 
   --fugu-shadow: 0 8px 24px rgba(0, 0, 0, .12);
   --fugu-radius: 6px;
-  --fugu-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  /* Type, and the roles a site may colour apart from the accent: flags (drafts, notices), principles, highlights, focus rings. */
+  /* Type: the system faces. Body is the reading text (prose, card intros,
+   * glossary definitions, captions); a site can make it a serif. */
   --fugu-font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --fugu-font-serif: ui-serif, Georgia, Cambria, "Times New Roman", serif;
-  --fugu-flag: rgb(var(--color-secondary-600));
-  --fugu-flag-soft: rgba(var(--color-secondary-500), .14);
-  --fugu-principle: rgb(var(--color-primary-600));
-  --fugu-principle-strong: rgb(var(--color-primary-700));
-  --fugu-principle-soft: rgba(var(--color-primary-500), .14);
-  --fugu-highlight: rgb(var(--color-primary-800));
-  --fugu-highlight-soft: rgba(var(--color-primary-500), .12);
-  --fugu-focus: var(--fugu-accent);
+  --fugu-font-body: var(--fugu-font-sans);
+  --fugu-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 .dark {
-  --fugu-bg: rgb(var(--color-neutral-800));
-  --fugu-surface: color-mix(in srgb, rgb(var(--color-neutral-800)) 55%, rgb(var(--color-neutral-700)));
-  --fugu-surface-2: rgb(var(--color-neutral-900));
+  /* Darker than Blowfish's neutral-800 page, so panels read as set into it. */
+  --fugu-bg: rgb(var(--color-neutral-900));
+  --fugu-surface: color-mix(in srgb, rgb(var(--color-neutral-900)) 50%, rgb(var(--color-neutral-800)));
+  --fugu-surface-2: color-mix(in srgb, rgb(var(--color-neutral-900)) 65%, black);
   --fugu-ink: rgb(var(--color-neutral-100));
   --fugu-ink-muted: rgb(var(--color-neutral-400));
   --fugu-ink-faint: rgb(var(--color-neutral-500));
   --fugu-border: rgb(var(--color-neutral-700));
   --fugu-border-strong: rgb(var(--color-neutral-600));
 
-  --fugu-accent: rgb(var(--color-primary-400));
-  --fugu-accent-strong: rgb(var(--color-primary-300));
-  --fugu-accent-soft: rgba(var(--color-primary-500), .2);
-  --fugu-accent-wash: rgba(var(--color-primary-400), .2);
+  --fugu-accent: rgb(var(--color-neutral-50));
+  --fugu-accent-strong: rgb(255, 255, 255);
+  --fugu-accent-soft: rgba(255, 255, 255, .1);
+  --fugu-accent-wash: rgba(255, 255, 255, .07);
 
-  /* Char stays dark in dark mode; the crust and flecks go darker. */
+  --fugu-flag: rgb(var(--color-neutral-300));
+  --fugu-flag-soft: rgba(255, 255, 255, .08);
+  --fugu-principle: rgb(var(--color-neutral-200));
+  --fugu-principle-strong: rgb(255, 255, 255);
+  --fugu-principle-soft: rgba(255, 255, 255, .08);
+  --fugu-highlight: rgb(255, 255, 255);
+  --fugu-highlight-soft: rgba(255, 255, 255, .08);
+  --fugu-cuisine: rgb(var(--color-neutral-200));
+  --fugu-cuisine-soft: rgba(255, 255, 255, .08);
+
   --fugu-sear: #5C3A26;
   --fugu-sear-fleck: #24170F;
   --fugu-sear-char: #121310;
@@ -120,19 +137,7 @@
   --fugu-kit-wine: #5A2428;
   --fugu-kit-ice: #2A3236;
 
-  --fugu-cuisine: rgb(var(--color-secondary-300));
-  --fugu-cuisine-soft: rgba(var(--color-secondary-500), .18);
-
   --fugu-shadow: 0 8px 24px rgba(0, 0, 0, .4);
-
-  /* The extra roles, lighter for dark backgrounds. */
-  --fugu-flag: rgb(var(--color-secondary-400));
-  --fugu-flag-soft: rgba(var(--color-secondary-500), .2);
-  --fugu-principle: rgb(var(--color-primary-400));
-  --fugu-principle-strong: rgb(var(--color-primary-300));
-  --fugu-principle-soft: rgba(var(--color-primary-500), .2);
-  --fugu-highlight: rgb(var(--color-primary-300));
-  --fugu-highlight-soft: rgba(var(--color-primary-500), .2);
 }
 
 /* ---------------------------------------------------------------------
@@ -238,7 +243,7 @@ main > header + section {
  * stay Libre Franklin like every other heading on the site. Found by
  * checking a recipe page's "Mechanic" h2, which had silently gone serif. */
 .prose {
-  font-family: var(--fugu-font-serif);
+  font-family: var(--fugu-font-body);
   /* Tailwind Typography's own default is 1.75 — tuned down to match the
    * site's 1.5 body/list/card rhythm (2026-09-18). This is the one place
    * that value actually lives: `<li>` has no line-height of its own, so
@@ -371,7 +376,7 @@ main > header + section {
   display: grid; gap: 5px; text-align: left; white-space: normal;
   background: var(--fugu-surface); border: 1px solid var(--fugu-border-strong); border-radius: 8px;
   padding: 11px 13px; box-shadow: 0 6px 20px rgba(0, 0, 0, .12);
-  font-family: var(--fugu-font-serif); font-size: .84rem; font-style: normal; font-weight: 400; line-height: 1.45; color: var(--fugu-ink-muted);
+  font-family: var(--fugu-font-body); font-size: .84rem; font-style: normal; font-weight: 400; line-height: 1.45; color: var(--fugu-ink-muted);
   letter-spacing: 0; text-transform: none;
   opacity: 0; visibility: hidden; transform: translateY(-4px);
   transition: opacity .12s .25s, transform .12s .25s, visibility 0s .37s;
@@ -434,7 +439,7 @@ dl.glossary dt:target { background: var(--fugu-accent-soft); border-radius: 4px;
 dl.glossary dfn { font-style: normal; }
 dl.glossary .also { font-size: .76rem; font-weight: 500; color: var(--fugu-ink-muted); }
 /* 1rem like body text elsewhere; it inherited Blowfish's 18px (visual pass, 2026-11-03). */
-dl.glossary dd { max-width: 62ch; margin: 0; font-family: var(--fugu-font-serif); font-size: 1rem; line-height: 1.6; color: var(--fugu-ink); }
+dl.glossary dd { max-width: 62ch; margin: 0; font-family: var(--fugu-font-body); font-size: 1rem; line-height: 1.6; color: var(--fugu-ink); }
 dl.glossary dd p { margin: 0; }
 dl.glossary dd p + p { margin-top: .6em; }
 dl.glossary .used { margin-top: 6px; font-family: var(--fugu-font-sans); font-size: .76rem; line-height: 1.6; color: var(--fugu-ink-muted); }
@@ -483,7 +488,7 @@ li.ing {
   padding: 7px 0;
   border-bottom: 1px solid var(--fugu-border);
   font-size: .98rem;
-  font-family: var(--fugu-font-serif);
+  font-family: var(--fugu-font-body);
   margin: 0;
 }
 .ing:last-child {
@@ -761,7 +766,7 @@ h4.ing-subhead {
 .ing-scale-ticks { display: flex; justify-content: space-between; padding: 0 3px; margin-top: -4px; font-size: .6rem; color: var(--fugu-ink-muted); }
 .ing-scale-ticks span { width: 12px; text-align: center; }
 .ing-scale-ticks span.is-current { color: var(--fugu-accent-strong); font-weight: 600; }
-.ing-yield { margin: 0; font-family: var(--fugu-font-serif); font-style: italic; font-size: .76rem; color: var(--fugu-ink-muted); }
+.ing-yield { margin: 0; font-family: var(--fugu-font-body); font-style: italic; font-size: .76rem; color: var(--fugu-ink-muted); }
 
 /* Units: a segmented control, every option on one row. Square-ish 5px
  * corners (STYLE.md's "checkbox, buttons, chip base" bucket), not the
@@ -867,7 +872,7 @@ h2.block-title { font-size: 1.35rem; font-weight: 700; letter-spacing: -.005em; 
  * the row still ends in an ellipsis. The row sits above the card's
  * stretched link (.rcard-link::after) so its tag links take clicks. */
 .rcard-title { font-family: var(--fugu-font-sans); font-size: 1.02rem; font-weight: 700; line-height: 1.3; letter-spacing: -.005em; text-wrap: balance; color: var(--fugu-ink); }
-.rcard-intro { font-family: var(--fugu-font-serif); font-size: .84rem; line-height: 1.5; color: var(--fugu-ink-muted); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+.rcard-intro { font-family: var(--fugu-font-body); font-size: .84rem; line-height: 1.5; color: var(--fugu-ink-muted); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
 /* Formula strip (formula-strip.html, STYLE.md "Formula diagram"): a 24px
  * row of the recipe's formula icons. It takes the intro's third line, so a
  * card with one is the same height as a card without. */
@@ -1011,7 +1016,7 @@ a.principle-chip:hover, a.principle-chip:focus-visible { text-decoration: underl
 .dev-link:hover, .dev-link:focus-visible { border-bottom-color: var(--fugu-flag); }
 .dev-link::after { content: "\00a0\2192"; }
 .dev-strip .dev-link { margin-left: 4px; }
-.dev-strip-note { display: block; margin-top: 7px; padding-top: 6px; border-top: 1px dashed color-mix(in srgb, var(--fugu-flag) 45%, transparent); font-family: var(--fugu-font-serif); font-style: italic; color: var(--fugu-ink); }
+.dev-strip-note { display: block; margin-top: 7px; padding-top: 6px; border-top: 1px dashed color-mix(in srgb, var(--fugu-flag) 45%, transparent); font-family: var(--fugu-font-body); font-style: italic; color: var(--fugu-ink); }
 .dev-strip-note b { font-family: var(--fugu-font-sans); font-style: normal; font-weight: 600; font-size: .78rem; margin-right: 2px; }
 /* The card's test kitchen chip: a link to the explainer, lifted above
  * the card's stretched link. */
@@ -1343,7 +1348,7 @@ article > footer {
 .recipe-sidebar-section h3 a[href^="#"] { display: none; }
 .recipe-sidebar-section > p,
 .recipe-sidebar-section > ul {
-  font-family: var(--fugu-font-serif);
+  font-family: var(--fugu-font-body);
   font-size: .85rem;
   line-height: 1.4;
   margin: 0;
@@ -1528,7 +1533,7 @@ article:not(:has(.article-pagination)) .reading-sidebar-wrap { margin-bottom: 0;
   font-family: var(--fugu-font-mono); font-size: .9rem; font-weight: 600;
 }
 .sidebar-photos .photo-caption {
-  font-family: var(--fugu-font-serif); font-size: .8rem; line-height: 1.45; color: var(--fugu-ink-muted); margin: 7px 0 0;
+  font-family: var(--fugu-font-body); font-size: .8rem; line-height: 1.45; color: var(--fugu-ink-muted); margin: 7px 0 0;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 
@@ -1571,7 +1576,7 @@ article:not(:has(.article-pagination)) .reading-sidebar-wrap { margin-bottom: 0;
 .photo-viewer .pv-stage figure { position: relative; margin: 0; min-width: 0; height: 100%; }
 .photo-viewer .pv-stage img { position: absolute; inset: 0; margin: auto; max-width: 100%; max-height: 100%; border-radius: 4px; box-shadow: 0 10px 40px rgba(0, 0, 0, .4); }
 .photo-viewer .pv-foot { justify-self: center; width: min(100%, 44rem); background: var(--fugu-surface); border-radius: 6px; padding: 12px 16px; display: flex; flex-direction: column; gap: 4px; }
-.photo-viewer .pv-cap { font-family: var(--fugu-font-serif); font-size: .92rem; line-height: 1.45; margin: 0; }
+.photo-viewer .pv-cap { font-family: var(--fugu-font-body); font-size: .92rem; line-height: 1.45; margin: 0; }
 .photo-viewer .pv-src { font-family: var(--fugu-font-sans); font-size: .74rem; color: var(--fugu-ink-muted); display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 0; }
 .photo-viewer .pv-src:empty { display: none; }
 .photo-viewer .pv-jump { color: var(--fugu-accent-strong); font-weight: 600; text-decoration: none; }
@@ -1617,7 +1622,7 @@ article:not(:has(.article-pagination)) .reading-sidebar-wrap { margin-bottom: 0;
 .f-label { font-family: var(--fugu-font-sans); font-size: .74rem; font-weight: 600; color: var(--fugu-ink); margin-top: 6px; line-height: 1.2; }
 .f-result .f-label { color: var(--fugu-ink-muted); }
 .f-qty { font-family: var(--fugu-font-mono); font-variant-numeric: tabular-nums; font-size: .76rem; font-weight: 600; color: var(--fugu-accent-strong); line-height: 1.3; margin-top: 2px; }
-.f-sub, .f-or { font-family: var(--fugu-font-serif); font-style: italic; font-size: .72rem; line-height: 1.3; margin-top: 3px; }
+.f-sub, .f-or { font-family: var(--fugu-font-body); font-style: italic; font-size: .72rem; line-height: 1.3; margin-top: 3px; }
 .f-sub { color: var(--fugu-ink-muted); }
 .f-or { color: var(--fugu-ink-muted); }
 .f-or span { display: block; }
@@ -1671,7 +1676,7 @@ article:not(:has(.article-pagination)) .reading-sidebar-wrap { margin-bottom: 0;
 .bp-name .go { font-weight: 500; font-size: .9rem; color: var(--fugu-accent-strong); opacity: 0; transform: translateX(-4px); transition: opacity .12s, transform .12s; }
 .bp-name:hover .go, .bp-name:focus-visible .go { opacity: 1; transform: none; }
 .bp-count { font-family: var(--fugu-font-mono); font-size: .7rem; color: var(--fugu-ink-muted); white-space: nowrap; }
-.bp-desc { font-family: var(--fugu-font-serif); font-size: .86rem; color: var(--fugu-ink-muted); }
+.bp-desc { font-family: var(--fugu-font-body); font-size: .86rem; color: var(--fugu-ink-muted); }
 
 /* The ordered parts list, compact, on the methods list and a blueprint's
  * page. */
@@ -1733,7 +1738,7 @@ a.part-row:hover::after, a.part-row:focus-visible::after { opacity: 1; transform
 /* The intro is body text at the recipe body's size (prose: 1rem, 1.5), not
  * a lede (2026-10-11: 1.08rem read larger than a recipe beside it), with
  * no prose margins: 14px between paragraphs. */
-.method-intro p, .principle-intro p { margin: 0; font-family: var(--fugu-font-serif); font-size: 1rem; line-height: 1.5; max-width: 65ch; }
+.method-intro p, .principle-intro p { margin: 0; font-family: var(--fugu-font-body); font-size: 1rem; line-height: 1.5; max-width: 65ch; }
 .method-intro p + p, .principle-intro p + p { margin-top: 14px; }
 .principle-intro .read-essay { display: inline-block; margin-top: 14px; font-family: var(--fugu-font-sans); font-size: .86rem; font-weight: 600; color: var(--fugu-principle-strong); text-decoration: none; }
 .principle-intro .read-essay:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -1912,11 +1917,11 @@ span.vt-name.vt-decade:hover .ln-dot { transform: translateY(-5px); }
   background: var(--fugu-surface); color: var(--fugu-ink);
   font-family: var(--fugu-font-sans); font-size: .8rem; font-weight: 600; line-height: 20px; white-space: nowrap;
 }
-.flow .flow-note { margin-top: 5px; max-width: 10em; font-family: var(--fugu-font-serif); font-size: .74rem; font-style: italic; line-height: 1.3; color: var(--fugu-ink-muted); }
+.flow .flow-note { margin-top: 5px; max-width: 10em; font-family: var(--fugu-font-body); font-size: .74rem; font-style: italic; line-height: 1.3; color: var(--fugu-ink-muted); }
 .flow :is(.flow-label, .flow-note) code { margin: 0; padding: 1px 4px; font-size: .85em; }
 /* As tall as a label's box, so each arrow sits level with the boxes. */
 .flow .flow-arrow { flex: none; font-family: var(--fugu-font-mono); font-size: 1rem; line-height: 32px; color: var(--fugu-accent); }
-.flow .flow-cap { margin-top: 12px; font-family: var(--fugu-font-serif); font-size: .76rem; text-align: center; color: var(--fugu-ink-muted); }
+.flow .flow-cap { margin-top: 12px; font-family: var(--fugu-font-body); font-size: .76rem; text-align: center; color: var(--fugu-ink-muted); }
 .flow .flow-grid { display: grid; grid-template-columns: repeat(var(--cols), auto); justify-content: center; gap: 16px 10px; }
 .flow.headed .flow-grid { grid-template-columns: auto repeat(var(--cols), auto); }
 .flow .flow-head {
@@ -1957,7 +1962,7 @@ span.vt-name.vt-decade:hover .ln-dot { transform: translateY(-5px); }
 .stack { margin: 1.75rem auto; max-width: 420px; color: var(--fugu-ink); }
 .stack-svg { display: block; width: 100%; height: auto; overflow: visible; }
 .stack-label { font-family: var(--fugu-font-sans); font-weight: 600; fill: var(--fugu-ink); }
-.stack-role { font-family: var(--fugu-font-serif); font-style: italic; fill: var(--fugu-ink-muted); fill-opacity: 1; }
+.stack-role { font-family: var(--fugu-font-body); font-style: italic; fill: var(--fugu-ink-muted); fill-opacity: 1; }
 .stack-lead { stroke: var(--fugu-ink-faint); stroke-opacity: 1; }
 .stack-dot { fill: var(--fugu-ink-faint); fill-opacity: 1; }
 .stack-bracket { stroke: var(--fugu-accent); }

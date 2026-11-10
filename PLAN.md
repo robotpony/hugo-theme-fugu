@@ -4,7 +4,7 @@ The work list for taking Fugu to a theme other Blowfish users can install. Finis
 
 **Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §5–§7 and §10's open items; the code review and Not a Chef's accessibility audit are done (CHANGELOG, Unreleased). Features come after 1.0.
 
-**Next:** §5's neutral look, mocked first, and the docs that go with it (`customizing.md`).
+**Next:** §5's docs (`customizing.md`, the icon kit rules) and its comment pass.
 
 ## 4. Translation
 
@@ -12,12 +12,12 @@ Done: template and script English is in `i18n/en.yaml` (`docs/configuration.md`,
 
 ## 5. Default design
 
-Done 2026-11-10: `fugu.css` holds Not a Chef's component design (every class Fugu emits, the page shells, and the Blowfish and Typography adjustments they rely on), with the site's colours and faces as `--fugu-*` tokens that default to the Blowfish scheme; Not a Chef runs with `styles = true` and its `custom.css` keeps only its tokens, its own pieces (header, homepage, footer, 404) and the paper grain, 529 lines from 2,382. `tools/compare-styles.py` found no differences. Left:
+Done 2026-11-10: `fugu.css` carries every component's design, moved from Not a Chef's `custom.css` (2,382 lines down to 529: its tokens, header, homepage, footer, 404 and paper grain), and Fugu's own look is direction A of three mocked (monochrome from the scheme's neutral ramp, system fonts, a pure-grey `fugu` scheme). Not a Chef sets every token and renders as before (`compare-styles.py`: no differences). Left:
 
-- [ ] Mock Fugu's own neutral look (two or three directions for the token defaults, and any rules that should differ from Not a Chef's, on example-site pages, light and dark) for Bruce to choose, then build it, retake the screenshots (`tools/screenshots.py`), and update `docs/getting-started.md`, which says it comes later. Until then the example site and screenshots show Not a Chef's design in system fonts and Blowfish's colours.
 - [ ] The rules' comments in `fugu.css` cite Not a Chef's mockups and `STYLE.md`; point them at Fugu's docs where one exists, or say they're Not a Chef's.
-- [ ] `docs/customizing.md` (§7): the tokens, overriding a rule, `styles = false`, and the fonts hook (`partials/fonts.html`) with a self-hosting recipe; a `fonts` param only if another site wants one.
+- [ ] `docs/customizing.md` (§7): the tokens, overriding a rule, `styles = false`, the `fugu` scheme, and the fonts hook (`partials/fonts.html`) with a self-hosting recipe; a `fonts` param only if another site wants one.
 - [ ] Copy the formula icon kit's drawing rules (stroke, grid, size) from Not a Chef's `mockups/STYLE.md` into Fugu's docs.
+- [ ] `compare-styles.py --open` over all 33 pages ran past Chrome's 15-minute limit, though one page takes seconds: find the page that stalls.
 
 ## 6. Blowfish compatibility
 

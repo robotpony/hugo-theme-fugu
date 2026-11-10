@@ -142,7 +142,7 @@ Open <http://localhost:1313/recipes/plain-rice/>. You should see:
 
 The recipes list at `/recipes/` shows it as a card.
 
-> Fugu's styles colour all of this from your Blowfish `colorScheme`, in light and dark mode ([configuration.md](configuration.md#styles)). Their design is Not a Chef's for now; a neutral look of Fugu's own comes later (PLAN.md §5).
+> Fugu's styles draw all of this in greys from your Blowfish `colorScheme`'s neutral ramp, in light and dark mode, with system fonts; set `colorScheme = "fugu"` for pure greys, or give it colour with its `--fugu-*` tokens ([configuration.md](configuration.md#styles)).
 
 ## 6. Search (optional)
 
