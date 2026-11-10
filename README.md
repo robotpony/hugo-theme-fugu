@@ -4,7 +4,7 @@ A cookbook theme for [Blowfish](https://github.com/nunocoracao/blowfish). Fugu i
 
 ![A recipe page: the ingredient list with checkboxes, a formula diagram, and the sidebar with the recipe's facts, To serve and Mechanic](docs/images/recipe.png)
 
-> **Work in progress: `v0.2.0`.** Fugu was split out of [Not a Chef](https://github.com/robotpony/not-a-chef) on 2026-10-06. It builds and works on a fresh site, with basic styles coloured from your Blowfish scheme; a designed default look comes later. See "Status" below.
+> **Work in progress: `v0.2.0`.** Fugu was split out of [Not a Chef](https://github.com/robotpony/not-a-chef) on 2026-10-06. It builds and works on a fresh site, with Not a Chef's component design coloured from your Blowfish scheme; a neutral default look of its own comes later. See "Status" below.
 
 ## Scope
 
@@ -31,7 +31,7 @@ Recipe pages with a sidebar for the Mechanic, To serve, Notes, and photos; ingre
 | [![A build's stack diagram](docs/images/build.png)](docs/features.md#stack-diagrams) | [![A blueprint page](docs/images/blueprint.png)](docs/features.md#methods-and-blueprints) |
 | A build's picks and its exploded stack diagram | A blueprint: its parts, its builds on a timeline, and their cards |
 
-The screenshots are of [exampleSite/](exampleSite/README.md), with Fugu's basic styles and Blowfish's default scheme; `tools/screenshots.py` retakes them ([docs/images/README.md](docs/images/README.md)).
+The screenshots are of [exampleSite/](exampleSite/README.md), with Fugu's styles and Blowfish's default scheme; `tools/screenshots.py` retakes them ([docs/images/README.md](docs/images/README.md)).
 
 Content tools live in `tools/`: `frontmatter.py` (check and edit frontmatter), `drafts.py` (list drafts), `add-image.sh` (prepare photos), `compare-builds.py` (check a theme change doesn't alter a site's pages), `compare-styles.py` (the same for how they look, in headless Chrome), and `screenshots.py` (retake the docs screenshots). The Python tools use the standard library only; every tool explains itself with `--help`.
 
@@ -91,8 +91,8 @@ python3 "$fugu/tools/drafts.py"
 - [ ] Docs: five written; customizing, tools, and Blowfish compatibility to come
 - [x] English text moved into `i18n/` for translation
 - [x] Accessibility pass: named landmarks and controls, a heading outline without gaps, and read-out changes for scaling, units, search and the photo viewer
-- [x] Basic styles that follow the site's Blowfish colour scheme, light and dark (`params.fugu.styles`)
-- [ ] A default design of its own, with Not a Chef's CSS split into structure and look
+- [x] Styles for every component, from `--fugu-*` tokens that follow the site's Blowfish colour scheme, light and dark (`params.fugu.styles`); Not a Chef runs on them
+- [ ] A neutral default look of its own
 - [x] An example site, `exampleSite/`, built and link-checked in CI
 - [x] Screenshots of the example site, retaken with `tools/screenshots.py`
 - [x] Hugo modules install, checked in CI; releases `v0.1.0` and `v0.2.0`

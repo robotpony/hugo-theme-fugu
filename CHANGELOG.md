@@ -14,6 +14,8 @@ After updating Fugu, restart a running `hugo server`: one started before the i18
 
 ### Changed
 
+- `fugu.css` now carries Not a Chef's whole component design (cards, ingredients, sidebars, glossary, diagrams, the page shells), moved from that site's `custom.css`, with its colours and faces as `--fugu-*` tokens defaulting to the Blowfish scheme and system fonts. New tokens: `--fugu-font-sans`, `--fugu-font-serif`, `--fugu-flag(-soft)`, `--fugu-principle(-strong/-soft)`, `--fugu-highlight(-soft)`, `--fugu-focus`. A site with `styles = true` will look different: closer to Not a Chef.
+- `compare-styles.py` gains `--open` (every `<details>` open and the first popover shown) and `--all` (every page).
 - The ingredient controls (the gear and the keep-awake switch) are no longer inside the first ingredients `<h2>`: `ingredients.js` wraps the heading and them in `<div class="ing-heading">`. They look the same, but a site's CSS keyed to `h2:has(> .ing-config)` or `h2:has(> .ing-awake)` needs `.ing-heading:has(> …) > h2` instead (Fugu's and Not a Chef's are updated).
 - Subsection titles (`.subsection-title`: a blueprint's Lineage, Parts and Builds; the methods page's Blueprints and Techniques; a principle's "Recipes that follow this principle") are `<h2>`, not `<h3>`. Their look is unchanged; CSS written for `h3.subsection-title` needs updating.
 - The `#fugu-strings` block is in every page's `<head>` (`partials/head.html`), not beside each script, since search uses it on every page.

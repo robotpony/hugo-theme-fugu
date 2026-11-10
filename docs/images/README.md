@@ -1,6 +1,6 @@
 # Screenshots
 
-The images here, and the theme listing's `images/screenshot.png` and `images/tn.png`, are taken by `tools/screenshots.py` from [exampleSite/](../../exampleSite/README.md), which uses Fugu's basic styles with Blowfish's default scheme (`blowfish`) and no site CSS, so they show what a new site gets. Retake them all after a style change, from Fugu's root:
+The images here, and the theme listing's `images/screenshot.png` and `images/tn.png`, are taken by `tools/screenshots.py` from [exampleSite/](../../exampleSite/README.md), which uses Fugu's styles with Blowfish's default scheme (`blowfish`) and no site CSS, so they show what a new site gets. Retake them all after a style change, from Fugu's root:
 
 ```sh
 python3 tools/screenshots.py                 # every shot, plus the listing images

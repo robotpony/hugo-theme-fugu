@@ -13,7 +13,7 @@ It was split out of Not a Chef (https://github.com/robotpony/not-a-chef) on 2026
 This repo is checked out as a git submodule at `themes/fugu` inside Not a Chef, usually at `/Users/mx/writing/not-a-chef/themes/fugu`. Not a Chef is the only real site using Fugu, so it's the test bed (`exampleSite/` and the fixtures in `tests/sites/` are the small ones):
 
 - Build from the site root, `../..`: `hugo --quiet -d <out>`. Run a dev server with `hugo server -D` there.
-- Not a Chef keeps its own design and branding as site-level files: `assets/css/custom.css` (which styles every class Fugu emits, for now), the `not-a-chef` colour scheme, `layouts/index.html`, `layouts/partials/header/basic.html`, `footer.html`, `favicons.html`, and `fonts.html`. Don't edit those from here unless a Fugu change needs a matching site change; if so, say so and make it a separate commit in that repo.
+- Not a Chef keeps its own design and branding as site-level files: `assets/css/custom.css` (its tokens, mapped onto Fugu's `--fugu-*` ones, its own header, homepage, footer and 404, and the paper grain), the `not-a-chef` colour scheme, `layouts/index.html`, `layouts/partials/header/basic.html`, `footer.html`, `favicons.html`, and `fonts.html`. Don't edit those from here unless a Fugu change needs a matching site change; if so, say so and make it a separate commit in that repo.
 
 ## The rule: don't change Not a Chef by accident
 

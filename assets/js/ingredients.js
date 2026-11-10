@@ -1251,7 +1251,7 @@
       var s = surface.scaleSlider;
       s.value = String(state.scale);
       s.setAttribute('aria-valuetext', formatScaleValue(state.scale));
-      // Filled track up to the thumb (custom.css reads --fill).
+      // Filled track up to the thumb (fugu.css reads --fill).
       s.style.setProperty('--fill', ((state.scale - SCALE_MIN) / (SCALE_MAX - SCALE_MIN) * 100) + '%');
       surface.scaleValue.textContent = formatScaleValue(state.scale);
       surface.scaleTicks.forEach(function (tick) {

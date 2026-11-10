@@ -35,8 +35,11 @@ and stack diagrams, popovers, the glossary, the lineage timeline, photos,
 part rows), from the "after" build. --page adds more; --pages-only uses
 only those.
 
-Not measured: hover, focus and open states (popovers, the gear panel), and
-anything a script draws later than a second after load. The site is
+Not measured: hover and focus states, and anything a script draws more
+than a few seconds after load. --open adds a view of each page with every
+<details> open (the gear panel, contents toggles) and the first popover
+shown; --all measures every page instead of the sample (slow: about a
+second a view). The site is
 $FUGU_SITE_ROOT or the nearest Hugo site, as for the other tools. Hugo is
 $HUGO, Chrome is $CHROME (default: Google Chrome's usual place on macOS,
 else `google-chrome` or `chromium` on the PATH). Python standard library
@@ -109,6 +112,7 @@ const PSEUDO = ["content","color","background-color","width","height","top","lef
   "border-top-width","border-bottom-width","font-size"];
 const q = new URLSearchParams(location.search);
 const pages = JSON.parse(q.get("pages")), widths = JSON.parse(q.get("widths")), modes = JSON.parse(q.get("modes"));
+const states = JSON.parse(q.get("states") || '["closed"]');
 const sleep = t => new Promise(r => setTimeout(r, t));
 const r1 = n => Math.round(n * 10) / 10;
 function label(el) {
@@ -139,6 +143,25 @@ function measure(doc, win) {
   }
   return out;
 }
+// "open": every <details> open (the gear panel, contents toggles) and the
+// first popover shown, by focusing its link (popovers open on hover or
+// focus-within, and hover can't be set from a script).
+function openUp(doc) {
+  doc.querySelectorAll("details").forEach(d => { d.open = true; });
+  const pop = doc.querySelector(".pop-host a, .pop-host [tabindex]");
+  if (pop) pop.focus({preventScroll: true});
+}
+async function settled(doc, win) {
+  await sleep(500);
+  let prev = JSON.stringify(measure(doc, win)), cur = null;
+  for (let n = 0; n < 3; n++) {
+    await sleep(700);
+    cur = JSON.stringify(measure(doc, win));
+    if (cur === prev) break;
+    prev = cur;
+  }
+  return cur === prev ? JSON.parse(cur) : {error: "still changing after four passes"};
+}
 async function run() {
   const res = {};
   for (const page of pages) for (const w of widths) for (const mode of modes) {
@@ -164,15 +187,11 @@ async function run() {
       }
       // Measured until two passes agree (up to four), so a late font,
       // image or script doesn't pass for a style change.
-      await sleep(500);
-      let prev = JSON.stringify(measure(doc, win)), cur = null;
-      for (let n = 0; n < 3; n++) {
-        await sleep(700);
-        cur = JSON.stringify(measure(doc, win));
-        if (cur === prev) break;
-        prev = cur;
+      if (states.includes("closed")) res[key] = await settled(doc, win);
+      if (states.includes("open")) {
+        openUp(doc);
+        res[key + " open"] = await settled(doc, win);
       }
-      res[key] = cur === prev ? JSON.parse(cur) : {error: "still changing after four passes"};
     } catch (e) { res[key] = {error: String(e)}; }
     f.remove();
   }
@@ -220,11 +239,11 @@ def chrome_bin():
     sys.exit(f"{TOOL}: no Chrome found; set CHROME to its path")
 
 
-def measure_pages(base, pages, widths, modes, profile):
+def measure_pages(base, pages, widths, modes, profile, states=("closed",)):
     """Run the harness in headless Chrome over `pages`; returns
     {"<page> @<width> <mode>": [element records]}."""
     query = urllib.parse.urlencode({"pages": json.dumps(pages), "widths": json.dumps(list(widths)),
-                                    "modes": json.dumps(list(modes))})
+                                    "modes": json.dumps(list(modes)), "states": json.dumps(list(states))})
     cmd = [chrome_bin(), "--headless=new", "--disable-gpu", "--no-first-run", "--no-default-browser-check",
            f"--user-data-dir={profile}", "--window-size=1400,1000", "--hide-scrollbars",
            "--virtual-time-budget=600000", "--dump-dom", f"{base}{HARNESS}?{query}"]
@@ -421,6 +440,9 @@ def main():
     parser.add_argument("--width", action="append", type=int, metavar="PX",
                         help=f"a viewport width; repeatable (default: {', '.join(map(str, WIDTHS))})")
     parser.add_argument("--mode", action="append", choices=MODES, help="light or dark; repeatable (default: both)")
+    parser.add_argument("--open", action="store_true",
+                        help="also measure each view with every <details> open and the first popover shown")
+    parser.add_argument("--all", action="store_true", help="measure every page the build has (slow)")
     parser.add_argument("--tolerance", type=float, default=0.5, metavar="PX",
                         help="how far a box may move before it counts (default: 0.5)")
     parser.add_argument("--examples", type=int, default=4, metavar="N", help="examples per difference (default: 4)")
@@ -457,6 +479,9 @@ def main():
 
         if args.pages_only:
             pages = list(dict.fromkeys(args.page))
+        elif args.all:
+            pages = sorted({"/" if p.parent == new else "/" + p.parent.relative_to(new).as_posix() + "/"
+                            for p in new.rglob("index.html")})
         else:
             pages, found = pick_pages(new)
             pages = list(dict.fromkeys(pages + args.page))
@@ -469,7 +494,8 @@ def main():
         for side, folder in (("before", old), ("after", new)):
             server, base = serve(folder)
             try:
-                results.append(measure_pages(base, pages, widths, modes, work / f"profile-{side}"))
+                states = ("closed", "open") if args.open else ("closed",)
+                results.append(measure_pages(base, pages, widths, modes, work / f"profile-{side}", states))
             finally:
                 server.shutdown()
         ok = compare(results[0], results[1], args.tolerance, args.examples)

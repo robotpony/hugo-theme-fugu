@@ -1,24 +1,24 @@
-/* Fugu's basic styles: every class Fugu's templates and JS emit, styled
- * against whichever Blowfish colour scheme the site picks.
+/* Fugu's styles: every class Fugu's templates and scripts emit.
  *
  * Loaded by partials/head.html after Blowfish's main.css and before the
  * site's assets/css/custom.css, so a site's rules win. params.fugu.styles
  * = false leaves it out, for a site that styles every class itself.
  *
- * Colours come from the --fugu-* tokens below, which point at the scheme's
- * ramps (--color-primary-*, --color-secondary-*, --color-neutral-*, each an
- * "r, g, b" triplet). A site can change the look by setting the tokens
- * alone. Dark mode follows Blowfish's .dark class on <html>.
+ * The look comes from the --fugu-* tokens below: colours, which default to
+ * the site's Blowfish colour scheme (--color-primary-*, --color-secondary-*,
+ * --color-neutral-*, each an "r, g, b" triplet), and three type faces. A
+ * site restyles Fugu by setting the tokens alone, in its own custom.css:
  *
- * Roles: primary is the accent (links, quantities, active controls, the
- * principle chip); secondary marks cuisine; drafts ("test kitchen") stay
- * neutral, with dashed borders. Type is Blowfish's own sans, with a mono
- * face for quantities and facts.
+ *   :root, .dark { --fugu-accent: #A8865A; --fugu-font-serif: 'Lora', serif; }
+ *
+ * (docs/customizing.md lists them). Dark mode follows Blowfish's .dark
+ * class on <html>. The rules after the tokens came from Not a Chef's design
+ * (https://bruce-loves-to-cook.ca), where they were written, so their
+ * comments cite its mockups and decisions.
  *
  * None of these rules sit in a cascade layer, so they beat Blowfish's
  * Tailwind utilities and Typography's .prose rules, which do.
  */
-
 :root {
   --fugu-bg: rgb(var(--color-neutral));
   --fugu-surface: rgb(var(--color-neutral-50));
@@ -71,6 +71,18 @@
   --fugu-shadow: 0 8px 24px rgba(0, 0, 0, .12);
   --fugu-radius: 6px;
   --fugu-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Type, and the roles a site may colour apart from the accent: flags (drafts, notices), principles, highlights, focus rings. */
+  --fugu-font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --fugu-font-serif: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  --fugu-flag: rgb(var(--color-secondary-600));
+  --fugu-flag-soft: rgba(var(--color-secondary-500), .14);
+  --fugu-principle: rgb(var(--color-primary-600));
+  --fugu-principle-strong: rgb(var(--color-primary-700));
+  --fugu-principle-soft: rgba(var(--color-primary-500), .14);
+  --fugu-highlight: rgb(var(--color-primary-800));
+  --fugu-highlight-soft: rgba(var(--color-primary-500), .12);
+  --fugu-focus: var(--fugu-accent);
 }
 
 .dark {
@@ -112,103 +124,24 @@
   --fugu-cuisine-soft: rgba(var(--color-secondary-500), .18);
 
   --fugu-shadow: 0 8px 24px rgba(0, 0, 0, .4);
-}
 
-/* Small uppercase labels: sidebar headings, facts, card stats. */
-.recipe-sidebar-section h2,
-.recipe-meta-label,
-.rcard-stat b,
-.reading-sidebar .rs-label,
-.ing-config-label,
-.toc-jump-label,
-.pop-head,
-h3.ing-subhead,
-h4.ing-subhead {
-  font-size: .68rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .07em;
-  color: var(--fugu-ink-muted);
-}
-
-.mono {
-  font-family: var(--fugu-font-mono);
-  font-variant-numeric: tabular-nums;
+  /* The extra roles, lighter for dark backgrounds. */
+  --fugu-flag: rgb(var(--color-secondary-400));
+  --fugu-flag-soft: rgba(var(--color-secondary-500), .2);
+  --fugu-principle: rgb(var(--color-primary-400));
+  --fugu-principle-strong: rgb(var(--color-primary-300));
+  --fugu-principle-soft: rgba(var(--color-primary-500), .2);
+  --fugu-highlight: rgb(var(--color-primary-300));
+  --fugu-highlight-soft: rgba(var(--color-primary-500), .2);
 }
 
 /* ---------------------------------------------------------------------
- * Prose
+ * Prose: small fixes to Typography's defaults, for any page.
  * ------------------------------------------------------------------- */
-
-.article-content > :first-child { margin-top: 0; }
-.article-content > :last-child { margin-bottom: 0; }
-.prose h2 { margin-top: 1.5em; margin-bottom: .5em; line-height: 1.2; }
-.prose h3 { margin-top: 1em; margin-bottom: .3em; line-height: 1.25; }
-.prose h4 { margin-top: .75em; margin-bottom: .25em; line-height: 1.3; }
-.prose li > p { margin: 0; }
-.prose li { margin-top: .25em; margin-bottom: .25em; }
-.prose li > :is(ul, ol) { margin-top: .25em; margin-bottom: .25em; }
-.prose hr { margin-top: 1.5em; margin-bottom: 1.5em; }
-
-/* render-heading.html's anchor; the "#" lives here so it stays out of
- * .Summary text. */
-.heading-anchor-link::before { content: '#'; }
-/* Shown on keyboard focus as well as hover (Blowfish's group-hover). */
-.heading-anchor:focus-within { opacity: 1; }
-
-/* Markdown task lists (- [ ], - [x]): the checkbox is the marker. */
-.prose li:has(> input[type="checkbox"]) { list-style: none; }
-.prose ul:has(> li > input[type="checkbox"]) { padding-left: .25em; }
 li:has(> input[type="checkbox"]:checked) {
   color: var(--fugu-ink-muted);
   text-decoration: line-through;
 }
-
-/* Tables: shrink to their columns, scroll in render-table.html's wrapper
- * when they're wider than the column. */
-.article-content table { display: inline-table; vertical-align: top; }
-.article-content .table-scroll { max-width: 100%; overflow-x: auto; }
-.article-content table :is(th, td) { min-width: 5em; }
-.article-content table .ing-check-cell { min-width: 0; }
-
-/* ---------------------------------------------------------------------
- * Links (render-link.html)
- * ------------------------------------------------------------------- */
-
-.prose .wikilink,
-.prose .extlink,
-.wikilink,
-.extlink {
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
-  text-decoration-color: color-mix(in srgb, var(--fugu-accent) 40%, transparent);
-  transition: text-decoration-color .15s, color .15s;
-}
-.wikilink:hover,
-.extlink:hover {
-  color: var(--fugu-accent-strong);
-  text-decoration-color: var(--fugu-accent);
-}
-.wikilink::after { content: '\00a0\2192'; font-size: .85em; }
-.extlink::after { content: ' \2197'; font-size: .75em; color: var(--fugu-ink-faint); }
-.broken-link {
-  color: var(--fugu-ink-muted);
-  text-decoration: underline wavy var(--fugu-ink-faint);
-  text-underline-offset: 3px;
-  cursor: help;
-}
-.glossary-link {
-  color: inherit;
-  text-decoration: underline dotted;
-  text-decoration-thickness: 1.5px;
-  text-underline-offset: 3px;
-  text-decoration-color: color-mix(in srgb, var(--fugu-ink-faint) 65%, transparent);
-  cursor: help;
-}
-.glossary-link:hover,
-.glossary-link:focus-visible { color: var(--fugu-ink); text-decoration-color: var(--fugu-ink); }
 
 /* ---------------------------------------------------------------------
  * Popover (popover.js): glossary terms and, on pages, the principle and
@@ -224,351 +157,591 @@ li:has(> input[type="checkbox"]:checked) {
  * keeps sticky sidebars working; popover.js keeps an open one inside the
  * window. */
 html, body { overflow-x: clip; }
+
+/* ---------------------------------------------------------------------
+ * Components
+ * ------------------------------------------------------------------- */
+
+/* Blowfish's default single/list templates (recipe/essay/reference pages —
+ * when this was written) have no centering or side gutter of their own;
+ * they were relying entirely on body's now-removed padding for that, and
+ * without it their content bled to the true viewport edges. <main> (from
+ * baseof.html, wraps every page's content — ours and Blowfish's defaults
+ * alike) is the one element common to both, so centering it at the same
+ * 1100px column keeps the homepage's already-precise nav/hero alignment
+ * intact (each of those already carries its own 20px padding). */
+main {
+  /* <body> is `display:flex;flex-direction:column` (Blowfish's own layout)
+   * and <main> is a flex item — `margin:0 auto` alone on a flex item with
+   * no explicit width doesn't stretch-then-center the way it does on a
+   * normal block; it makes the item shrink-to-fit its content instead,
+   * silently ignoring max-width entirely (measured: 646px, matching
+   * article's own max-w-prose, not the 1100px this rule asked for). The
+   * explicit width:100% forces it to take the full cross-axis size first,
+   * so max-width has something to actually cap. */
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  /* Page bottom (STYLE.md "Spacing & radius"): 40px from the last thing on
+   * any page to the footer, owned here rather than borrowed from whichever
+   * block comes last, so the blocks below that used to supply it
+   * (.article-pagination, the last .home-section, .list-pagination-spacer)
+   * have no bottom space of their own. About, which has none of them, ran
+   * into the footer before this (mockups/page-bottom-spacing.html). */
+  padding-bottom: 40px;
+}
+
+/* The gap the comment above used to call "known, minor" turned out not to
+ * be minor: nav/footer/hero/home-section all carry their own 20px side
+ * padding on top of <main>'s 1100px column, but the single-page template
+ * (recipe/essay/reference) had none, so its title/content sat flush
+ * against that column's edge — 20px left of where the nav wordmark and
+ * every other section's content actually starts. Confirmed by measuring
+ * both in the browser: .site-nav-inner's padding put the wordmark at
+ * x=90, while #single_header's h1 sat at x=70. Giving the single template
+ * its own matching 20px gutter, the same way every other section already
+ * does, instead of leaving it to inherit <main>'s bare edge. */
+#single_header,
+#single_header + section {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+/* A page's title is set the same on single and list pages (.ltitle), in
+ * place of the template's text-4xl, extrabold, neutral-900 utilities. */
+#single_header h1 { font-size: 2.1rem; font-weight: 700; line-height: 1.1; letter-spacing: -.01em; color: var(--fugu-ink); }
+
+/* Same gap, same fix, different templates: Blowfish's default list.html
+ * (section lists like /the-food-log/) and term.html (/tags/x/, /cuisine/x/)
+ * render a bare <header> as a direct child of <main> instead of wrapping it
+ * in an <article> the way single.html does — so #single_header's rule above
+ * never reaches them. Confirmed on /the-food-log/: "The-Food-Logs" and its
+ * card sat at x=82 while the nav wordmark sat at x=120. Our own terms.html
+ * override (/tags/, /cuisine/) has the identical bare-header shape and the
+ * same gap, so it's included too. `main >` scopes this to that direct-child
+ * pattern only — single.html's header is nested inside <article> and stays
+ * on the rule above. */
+main > header,
+main > header + section {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Same bare `bg-neutral` (always-white) issue as <body>, on the search
+ * modal panel (themes/blowfish/layouts/partials/search.html) — found by
+ * actually opening search, not just checking the hero's decorative button. */
+#search-modal {
+  background-color: var(--fugu-surface);
+}
+
+/* Lora for prose body text only — STYLE.md's split is by role (headings/UI
+ * vs. body text), not by container, so headings inside recipe/essay content
+ * stay Libre Franklin like every other heading on the site. Found by
+ * checking a recipe page's "Mechanic" h2, which had silently gone serif. */
+.prose {
+  font-family: var(--fugu-font-serif);
+  /* Tailwind Typography's own default is 1.75 — tuned down to match the
+   * site's 1.5 body/list/card rhythm (2026-09-18). This is the one place
+   * that value actually lives: `<li>` has no line-height of its own, so
+   * tightening it here tightens list items too, without needing a
+   * separate `.prose li` rule. Headings aren't touched — they keep
+   * Tailwind's own tighter per-level values (STYLE.md's "Headings:
+   * 1.05–1.3" guidance), which is a different rhythm on purpose. */
+  line-height: 1.5;
+}
+.prose :where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--fugu-font-sans);
+}
+/* Headings are ink, like the rest of the text: Tailwind's prose defaults
+ * pointed them at a darker neutral (white in dark mode), which the softer
+ * colours (2026-11-01) never reached. */
+.prose, .prose-invert {
+  --tw-prose-headings: var(--fugu-ink);
+  --tw-prose-invert-headings: var(--fugu-ink);
+}
+
+/* A markdown "loose list" (blank lines between items in the source) wraps
+ * each item's text in its own <p>, which then carries that paragraph's
+ * ~20px margin-bottom on top of the <li>'s own margin — list items ended up
+ * spaced far apart than in-paragraph line spacing regardless of how tight
+ * Tailwind Typography's own li margin is. Neutralize it so list rhythm
+ * doesn't depend on whether a given list happened to be written loose or
+ * tight in markdown. Found on a reference page's "Notes:" list. */
+.prose li > p {
+  margin: 0;
+}
+.prose li {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+/* Nested lists: Tailwind Typography gives `ul ul` a .75em margin above and
+ * below, so a sub-list opened a gap wider than the spacing between items.
+ * Match the li rhythm instead. Found on Food Log pages, which nest deeply. */
+.prose li > :is(ul, ol) {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+
+/* Wikilink/extlink, from mockups/style.html §3. Unlayered here beats
+ * Tailwind Typography's layered `.prose a { color: var(--tw-prose-links) }`
+ * regardless of specificity (same mechanism as the token bridge above), so
+ * these colors win without needing a `.prose` prefix. */
+/* Both link kinds share one underline, after warpedvisions.org: a solid
+ * 2px line in the accent mixed down to 35% so it reads as a quiet rule
+ * rather than a second text colour, brought to full --accent on hover.
+ * The mix follows --accent into dark mode, so there's no separate dark
+ * value. (Replaced the wikilink's dotted underline and the extlink's grey
+ * --border-strong one, 2026-09-25.) */
+.wikilink,
+.extlink {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, var(--fugu-accent) 35%, transparent);
+  transition: text-decoration-color .15s;
+}
+.wikilink:hover,
+.extlink:hover {
+  text-decoration-color: var(--fugu-accent);
+}
+/* Wikilink text stays body colour and weight until hover (2026-09-25),
+ * so a page dense with cross-references doesn't read as a wall of bold
+ * red; the underline and → carry it at rest. */
+.wikilink {
+  color: inherit;
+  transition: text-decoration-color .15s, color .15s;
+}
+.wikilink:hover {
+  color: var(--fugu-accent-strong);
+}
+.wikilink::after {
+  content: '\00a0\2192';
+  font-size: .85em;
+}
+.extlink {
+  color: inherit;
+}
+/* No ↗ after external links (2026-11-07): the link text already says where
+ * it goes ("Wikipedia"). If they ever need telling apart, change the underline. */
+/* Not in any mockup — this project's own addition for a wiki link that
+ * doesn't resolve to a real page (title typo, not-yet-written recipe).
+ * Reuses the existing flag tokens (draft-banner/badge-tag) since it's the
+ * same "needs attention" meaning, not a new color decision. */
+.broken-link {
+  color: var(--fugu-flag);
+  background: var(--fugu-flag-soft);
+  border-radius: 2px;
+  padding: 0 3px;
+  text-decoration: underline wavy var(--fugu-flag);
+  text-underline-offset: 2px;
+  cursor: help;
+}
+
+/* Glossary link (mockups/win-the-fridge.html) — a second inline-reference
+ * style alongside .wikilink, for terms rather than pages: dotted underline
+ * instead of wikilink's solid one, no trailing arrow (nothing to "go to"
+ * at rest), hover/focus reveals a short definition. Emitted by the same
+ * render hook (render-link.html) when a [[Term]] doesn't match a page
+ * title but does match a heading in content/reference/glossary.md. */
+/* Rule at 65% of --ink-faint, a shade under the full token (mockups/glossary.html, 2026-10-30), so a page of marked terms stays quiet. */
+.glossary-link { text-decoration: underline dotted; text-decoration-thickness: 1.5px; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, var(--fugu-ink-faint) 65%, transparent); color: inherit; cursor: help; }
+.glossary-link:hover, .glossary-link:focus-visible { text-decoration-color: var(--fugu-ink); color: var(--fugu-ink); }
+/* In the sidebar's smaller italic text the 65% rule all but vanished (2026-10-30), so it's full --ink-faint there. */
+.recipe-sidebar .glossary-link, .reading-sidebar .glossary-link { text-decoration-color: var(--fugu-ink-faint); }
+
+/* Popover — one component for glossary terms in prose and the concept
+ * chips in a page's tags row; never on cards (2026-10-11: a card's chips
+ * are plain links to the page that explains them) (Fugu: .pop-host wraps a trigger and
+ * its .pop; assets/js/popover.js). The shared look from STYLE.md
+ * ("Scaling callout"): --surface, --border-strong, 8px radius, soft
+ * shadow, a 7px pointer on the side facing the trigger. Behaviour, the
+ * same everywhere (2026-10-07):
+ * - Opens on hover or focus of the host, at once; closes 0.25s after
+ *   both leave, so a crooked path to the link inside doesn't drop it.
+ * - A bridge (.pop-host::after, only while open) covers the 8px gap to
+ *   the popover, so the hover survives the trip to its link.
+ * - The pointer sits at --pop-x, which popover.js sets to the trigger's
+ *   centre (default 21px, near the left edge, without JS).
+ * - Opens down by default; .pop-up opens up (prose, where a term sits
+ *   mid-paragraph); popover.js adds .pop-flip to reverse either when the
+ *   window has no room on that side.
+ * Kind classes set the heading and link colour: --pop-accent. */
 .pop-host { position: relative; --pop-accent: var(--fugu-accent-strong); --pop-head: var(--fugu-ink); }
 .pop {
   position: absolute; left: 0; top: calc(100% + 8px); z-index: 5; width: 260px;
   display: grid; gap: 5px; text-align: left; white-space: normal;
   background: var(--fugu-surface); border: 1px solid var(--fugu-border-strong); border-radius: 8px;
-  padding: 11px 13px; box-shadow: var(--fugu-shadow);
-  font-size: .84rem; font-style: normal; font-weight: 400; line-height: 1.45; color: var(--fugu-ink-muted);
+  padding: 11px 13px; box-shadow: 0 6px 20px rgba(0, 0, 0, .12);
+  font-family: var(--fugu-font-serif); font-size: .84rem; font-style: normal; font-weight: 400; line-height: 1.45; color: var(--fugu-ink-muted);
   letter-spacing: 0; text-transform: none;
   opacity: 0; visibility: hidden; transform: translateY(-4px);
   transition: opacity .12s .25s, transform .12s .25s, visibility 0s .37s;
 }
 .pop-host:hover > .pop, .pop-host:focus-within > .pop { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
-.pop-head { display: flex; align-items: center; gap: 6px; color: var(--pop-head); }
+.pop-head { display: flex; align-items: center; gap: 6px; font-family: var(--fugu-font-sans); font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--pop-head); }
 .pop-head .dev-icon { width: 15px; height: 15px; }
 .pop-note { font-style: italic; }
-.pop-link {
-  justify-self: start; position: relative; z-index: 1; margin-top: 2px;
-  font-size: .76rem; font-weight: 600; color: var(--pop-accent); text-decoration: none;
-  border-bottom: 1.5px solid color-mix(in srgb, var(--pop-accent) 35%, transparent);
-}
+.pop-link { justify-self: start; position: relative; z-index: 1; margin-top: 2px; font-family: var(--fugu-font-sans); font-size: .74rem; font-weight: 600; color: var(--pop-accent); text-decoration: none; border-bottom: 1.5px solid color-mix(in srgb, var(--pop-accent) 35%, transparent); }
 .pop-link:hover, .pop-link:focus-visible { border-bottom-color: var(--pop-accent); }
 .pop-link::after { content: "\00a0\2192"; }
+/* Pointer: two stacked triangles, border colour then surface. */
 .pop::before, .pop::after { content: ""; position: absolute; left: calc(var(--pop-x, 21px) - 7px); border: 7px solid transparent; }
 .pop::before { top: -8px; border-top: 0; border-bottom: 8px solid var(--fugu-border-strong); }
 .pop::after { top: -6.6px; border-top: 0; border-bottom: 8px solid var(--fugu-surface); }
+/* Opening upward (.pop-up, or a flipped downward one). */
 .pop-up, .pop-flip:not(.pop-up) { top: auto; bottom: calc(100% + 8px); transform: translateY(4px); }
 .pop-up::before, .pop-flip:not(.pop-up)::before { top: auto; bottom: -8px; border-bottom: 0; border-top: 8px solid var(--fugu-border-strong); }
 .pop-up::after, .pop-flip:not(.pop-up)::after { top: auto; bottom: -6.6px; border-bottom: 0; border-top: 8px solid var(--fugu-surface); }
+/* A flipped .pop-up opens downward, as the default does. */
 .pop-up.pop-flip { top: calc(100% + 8px); bottom: auto; transform: translateY(-4px); }
 .pop-up.pop-flip::before { bottom: auto; top: -8px; border-top: 0; border-bottom: 8px solid var(--fugu-border-strong); }
 .pop-up.pop-flip::after { bottom: auto; top: -6.6px; border-top: 0; border-bottom: 8px solid var(--fugu-surface); }
-.pop-host:hover > .pop, .pop-host:focus-within > .pop { transform: translateY(0); }
+/* The bridge, only while open, on whichever side the popover is. */
 .pop-host:hover::after, .pop-host:focus-within::after { content: ""; position: absolute; z-index: 5; left: 0; width: 260px; top: 100%; height: 10px; }
 .pop-host:has(> .pop-up:not(.pop-flip), > .pop-flip:not(.pop-up)):hover::after,
 .pop-host:has(> .pop-up:not(.pop-flip), > .pop-flip:not(.pop-up)):focus-within::after { top: auto; bottom: 100%; }
 
-/* ---------------------------------------------------------------------
- * Chips and tags: header row (article-meta/basic.html) and card top row
- * ------------------------------------------------------------------- */
+/* A closed popover is still laid out, 260px from its word, so one near
+ * the right edge of a phone made the page scroll sideways. Clip the
+ * page's x overflow; an open popover is kept inside the window by
+ * popover.js, so nothing visible is cut. clip, not hidden, so the sticky
+ * header still works. */
+html, body { overflow-x: clip; }
 
-.tags-row { gap: 6px; }
-.tag,
-.cuisine-chip,
-.principle-chip,
-.method-chip,
-.blueprint-chip,
-.dev-chip {
-  box-sizing: border-box; display: inline-flex; align-items: center; gap: 4px;
-  font-size: .7rem; line-height: 1.5; padding: 2px 7px; border: 1px solid transparent; border-radius: 4px;
-  text-decoration: none; white-space: nowrap;
-}
-.tag { border-color: var(--fugu-border-strong); color: var(--fugu-ink-muted); }
-a.tag:hover { border-color: var(--fugu-accent); color: var(--fugu-ink); }
-.tag-more { color: var(--fugu-ink-muted); border-style: dashed; }
-.cuisine-chip { font-weight: 600; text-transform: uppercase; letter-spacing: .05em; background: var(--fugu-cuisine-soft); color: var(--fugu-cuisine); }
-a.cuisine-chip:hover, a.cuisine-chip:focus-visible { border-color: var(--fugu-cuisine); }
-.principle-chip { font-weight: 600; background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); }
-.principle-chip svg { width: 10px; height: 10px; flex: none; }
-.principle-chip.is-icon { padding-left: 5px; padding-right: 5px; }
-a.principle-chip:hover, a.principle-chip:focus-visible { border-color: var(--fugu-accent); }
-/* Methods (partials/method/chip.html): filled like the principle chip; a
- * blueprint (blueprint/chip.html) is an outline, "belongs to". */
-.method-chip { font-weight: 600; background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); }
-.method-chip svg { width: 12px; height: 12px; flex: none; }
-a.method-chip:hover, a.method-chip:focus-visible { border-color: var(--fugu-accent); }
-.rcard a.method-chip { position: relative; z-index: 1; }
-.blueprint-chip { font-weight: 600; color: var(--fugu-accent-strong); border-color: color-mix(in srgb, var(--fugu-accent) 55%, transparent); }
-.blueprint-chip-part { font-weight: 500; color: var(--fugu-ink-muted); white-space: pre; }
-a.blueprint-chip:hover, a.blueprint-chip:focus-visible { border-color: var(--fugu-accent); }
-.pin-icon { display: inline-flex; align-items: center; color: var(--fugu-ink-faint); flex: none; opacity: .7; }
-.pin-icon svg { width: 11px; height: 11px; }
-
-/* ---------------------------------------------------------------------
- * Drafts (partials/development/): neutral, dashed, so they read as
- * unfinished in any scheme.
- * ------------------------------------------------------------------- */
-
-.dev-icon { width: 18px; height: 18px; flex: none; color: var(--fugu-ink-muted); }
-.dev-icon .dev-icon-body { fill: var(--fugu-surface); }
-.dev-icon .dev-icon-lid { fill: var(--fugu-surface-2); }
-.dev-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--fugu-ink-muted); flex: none; }
-.dev-chip { position: relative; z-index: 1; font-weight: 600; color: var(--fugu-ink-muted); background: var(--fugu-surface-2); border: 1px dashed var(--fugu-border-strong); }
-a.dev-chip:hover, a.dev-chip:focus-visible { border-color: var(--fugu-ink-faint); }
-.dev-chip .dev-icon { width: 12px; height: 12px; }
-.dev-chip .dev-dot { width: 5px; height: 5px; }
-/* 65ch at 1rem, the body column's measure (.article-content is
- * max-w-prose); the header around it sets a larger font. */
-.dev-strip {
-  display: flex; gap: 10px; align-items: flex-start; max-width: 65ch; font-size: 1rem;
-  background: var(--fugu-surface-2); border: 1px dashed var(--fugu-border-strong); border-radius: var(--fugu-radius);
-  padding: 10px 14px; margin: -8px 0 20px;
-}
-.dev-strip-body { min-width: 0; font-size: .9rem; line-height: 1.5; }
-.dev-strip .dev-icon { margin-top: 2px; }
-.dev-strip .dev-dot { margin-top: 8px; }
-.dev-strip-label { font-weight: 700; color: var(--fugu-ink); margin-right: 4px; }
-.dev-strip-msg { color: var(--fugu-ink-muted); }
-.dev-link { font-weight: 600; color: var(--fugu-accent-strong); text-decoration: none; white-space: nowrap; border-bottom: 1.5px solid color-mix(in srgb, var(--fugu-accent) 35%, transparent); }
-.dev-link:hover, .dev-link:focus-visible { border-bottom-color: var(--fugu-accent); }
-.dev-link::after { content: "\00a0\2192"; }
-.dev-strip .dev-link { margin-left: 4px; }
-.dev-strip-note { display: block; margin-top: 7px; padding-top: 6px; border-top: 1px dashed var(--fugu-border-strong); font-style: italic; color: var(--fugu-ink); }
-.dev-strip-note b { font-style: normal; font-weight: 600; font-size: .8rem; margin-right: 2px; }
-#single_header:has(.dev-strip) + section .recipe-sidebar-toggle { margin-top: 0; }
-
-/* ---------------------------------------------------------------------
- * Recipe cards (partials/recipe-card.html) and grids
- * ------------------------------------------------------------------- */
-
-.rgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-top: 4px; }
-.rcard {
-  position: relative; display: flex; flex-direction: column; gap: 8px; min-width: 0;
-  background: var(--fugu-surface); border: 1px solid var(--fugu-border); border-radius: var(--fugu-radius);
-  padding: 14px 16px 12px; text-decoration: none;
-}
-.rcard:hover, .rcard:focus-within { border-color: var(--fugu-accent); }
-/* The title link's ::after covers the card, so it clicks through anywhere;
- * chips that are links of their own sit above it. */
-.rcard-link { color: inherit; text-decoration: none; }
-.rcard-link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
-.rcard-link:focus-visible { outline: none; } /* the ring goes on the card, at the end */
-.rcard a.cuisine-chip, .rcard a.principle-chip { position: relative; z-index: 1; }
-/* One line that never wraps: a long tag ends in an ellipsis. z-index 2
- * keeps the row's links above the stretched link. */
-.rcard-top { position: relative; z-index: 2; display: flex; align-items: center; gap: 4px; flex-wrap: nowrap; min-width: 0; overflow: hidden; }
-.rcard-top > * { flex: none; }
-.rcard-top > .tag:not(.tag-more) { display: block; flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
-.rcard .rcard-title { margin: 0; font-size: 1.02rem; font-weight: 700; line-height: 1.3; text-wrap: balance; color: var(--fugu-ink); }
-.rcard .rcard-intro { margin: 0; font-size: .85rem; line-height: 1.5; color: var(--fugu-ink-muted); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
-.rcard.has-formula .rcard-intro { -webkit-line-clamp: 2; }
-/* A drink's glass (drink/glass.html), beside its title and intro. */
-.rcard-drink { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
-.rcard-drink-text { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
-.rcard-glass { flex: none; width: 56px; height: 72px; color: var(--fugu-ink); }
-/* Formula strip (formula-strip.html): takes the intro's third line. */
-.rcard-formula { display: flex; justify-content: safe center; height: 24px; min-width: 0; overflow: hidden; }
-.rcard-formula-link { position: relative; z-index: 1; display: flex; align-items: center; gap: 2px; color: var(--fugu-ink); text-decoration: none; }
-.rcard-formula .slot { display: flex; align-items: center; gap: 2px; flex: none; }
-.rcard-formula .ic {
-  fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-  overflow: visible; width: 24px; height: 24px; flex: none;
-}
-.rcard-formula .op { font-family: var(--fugu-font-mono); font-size: .8rem; color: var(--fugu-accent); width: 12px; text-align: center; flex: none; }
-.rcard-formula .n { font-family: var(--fugu-font-mono); font-size: .72rem; font-weight: 600; color: var(--fugu-accent-strong); margin-left: 1px; flex: none; }
-@media (max-width: 480px) {
-  .rcard-formula-link, .rcard-formula .slot { gap: 1px; }
-  .rcard-formula .ic { width: 18px; height: 18px; }
-  .rcard-formula .op { width: 8px; font-size: .7rem; }
-}
-.rcard-stats { margin-top: auto; padding-top: 8px; border-top: 1px solid var(--fugu-border); display: flex; gap: 12px; white-space: nowrap; min-width: 0; overflow: hidden; }
-.rcard-stat { display: flex; align-items: baseline; gap: 4px; flex: none; }
-.rcard-stat:last-child { flex: 0 1 auto; min-width: 0; overflow: hidden; }
-.rcard-stat b { font-size: .58rem; letter-spacing: .06em; }
-.rcard-stat span { font-family: var(--fugu-font-mono); font-variant-numeric: tabular-nums; font-size: .74rem; font-weight: 600; color: var(--fugu-accent-strong); overflow: hidden; text-overflow: ellipsis; }
-
-/* ---------------------------------------------------------------------
- * List pages (recipes/list.html, term.html, terms.html, reference, the
- * log, essays)
- * ------------------------------------------------------------------- */
-
-.listing-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
-.ltitle { font-size: 2.25rem; font-weight: 800; line-height: 1.1; letter-spacing: -.01em; color: var(--fugu-ink); }
-.ltitle-kind,
-.ltitle-kind-principle { color: var(--fugu-accent-strong); }
-.listing-count { font-family: var(--fugu-font-mono); font-variant-numeric: tabular-nums; font-size: .78rem; color: var(--fugu-ink-muted); }
-.listing-dek { color: var(--fugu-ink-muted); margin-bottom: 16px; }
-.listing-search { display: flex; margin-bottom: 24px; }
-
-.search-box {
-  flex: 0 1 460px; min-width: 180px; display: flex; align-items: center; gap: 8px;
-  background: var(--fugu-surface); border: 1px solid var(--fugu-border-strong); border-radius: var(--fugu-radius);
-  padding: 9px 12px; font-size: .85rem; color: var(--fugu-ink-muted); cursor: pointer; text-align: left;
-}
-.search-box:hover { border-color: var(--fugu-accent); }
-.search-box svg { width: 15px; height: 15px; flex-shrink: 0; }
-.search-box kbd { margin-left: auto; padding: 0 5px; border: 1px solid var(--fugu-border-strong); border-radius: 3px; background: none; box-shadow: none; font-family: var(--fugu-font-mono); font-size: .7rem; line-height: 1.5; color: var(--fugu-ink-muted); }
-@media (max-width: 820px) { .search-box { flex-basis: 100%; } }
-
-.browse-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 4px 28px; }
-.browse-list { display: flex; flex-direction: column; gap: 1px; }
-.browse-list a { display: flex; justify-content: space-between; gap: 14px; font-size: .9rem; color: var(--fugu-ink); text-decoration: none; padding: 6px 8px; border-radius: 4px; }
-.browse-list a:hover { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); }
-.browse-list a .n { font-family: var(--fugu-font-mono); font-size: .72rem; color: var(--fugu-ink-muted); flex-shrink: 0; }
-.block-title { font-size: 1.35rem; font-weight: 700; margin-bottom: 12px; }
-.section-caveat { font-size: .8rem; color: var(--fugu-ink-muted); padding: 8px 12px; background: var(--fugu-surface-2); border-radius: 4px; }
-.section-caveat strong { color: var(--fugu-ink-muted); }
-
-/* Subsection headings on list and concept pages */
-.subsection-title { font-size: 1rem; font-weight: 700; margin: 0 0 12px; }
-.subsection-count { margin-left: 6px; font-family: var(--fugu-font-mono); font-size: .74rem; font-weight: 500; color: var(--fugu-ink-muted); }
-.subsection-gap { margin-top: 36px; }
-
-/* List pagination (partials/pagination.html) */
-.list-pagination-spacer { padding-top: 40px; }
-.list-pagination { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; list-style: none; margin: 0; padding: 0; }
-.list-pagination-link {
-  display: flex; align-items: center; justify-content: center; box-sizing: border-box;
-  min-width: 34px; height: 34px; padding: 0 10px; border: 1px solid var(--fugu-border-strong); border-radius: 17px;
-  color: var(--fugu-ink-muted); font-size: .85rem; text-decoration: none;
-}
-.list-pagination-link:hover { border-color: var(--fugu-accent); color: var(--fugu-ink); }
-.list-pagination-current { background: var(--fugu-accent-soft); border-color: var(--fugu-accent); color: var(--fugu-accent-strong); font-weight: 600; }
-.list-pagination-ellipsis { color: var(--fugu-ink-muted); padding: 0 4px; }
-
-/* ---------------------------------------------------------------------
- * The glossary page (partials/glossary/page.html, glossary.js): a
- * search box shown by the script, the letters A to Z, then one <dl> per
- * letter under a small letter heading.
- * ------------------------------------------------------------------- */
-
+/* Glossary page (Fugu partials/glossary/page.html, glossary.js), from
+ * mockups/glossary.html §3: a search box the script shows, the letters A
+ * to Z, then one <dl> per letter under a small letter heading. */
 .glossary-intro { max-width: 65ch; margin-bottom: 8px; }
 .gl-search { position: relative; max-width: 460px; margin: 20px 0 0; }
 .gl-search input {
-  width: 100%; font: inherit; font-size: .92rem; color: var(--fugu-ink);
-  background: var(--fugu-surface); border: 1px solid var(--fugu-border-strong); border-radius: var(--fugu-radius);
+  width: 100%; font-family: var(--fugu-font-sans); font-size: .92rem; color: var(--fugu-ink);
+  background: var(--fugu-surface); border: 1px solid var(--fugu-border-strong); border-radius: 6px;
   padding: 9px 12px 9px 36px;
 }
 .gl-search input::placeholder { color: var(--fugu-ink-muted); }
 .gl-search input:focus { outline: none; border-color: var(--fugu-accent); box-shadow: 0 0 0 3px var(--fugu-accent-soft); }
 .gl-search svg { position: absolute; left: 12px; top: 12px; width: 16px; height: 16px; color: var(--fugu-ink-faint); pointer-events: none; }
-.gl-count { display: block; min-height: 1.2em; margin-top: 6px; font-size: .74rem; color: var(--fugu-ink-muted); }
-.gl-none { font-size: .88rem; color: var(--fugu-ink-muted); margin: 24px 0; }
-.gl-letters { display: flex; flex-wrap: wrap; gap: 2px; margin: 8px 0; padding: 8px 0; border-top: 1px solid var(--fugu-border); border-bottom: 1px solid var(--fugu-border); }
+.gl-count { display: block; min-height: 1.2em; margin-top: 6px; font-family: var(--fugu-font-sans); font-size: .74rem; color: var(--fugu-ink-muted); }
+.gl-none { font-family: var(--fugu-font-sans); font-size: .88rem; color: var(--fugu-ink-muted); margin: 24px 0; }
+.gl-letters { display: flex; flex-wrap: wrap; gap: 2px; margin: 8px 0; padding: 8px 0; border-top: 1px solid var(--fugu-border); border-bottom: 1px solid var(--fugu-border); font-family: var(--fugu-font-sans); }
 .gl-letters a, .gl-letters span { min-width: 24px; padding: 4px 0; border-radius: 4px; text-align: center; font-size: .8rem; font-weight: 600; text-decoration: none; }
 .gl-letters a { color: var(--fugu-accent-strong); }
 .gl-letters a:hover { background: var(--fugu-accent-soft); }
 .gl-letters span, .gl-letters a.is-empty { color: var(--fugu-border-strong); }
-.gl-letter { margin: 28px 0 4px; font-size: .72rem; font-weight: 700; letter-spacing: .08em; line-height: 1.2; color: var(--fugu-ink-muted); }
+.gl-letter { margin: 28px 0 4px; font-family: var(--fugu-font-sans); font-size: .72rem; font-weight: 700; letter-spacing: .08em; line-height: 1.2; color: var(--fugu-ink-muted); }
 dl.glossary { margin: 0; }
-dl.glossary dt { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 18px 0 4px; font-size: 1.05rem; font-weight: 700; color: var(--fugu-ink); scroll-margin-top: 80px; }
+dl.glossary dt { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 18px 0 4px; font-family: var(--fugu-font-sans); font-size: 1.05rem; font-weight: 700; line-height: 1.3; color: var(--fugu-ink); scroll-margin-top: 80px; }
 dl.glossary dt:target { background: var(--fugu-accent-soft); border-radius: 4px; padding: 2px 6px; margin-left: -6px; }
 dl.glossary dfn { font-style: normal; }
 dl.glossary .also { font-size: .76rem; font-weight: 500; color: var(--fugu-ink-muted); }
-dl.glossary dd { max-width: 62ch; margin: 0; color: var(--fugu-ink-muted); }
+/* 1rem like body text elsewhere; it inherited Blowfish's 18px (visual pass, 2026-11-03). */
+dl.glossary dd { max-width: 62ch; margin: 0; font-family: var(--fugu-font-serif); font-size: 1rem; line-height: 1.6; color: var(--fugu-ink); }
+dl.glossary dd p { margin: 0; }
 dl.glossary dd p + p { margin-top: .6em; }
-dl.glossary .used { margin-top: 6px; font-size: .76rem; line-height: 1.6; color: var(--fugu-ink-muted); }
+dl.glossary .used { margin-top: 6px; font-family: var(--fugu-font-sans); font-size: .76rem; line-height: 1.6; color: var(--fugu-ink-muted); }
 dl.glossary .used a { color: var(--fugu-ink-muted); text-decoration: none; border-bottom: 1px solid var(--fugu-border-strong); }
 dl.glossary .used a:hover { color: var(--fugu-accent-strong); border-bottom-color: var(--fugu-accent); }
+dl.glossary .used a.essay-link { font-weight: 600; color: var(--fugu-accent-strong); border-bottom: 1.5px solid color-mix(in srgb, var(--fugu-accent-strong) 35%, transparent); }
+dl.glossary .used a.essay-link::after { content: "\00a0\2192"; }
+
+/* Desktop: the letters move to a sticky rail on the right, where the
+ * 62ch entries left a third of the page empty (visual pass, 2026-11-03).
+ * Everything else stays in the first column, in source order. */
+@media (min-width: 1024px) {
+  .glossary-page { display: grid; grid-template-columns: minmax(0, 1fr) 200px; column-gap: 56px; align-items: start; }
+  .glossary-page > * { grid-column: 1; }
+  .glossary-page > .listing-head { grid-column: 1 / -1; }
+  .glossary-page > .gl-letters {
+    grid-column: 2; grid-row: 3 / span 200; position: sticky; top: 28px;
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; margin: 20px 0 0; padding: 10px 0;
+  }
+  .glossary-page > .gl-letters a, .glossary-page > .gl-letters span { min-width: 0; }
+}
 .used-more, .used-more summary { display: inline; }
-.used-more summary { cursor: pointer; list-style: none; }
+.used-more summary { cursor: pointer; list-style: none; color: var(--fugu-ink-muted); }
 .used-more summary::-webkit-details-marker { display: none; }
 .used-more[open] summary::after { content: ":"; }
 
-/* ---------------------------------------------------------------------
- * Single pages: related content and previous/next
- * ------------------------------------------------------------------- */
-
-.article-content { margin-bottom: 0; }
-.related-section { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--fugu-border); }
-.related-section .related-heading { margin-top: 0; margin-bottom: 20px; }
-.related-section .rgrid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
-.article-pagination {
-  display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap;
-  margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--fugu-border);
+/* Ingredient list (check), sub-head, and sub-note, from mockups/style.html
+ * §3. Applied client-side by themes/fugu/assets/js/ingredients.js, not by Hugo — see
+ * render-heading.html and docs/PLAN.md 6.2b for why (no list render hook
+ * exists). Real markup is <ul class="ing-list"><li class="ing"> (the
+ * mockup used bare <div>s since it had no real markdown to render), so
+ * these target real list elements instead of the mockup's divs. */
+.ing-list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding-left: 0;
 }
-.article-pagination-link { display: flex; flex-direction: column; gap: 4px; max-width: 320px; text-decoration: none; color: var(--fugu-ink); }
-.article-pagination-next { text-align: right; margin-left: auto; }
-.article-pagination-label { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--fugu-accent-strong); }
-.article-pagination-title { font-size: .95rem; font-weight: 600; line-height: 1.4; }
-.article-pagination-link:hover .article-pagination-title { color: var(--fugu-accent-strong); }
-.toc-jump-label { padding-top: 6px; margin-bottom: -2px; }
-
-/* ---------------------------------------------------------------------
- * Ingredients (ingredients.js): check-off rows, sub-heads, quantities
- * ------------------------------------------------------------------- */
-
-.ing-list { display: flex; flex-direction: column; list-style: none; padding-left: 0; }
+/* li.ing (not bare .ing) so this ties .prose li's specificity (element +
+ * class) instead of losing to it — the plain 0.25em list-item margin would
+ * otherwise stack with this row's own padding. */
 li.ing {
-  display: flex; align-items: flex-start; gap: 10px; margin: 0; padding: 7px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 7px 0;
   border-bottom: 1px solid var(--fugu-border);
+  font-size: .98rem;
+  font-family: var(--fugu-font-serif);
+  margin: 0;
 }
-li.ing:last-child { border-bottom: none; }
+.ing:last-child {
+  border-bottom: none;
+}
 .ing input[type="checkbox"] {
-  appearance: none; position: relative; flex-shrink: 0; width: 19px; height: 19px; margin: 3px 0 0;
-  border: 1px solid var(--fugu-ink-faint); border-radius: 4px; background: var(--fugu-bg); cursor: pointer; /* 3:1 or more */
+  appearance: none;
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  border: 1px solid var(--fugu-ink-faint); /* 3:1 or more, so it shows in bright light */
+  border-radius: 3px;
+  background: var(--fugu-bg);
+  position: relative;
+  cursor: pointer;
 }
-.ing input[type="checkbox"]:checked { background: var(--fugu-accent); border-color: var(--fugu-accent); }
+.ing input[type="checkbox"]:checked {
+  background: var(--fugu-accent);
+  border-color: var(--fugu-accent);
+}
 .ing input[type="checkbox"]:checked::after {
-  content: ''; position: absolute; left: 5.5px; top: 2px; width: 5px; height: 10px;
-  border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg);
+  content: '';
+  position: absolute;
+  left: 5.5px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
-.ing input[type="checkbox"]:focus-visible { outline: 2px solid var(--fugu-accent); outline-offset: 2px; }
-.ing:has(input:checked),
-.ing-table tr.ing:has(input:checked) td { color: var(--fugu-ink-muted); text-decoration: line-through; }
-.ing label { cursor: pointer; }
-.ing.sub { padding-left: 29px; font-size: .9em; font-style: italic; color: var(--fugu-ink-muted); }
-.ing-check-cell { width: 1%; padding-right: 6px !important; vertical-align: top; }
-h3.ing-subhead,
-h4.ing-subhead { margin: 14px 0 4px; }
-/* Quantities and temperatures the scale and units controls act on, in
- * the ingredients and the method. */
+.ing:has(input:checked) {
+  color: var(--fugu-ink-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--fugu-border-strong);
+}
+/* Done items in a plain Markdown task list (`- [x]`, mostly the Food
+ * Log) get the same struck, faded look, matching how Obsidian shows them. */
+/* Task lists in Food Log notes: the box is the marker, so no bullet too.
+ * The same rules are in Fugu's fugu.css, which this site doesn't load. */
+.prose li:has(> input[type="checkbox"]) { list-style: none; }
+.prose ul:has(> li > input[type="checkbox"]) { padding-left: .25em; }
+/* The forms reset draws the box white with a grey edge, in dark mode too. */
+.prose li > input[type="checkbox"]:not(:checked) { background-color: var(--fugu-surface); border-color: var(--fugu-ink-faint); }
+li:has(> input[type="checkbox"]:checked) {
+  color: var(--fugu-ink-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--fugu-border-strong);
+}
+.ing label {
+  cursor: pointer;
+}
+/* %-based ingredient table (themes/fugu/assets/js/ingredients.js's enhanceTable) — a
+ * <tr> gets the same "ing" class a <ul>'s <li> does, so it picks up the
+ * checkbox appearance and checked-state rules above for free (those are
+ * plain .ing/.ing selectors, not li.ing-scoped). What's added here is only
+ * what a table row needs that a flex <li> doesn't: a narrow column to hold
+ * the checkbox instead of a leading inline one, top-aligned to the first
+ * line of the row (vertical-align: middle would center it against the
+ * row's tallest cell — e.g. a two-line Notes cell — instead of sitting next
+ * to the text it belongs to), and an explicit strike-through on each <td> —
+ * text-decoration sets on the <tr> itself do propagate visually onto its
+ * cells in current browsers, but this keeps the strike-through from
+ * depending on that rather than a fallback in .ing:has(). */
+.ing-check-cell {
+  width: 1%;
+  padding-right: 6px !important;
+  vertical-align: top;
+}
+.ing-table tr.ing:has(input:checked) td {
+  color: var(--fugu-ink-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--fugu-border-strong);
+}
+/* Any recipe table (ingredient percentage tables, a Timing/ratio reference
+ * table, etc.) — a narrow auto-sized column (a bare "%" or "Weight" header
+ * over short values) reads as cramped and uneven next to a wide prose
+ * column, so every column gets the same floor. The checkbox column is the
+ * one exception: it only ever holds a 19px control and earns its own
+ * width:1% rule above instead of stretching to match.
+ *
+ * display: inline-table (not block) matters here: a <table> is display:
+ * table by default — outer display block, inner display table — which
+ * already shrink-wraps to its columns' content width, same as
+ * inline-block. Switching only the OUTER half to inline (inline-table)
+ * keeps that shrink-to-fit sizing and the normal table column-layout
+ * algorithm; the .table-scroll wrapper below only scrolls on the rare
+ * table whose 5em-floored columns actually exceed the article width. An earlier
+ * version of this rule used `display: block`, which drops the table
+ * formatting context entirely — the browser no longer sizes columns from
+ * their content, so a table stretches to fill the full article width and
+ * a narrow column (the checkbox one) ends up with a huge gap of unused
+ * space instead of collapsing to its content. */
+.article-content table {
+  display: inline-table;
+  vertical-align: top;
+}
+/* overflow-x does nothing on a table box, so the scrolling happens on the
+ * wrapper from themes/fugu/layouts/_default/_markup/render-table.html instead.
+ * A scrolling box clips at its padding edge, and the checkbox column sits
+ * flush against it, so the box's left border and its focus ring were cut
+ * off. The padding gives them room; the matching negative margin keeps
+ * the table where it was. */
+.article-content .table-scroll {
+  max-width: calc(100% + 12px);
+  overflow-x: auto;
+  padding: 6px;
+  margin: -6px;
+}
+.article-content table :is(th, td) {
+  min-width: 5em;
+}
+.article-content table .ing-check-cell {
+  min-width: 0;
+}
+/* .qty also appears outside .ing rows — themes/fugu/assets/js/ingredients.js wraps
+ * unit-bearing quantities and temperatures it finds in Directions/Method
+ * prose the same way. Accent text marks these as the numbers the units
+ * toggle actually acts on, matching the formula diagrams' quantities
+ * (2026-11-01, mockups/soft-colour.html; was a 25% --accent wash). */
 .qty,
-.temp { color: inherit; background: var(--fugu-accent-wash); border-radius: 3px; padding: 0 3px; font-size: .92em; }
+.temp {
+  color: var(--fugu-accent-strong);
+  background: none;
+  padding: 0;
+}
+/* Sub-note: a tab-indented sub-item under an ingredient (docs/FORMAT.md's
+ * "add split peas for more texture" example) — non-checkable, no checkbox
+ * at all (enhanceSubRow never adds one) and no list marker (list-style:
+ * none comes from .ing-list; these are real <li> siblings of it, not a
+ * nested <ul>). Left edge matches the parent row's label text — checkbox
+ * width (19px) + .ing's gap (10px) — so it reads as a continuation of the
+ * ingredient above rather than its own bullet. */
+.ing.sub {
+  padding-left: 29px;
+  font-size: .88rem;
+  font-style: italic;
+  color: var(--fugu-ink-muted);
+}
+/* Ingredient sub-head: a "#### Dry" / "#### Wet" label inside an
+ * Ingredients section (docs/FORMAT.md's grouping convention). Compound selector
+ * (element + class) so this beats Tailwind Typography's own h3/h4 rules —
+ * those are written with :where() specifically to make them easy to
+ * override, but only if the overriding selector is at least as specific. */
+h3.ing-subhead,
+h4.ing-subhead {
+  font-family: var(--fugu-font-sans);
+  font-size: .68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--fugu-ink-muted);
+  margin: 14px 0 6px;
+}
 
-/* Scale and units: a gear beside the first ingredients heading, opening a
- * panel (a <details>, so no JS to open it). */
+/* Ingredient config menu (scale recipe / change units) — injected by
+ * themes/fugu/assets/js/ingredients.js next to the recipe's first Ingredients heading.
+ * A plain <details>/<summary> disclosure, the same pattern the nav's
+ * mega-menu dropdowns use (.nav-drop below) — no open/close JS needed.
+ * Its unit segments reuse .filter-pill's accent-soft fill for the active
+ * option rather than inventing a new selected-state look. */
 /* ingredients.js wraps the heading and its controls in .ing-heading; the
  * controls sit at its top right, beside the heading's first line. Its
- * margins pass through to the h2, so the prose rules that space an h2 by
- * its neighbours are repeated for the wrapper, at the same weight. */
+ * margins pass through to the h2, so the rules that space an h2 by its
+ * neighbours are repeated for the wrapper, at the same weight. */
 .ing-heading { position: relative; }
 .prose :where(.ing-heading + *) { margin-top: 0; }
 .prose :where(.prose > .ing-heading:first-child > h2) { margin-top: 0; }
 .article-content > .ing-heading:first-child > h2 { margin-top: 0; }
-.ing-heading:has(> .ing-config) > h2 { padding-right: 40px; }
-.ing-config { position: absolute; top: 2px; right: 0; }
+/* Reserves room so a long heading's text can't run under the button. */
+.ing-heading:has(> .ing-config) > h2 {
+  padding-right: 40px;
+}
+.ing-config {
+  position: absolute;
+  top: 2px;
+  right: 0;
+}
 .ing-config > summary {
-  list-style: none; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px;
-  border: 1px solid var(--fugu-border-strong); border-radius: var(--fugu-radius); background: var(--fugu-surface);
-  color: var(--fugu-ink-muted); cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--fugu-border-strong);
+  border-radius: 5px;
+  background: var(--fugu-surface);
+  color: var(--fugu-ink-muted);
+  cursor: pointer;
 }
 .ing-config > summary::-webkit-details-marker { display: none; }
 .ing-config > summary::marker { content: ''; }
 .ing-config > summary:hover { color: var(--fugu-ink); border-color: var(--fugu-accent); }
 .ing-config[open] > summary { color: var(--fugu-accent-strong); border-color: var(--fugu-accent); }
 .ing-config > summary svg { width: 15px; height: 15px; }
-/* Keep screen awake (ingredients.js): the gear's twin, just left of it, or
- * in its place on a percentage page. Pressed reads like the open gear. */
+/* Keep screen awake (Fugu's ingredients.js): the gear's twin, just left
+ * of it, or in its place on a percentage page. Pressed reads like the
+ * open gear, with the accent-soft fill. */
 .ing-heading:has(> .ing-awake) > h2 { padding-right: 40px; }
 .ing-heading:has(> .ing-awake):has(> .ing-config) > h2 { padding-right: 76px; }
 .ing-awake {
-  position: absolute; top: 2px; right: 36px; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; padding: 0;
-  border: 1px solid var(--fugu-border-strong); border-radius: var(--fugu-radius); background: var(--fugu-surface);
-  color: var(--fugu-ink-muted); cursor: pointer;
+  position: absolute; top: 2px; right: 36px;
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; padding: 0;
+  border: 1px solid var(--fugu-border-strong); border-radius: 5px;
+  background: var(--fugu-surface); color: var(--fugu-ink-muted); cursor: pointer;
 }
 .ing-awake--alone { right: 0; }
 .ing-awake:hover { color: var(--fugu-ink); border-color: var(--fugu-accent); }
 .ing-awake[aria-pressed="true"] { color: var(--fugu-accent-strong); border-color: var(--fugu-accent); background: var(--fugu-accent-soft); }
 .ing-awake svg { width: 15px; height: 15px; }
 @media print { .ing-awake { display: none; } }
+
+/* The scale callout (mockups/scale-callout.html, STYLE.md "Scaling
+ * callout"): the shared popover look (surface, border-strong, 8px radius)
+ * with a ^ pointer up to the gear. The gear is 28px wide at right:0 and
+ * the callout sits 8px further right, so the pointer's tip (right: 15px +
+ * its 7px half-width) lands 22px in: the gear's centre. */
 .ing-config-panel {
-  position: absolute; top: calc(100% + 11px); right: -8px; z-index: 20; width: 256px; max-width: calc(100vw - 32px);
-  display: flex; flex-direction: column; gap: 14px; padding: 14px 16px 16px;
-  background: var(--fugu-surface); border: 1px solid var(--fugu-border-strong); border-radius: 8px; box-shadow: var(--fugu-shadow);
-  font-size: 1rem; font-weight: 400; line-height: 1.4; letter-spacing: 0;
+  position: absolute;
+  top: calc(100% + 11px);
+  right: -8px;
+  z-index: 20;
+  width: 256px;
+  max-width: calc(100vw - 32px);
+  background: var(--fugu-surface);
+  border: 1px solid var(--fugu-border-strong);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.14);
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-family: var(--fugu-font-sans);
+  font-weight: 400;
+  line-height: 1.4;
 }
 .ing-config-panel::before,
-.ing-config-panel::after { content: ""; position: absolute; right: 15px; border: 7px solid transparent; border-top: 0; }
+.ing-config-panel::after {
+  content: ""; position: absolute; right: 15px;
+  border: 7px solid transparent; border-top: 0;
+}
 .ing-config-panel::before { top: -8px; border-bottom: 8px solid var(--fugu-border-strong); }
 .ing-config-panel::after { top: -6.6px; border-bottom: 8px solid var(--fugu-surface); }
 .ing-config-group { display: flex; flex-direction: column; gap: 8px; }
 .ing-config-group--units { padding-top: 14px; border-top: 1px solid var(--fugu-border); }
 .ing-config-head { display: flex; align-items: baseline; justify-content: space-between; }
+.ing-config-label { font-size: .66rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--fugu-ink-muted); }
 .ing-scale-value { font-size: .92rem; font-weight: 600; color: var(--fugu-accent-strong); }
-.ing-scale-range { -webkit-appearance: none; appearance: none; width: 100%; height: 20px; margin: 0; background: transparent; cursor: pointer; }
+
+/* Slider: the real <input type=range>, restyled. The track fills up to
+ * the thumb from --fill, which ingredients.js sets on every change. */
+.ing-scale-range {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 20px; margin: 0; background: transparent; cursor: pointer;
+}
 .ing-scale-range::-webkit-slider-runnable-track {
   height: 6px; border-radius: 3px; border: 1px solid var(--fugu-border);
   background: linear-gradient(to right, var(--fugu-accent) var(--fill, 0%), var(--fugu-surface-2) var(--fill, 0%));
@@ -577,213 +750,829 @@ h4.ing-subhead { margin: 14px 0 4px; }
 .ing-scale-range::-moz-range-progress { height: 6px; border-radius: 3px; background: var(--fugu-accent); }
 .ing-scale-range::-webkit-slider-thumb {
   -webkit-appearance: none; width: 18px; height: 18px; margin-top: -7px; border-radius: 50%;
-  background: var(--fugu-surface); border: 2px solid var(--fugu-accent); box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+  background: var(--fugu-surface); border: 2px solid var(--fugu-accent); box-shadow: 0 1px 3px rgba(0,0,0,.2);
 }
 .ing-scale-range::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--fugu-surface); border: 2px solid var(--fugu-accent); }
 .ing-scale-range:focus-visible { outline: none; }
 .ing-scale-range:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--fugu-accent); outline-offset: 2px; }
 .ing-scale-range:focus-visible::-moz-range-thumb { outline: 2px solid var(--fugu-accent); outline-offset: 2px; }
-.ing-scale-ticks { display: flex; justify-content: space-between; padding: 0 3px; margin-top: -4px; font-size: .62rem; color: var(--fugu-ink-muted); }
+/* One label per whole step, centred under where the thumb sits at it (the
+ * 18px thumb travels 9px in from each end). */
+.ing-scale-ticks { display: flex; justify-content: space-between; padding: 0 3px; margin-top: -4px; font-size: .6rem; color: var(--fugu-ink-muted); }
 .ing-scale-ticks span { width: 12px; text-align: center; }
 .ing-scale-ticks span.is-current { color: var(--fugu-accent-strong); font-weight: 600; }
-.ing-yield { margin: 0; font-style: italic; font-size: .78rem; color: var(--fugu-ink-muted); }
-.ing-units { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; border: 1px solid var(--fugu-border-strong); border-radius: var(--fugu-radius); overflow: hidden; }
+.ing-yield { margin: 0; font-family: var(--fugu-font-serif); font-style: italic; font-size: .76rem; color: var(--fugu-ink-muted); }
+
+/* Units: a segmented control, every option on one row. Square-ish 5px
+ * corners (STYLE.md's "checkbox, buttons, chip base" bucket), not the
+ * 14px pill a filter uses: this is a setting, not a filter. The active
+ * segment borrows .filter-pill's accent-soft fill. */
+.ing-units {
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+  border: 1px solid var(--fugu-border-strong); border-radius: 5px; overflow: hidden;
+}
 .ing-btn {
-  padding: 6px 4px; border: 0; border-left: 1px solid var(--fugu-border-strong);
-  background: var(--fugu-surface); color: var(--fugu-ink-muted); font-size: .76rem; font-weight: 600; white-space: nowrap; cursor: pointer;
+  font-family: var(--fugu-font-sans);
+  font-size: .74rem;
+  font-weight: 600;
+  padding: 6px 4px;
+  border: 0;
+  border-left: 1px solid var(--fugu-border-strong);
+  background: var(--fugu-surface);
+  color: var(--fugu-ink-muted);
+  cursor: pointer;
+  white-space: nowrap;
 }
 .ing-btn:first-child { border-left: 0; }
 .ing-btn:hover { color: var(--fugu-ink); background: var(--fugu-surface-2); }
-.ing-btn.active { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); text-decoration: none; } /* Blowfish underlines any .active */
+.ing-btn.active { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); text-decoration: none; } /* Blowfish underlines any .active (its nav) */
 .ing-btn:focus-visible { outline: 2px solid var(--fugu-accent); outline-offset: -2px; }
 
-/* The "Scale based on" row under a percentage table's headings (ingredients.js's
-   buildPercentRow). Its cells take the body cells' side padding, and the stack
-   sits out by the input's padding and border, less the 3px a quantity has of
-   its own, so its digits line up with the amounts below. */
-.ing-pct-row td { padding: 8px; vertical-align: middle; }
-.ing-pct-name { font-style: italic; }
-.ing-pct-stack { display: flex; align-items: center; gap: 8px; margin-left: -6px; white-space: nowrap; }
-.ing-pct-row.is-stacked .ing-pct-stack { flex-direction: column; align-items: flex-start; }
-.ing-pct-input {
-  width: 4.8em; padding: 4px 8px; font-size: 1rem; text-align: left; color: var(--fugu-ink); background: transparent;
-  border: 1px solid var(--fugu-border); border-radius: 4px;
+/* The "Scale based on" row between a percentage table's headings and its body (Fugu's
+ * buildPercentRow, mockups/percent-scaling.html round 2, STYLE.md "Scaling
+ * callout"): a row of the table, so each part sits in its column. Under
+ * 680px Fugu moves the units into the amount cell (.is-stacked). Its unit
+ * segments are the Units control's .ing-units and .ing-btn, inline. Fugu's
+ * own rules are in fugu.css, which this site doesn't load. */
+.article-content table .ing-pct-row td {
+  padding: 8px .5714em; vertical-align: middle; white-space: nowrap;
+  background: var(--fugu-flag-soft);
+  border-top: 1px solid var(--fugu-ink-faint); border-bottom: 1px solid var(--fugu-ink-faint);
 }
-.ing-pct-input:focus-visible { outline: 2px solid var(--fugu-accent); outline-offset: -1px; }
-.ing-pct-input[aria-invalid="true"] { border-color: var(--fugu-accent-strong); }
-.ing-pct-controls { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.article-content table .ing-pct-row td:first-child { padding-left: 0; }
+.article-content table .ing-pct-row td:last-child { padding-right: 0; }
+.article-content table .ing-pct-row td.ing-pct-name { white-space: normal; font-style: italic; }
+/* The row's long phrase widens the name column; don't let that wrap "For 900g". */
+.article-content table .ing-pct-head { white-space: nowrap; }
+.ing-pct-mult { font-size: .84rem; font-weight: 600; color: var(--fugu-accent-strong); }
+/* The table's own top margin would hold the row away from its section's heading. */
+.article-content table.ing-table--percent { margin-top: 6px; }
+/* -9px is the input's padding and border, so its digits sit on the amounts' left edge. */
+.ing-pct-stack { display: flex; align-items: center; gap: 12px; margin-left: -9px; }
+.ing-pct-row.is-stacked .ing-pct-stack { flex-direction: column; align-items: flex-start; gap: 6px; }
+.ing-pct-controls { display: inline-flex; align-items: center; gap: 6px; }
+.ing-pct-input {
+  width: 4.8em; height: 30px; padding: 0 8px; font-size: .88rem; font-weight: 600; text-align: left;
+  color: var(--fugu-accent-strong); background: var(--fugu-surface);
+  border: 1px solid var(--fugu-border-strong); border-radius: 5px;
+}
+.ing-pct-input:hover { border-color: var(--fugu-accent); }
+.ing-pct-input:focus-visible { outline: 2px solid var(--fugu-accent); outline-offset: 2px; box-shadow: none; border-color: var(--fugu-border-strong); }
+.ing-pct-input[aria-invalid="true"] { color: var(--fugu-ink-muted); }
 .ing-pct-units { display: inline-grid; }
-.ing-pct-mult { color: var(--fugu-ink-muted); }
+.ing-pct-units .ing-btn { padding: 5px 7px; }
+.ing-pct-reset {
+  display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 26px; height: 26px; padding: 0; background: none; border: 0; border-radius: 5px; cursor: pointer;
+  color: var(--fugu-ink-muted);
+}
+.ing-pct-reset:hover { color: var(--fugu-accent-strong); background: var(--fugu-surface-2); }
+.ing-pct-reset svg { width: 15px; height: 15px; }
 .ing-pct-mult[hidden] { display: none; }
-.ing-pct-reset { display: inline-flex; padding: 4px; color: var(--fugu-accent-strong); background: none; border: 0; cursor: pointer; }
 @media print { .ing-pct-row { display: none !important; } }
 
-/* ---------------------------------------------------------------------
- * Recipe sidebar (single.html, filled by automagic-sidebar.js). Below lg
- * it starts collapsed behind .recipe-sidebar-toggle.
- * ------------------------------------------------------------------- */
-
-.recipe-sidebar-toggle {
-  display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
-  margin: 20px 0; padding: 10px 14px; border: none; border-radius: var(--fugu-radius);
-  background: var(--fugu-surface-2); color: var(--fugu-ink);
-  font-size: .95rem; font-weight: 700; text-align: left; cursor: pointer;
+.mono {
+  font-family: var(--fugu-font-mono);
+  font-variant-numeric: tabular-nums;
 }
-.recipe-sidebar-toggle .icon { width: 16px; height: 16px; flex-shrink: 0; color: var(--fugu-ink-faint); transition: transform 150ms ease-in-out; }
-.recipe-sidebar-toggle[aria-expanded="true"] .icon { transform: rotate(180deg); }
+.search-box {
+  flex: 0 1 460px; min-width: 180px; display: flex; align-items: center; gap: 8px;
+  background: var(--fugu-surface); border: 1px solid var(--fugu-border-strong); border-radius: 4px;
+  padding: 10px 12px; font-family: var(--fugu-font-sans); font-size: .85rem; color: var(--fugu-ink-muted);
+  cursor: pointer; text-align: left;
+}
+@media (max-width: 820px) { .search-box { flex-basis: 100%; } }
+.search-box svg { width: 15px; height: 15px; flex-shrink: 0; }
+.search-box kbd { font-family: var(--fugu-font-mono); font-size: .7rem; border: 1px solid var(--fugu-border-strong); border-radius: 3px; padding: 2px 5px; color: var(--fugu-ink-muted); margin-left: auto; }
+h2.block-title { font-size: 1.35rem; font-weight: 700; letter-spacing: -.005em; margin-bottom: 6px; text-wrap: balance; }
+
+.rgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 16px; margin-top: 4px; }
+/* Recipe card v2 (mockups/recipe-card-v2.html): one-line taxonomy row,
+ * intro paragraph in the middle, compact stat line pinned to the bottom so
+ * cards in a row line up regardless of intro length. */
+.rcard { background: var(--fugu-surface); border: 1px solid var(--fugu-border); border-radius: 6px; padding: 14px 16px 12px; display: flex; flex-direction: column; gap: 8px; min-width: 0; text-decoration: none; position: relative; }
+/* The title link's ::after covers the whole card, so the card still clicks
+ * through anywhere; the cuisine chip (its own link) is lifted above it. */
+.rcard:hover, .rcard:focus-within { border-color: var(--fugu-accent); }
+.rcard-link { color: inherit; text-decoration: none; }
+.rcard-link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.rcard-link:focus-visible { outline: none; } /* the ring goes on the card, below */
+.rcard a.cuisine-chip, .rcard a.principle-chip { position: relative; z-index: 1; }
+.rcard-top { position: relative; z-index: 2; display: flex; align-items: center; align-content: flex-start; gap: 8px; flex-wrap: wrap; max-height: calc(.7rem * 1.5 + 8px); min-width: 0; overflow: hidden; }
+.rcard-top > * { flex: none; white-space: nowrap; }
+.rcard-top > .tag:not(.tag-more) { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+/* The row is one chip high (.7rem at 1.5, plus 6px padding and 2px border)
+ * and wraps, so a chip that doesn't fit drops whole onto the hidden second
+ * line instead of squeezing to "c…" (2026-11-03). A first chip wider than
+ * the row still ends in an ellipsis. The row sits above the card's
+ * stretched link (.rcard-link::after) so its tag links take clicks. */
+.rcard-title { font-family: var(--fugu-font-sans); font-size: 1.02rem; font-weight: 700; line-height: 1.3; letter-spacing: -.005em; text-wrap: balance; color: var(--fugu-ink); }
+.rcard-intro { font-family: var(--fugu-font-serif); font-size: .84rem; line-height: 1.5; color: var(--fugu-ink-muted); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+/* Formula strip (formula-strip.html, STYLE.md "Formula diagram"): a 24px
+ * row of the recipe's formula icons. It takes the intro's third line, so a
+ * card with one is the same height as a card without. */
+.rcard.has-formula .rcard-intro { -webkit-line-clamp: 2; }
+/* Drink cards: a small glass beside the title and intro (Fugu partials/drink/glass.html). */
+.rcard-drink { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
+.rcard-drink-text { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
+.rcard-glass { flex: none; width: 56px; height: 72px; color: var(--fugu-ink); }
+.rcard-formula { display: flex; justify-content: safe center; height: 24px; min-width: 0; overflow: hidden; }
+/* The strip's own link sits above .rcard-link::after so its slots' title
+ * tooltips show on hover; it points at the same page, so clicks still go
+ * through. Only as wide as its icons, so the rest of the row stays the card. */
+.rcard-formula-link { position: relative; z-index: 1; display: flex; align-items: center; gap: 2px; color: var(--fugu-ink); text-decoration: none; }
+.rcard-formula .slot { display: flex; align-items: center; gap: 2px; flex: none; }
+.rcard-formula .ic {
+  fill: none; stroke: currentColor; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round; overflow: visible;
+  width: 24px; height: 24px; flex: none;
+}
+.rcard-formula .op { font-family: var(--fugu-font-mono); font-size: .8rem; color: var(--fugu-accent); width: 12px; text-align: center; flex: none; }
+.rcard-formula .n { font-family: var(--fugu-font-mono); font-variant-numeric: tabular-nums; font-size: .72rem; font-weight: 600; color: var(--fugu-accent-strong); margin-left: 1px; flex: none; }
+/* Phones put cards two across (~170px), too narrow for a five-icon strip
+ * at 24px; smaller icons fit it. safe center (above) clips a longer one at
+ * the end rather than both ends. */
+@media (max-width: 480px) {
+  .rcard-formula-link, .rcard-formula .slot { gap: 1px; }
+  .rcard-formula .ic { width: 18px; height: 18px; }
+  .rcard-formula .op { width: 8px; font-size: .7rem; }
+  .rcard-formula .n { font-size: .66rem; }
+}
+.rcard-stats { margin-top: auto; padding-top: 8px; border-top: 1px solid var(--fugu-border); display: flex; flex-wrap: wrap; align-content: flex-start; gap: 0 12px; max-height: 26.3px; white-space: nowrap; min-width: 0; overflow: hidden; }
+/* One line high (8px padding, 1px rule, a 17.3px stat) and wrapped, like
+ * .rcard-top: a stat that doesn't fit drops whole, rather than leaving a
+ * lone "s" of Serves in a narrow card (2026-11-03). */
+.rcard-stat { display: flex; align-items: baseline; gap: 4px; flex: none; }
+.rcard-stat:last-child { flex: 0 1 auto; min-width: 0; overflow: hidden; }
+.rcard-stat b { font-family: var(--fugu-font-sans); font-size: .56rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--fugu-ink-muted); }
+.rcard-stat span { font-family: var(--fugu-font-mono); font-variant-numeric: tabular-nums; font-size: .72rem; font-weight: 600; color: var(--fugu-ink); overflow: hidden; text-overflow: ellipsis; }
+
+/* Listing page header (STYLE.md .ltitle / .listing-count), with the same
+ * 1100px column + 20px gutter as .home-section. */
+.listing { max-width: 1100px; margin: 0 auto; padding: 32px 20px 0; }
+.listing-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+.ltitle { font-family: var(--fugu-font-sans); font-size: 2.1rem; font-weight: 700; line-height: 1.1; letter-spacing: -.01em; color: var(--fugu-ink); }
+.ltitle-kind { color: var(--fugu-accent-strong); }
+.ltitle-kind-principle { color: var(--fugu-principle-strong); }
+.listing-count { font-family: var(--fugu-font-mono); font-variant-numeric: tabular-nums; font-size: .78rem; color: var(--fugu-ink-muted); }
+.listing-dek { color: var(--fugu-ink-muted); font-size: .95rem; margin-bottom: 16px; }
+.listing-search { display: flex; margin-bottom: 24px; }
+
+.subsection-title { font-family: var(--fugu-font-sans); font-size: 1rem; font-weight: 700; margin: 0 0 12px; }
+.subsection-count { font-family: var(--fugu-font-mono); font-weight: 500; font-size: .74rem; color: var(--fugu-ink-muted); margin-left: 6px; }
+.subsection-gap { margin-top: 36px; }
+
+/* Recipe/essay/reference header taxonomies row (article-meta/basic.html):
+ * one `gap` on the row replaces a per-child mt-[0.5rem] me-2. The old
+ * margin-per-child approach put its own top margin on the first line too
+ * (there's only ever one line here in practice), which stacked on top of
+ * the title's own spacing above the row — `gap` only ever applies
+ * between siblings, never before the first or after the last. */
+.tags-row { gap: 8px; }
+/* The method chip (mockups/STYLE.md Method chip, Fugu method/chip.html):
+ * a concept chip like .principle-chip, in the accent, on a method's card
+ * and leading its page's tags row. */
+.method-chip { font-family: var(--fugu-font-sans); font-size: .7rem; font-weight: 600; background: none; color: var(--fugu-accent-strong); padding: 3px 0; display: inline-flex; align-items: center; gap: 4px; }
+.method-chip svg { width: 12px; height: 12px; flex: none; }
+a.method-chip { text-decoration: none; }
+a.method-chip:hover, a.method-chip:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+.rcard a.method-chip { position: relative; z-index: 1; }
+/* The blueprint chip (STYLE.md Blueprint chip, Fugu blueprint/chip.html):
+ * an accent outline, so it ranks below the filled chips and reads as
+ * "belongs to"; the part or build name lighter. Page header only. */
+.blueprint-chip { font-family: var(--fugu-font-sans); font-size: .7rem; font-weight: 600; color: var(--fugu-accent-strong); border: 1px solid color-mix(in srgb, var(--fugu-accent) 55%, transparent); padding: 2px 7px; border-radius: 3px; display: inline-flex; align-items: center; text-decoration: none; white-space: nowrap; }
+.blueprint-chip-part { font-weight: 500; color: var(--fugu-ink-muted); white-space: pre; }
+a.blueprint-chip:hover, a.blueprint-chip:focus-visible { border-color: var(--fugu-accent); }
+.tag { font-family: var(--fugu-font-sans); font-size: .7rem; border: 1px solid var(--fugu-border-strong); color: var(--fugu-ink-muted); padding: 3px 7px; border-radius: 3px; display: inline-block; }
+.tag-more { color: var(--fugu-ink-muted); border-style: dashed; }
+/* Header tags are links (article-meta/basic.html); hover as .filter-pill. */
+a.tag { text-decoration: none; }
+a.tag:hover { border-color: var(--fugu-accent); color: var(--fugu-ink); }
+.cuisine-chip { font-family: var(--fugu-font-sans); font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; background: none; color: var(--fugu-highlight); padding: 3px 0; display: inline-block; }
+/* Linked chip (cards and recipe pages): same yellow, underlined on hover
+ * rather than an accent colour, so it stays cuisine-only. */
+a.cuisine-chip { text-decoration: none; }
+a.cuisine-chip:hover, a.cuisine-chip:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+/* Principle chip (mockups/win-the-fridge.html) — one tag only, win-the-fridge.
+ * Same shape as .cuisine-chip so it reads as the same kind of thing ("a fact
+ * about this recipe"), but green and sentence case instead of yellow/
+ * uppercase. On a recipe card it abbreviates to "WTF" (title attr carries
+ * the full name) so it fits the card's existing 2-slot top row without a
+ * layout change; everywhere else it spells out "Win the fridge". */
+.principle-chip { font-family: var(--fugu-font-sans); font-size: .7rem; font-weight: 600; background: none; color: var(--fugu-principle-strong); padding: 3px 0; display: inline-flex; align-items: center; gap: 4px; }
+.principle-chip svg { width: 10px; height: 10px; flex: none; }
+a.principle-chip { text-decoration: none; }
+/* Icon-only principle chip (a tag with card_label: false, e.g. plant-based):
+ * a zero-width character gives it the same text line as its labelled
+ * siblings, so it's as tall as they are; the icon at the method chip's 12px. */
+.principle-chip.is-icon, .rcard-top .principle-chip.is-icon { padding-inline: 0; gap: 0; }
+.principle-chip.is-icon::after { content: "\200b"; }
+.principle-chip.is-icon svg { width: 12px; height: 12px; }
+/* Principles are told apart by colour (STYLE.md §4, 2026-10-14): green means
+ * plant-based, and Win the fridge takes the test kitchen's blue. Done by
+ * re-pointing the --principle tokens in Win the fridge's chip and its tag
+ * page's own header bits (not the page, whose cards carry green leaves).
+ * Fugu marks chips and the tag page with `principle-<slug>`. */
+.principle-chip.principle-win-the-fridge,
+.principle-page.principle-win-the-fridge :is(.ltitle-kind-principle, .read-essay) {
+  --fugu-principle: var(--fugu-flag); --fugu-principle-strong: var(--fugu-flag); --fugu-principle-soft: var(--fugu-flag-soft);
+}
+a.principle-chip:hover, a.principle-chip:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+/* Test kitchen: drafts, published while they're still changing (Fugu
+ * partials/development/, params.toml [fugu.development],
+ * mockups/in-development.html). The flag blue is shared with Win the fridge (see the principle chips above). */
+/* The mark: an inlined SVG (assets/icons/development/pot-steam.svg) or,
+ * without one, a dot. */
+.dev-icon { width: 18px; height: 18px; flex: none; color: var(--fugu-flag); }
+.dev-icon .dev-icon-body { fill: var(--fugu-surface); }
+.dev-icon .dev-icon-lid { fill: var(--fugu-flag-soft); }
+.dev-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--fugu-flag); flex: none; }
+/* The strip under a draft's title and tags (the end of #single_header).
+ * Two blue hairlines take it out of the flow of the content (a filled
+ * box until 2026-11-01, mockups/soft-colour.html); the page's
+ * `working_on` note sits under a dotted line.
+ * Width: the body column's own measure, 65ch of Lora at 16px (Tailwind's
+ * max-w-prose on .article-content), so its right edge lines up with the
+ * body text. The header's own max-w-prose is 65ch of 18px Franklin,
+ * ~160px wider, which put the strip into the sidebar's lane. The font
+ * is set here only to size the ch; the text sets its own below. */
+.dev-strip { display: flex; gap: 10px; align-items: flex-start; max-width: 65ch; font: 16px/1 'Lora', Georgia, serif; background: none; border: 0; border-radius: 0; border-top: 1px solid color-mix(in srgb, var(--fugu-flag) 45%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--fugu-flag) 45%, transparent); padding: 10px 0; margin: -4px 0 20px; }
+/* 20px above (the meta row's 24px bottom margin, less 4) and 20px below,
+ * at every width. Below lg the recipe sidebar's "Recipe notes" toggle
+ * comes next, inside a flex column, so its own 20px top margin would add
+ * to the strip's instead of collapsing into it (46px); drop it here. */
+#single_header:has(.dev-strip) + section .recipe-sidebar-toggle { margin-top: 0; }
+.dev-strip-body { font-family: var(--fugu-font-sans); font-size: .9rem; line-height: 1.5; min-width: 0; }
+.dev-strip .dev-icon { margin-top: 1px; }
+.dev-strip .dev-dot { margin-top: 8px; }
+.dev-strip-label { font-weight: 700; color: var(--fugu-flag); margin-right: 4px; }
+.dev-strip-msg { color: var(--fugu-ink-muted); }
+.dev-link { font-family: var(--fugu-font-sans); font-weight: 600; color: var(--fugu-flag); text-decoration: none; white-space: nowrap; border-bottom: 1.5px solid color-mix(in srgb, var(--fugu-flag) 35%, transparent); }
+.dev-link:hover, .dev-link:focus-visible { border-bottom-color: var(--fugu-flag); }
+.dev-link::after { content: "\00a0\2192"; }
+.dev-strip .dev-link { margin-left: 4px; }
+.dev-strip-note { display: block; margin-top: 7px; padding-top: 6px; border-top: 1px dashed color-mix(in srgb, var(--fugu-flag) 45%, transparent); font-family: var(--fugu-font-serif); font-style: italic; color: var(--fugu-ink); }
+.dev-strip-note b { font-family: var(--fugu-font-sans); font-style: normal; font-weight: 600; font-size: .78rem; margin-right: 2px; }
+/* The card's test kitchen chip: a link to the explainer, lifted above
+ * the card's stretched link. */
+.dev-chip { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 4px; font-family: var(--fugu-font-sans); font-weight: 600; color: var(--fugu-flag); background: none; border: 0; padding-inline: 0; text-decoration: none; white-space: nowrap; }
+a.dev-chip:hover, a.dev-chip:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+.dev-chip .dev-icon { width: 12px; height: 12px; }
+.dev-chip .dev-dot { width: 5px; height: 5px; }
+/* Card top row: one box for every chip (test kitchen, cuisine, principle,
+ * tags, +N), so their labels share a baseline and the row is one height.
+ * Same size, line height, and padding everywhere, and a 1px border on
+ * each (transparent where the chip is a fill), centred in the row. Before
+ * this (2026-10-07), cuisine had no border so its text sat 1px above the
+ * tags'; the principle chip's wrapper (.glossary-term) took the row's
+ * padding, which made that row 2px taller and dropped the chip and the
+ * card's title; and the test kitchen chip was .62rem beside .7rem.
+ * Tags stay display:block so a long one can still end in an ellipsis. */
+.rcard-top .cuisine-chip, .rcard-top .tag, .rcard-top .principle-chip, .rcard-top .method-chip, .rcard-top .dev-chip { box-sizing: border-box; font-size: .7rem; line-height: 1.5; padding: 3px 7px; border: 1px solid transparent; }
+.rcard-top .principle-chip, .rcard-top .method-chip, .rcard-top .dev-chip { display: inline-flex; align-items: center; gap: 4px; }
+.rcard-top .tag { border-color: var(--fugu-border-strong); }
+.rcard-top .tag-more { border-style: dashed; }
+/* The concept chips are coloured text (2026-11-01, mockups/soft-colour.html):
+ * no fill, so no side padding; tags keep theirs inside their outline. */
+.rcard-top .cuisine-chip, .rcard-top .principle-chip, .rcard-top .method-chip, .rcard-top .dev-chip { padding-inline: 0; }
+/* The list of drafts at the end of the test kitchen page
+ * (partials/development/list.html) takes the Related section's place and
+ * its .related-section styles; nothing extra needed. */
+/* Pin icon (partials/recipe-card.html) — marks a pinned page (frontmatter
+ * `pinned: true`, see docs/DESIGN.md). Unlinked, minimal-contrast, sits at the
+ * end of the top row after tags/+N. */
+.pin-icon { display: inline-flex; align-items: center; color: var(--fugu-ink-faint); flex: none; opacity: .7; }
+.pin-icon svg { width: 11px; height: 11px; }
+
+/* Label above the desktop sticky recipe/essay TOC (themes/fugu/layouts/partials/toc.html
+ * override) — matches .mega-col-label's small-caps treatment, the site's
+ * existing pattern for an unobtrusive section label. */
+.toc-jump-label { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--fugu-ink-muted); padding-top: 6px; margin-bottom: -2px; }
+
+.browse-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px,1fr)); gap: 4px 28px; }
+/* terms.html's mb-8 would stack on <main>'s page-bottom 40px */
+.browse-grid.mb-8 { margin-bottom: 0; }
+.browse-list { display: flex; flex-direction: column; gap: 1px; }
+.browse-list a { display: flex; justify-content: space-between; gap: 14px; font-family: var(--fugu-font-sans); font-size: .88rem; color: var(--fugu-ink); text-decoration: none; padding: 6px 8px; border-radius: 4px; }
+.browse-list a:hover { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); }
+.browse-list a .n { font-family: var(--fugu-font-mono); font-size: .72rem; color: var(--fugu-ink-muted); flex-shrink: 0; }
+
+.section-caveat { font-family: var(--fugu-font-sans); font-size: .78rem; color: var(--fugu-ink-muted); padding: 8px 12px; background: var(--fugu-surface-2); border-radius: 4px; }
+.section-caveat strong { color: var(--fugu-ink-muted); }
+
+/* Article prev/next (recipe, essay, reference single pages) — no mockup
+ * ever covered this, since those pages began as Blowfish's default layout.
+ * Restyled to match the rest of the system rather than
+ * leave Blowfish's bare, unpadded default in an otherwise designed page. */
+/* Three separate, uncoordinated margins were stacking before the divider —
+ * Blowfish's own `mb-20` (80px) on .article-content, its own `pt-8` (32px)
+ * on the <footer> wrapping this, plus this component's own margin-top —
+ * for 152px of dead space (measured via getBoundingClientRect, not
+ * eyeballed), while nothing at all separated this from the site footer
+ * after it (measured gap: exactly 0px). Zeroing the two Blowfish sources
+ * so this component's own margin is the single, deliberate source of the
+ * gap on both sides, matching `.home-section`'s 40px rhythm. */
+.article-content { margin-bottom: 0; }
+footer.pt-8.max-w-prose { padding-top: 0; }
+
+/* Tailwind Typography ships a rule zeroing margin on `.prose`'s own first
+ * and last child, so the block right after an opening heading (or the
+ * very start/end of an article) doesn't carry redundant space. It never
+ * fires here: `.prose` is on the outer flex <section>
+ * (themes/blowfish/layouts/_default/single.html), three wrapper divs
+ * above the actual content, so `.prose`'s real first/last child is never
+ * a heading or paragraph. Confirmed via measurement: the opening heading
+ * on every single page rendered with its full margin-top intact (48px on
+ * an h2), pushing the whole content column down that much further than
+ * intended relative to the title above it and the TOC beside it.
+ * Re-targeting the same rule at .article-content, which actually is the
+ * direct parent of the rendered content, restores the intended behaviour. */
+.article-content > :first-child { margin-top: 0; }
+.article-content > :last-child { margin-bottom: 0; }
+
+/* Prose heading rhythm (STYLE.md "Prose vertical rhythm"): 3:1 top to
+ * bottom margin per level, so a heading binds to the section it titles,
+ * and a tighter line-height than Tailwind Typography's, whose air under
+ * the glyphs stacked on the margin. Set 2026-09-18, bottoms cut again
+ * 2026-09-27; git history has the earlier values. */
+.prose h2 { margin-top: 1.5em; margin-bottom: 0.5em; line-height: 1.2; }
+.prose h3 { margin-top: 0.9em; margin-bottom: 0.3em; line-height: 1.25; }
+.prose h4 { margin-top: 0.75em; margin-bottom: 0.25em; line-height: 1.3; }
+
+/* Horizontal rules: Tailwind Typography gives them 3em above and below,
+ * and the next heading's own top margin stacks on that. Cut to a thin
+ * divider with minimal space, and let the rule be the only gap by zeroing
+ * whatever follows it. Opacity 40% below the default border colour. */
+.prose hr { margin-top: 1em; margin-bottom: 1em; opacity: .6; }
+.prose hr + * { margin-top: 0; }
+
+/* Related recipes, at the end of a recipe/essay's prose column
+ * (themes/fugu/layouts/partials/related.html overrides Blowfish's to add these
+ * wrapping classes). Same divider language as .article-pagination right
+ * below it — border-top + padding-top + margin-top — so this reads as
+ * content past the recipe rather than one more section within it.
+ * Two-class selectors beat .prose h2's element+class specificity without
+ * needing !important. */
+/* See render-heading.html: the anchor's "#" is generated here so it stays
+ * out of .Summary text. */
+.heading-anchor-link::before { content: '#'; }
+/* Shown on keyboard focus as well as hover (Blowfish's group-hover). */
+.heading-anchor:focus-within { opacity: 1; }
+
+/* The recipe page's Related block (<div class="max-w-prose"> after the
+ * two-column section) and every single page's prev/next <footer> sit
+ * directly inside <article>, outside #single_header + section, so they
+ * missed that rule's 20px gutter: flush to the screen edge on a phone and
+ * 20px left of the title on desktop. */
+article > .max-w-prose,
+article > footer {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.related-section {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--fugu-border);
+}
+.related-section .related-heading {
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+/* Three cards across on every page type: the essay/reference column (next
+ * to the reading sidebar) is ~730px, just under the 752px .rgrid needs for
+ * three 240px cards. The card title/intro reset beats the
+ * .prose h3 rule, which .not-prose doesn't reach. */
+.related-section .rgrid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+/* One right edge under the prose: Related and prev/next stop where the
+ * text does (.article-content, 65ch of 16px Lora, about 40.4rem). They ran
+ * 84px and 119px past it (visual pass, 2026-11-03). Three 200px cards
+ * still fit. */
+.related-section,
+.article-pagination { max-width: 40.4rem; }
+.related-section .rcard-title,
+.related-section .rcard-intro { margin: 0; }
+
+.article-pagination {
+  display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  margin-top: 40px; margin-bottom: 0; padding-top: 28px; border-top: 1px solid var(--fugu-border);
+  font-family: var(--fugu-font-sans);
+}
+.article-pagination-link {
+  display: flex; flex-direction: column; gap: 4px; max-width: 320px;
+  text-decoration: none; color: var(--fugu-ink);
+}
+.article-pagination-next { text-align: right; margin-left: auto; }
+.article-pagination-label {
+  font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--fugu-accent-strong);
+}
+.article-pagination-title {
+  font-size: .92rem; font-weight: 600; line-height: 1.4;
+}
+.article-pagination-link:hover .article-pagination-title { color: var(--fugu-accent-strong); }
+
+/* List-page pagination (recipes/reference/essays listings, page 1/2/3…) —
+ * same story as article-pagination above: no mockup ever covered it, and
+ * Blowfish's default is bare utility classes with no padding or border.
+ * Pill treatment matches .filter-pill. The spacer (not .list-pagination
+ * itself) owns the vertical space, via padding rather than margin so an
+ * empty spacer (single-page listing, no <ul> inside) still reserves the
+ * gap instead of collapsing to nothing — see pagination.html. */
+.list-pagination-spacer {
+  padding: 40px 0 0;
+}
+.list-pagination {
+  display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
+  list-style: none; margin: 0; padding: 0;
+  font-family: var(--fugu-font-sans);
+}
+.list-pagination-link {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 34px; height: 34px; padding: 0 10px; box-sizing: border-box;
+  border: 1px solid var(--fugu-border-strong); border-radius: 14px;
+  color: var(--fugu-ink-muted); font-size: .85rem; text-decoration: none;
+}
+.list-pagination-link:hover { border-color: var(--fugu-accent); color: var(--fugu-ink); }
+.list-pagination-current {
+  background: var(--fugu-accent-soft); border-color: var(--fugu-accent); color: var(--fugu-accent-strong); font-weight: 600;
+}
+
+/* Recipe sidebar prototype (recipe-sidebar-prototype branch) — replaces the
+ * generic jump-to TOC on recipe pages (themes/fugu/layouts/_default/single.html).
+ * Mechanic / To serve / Notes are relocated here client-side by
+ * themes/fugu/assets/js/automagic-sidebar.js (moveSidebarSections); slots start `hidden`
+ * in markup and are only revealed once populated. Scale/Units stay with
+ * the ingredient list instead (the popup gear, unchanged) — tried Units
+ * alone here for a round, cut once Scale left. Not yet in
+ * mockups/STYLE.md — this is exploratory, see that file before promoting
+ * any of it to the ratified component list. */
+/* Mobile: the sidebar starts collapsed behind `.recipe-sidebar-toggle`
+ * (a real button, not a native <details> — see single.html's comment for
+ * why); themes/fugu/assets/js/automagic-sidebar.js's initSidebarToggle flips
+ * `.recipe-sidebar-wrap.is-open` and the button's aria-expanded together.
+ * Desktop: always visible regardless of that state — the media query
+ * below wins over the base mobile-collapsed rule by appearing later in
+ * the cascade, same pattern as `.recipe-sidebar-section[hidden]` needing
+ * no lg: override since it's only ever toggled at all on mobile. */
+.recipe-sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  cursor: pointer;
+  font-family: var(--fugu-font-sans);
+  font-size: .95rem;
+  font-weight: 700;
+  text-align: left;
+  padding: 10px 14px;
+  margin: 20px 0;
+  background: var(--fugu-surface-2);
+  border: none;
+  border-radius: 6px;
+  color: var(--fugu-ink);
+}
+/* Chevron reuses Blowfish's own accordion/dropdown affordance (see
+ * icon.html "chevron-down", also used by the nav mega-menu) rather than
+ * inventing a new expand indicator — rotates open on aria-expanded since
+ * this is a plain button, not a <details> summary with a native [open]. */
+.recipe-sidebar-toggle .icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--fugu-ink-faint);
+  transition: transform 150ms ease-in-out;
+}
+.recipe-sidebar-toggle[aria-expanded="true"] .icon {
+  transform: rotate(180deg);
+}
+/* The phone "On this page" box (Blowfish's .toc-inside, on methods, essays,
+ * and reference pages), drawn as the "Recipe notes" toggle above. It's a
+ * <details>, so the chevron is a masked ::after, and the selectors need
+ * two classes to beat Blowfish's dark: utilities. Label: i18n/en.yaml. */
+@media (max-width: 1023px) {
+  .toc { padding-inline-start: 0; }
+  .toc details.toc-inside { margin: 0 0 20px; padding: 0; border-radius: 6px; background: var(--fugu-surface-2); }
+  .toc details.toc-inside > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 0;
+    padding: 10px 14px;
+    font-family: var(--fugu-font-sans);
+    font-size: .95rem;
+    font-weight: 700;
+    list-style: none;
+    background: none;
+    color: var(--fugu-ink);
+  }
+  .toc details.toc-inside > summary::-webkit-details-marker { display: none; }
+  .toc details.toc-inside > summary::after {
+    content: "";
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    background: var(--fugu-ink-faint);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.17l3.71-3.94a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.17l3.71-3.94a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z'/%3E%3C/svg%3E") center / contain no-repeat;
+    transition: transform 150ms ease-in-out;
+  }
+  .toc details.toc-inside[open] > summary::after { transform: rotate(180deg); }
+  .toc details.toc-inside > div { margin: 0; padding: 0 14px 10px; border: 0; }
+  .toc details.toc-inside ul { margin-block: 0; }
+}
+/* Scoped to a max-width media query (mutual exclusion with the lg:
+ * breakpoint below) rather than left as a plain rule beaten back by
+ * specificity at desktop — a plain `.recipe-sidebar-wrap #recipe-sidebar`
+ * desktop override would need to out-specificity this selector's
+ * `:not(.is-open)`, and silently wouldn't (same class of bug the
+ * abandoned <details> CSS override hit above). */
 @media (max-width: 1023.98px) {
   .recipe-sidebar-wrap:not(.is-open) #recipe-sidebar { display: none; }
+  /* Matches the toggle's own margin so the open panel doesn't run straight
+   * into Ingredients below it. Desktop doesn't need this — the sidebar
+   * sits beside the recipe there, not stacked above it. */
   .recipe-sidebar { margin-bottom: 20px; }
 }
 @media (min-width: 1024px) {
   .recipe-sidebar-toggle { display: none; }
+  /* 15% wider than the lg:max-w-2xs utility class already on
+   * .recipe-sidebar-wrap (single.html) — 18rem * 1.15 = 20.7rem. This
+   * sidebar carries more (meta rail, Mechanic callout, To serve, Notes)
+   * than a plain jump-to TOC, so it doesn't share the TOC's narrower
+   * lg:max-w-2xs width. */
   .recipe-sidebar-wrap { max-width: 20.7rem; }
 }
-.recipe-sidebar { display: flex; flex-direction: column; gap: 18px; }
-.recipe-sidebar .search-box { width: 100%; flex: none; }
+
+.recipe-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
 .recipe-sidebar-section[hidden] { display: none; }
-.recipe-sidebar-section h2 { margin: 0 0 6px; padding: 0; }
-.recipe-sidebar-section :is(h2, h3) :is(.anchor, a[href^="#"]) { display: none; }
-.recipe-sidebar-section h3 { margin: .9em 0 .25em; font-size: .82rem; font-weight: 700; color: var(--fugu-ink); }
+/* Headings arrive already wrapped by render-heading.html (h2, relative
+ * group, anchor markup and all) — restyled smaller for the narrower
+ * sidebar column rather than inheriting .prose h2's article-width sizing. */
+.recipe-sidebar-section h2 {
+  font-family: var(--fugu-font-sans);
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--fugu-ink-muted);
+  margin: 0 0 6px;
+  padding: 0;
+}
+.recipe-sidebar-section h2 .anchor,
+.recipe-sidebar-section h2 a[href^="#"] { display: none; }
+/* Variation blocks (docs/FORMAT.md's "## Variations" -> "### <name>" per
+ * variation) carry an h3 per variation — unstyled by default at this
+ * width, so it needs the same compact treatment as the section h2 above,
+ * one notch smaller/lighter since it's a subheading within the section. */
+.recipe-sidebar-section h3 {
+  font-family: var(--fugu-font-sans);
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--fugu-ink);
+  margin: .9em 0 .25em;
+}
 .recipe-sidebar-section h3:first-of-type { margin-top: 0; }
+.recipe-sidebar-section h3 .anchor,
+.recipe-sidebar-section h3 a[href^="#"] { display: none; }
 .recipe-sidebar-section > p,
-.recipe-sidebar-section > ul { margin: 0; font-size: .86rem; line-height: 1.45; }
+.recipe-sidebar-section > ul {
+  font-family: var(--fugu-font-serif);
+  font-size: .85rem;
+  line-height: 1.4;
+  margin: 0;
+}
 .recipe-sidebar-section > p + p { margin-top: .6em; }
-.recipe-sidebar-section > ul { padding-left: 1.1em; }
-.recipe-sidebar-section .mechanic { font-size: .86rem; line-height: 1.45; color: var(--fugu-ink-muted); }
-.recipe-sidebar-section .mechanic p { margin: 0; }
-.recipe-sidebar-section .mechanic p + p { margin-top: .6em; }
-.recipe-sidebar-section .mechanic ul { margin: .6em 0 0; padding-left: 1.1em; }
-.recipe-sidebar-section .mechanic strong { color: var(--fugu-ink); }
-/* A Mechanic left in the article (no "mechanic" in recipeSidebar):
-   automagic-sidebar.js wraps it in place as a callout. */
-.article-content .mechanic-callout { border-left: 3px solid var(--fugu-accent); background: var(--fugu-surface); padding: 14px 18px 12px; margin: 0 0 28px; border-radius: 0 6px 6px 0; }
-.article-content .mechanic-callout > h2 { font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--fugu-accent-strong); margin: 0 0 6px; }
-.article-content .mechanic-callout p { margin: 0; }
-.article-content .mechanic-callout p + p { margin-top: .6em; }
-.recipe-sidebar-section .notes-list { list-style: none; padding: 0; }
-.recipe-sidebar-section .notes-list li { position: relative; padding-left: 1.3em; margin: 0 0 6px; }
-.recipe-sidebar-section .notes-list li::before { content: '\2014'; position: absolute; left: 0; color: var(--fugu-ink-faint); }
+
+/* Notes list (mockups/STYLE.md's "Notes list") — em-dash bullets instead
+ * of a native marker, ported verbatim from mockups/style.html. */
+.recipe-sidebar-section .notes-list {
+  list-style: none;
+  padding: 0;
+}
+/* Marker is absolutely positioned, not a flex sibling: a flex li turns
+ * every inline child (text, links) into its own column. */
+.recipe-sidebar-section .notes-list li {
+  position: relative;
+  padding-left: 1.3em;
+  margin-bottom: 6px;
+}
+.recipe-sidebar-section .notes-list li::before {
+  content: '—';
+  color: var(--fugu-ink-faint);
+  position: absolute;
+  left: 0;
+}
 .recipe-sidebar-section .notes-list li:last-child { margin-bottom: 0; }
 
-/* Facts list: servings, times, dates, source. */
-.recipe-meta { display: flex; flex-direction: column; gap: 5px; padding-bottom: 14px; border-bottom: 1px solid var(--fugu-border); }
-.recipe-meta-row { display: flex; gap: 10px; align-items: baseline; }
-.recipe-meta-label { flex: 0 0 auto; min-width: 58px; white-space: nowrap; font-size: .62rem; }
-.recipe-meta-value { flex: 1; font-family: var(--fugu-font-mono); font-size: .8rem; line-height: 1.4; color: var(--fugu-ink-muted); }
+/* Meta rail (mockups/STYLE.md's "Stat rail" component, adapted): recipe
+ * facts that exist in frontmatter but otherwise never render anywhere on
+ * the page itself (article.showDate/showAuthor/showReadingTime are all
+ * off site-wide, config/_default/params.toml) — servings, prep/cook/total
+ * time, date, and (when a recipe sets it) author. Stacked rows rather
+ * than stat-rail's own flex-wrap row, since values like prep_time
+ * ("30 min (plus 4 hr chill, ideally overnight)") are prose-length, not
+ * short numbers — a fixed label column keeps them scannable instead of
+ * wrapping under a wrapped label. */
+.recipe-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--fugu-border);
+}
+.recipe-meta-row {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+.recipe-meta-label {
+  /* Fits "Updated", the longest label (sidebar/date-rows.html). */
+  flex: 0 0 54px;
+  font-family: var(--fugu-font-sans);
+  font-size: .62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--fugu-ink-muted);
+}
+.recipe-meta-value {
+  flex: 1;
+  font-family: var(--fugu-font-mono);
+  font-size: .78rem;
+  color: var(--fugu-ink-muted);
+  line-height: 1.4;
+}
+.list-pagination-ellipsis { color: var(--fugu-ink-muted); padding: 0 4px; }
 
-/* ---------------------------------------------------------------------
- * Reading sidebar (reading-sidebar.html): essays, reference, the log
- * ------------------------------------------------------------------- */
-
+/* Reading sidebar (mockups/reading-sidebar.html) — essays, reference,
+ * the Food Log, and About (themes/fugu/layouts/partials/reading-sidebar.html, placed
+ * by _default/single.html). Reuses .search-box, .browse-list, and
+ * .section-caveat. Content column is 18.6rem, as in
+ * the mockup (10% narrower than the recipe sidebar there, since these
+ * modules are denser); the wrap's width adds lg:ps-8's 2rem on top. Two-class selectors
+ * throughout so they beat the `.prose h2` rules; `not-prose`
+ * on the wrapper opts out of Tailwind Typography's. */
 .reading-sidebar-wrap { border-top: 1px solid var(--fugu-border); padding-top: 24px; margin-bottom: 32px; }
+/* Last on the page (About: no previous/next links below it), <main>'s
+ * page-bottom 40px is the gap; this one would stack on it. */
+article:not(:has(.article-pagination)) .reading-sidebar-wrap { margin-bottom: 0; }
 @media (min-width: 1024px) {
   .reading-sidebar-wrap { flex: 0 0 20.6rem; max-width: 20.6rem; border-top: none; padding-top: 0; margin-bottom: 0; }
+  /* Pinned like the recipe sidebar (single.html). Capped to the viewport
+   * (less the lg:top-10 offset and a little breathing room) so a tall one,
+   * like a long reference guide's "On this page", scrolls on its own
+   * rather than pinning its bottom half out of reach. overflow-y: auto
+   * forces overflow-x to auto too, so .browse-list's -8px bleed (below)
+   * would scroll sideways; the matching margin/padding makes room for it. */
   .reading-sidebar-pin { max-height: calc(100vh - 3.5rem); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; padding: 0 8px 8px; margin: 0 -8px; }
 }
 .reading-sidebar { display: flex; flex-direction: column; gap: 26px; }
-.reading-sidebar .rs-label { line-height: 1.3; margin: 0 0 8px; padding: 0; }
+.reading-sidebar .rs-label {
+  font-family: var(--fugu-font-sans); font-size: .72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .07em; color: var(--fugu-ink-muted);
+  line-height: 1.3; margin: 0 0 8px; padding: 0;
+}
 .reading-sidebar .rs-label .n { font-family: var(--fugu-font-mono); font-weight: 500; letter-spacing: 0; margin-left: 4px; }
-.reading-sidebar .search-box { width: 100%; flex: none; }
+.reading-sidebar .search-box,
+.recipe-sidebar .search-box { width: 100%; flex: none; padding: 9px 11px; font-size: .82rem; }
+.reading-sidebar .search-box:hover,
+.recipe-sidebar .search-box:hover { border-color: var(--fugu-accent); }
 .reading-sidebar .browse-list { margin: 0 -8px; }
-.reading-sidebar .browse-list a { font-size: .88rem; line-height: 1.35; padding: 5px 8px; align-items: baseline; }
-.reading-sidebar .browse-list a[aria-current="page"] { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); font-weight: 600; }
-.reading-sidebar .browse-list a:hover .n,
-.reading-sidebar .browse-list a[aria-current="page"] .n { color: var(--fugu-accent-strong); }
-.reading-sidebar .rs-toc { display: flex; flex-direction: column; line-height: 1.3; }
+.reading-sidebar .browse-list a { font-size: .86rem; line-height: 1.35; padding: 5px 8px; align-items: baseline; }
+/* "On this page" (variant C in mockups/reading-sidebar.html): sections with
+ * a subsection count that opens a hairline rail of subsections. Rows are
+ * tight (1px), so hover is a colour change, not .browse-list's pill. */
+.reading-sidebar .rs-toc { display: flex; flex-direction: column; font-family: var(--fugu-font-sans); line-height: 1.3; }
 .reading-sidebar .rs-toc a { color: var(--fugu-ink); text-decoration: none; }
 .reading-sidebar .rs-toc a:hover { color: var(--fugu-accent-strong); }
-.reading-sidebar .rs-toc-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 3px 0; font-size: .9rem; font-weight: 600; }
-.reading-sidebar .rs-toc-top .n { font-family: var(--fugu-font-mono); font-size: .72rem; font-weight: 500; color: var(--fugu-ink-muted); }
+/* Top-level entries a size up and bolder than the .84rem/500 they started
+ * at — at that weight they read too close to the subsection links below
+ * (.rs-toc-group a, .8rem/ink-muted) to land as the section-level nav
+ * items they are. */
+.reading-sidebar .rs-toc-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: .88rem; font-weight: 600; padding: 3px 0; }
 .reading-sidebar .rs-toc-toggle {
-  flex-shrink: 0; padding: 0 0 0 8px; border: 0; background: none; cursor: pointer;
-  font-family: var(--fugu-font-mono); font-variant-numeric: tabular-nums; font-size: .7rem; color: var(--fugu-ink-muted);
+  flex-shrink: 0; font-family: var(--fugu-font-mono); font-variant-numeric: tabular-nums;
+  font-size: .7rem; color: var(--fugu-ink-muted); background: none; border: 0; padding: 0 0 0 8px; cursor: pointer;
 }
 .reading-sidebar .rs-toc-toggle[hidden] { display: none; }
 .reading-sidebar .rs-toc-toggle::after { content: "\203A"; display: inline-block; margin-left: 5px; transition: transform .15s; }
 .reading-sidebar .rs-toc-toggle[aria-expanded="true"]::after { transform: rotate(90deg); }
 .reading-sidebar .rs-toc-toggle:hover { color: var(--fugu-accent-strong); }
-.reading-sidebar .rs-toc-top:has(.rs-toc-toggle[aria-expanded="true"]) a { color: var(--fugu-accent-strong); }
-.reading-sidebar .rs-toc-group { display: flex; flex-direction: column; margin: 1px 0 5px 1px; border-left: 1px solid var(--fugu-border-strong); }
+.reading-sidebar .rs-toc-top:has(.rs-toc-toggle[aria-expanded="true"]) a { color: var(--fugu-accent-strong); font-weight: 600; }
+.reading-sidebar .rs-toc-group { display: flex; flex-direction: column; border-left: 1px solid var(--fugu-border-strong); margin: 1px 0 5px 1px; }
 .reading-sidebar .rs-toc-group[hidden] { display: none; }
-.reading-sidebar .rs-toc-group a { padding: 1px 0 1px 11px; font-size: .82rem; color: var(--fugu-ink-muted); }
+.reading-sidebar .rs-toc-group a { font-size: .8rem; color: var(--fugu-ink-muted); padding: 1px 0 1px 11px; }
+.reading-sidebar .rs-toc-group a:hover { color: var(--fugu-accent-strong); }
 @media (prefers-reduced-motion: reduce) { .reading-sidebar .rs-toc-toggle::after { transition: none; } }
-.reading-sidebar .rs-more summary { list-style: none; display: inline-block; margin-top: 6px; font-size: .82rem; font-weight: 600; color: var(--fugu-accent-strong); cursor: pointer; }
+.reading-sidebar .browse-list a[aria-current="page"] { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); font-weight: 600; }
+.reading-sidebar .browse-list a:hover .n,
+.reading-sidebar .browse-list a[aria-current="page"] .n { color: var(--fugu-accent-strong); }
+.reading-sidebar .rs-more summary {
+  list-style: none; cursor: pointer; display: inline-block; margin-top: 6px;
+  font-family: var(--fugu-font-sans); font-size: .8rem; font-weight: 600; color: var(--fugu-accent-strong);
+}
 .reading-sidebar .rs-more summary::-webkit-details-marker { display: none; }
 .reading-sidebar .rs-more summary::after { content: "\00a0\2192"; }
 .reading-sidebar .rs-more[open] summary { display: none; }
-/* Food Log Months, grouped by year: a small year label over the open
-   years, and a fold for each older one. */
-.reading-sidebar .rs-year { font-size: .7rem; font-weight: 600; letter-spacing: .08em; color: var(--fugu-ink-muted); margin: 12px 8px 2px; }
-.reading-sidebar .rs-year:first-child { margin-top: 0; }
-.reading-sidebar .rs-year-fold > summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 14px; font-size: .7rem; font-weight: 600; letter-spacing: .08em; color: var(--fugu-ink-muted); padding: 7px 8px; border-radius: 4px; }
-.reading-sidebar .rs-year-fold > summary::-webkit-details-marker { display: none; }
-.reading-sidebar .rs-year-fold > summary:hover { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); }
-.reading-sidebar .rs-year-fold > summary .n { font-family: var(--fugu-font-mono); font-size: .72rem; font-weight: 500; letter-spacing: 0; color: var(--fugu-ink-muted); }
-.reading-sidebar .rs-year-fold > summary .n::after { content: " +"; }
-.reading-sidebar .rs-year-fold[open] > summary .n::after { content: " \2013"; }
-.reading-sidebar .rs-year-fold > a { padding-left: 16px; }
 .reading-sidebar .section-caveat { margin-top: 8px; line-height: 1.45; }
 .reading-sidebar .rs-numbers { display: flex; flex-direction: column; }
-.reading-sidebar .rs-number { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--fugu-border); font-size: .84rem; color: var(--fugu-ink-muted); }
+.reading-sidebar .rs-number {
+  display: flex; justify-content: space-between; gap: 12px; padding: 6px 0;
+  border-bottom: 1px solid var(--fugu-border);
+  font-family: var(--fugu-font-sans); font-size: .82rem; color: var(--fugu-ink-muted);
+}
 .reading-sidebar .rs-number:last-child { border-bottom: none; }
+/* Linked rows: the hover fill reaches 8px past each side with box-shadow,
+   so the text and dividers stay in line with the section label. */
 .reading-sidebar a.rs-number { text-decoration: none; }
-.reading-sidebar a.rs-number:hover { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); }
+.reading-sidebar a.rs-number:hover { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); box-shadow: -8px 0 0 var(--fugu-accent-soft), 8px 0 0 var(--fugu-accent-soft); }
 .reading-sidebar .rs-number b { font-family: var(--fugu-font-mono); font-variant-numeric: tabular-nums; font-weight: 600; color: var(--fugu-accent-strong); }
 
-/* ---------------------------------------------------------------------
- * Photos (render-image.html, automagic-sidebar.js): a sidebar grid at lg
- * and up, a strip above the content below it, and a <dialog> viewer.
- * ------------------------------------------------------------------- */
-
+/* Photos (mockups/sidebar-images.html). render-image.html renders each
+ * markdown image as figure.page-photo; automagic-sidebar.js (initPhotos)
+ * builds the sidebar module, the mobile strip, the "Photo N" markers, and
+ * the viewer from them, then hides the figures on screen. They still
+ * print, and the markers don't. Sidebar module at lg and up, strip below:
+ * the reading sidebar falls below the article on mobile and the recipe
+ * sidebar starts collapsed, so photos there would be out of sight. */
 @media screen { .page-photo.is-relocated { display: none; } }
 @media print { .photo-marker, .photo-strip, .photo-viewer { display: none !important; } }
+
 .sidebar-photos .photos-label .n { font-family: var(--fugu-font-mono); font-weight: 500; letter-spacing: 0; margin-left: 4px; }
 .photo-grid { display: grid; gap: 6px; grid-template-columns: repeat(3, 1fr); }
 .photo-grid.n1 { grid-template-columns: 1fr; }
 .photo-grid.n2 { grid-template-columns: repeat(2, 1fr); }
 .photo-thumb {
-  position: relative; display: block; width: 100%; max-width: 100%; aspect-ratio: 1; padding: 0; border: 0;
-  border-radius: 4px; overflow: hidden; background: var(--fugu-surface-2); cursor: zoom-in;
+  position: relative; display: block; width: 100%; max-width: 100%; aspect-ratio: 1;
+  padding: 0; border: 0; border-radius: 4px; overflow: hidden;
+  background: var(--fugu-surface-2); cursor: zoom-in;
 }
 .photo-grid.n1 .photo-thumb { aspect-ratio: 4 / 3; }
 .photo-thumb img { display: block; width: 100%; height: 100%; margin: 0; object-fit: cover; transition: transform .25s ease; }
-.photo-thumb::after { content: ""; position: absolute; inset: 0; border-radius: 4px; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .08); transition: box-shadow .15s; }
+.photo-thumb::after {
+  content: ""; position: absolute; inset: 0; border-radius: 4px; pointer-events: none;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--fugu-ink) 10%, transparent); transition: box-shadow .15s;
+}
 .photo-thumb:hover::after { box-shadow: inset 0 0 0 2px var(--fugu-accent); }
 .photo-thumb:hover img { transform: scale(1.03); }
-.photo-thumb .more { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(0, 0, 0, .55); color: #fff; font-family: var(--fugu-font-mono); font-size: .9rem; font-weight: 600; }
+.photo-thumb .more {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  background: rgba(20, 21, 16, .55); color: #FBFBF6;
+  font-family: var(--fugu-font-mono); font-size: .9rem; font-weight: 600;
+}
 .sidebar-photos .photo-caption {
-  margin: 7px 0 0; font-size: .8rem; line-height: 1.45; color: var(--fugu-ink-muted);
+  font-family: var(--fugu-font-serif); font-size: .8rem; line-height: 1.45; color: var(--fugu-ink-muted); margin: 7px 0 0;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
+
 .photo-strip { display: flex; gap: 6px; margin: -8px 0 22px; overflow-x: auto; scrollbar-width: none; }
 .photo-strip .photo-thumb { flex: 0 0 64px; width: 64px; height: 64px; }
 .photo-strip.solo .photo-thumb { flex-basis: 112px; width: 112px; height: 84px; aspect-ratio: auto; }
 @media (min-width: 1024px) { .photo-strip { display: none; } }
 @media (max-width: 1023.98px) { .sidebar-photos { display: none; } }
+
 .photo-marker {
-  display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px 2px 6px;
-  border: 1px solid var(--fugu-border-strong); border-radius: 4px; background: transparent;
-  font-size: .76rem; font-weight: 500; line-height: 1.3; color: var(--fugu-ink-muted); cursor: zoom-in;
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--fugu-font-sans); font-size: .74rem; font-weight: 500; line-height: 1.3;
+  color: var(--fugu-ink-muted); background: transparent;
+  border: 1px solid var(--fugu-border-strong); border-radius: 3px; padding: 3px 8px 3px 6px; cursor: zoom-in;
 }
 .photo-marker:hover { border-color: var(--fugu-accent); color: var(--fugu-accent-strong); }
 .photo-marker svg { width: 14px; height: 14px; }
 .photo-marker .n { font-family: var(--fugu-font-mono); font-size: .7rem; color: var(--fugu-ink-muted); }
-.photo-viewer { border: 0; padding: 0; margin: 0; width: 100%; height: 100%; max-width: none; max-height: none; background: transparent; color: var(--fugu-ink); }
-.photo-viewer::backdrop { background: rgba(10, 10, 12, .88); }
+
+/* Viewer: a native <dialog>. The backdrop is dark in both themes so photos
+ * are always judged on the same ground; the caption panel uses --surface.
+ * Its controls take the dark theme's ink, muted ink and accent in both
+ * themes too (the .dark values, copied here since .dark only sets them in
+ * dark mode). */
+.photo-viewer { --pv-ink: #E2E4D8; --pv-muted: #A2A493; --pv-accent: #BF9D72; border: 0; padding: 0; margin: 0; width: 100%; height: 100%; max-width: none; max-height: none; background: transparent; color: var(--fugu-ink); }
+.photo-viewer::backdrop { background: rgba(20, 21, 16, .88); }
 .photo-viewer .pv-inner { height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 12px; padding: 14px max(16px, 3vw) 18px; }
-.photo-viewer .pv-top { display: flex; justify-content: space-between; align-items: center; font-family: var(--fugu-font-mono); font-size: .78rem; color: rgba(255, 255, 255, .75); }
-.photo-viewer .pv-btn { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .25); background: rgba(0, 0, 0, .4); color: #fff; cursor: pointer; }
-.photo-viewer .pv-btn:hover { border-color: #fff; }
+.photo-viewer .pv-top { display: flex; justify-content: space-between; align-items: center; font-family: var(--fugu-font-mono); font-size: .78rem; font-variant-numeric: tabular-nums; color: var(--pv-muted); }
+.photo-viewer .pv-btn {
+  display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+  border: 1px solid color-mix(in srgb, var(--pv-ink) 25%, transparent); background: rgba(20, 21, 16, .4); color: var(--pv-ink);
+}
+.photo-viewer .pv-btn:hover { border-color: var(--pv-accent); color: var(--pv-accent); }
 .photo-viewer.is-single .pv-prev,
 .photo-viewer.is-single .pv-next { visibility: hidden; }
 .photo-viewer .pv-btn svg { width: 18px; height: 18px; }
 .photo-viewer .pv-stage { min-height: 0; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; }
+/* Absolutely placed so max-height has a definite box to resolve against;
+ * a grid cell's percentage height doesn't give it one. */
 .photo-viewer .pv-stage figure { position: relative; margin: 0; min-width: 0; height: 100%; }
 .photo-viewer .pv-stage img { position: absolute; inset: 0; margin: auto; max-width: 100%; max-height: 100%; border-radius: 4px; box-shadow: 0 10px 40px rgba(0, 0, 0, .4); }
-.photo-viewer .pv-foot { justify-self: center; width: min(100%, 44rem); display: flex; flex-direction: column; gap: 4px; padding: 12px 16px; border-radius: var(--fugu-radius); background: var(--fugu-surface); }
-.photo-viewer .pv-cap { margin: 0; font-size: .92rem; line-height: 1.45; }
-.photo-viewer .pv-src { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 0; font-size: .76rem; color: var(--fugu-ink-muted); }
+.photo-viewer .pv-foot { justify-self: center; width: min(100%, 44rem); background: var(--fugu-surface); border-radius: 6px; padding: 12px 16px; display: flex; flex-direction: column; gap: 4px; }
+.photo-viewer .pv-cap { font-family: var(--fugu-font-serif); font-size: .92rem; line-height: 1.45; margin: 0; }
+.photo-viewer .pv-src { font-family: var(--fugu-font-sans); font-size: .74rem; color: var(--fugu-ink-muted); display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 0; }
 .photo-viewer .pv-src:empty { display: none; }
 .photo-viewer .pv-jump { color: var(--fugu-accent-strong); font-weight: 600; text-decoration: none; }
 .photo-viewer .pv-jump:hover { text-decoration: underline; }
@@ -797,39 +1586,65 @@ h4.ing-subhead { margin: 14px 0 4px; }
   .photo-thumb:hover img { transform: none; }
 }
 
-/* ---------------------------------------------------------------------
- * Formula diagrams (render-codeblock-formula.html): one row of icons
- * joined by +, : or →. Icons are stroked in currentColor; full size in
- * the body column, compact in the recipe sidebar.
- * ------------------------------------------------------------------- */
-
+/* ---------------------------------------------------------------------------
+ * Formula diagram (mockups/formula-diagrams.html, STYLE.md "Formula
+ * diagram"): a ```formula block drawn by render-codeblock-formula.html as
+ * one row of icons joined by +, : or →. Icons are inline SVG on a 48-unit
+ * grid, stroked in currentColor with one --accent-soft fill, so dark mode
+ * comes free. Full size in the body column; compact in the recipe sidebar,
+ * where Mechanic (and so most formulas) ends up.
+ * ------------------------------------------------------------------------- */
+/* A figure, spaced like a table rather than a paragraph: 28px from the
+ * text around it, and 48px (up from the heading's own 36px) to a heading
+ * after it, since its ragged, light bottom edge (italic swap lines, short
+ * and centred) reads closer than a full-width paragraph would
+ * (2026-10-07). rem, not em: on a heading, em is the heading's own size. */
 .formula { margin: 1.75rem 0; font-style: normal; }
 .article-content .formula + :is(h2, h3),
-.article-content .formula + .ing-heading > h2 { margin-top: 2.5rem; }
+.article-content .formula + .ing-heading > h2 { margin-top: 3rem; }
 .formula .ic {
-  fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-  overflow: visible; width: 48px; height: 48px; flex: none;
+  fill: none; stroke: currentColor; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round; overflow: visible;
+  width: 48px; height: 48px; flex: none;
 }
 .formula .ic-missing { color: var(--fugu-ink-faint); }
 .formula-row { display: flex; align-items: flex-start; justify-content: center; flex-wrap: wrap; row-gap: 14px; }
+/* Each operator wraps together with the slot it introduces, so a row never ends on a stray + */
 .f-step { display: flex; align-items: flex-start; }
-.f-slot { display: flex; flex-direction: column; align-items: center; width: 96px; text-align: center; color: var(--fugu-ink); }
+.f-slot { display: flex; flex-direction: column; align-items: center; text-align: center; width: 96px; color: var(--fugu-ink); }
 .f-icons { display: flex; gap: 2px; height: 48px; align-items: center; }
 .f-pair .ic { width: 40px; height: 40px; }
-.f-label { margin-top: 6px; font-size: .76rem; font-weight: 600; line-height: 1.2; color: var(--fugu-ink); }
+.f-label { font-family: var(--fugu-font-sans); font-size: .74rem; font-weight: 600; color: var(--fugu-ink); margin-top: 6px; line-height: 1.2; }
 .f-result .f-label { color: var(--fugu-ink-muted); }
-.f-qty { margin-top: 2px; font-family: var(--fugu-font-mono); font-variant-numeric: tabular-nums; font-size: .76rem; font-weight: 600; line-height: 1.3; color: var(--fugu-accent-strong); }
-.f-sub, .f-or { margin-top: 3px; font-style: italic; font-size: .74rem; line-height: 1.3; }
+.f-qty { font-family: var(--fugu-font-mono); font-variant-numeric: tabular-nums; font-size: .76rem; font-weight: 600; color: var(--fugu-accent-strong); line-height: 1.3; margin-top: 2px; }
+.f-sub, .f-or { font-family: var(--fugu-font-serif); font-style: italic; font-size: .72rem; line-height: 1.3; margin-top: 3px; }
 .f-sub { color: var(--fugu-ink-muted); }
 .f-or { color: var(--fugu-ink-muted); }
 .f-or span { display: block; }
-.f-op { flex: none; width: 22px; font-family: var(--fugu-font-mono); font-size: 1.25rem; font-weight: 500; line-height: 48px; text-align: center; color: var(--fugu-accent); }
+.f-op { font-family: var(--fugu-font-mono); font-size: 1.25rem; font-weight: 500; color: var(--fugu-accent); width: 22px; text-align: center; line-height: 48px; flex: none; }
 .f-op.f-eq { color: var(--fugu-ink-faint); }
-.formula-ratio .f-num { margin-top: 4px; font-family: var(--fugu-font-mono); font-variant-numeric: tabular-nums; font-size: 1.5rem; font-weight: 600; line-height: 1.1; color: var(--fugu-accent-strong); }
+.formula-seq .f-op { font-family: var(--fugu-font-sans); }
+.formula-ratio .f-num { font-family: var(--fugu-font-mono); font-variant-numeric: tabular-nums; font-size: 1.5rem; font-weight: 600; color: var(--fugu-accent-strong); line-height: 1.1; margin-top: 4px; }
 .formula-ratio .f-op { font-size: 1.5rem; }
 .f-bar { display: flex; gap: 2px; height: 10px; max-width: 340px; margin: 16px auto 0; }
 .f-bar span { background: var(--fugu-accent-soft); border: 1px solid var(--fugu-accent); border-radius: 2px; }
-.f-cap { margin-top: 12px; font-size: .76rem; text-align: center; color: var(--fugu-ink-muted); }
+.f-cap { font-family: var(--fugu-font-sans); font-size: .74rem; color: var(--fugu-ink-muted); margin-top: 12px; text-align: center; }
+
+/* Phones: a full-size slot is 96px, so five slots and four operators need
+   568px and wrap in a ~342px column, and the next row starts on its operator
+   (a flow's second row led with →). Compact sizes fit five on one row. */
+@media (max-width: 640px) {
+  .article-content .formula .f-slot { width: 56px; }
+  .article-content .formula .f-op { width: 14px; font-size: 1rem; line-height: 36px; }
+  .article-content .formula-ratio .f-op { font-size: 1.2rem; }
+  .article-content .formula .ic, .article-content .formula .f-icons { height: 36px; }
+  .article-content .formula .ic { width: 36px; }
+  .article-content .formula .f-pair .ic { width: 30px; height: 30px; }
+  .article-content .formula .f-label { font-size: .7rem; }
+  .article-content .formula .f-qty, .article-content .formula .f-sub, .article-content .formula .f-or { font-size: .68rem; }
+}
+
+/* Compact: the recipe sidebar (~18.6rem) fits five slots */
 .recipe-sidebar-section .formula { margin: .9em 0 .6em; }
 .recipe-sidebar-section .f-slot { width: 50px; }
 .recipe-sidebar-section .formula .ic,
@@ -837,182 +1652,202 @@ h4.ing-subhead { margin: 14px 0 4px; }
 .recipe-sidebar-section .formula .ic { width: 34px; }
 .recipe-sidebar-section .f-pair .ic { width: 22px; height: 22px; }
 .recipe-sidebar-section .f-op { width: 10px; font-size: 1rem; line-height: 34px; }
-.recipe-sidebar-section .f-label { margin-top: 4px; font-size: .66rem; }
+.recipe-sidebar-section .f-label { font-size: .66rem; margin-top: 4px; }
 .recipe-sidebar-section .f-qty { font-size: .66rem; }
-.recipe-sidebar-section :is(.f-sub, .f-or) { font-size: .62rem; }
-.recipe-sidebar-section .formula-ratio :is(.f-num, .f-op) { font-size: 1.1rem; }
+.recipe-sidebar-section .f-sub,
+.recipe-sidebar-section .f-or { font-size: .62rem; }
+.recipe-sidebar-section .formula-ratio .f-num { font-size: 1.1rem; }
+.recipe-sidebar-section .formula-ratio .f-op { font-size: 1.1rem; }
 
-/* ---------------------------------------------------------------------
- * Stack diagrams (partials/stack/draw.html): a build drawn as an exploded
- * view, labels on the right. The layer drawings carry their own ink and
- * fills; these set the labels, leaders and bracket. Full size in the body,
- * unlabelled and narrow on a build card.
- * ------------------------------------------------------------------- */
-
-.stack { margin: 1.75rem auto; max-width: 420px; font-style: normal; color: var(--fugu-ink); }
-.stack-svg { display: block; width: 100%; height: auto; overflow: visible; }
-.stack-label { fill: var(--fugu-ink); }
-.stack-role { fill: var(--fugu-ink-muted); fill-opacity: 1; }
-.stack-lead { stroke: var(--fugu-ink-faint); stroke-opacity: 1; }
-.stack-dot { fill: var(--fugu-ink-faint); fill-opacity: 1; }
-.stack-bracket { stroke: var(--fugu-accent); }
-.stack-times { font-family: var(--fugu-font-mono); fill: var(--fugu-accent-strong); }
-.stack-missing { stroke: var(--fugu-ink-faint); }
-.stack-cap { margin-top: 12px; font-size: .76rem; text-align: center; color: var(--fugu-ink-muted); }
-/* A build card's stack sits centred between its intro and its stats: the
- * cards in a row stretch to the tallest, and the stack's auto margins take
- * the free space that .rcard-stats' margin-top would otherwise. */
-.build-card .stack { width: 150px; margin: auto; padding: 4px 0; }
-.build-card .rcard-stats { margin-top: 0; }
-
-/* ---------------------------------------------------------------------
- * Flow diagrams (render-codeblock-flow.html): boxed labels in a row
- * joined by arrows, each note under its label, the caption under the
- * row. Parallel rows (`row:` lines) share one grid, so step n of every
- * row shares a column. The figure is a size container: in a narrow one
- * (a phone, the recipe sidebar) each row becomes a list down the page.
- * ------------------------------------------------------------------- */
-
-/* A size container has no width of its own to offer, so it says how wide
- * it would like to be; otherwise a column that fits its content (Blowfish's
- * max-w-fit) collapses around it. */
-.flow { container-type: inline-size; contain-intrinsic-inline-size: 40rem; margin: 1.75rem 0; font-style: normal; }
-.flow .flow-row { display: flex; justify-content: center; align-items: flex-start; gap: 10px; }
-.flow .flow-step { display: flex; flex-direction: column; align-items: center; min-width: 0; text-align: center; }
-.flow .flow-label {
-  padding: 5px 10px; border: 1px solid var(--fugu-border-strong); border-radius: var(--fugu-radius);
-  background: var(--fugu-surface); color: var(--fugu-ink);
-  font-size: .85rem; font-weight: 600; line-height: 20px; white-space: nowrap;
-}
-.flow .flow-note { margin-top: 5px; max-width: 10em; font-size: .74rem; font-style: italic; line-height: 1.3; color: var(--fugu-ink-muted); }
-.flow :is(.flow-label, .flow-note) code { margin: 0; padding: 1px 4px; font-size: .85em; }
-/* As tall as a label's box, so each arrow sits level with the boxes. */
-.flow .flow-arrow { flex: none; font-family: var(--fugu-font-mono); font-size: 1rem; line-height: 32px; color: var(--fugu-accent); }
-.flow .flow-cap { margin-top: 12px; font-size: .76rem; text-align: center; color: var(--fugu-ink-muted); }
-.flow .flow-grid { display: grid; grid-template-columns: repeat(var(--cols), auto); justify-content: center; gap: 16px 10px; }
-.flow.headed .flow-grid { grid-template-columns: auto repeat(var(--cols), auto); }
-.flow .flow-head {
-  grid-column: 1; margin: 0; text-align: right; white-space: nowrap;
-  font-family: var(--fugu-font-mono); font-size: .72rem; line-height: 32px; color: var(--fugu-ink-muted);
-}
-.flow .flow-grid ol.flow-row {
-  display: grid; grid-column: 1 / -1; grid-template-columns: subgrid;
-  margin: 0; padding: 0; list-style: none; column-gap: 10px;
-}
-.flow.headed .flow-grid ol.flow-row { grid-column: 2 / -1; }
-.flow .flow-item { display: flex; align-items: flex-start; gap: 10px; margin: 0; padding: 0; }
-.flow .flow-item::before { content: none; }
-.flow .flow-item .flow-step { flex: 1; }
-/* Narrow: every row is a list down the page, the labels in one column
- * with ↓ between them and each note beside its label. The items and steps
- * step out of the way (display: contents) so the labels share a column. */
-@container (max-width: 560px) {
-  .flow .flow-grid { display: block; }
-  .flow .flow-row,
-  .flow .flow-grid ol.flow-row {
-    display: grid; grid-template-columns: auto minmax(0, 16em); justify-content: center;
-    align-items: center; gap: 0 12px;
-  }
-  .flow .flow-item, .flow .flow-step { display: contents; }
-  .flow .flow-label { grid-column: 1; justify-self: stretch; text-align: center; }
-  .flow .flow-arrow { grid-column: 1; justify-self: center; line-height: 20px; transform: rotate(90deg); }
-  .flow .flow-note { grid-column: 2; max-width: none; margin: 0; text-align: left; }
-  .flow .flow-head { margin: 18px 0 8px; line-height: 1.3; text-align: center; }
-  .flow .flow-head:first-child { margin-top: 0; }
-  .flow .flow-grid ol.flow-row + ol.flow-row { margin-top: 18px; }
-}
-
-/* ---------------------------------------------------------------------
- * Methods and blueprints (partials/method/, partials/blueprint/): the
- * methods list and a blueprint's page.
- * ------------------------------------------------------------------- */
-
-/* The methods list's and a principle's intro: the definition as plain
- * body text, a principle's with its essay link after. */
-.method-intro, .principle-intro { max-width: 65ch; font-size: 1.08rem; margin-bottom: 8px; }
-/* It's rendered as prose, so a heading, table or list in it matches a
- * method page's body; these keep its size and the page's text colour. */
-.method-intro.prose, .principle-intro.prose { max-width: 65ch; font-size: 1.08rem; color: inherit; }
-.principle-intro .read-essay, .blueprint-intro .read-essay { display: inline-block; margin-top: 4px; font-size: .9rem; font-weight: 600; color: var(--fugu-accent-strong); text-decoration: none; }
-.principle-intro .read-essay:hover, .blueprint-intro .read-essay:hover { text-decoration: underline; }
-
-/* Blueprint rows on the methods list: the block, then its build tiles
- * under it. The block holds links but isn't one, so it doesn't light up;
- * its name and part rows do. */
-.bp-list { display: flex; flex-direction: column; gap: 32px; }
-.bp-row { display: flex; flex-direction: column; gap: 14px; }
-.bp { display: flex; flex-direction: column; gap: 10px; min-width: 0; background: var(--fugu-surface); border: 1px solid var(--fugu-border); border-radius: var(--fugu-radius); padding: 16px 18px 14px; }
+/* Methods and blueprints (mockups/methods-pages.html, STYLE.md "Methods
+ * and blueprint pages"; Fugu partials/method/ and partials/blueprint/):
+ * the methods list at /methods/ and a blueprint's page. */
+.bp-list { display: flex; flex-direction: column; gap: 24px; }
+.bp { background: var(--fugu-surface); border: 1px solid var(--fugu-border); border-radius: 6px; padding: 16px 18px 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .bp-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
-.bp-name { display: inline-flex; align-items: center; gap: 8px; font-size: 1.15rem; font-weight: 700; color: var(--fugu-ink); text-decoration: none; }
-.bp-name svg { width: 16px; height: 16px; flex: none; color: var(--fugu-accent-strong); }
-.bp-name:hover, .bp-name:focus-visible { color: var(--fugu-accent-strong); }
-.bp-name .go { font-size: .9rem; font-weight: 500; color: var(--fugu-accent-strong); opacity: 0; transform: translateX(-6px); transition: opacity .12s, transform .12s; }
+.bp-name { font-family: var(--fugu-font-sans); font-weight: 700; font-size: 1.15rem; text-decoration: none; color: var(--fugu-ink); display: inline-flex; align-items: center; gap: 8px; }
+.bp-name svg { width: 16px; height: 16px; color: var(--fugu-accent-strong); }
+.bp-name:hover { color: var(--fugu-accent-strong); }
+.bp-name .go { font-weight: 500; font-size: .9rem; color: var(--fugu-accent-strong); opacity: 0; transform: translateX(-4px); transition: opacity .12s, transform .12s; }
 .bp-name:hover .go, .bp-name:focus-visible .go { opacity: 1; transform: none; }
 .bp-count { font-family: var(--fugu-font-mono); font-size: .7rem; color: var(--fugu-ink-muted); white-space: nowrap; }
-.bp-desc { margin: 0; font-size: .88rem; color: var(--fugu-ink-muted); }
+.bp-desc { font-family: var(--fugu-font-serif); font-size: .86rem; color: var(--fugu-ink-muted); }
 
-/* A blueprint's parts, numbered, on the methods list and the blueprint's
- * page. On its page they're in the .bp box without its head. */
-.parts { list-style: none; margin: 0; padding: 0; counter-reset: part; }
-.parts li { counter-increment: part; display: grid; grid-template-columns: 28px 1fr; gap: 2px 10px; align-items: baseline; padding: 9px 0; border-top: 1px solid var(--fugu-border); margin: 0; }
-.parts li::before { content: counter(part, decimal-leading-zero); grid-row: span 2; font-family: var(--fugu-font-mono); font-size: .72rem; color: var(--fugu-accent); }
+/* The ordered parts list, compact, on the methods list and a blueprint's
+ * page. */
+.parts { list-style: none; margin: 0; padding: 0; counter-reset: part; display: flex; flex-direction: column; }
+.parts li { counter-increment: part; display: grid; grid-template-columns: 28px 1fr; gap: 2px 10px; padding: 9px 0; border-top: 1px solid var(--fugu-border); align-items: baseline; }
+.parts li::before { content: counter(part, decimal-leading-zero); font-family: var(--fugu-font-mono); font-size: .72rem; color: var(--fugu-accent); grid-row: span 2; }
+.parts-compact li { padding: 6px 0; grid-template-columns: 24px 1fr; }
+
+/* The methods list (mockups/methods-list-builds.html §1): the blueprint
+ * block holds links but isn't one, so it doesn't react; each written part
+ * row does, with a soft fill and a → sliding in. */
+.parts-compact li:has(.part-row) { display: block; padding: 0; }
+.part-row { display: grid; grid-template-columns: 24px 1fr auto; gap: 10px; align-items: baseline; margin: 0 -8px; padding: 6px 8px; border-radius: 4px; font-family: var(--fugu-font-sans); font-weight: 600; font-size: .82rem; color: var(--fugu-ink); text-decoration: none; transition: background .12s; }
+.parts-compact li:has(.part-row)::before { content: none; }
+.part-row::before { content: counter(part, decimal-leading-zero); font-family: var(--fugu-font-mono); font-weight: 400; font-size: .72rem; color: var(--fugu-accent); }
+a.part-row::after { content: '→'; font-weight: 500; color: var(--fugu-accent-strong); opacity: 0; transform: translateX(-6px); transition: opacity .12s, transform .12s; }
+a.part-row:hover, a.part-row:focus-visible { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); }
+a.part-row:hover::after, a.part-row:focus-visible::after { opacity: 1; transform: none; }
+
+/* The methods list, principle, and blueprint pages on the reading layout
+ * (mockups/methods-list-sidebar.html, principle-page-sidebar.html, decided
+ * 2026-10-11): a body column and the reading sidebar, so nothing
+ * runs past the body column. The definition is the page's intro as plain
+ * text, not a callout. Each blueprint stacks: its block, with the parts in
+ * two columns (numbered down, then across; Fugu sets --rows), then its
+ * builds under it. */
+.method-intro, .principle-intro { margin: 14px 0 30px; }
+/* The layout owns the page width and gutter, so the sidebar shares it
+ * (it sits outside .listing, and had no gutter on phones); the listing
+ * inside is a plain column. */
+.method-list-layout, .principle-layout, .blueprint-layout { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+.method-list-layout > .listing, .principle-layout > .listing, .blueprint-layout > .listing { width: 100%; max-width: none; margin: 0; padding: 32px 0 0; }
+@media (max-width: 1023px) {
+  .method-list-layout .reading-sidebar-wrap, .principle-layout .reading-sidebar-wrap, .blueprint-layout .reading-sidebar-wrap { margin-top: 40px; }
+}
+/* The sidebar's top lines up with the intro, not the title, as on the
+ * reading pages: .listing's 32px top padding, the title, its 6px margin,
+ * and the intro's 14px. */
+@media (min-width: 1024px) {
+  .method-list-layout .reading-sidebar-wrap, .principle-layout .reading-sidebar-wrap, .blueprint-layout .reading-sidebar-wrap { padding-top: calc(32px + 2.1rem * 1.1 + 20px); }
+}
+/* Fits "Blueprints", the longest label here. */
+.method-list-layout .recipe-meta-label, .principle-layout .recipe-meta-label, .blueprint-layout .recipe-meta-label { flex-basis: 74px; }
+.principle-layout .recipe-meta-row:has(.principle-chip) { align-items: center; }
+/* Three cards across in the body column, as on related recipes. */
+.principle-page .rgrid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+/* At that width a card with prep, cook, and serves clipped its last value;
+ * tighter gaps fit all three. */
+.principle-page .rcard-stats { gap: 8px; }
+.principle-page .rcard-stat { gap: 3px; }
+/* Fugu sets the intro as prose (2026-10-28), so a heading, table or list
+ * in it matches a part page's body. The block keeps the page's own text
+ * colour (not prose's) and the column's width, and its links their weight. */
+.method-intro.prose, .principle-intro.prose { max-width: none; color: inherit; }
+.method-intro p a, .principle-intro p a { font-weight: inherit; }
+/* A table keeps a part page's measure, 65ch like the paragraphs (plus the
+ * scroll box's 6px padding each side). */
+.method-intro .table-scroll, .principle-intro .table-scroll { max-width: calc(65ch + 12px); }
+/* The intro is body text at the recipe body's size (prose: 1rem, 1.5), not
+ * a lede (2026-10-11: 1.08rem read larger than a recipe beside it), with
+ * no prose margins: 14px between paragraphs. */
+.method-intro p, .principle-intro p { margin: 0; font-family: var(--fugu-font-serif); font-size: 1rem; line-height: 1.5; max-width: 65ch; }
+.method-intro p + p, .principle-intro p + p { margin-top: 14px; }
+.principle-intro .read-essay { display: inline-block; margin-top: 14px; font-family: var(--fugu-font-sans); font-size: .86rem; font-weight: 600; color: var(--fugu-principle-strong); text-decoration: none; }
+.principle-intro .read-essay:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* The blueprint's "All methods →" under its intro: the same link in the
+ * method accent. */
+.blueprint-intro .read-essay { display: inline-block; margin-top: 14px; font-family: var(--fugu-font-sans); font-size: .86rem; font-weight: 600; color: var(--fugu-accent-strong); text-decoration: none; }
+.blueprint-intro .read-essay:hover { text-decoration: underline; text-underline-offset: 3px; }
+.method-list .bp-row { display: flex; flex-direction: column; gap: 14px; }
+.method-list .parts-compact, .blueprint-page .parts-compact { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-flow: column; grid-template-rows: repeat(var(--rows, 3), auto); column-gap: 28px; }
+@media (max-width: 560px) {
+  .method-list .parts-compact, .blueprint-page .parts-compact { grid-template-columns: minmax(0, 1fr); grid-auto-flow: row; grid-template-rows: none; }
+}
+/* A blueprint page's build cards, two across beside the sidebar (2026-10-12):
+ * three made the cards narrow and their stacks cramped. Below 1024px the
+ * sidebar drops under the page and the grid fills the width as usual. */
+@media (min-width: 1024px) {
+  .blueprint-page .build-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.reading-sidebar .rs-toc-top .n { font-family: var(--fugu-font-mono); font-weight: 400; font-size: .72rem; color: var(--fugu-ink-muted); }
+
+/* A blueprint's builds on the methods list (mockups/methods-list-and-
+ * blueprint.html, 2026-10-12): one line of name pills at the foot of its
+ * block, under a hairline; the cards are on the blueprint's page. A draft
+ * build's pill is dashed and faint, and its era is mono. */
+.bp-builds-inline { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding-top: 10px; border-top: 1px solid var(--fugu-border); }
+.bp-builds-inline .lbl { font-family: var(--fugu-font-sans); font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--fugu-ink-muted); margin-right: 4px; }
+.opt-pill.todo { border-style: dashed; color: var(--fugu-ink-muted); }
+.opt-pill .y { font-family: var(--fugu-font-mono); font-size: .64rem; color: var(--fugu-ink-muted); margin-left: 5px; }
+/* A blueprint page's parts: the list's block without its head. */
 .bp.bp-parts-only { padding: 6px 18px 8px; }
-/* A parts/ or builds/ _index.md's text: in the parts box like the default lead, and above
- * the build cards (blueprint/lead.html). */
+/* With a lead line above the parts (Fugu's params.fugu.methods.partsLead,
+ * 2026-10-12), the box gets the list block's top padding, and the row rule
+ * under the line has something to sit under. */
+.bp.bp-parts-only:has(> .bp-desc) { padding-top: 16px; gap: 10px; }
+/* A lead from a blueprint's parts/lead.md or builds/lead.md (Fugu
+ * blueprint/lead.html, 2026-10-12) is block Markdown, so its paragraphs
+ * sit flush. The builds lead runs between the Builds heading and the
+ * cards, at reading width. */
 .bp-desc p { margin: 0; }
 .bp-desc p + p { margin-top: 6px; }
-.bp-builds-lead { max-width: 65ch; margin-bottom: 14px; }
-/* Compact rows are whole-row links: the number moves into the row, and
- * on hover the row fills and an arrow slides in. */
-.parts-compact li { display: block; padding: 0; }
-.parts-compact li::before { content: none; }
-.parts-compact .part-row { display: grid; grid-template-columns: 24px 1fr auto; gap: 10px; align-items: baseline; margin: 0 -8px; padding: 6px 8px; border-radius: 4px; font-size: .84rem; font-weight: 600; color: var(--fugu-ink); text-decoration: none; transition: background-color .12s; }
-.parts-compact .part-row::before { content: counter(part, decimal-leading-zero); font-family: var(--fugu-font-mono); font-size: .72rem; font-weight: 400; color: var(--fugu-accent); }
-.parts-compact a.part-row::after { content: "→"; font-weight: 500; color: var(--fugu-accent-strong); opacity: 0; transform: translateX(-6px); transition: opacity .12s, transform .12s; }
-.parts-compact a.part-row:hover, .parts-compact a.part-row:focus-visible { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); }
-.parts-compact a.part-row:hover::after, .parts-compact a.part-row:focus-visible::after { opacity: 1; transform: none; }
-/* Two columns, numbered down then across: the list sets --rows, half its
- * length rounded up. One column on phones. */
-@media (min-width: 640px) {
-  .parts-compact[style*="--rows"] { display: grid; grid-auto-flow: column; grid-template-rows: repeat(var(--rows), auto); column-gap: 28px; }
-}
-
-/* A blueprint's builds on the methods list: one line under its parts, a
- * label then a pill per build with its era; a draft's pill is dashed. */
-.bp-builds-inline { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding-top: 10px; border-top: 1px solid var(--fugu-border); }
-.bp-builds-inline .lbl { margin-right: 4px; font-size: .62rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--fugu-ink-muted); }
-@media (prefers-reduced-motion: reduce) {
-  .bp-name .go, .parts-compact .part-row, .parts-compact a.part-row::after { transition: none; }
-}
-
-/* Build pills */
-.opt-pill { padding: 2px 8px; border: 1px solid var(--fugu-border-strong); border-radius: 12px; font-size: .72rem; font-style: normal; color: var(--fugu-ink-muted); white-space: nowrap; text-decoration: none; }
+.bp-builds-lead { max-width: 65ch; margin: 0 0 16px; }
+.opt-pill { font-family: var(--fugu-font-sans); font-size: .72rem; font-style: normal; padding: 2px 8px; border: 1px solid var(--fugu-border-strong); border-radius: 12px; color: var(--fugu-ink-muted); white-space: nowrap; text-decoration: none; }
 .opt-pill b { font-weight: 600; color: var(--fugu-ink); }
 a.opt-pill:hover { border-color: var(--fugu-accent); color: var(--fugu-ink); }
-.opt-pill.todo { border-style: dashed; color: var(--fugu-ink-muted); }
-.opt-pill .y { margin-left: 5px; font-family: var(--fugu-font-mono); font-size: .64rem; color: var(--fugu-ink-muted); }
 
-/* A build's era: under its name on its card. */
-.build-origin { margin: 0; font-family: var(--fugu-font-mono); font-size: .7rem; letter-spacing: .02em; color: var(--fugu-ink-muted); }
+/* A build's era: mono, faint, under its name on its card. */
+.build-origin { font-family: var(--fugu-font-mono); font-size: .7rem; color: var(--fugu-ink-muted); letter-spacing: .02em; margin: 0; }
 
 /* A blueprint's lineage: builds as dots on a track of decades, placed by
- * era, labels above. Draft builds are faint. Under 640px, a list. */
+ * era, labels above (higher when close). Draft builds are faint. Under
+ * 640px it turns into a list. */
 .timeline { position: relative; margin: 8px 0 34px; padding: calc(50px + (var(--tl-rows, 2) - 2) * 36px) 0 0; }
-.tl-track { position: relative; height: 2px; margin: 0 6px; background: var(--fugu-border-strong); }
-.tl-list { margin: 0; padding: 0; list-style: none; }
-.tl-mark { position: absolute; bottom: -6px; display: flex; flex-direction: column; align-items: center; margin: 0; transform: translateX(-50%); }
-.tl-dot { order: 2; width: 12px; height: 12px; border-radius: 50%; background: var(--fugu-accent); border: 2px solid var(--fugu-bg); box-shadow: 0 0 0 1px var(--fugu-accent); }
-.tl-name { order: 1; margin-bottom: 6px; font-size: .78rem; font-weight: 600; white-space: nowrap; color: var(--fugu-ink); text-decoration: none; }
+.tl-track { position: relative; height: 2px; background: var(--fugu-border-strong); margin: 0 6px; }
+.tl-list { list-style: none; margin: 0; padding: 0; }
+.tl-mark { position: absolute; bottom: -6px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; margin: 0; }
+.tl-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--fugu-accent); border: 2px solid var(--fugu-bg); box-shadow: 0 0 0 1px var(--fugu-accent); order: 2; }
+.tl-name { font-family: var(--fugu-font-sans); font-size: .78rem; font-weight: 600; white-space: nowrap; margin-bottom: 6px; order: 1; color: var(--fugu-ink); text-decoration: none; }
 a.tl-name:hover { color: var(--fugu-accent-strong); }
 .tl-mark.alt .tl-name { margin-bottom: 24px; }
-.tl-mark.alt .tl-name::after { content: ""; display: block; width: 1px; height: 16px; margin: 2px auto 0; background: var(--fugu-border-strong); }
+.tl-mark.alt .tl-name::after { content: ""; display: block; width: 1px; height: 16px; background: var(--fugu-border-strong); margin: 2px auto 0; }
 /* Rows 2 and 3, for a label that would still overlap the one before it (blueprint/lineage.html, --tl-rows). */
 .tl-mark.r2 .tl-name { margin-bottom: 42px; }
 .tl-mark.r2 .tl-name::after { height: 34px; }
 .tl-mark.r3 .tl-name { margin-bottom: 60px; }
 .tl-mark.r3 .tl-name::after { height: 52px; }
 .tl-mark.todo .tl-dot { background: var(--fugu-bg); box-shadow: 0 0 0 1px var(--fugu-ink-faint); }
-.tl-mark.todo .tl-name { font-weight: 500; color: var(--fugu-ink-muted); }
+.tl-mark.todo .tl-name { color: var(--fugu-ink-muted); font-weight: 500; }
+/* The sidebar's lineage at desktop widths (Fugu blueprint/lineage-side.html;
+ * STYLE.md "Lineage in the sidebar", mockups/blueprint-lineage-sidebar.html):
+ * a spine to scale, decades on the left, a link row per build on the right.
+ * Fugu places each row and decade by an inline `top`; the dot and leader sit
+ * inside the link, offset by --off, so hovering a row lights its dot. The
+ * geometry matches Fugu's: spine at 52px, text at 80px, dot centred on the
+ * spine. The leader runs from the dot's centre, under the dot, so it aims
+ * at the middle of the circle. The body's lineage (.blueprint-lineage) hides at the same width, so
+ * Parts, which follows it, loses its gap. */
+@media (min-width: 1024px) { .blueprint-lineage + .subsection-gap { margin-top: 0; } }
+.vt { position: relative; }
+.vt-spine { position: absolute; left: 52px; top: 0; bottom: 0; width: 2px; background: var(--fugu-border-strong); }
+.vt-dec { position: absolute; left: 0; width: 58px; display: flex; align-items: center; gap: 6px; transform: translateY(-50%); font-family: var(--fugu-font-mono); font-size: .64rem; line-height: 1; color: var(--fugu-ink-muted); }
+/* The tick is 8px centred on the spine (52–54px, centre 53): it runs
+ * 49–57px, so it ends 1px inside the label's 58px box. */
+.vt-dec::after { content: ""; width: 8px; height: 1px; margin-left: auto; margin-right: 1px; background: var(--fugu-border-strong); }
+.vt-zoom { position: absolute; left: 50px; width: 6px; border-radius: 3px; background: var(--fugu-accent-soft); box-shadow: 0 0 0 1px var(--fugu-border-strong); }
+.vt-dec.vt-yr { font-size: .6rem; }
+/* A long empty stretch cut to a break in the spine, centred on it (53px), with a ⋮. */
+.vt-break { position: absolute; left: 44px; width: 18px; display: flex; align-items: center; justify-content: center; background: var(--fugu-bg); font-size: .8rem; line-height: 1; color: var(--fugu-ink-faint); }
+.vt-name { position: absolute; left: 72px; right: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 2px 8px; border-radius: 4px; transform: translateY(-50%); font-family: var(--fugu-font-sans); font-size: .86rem; font-weight: 600; line-height: 1.2; white-space: nowrap; color: var(--fugu-ink); text-decoration: none; }
+.vt-name > span:not(.ln-dot) { overflow: hidden; text-overflow: ellipsis; }
+.vt-name .y { flex: none; font-family: var(--fugu-font-mono); font-size: .7rem; font-weight: 400; color: var(--fugu-ink-muted); }
+.vt-name:hover, .vt-name:focus-visible { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); }
+.vt-name:hover .y, .vt-name:focus-visible .y { color: var(--fugu-accent-strong); }
+.vt-name .ln-dot { position: absolute; left: -25px; top: calc(50% + var(--off, 0px)); width: 12px; height: 12px; border-radius: 50%; background: var(--fugu-accent); border: 2px solid var(--fugu-bg); box-shadow: 0 0 0 1px var(--fugu-accent); z-index: 1; transform: translateY(-50%); transition: transform .12s, background .12s; }
+.vt-name:hover .ln-dot, .vt-name:focus-visible .ln-dot { transform: translateY(-50%) scale(1.35); background: var(--fugu-accent-strong); box-shadow: 0 0 0 1px var(--fugu-accent-strong); }
+.vt-lead { position: absolute; left: -19px; top: calc(50% + var(--off, 0px)); width: 21px; overflow: visible; stroke: var(--fugu-border-strong); stroke-width: 1; }
+.vt-name.todo { font-weight: 500; color: var(--fugu-ink-muted); }
+.vt-name.todo .ln-dot { background: var(--fugu-bg); box-shadow: 0 0 0 1px var(--fugu-ink-faint); }
+.vt-name.todo:hover, .vt-name.todo:focus-visible { color: var(--fugu-accent-strong); }
+.vt-name.todo:hover .ln-dot, .vt-name.todo:focus-visible .ln-dot { background: var(--fugu-accent-strong); box-shadow: 0 0 0 1px var(--fugu-accent-strong); }
+/* History entries and decades in the sidebar, as on the track: a smaller
+ * grey dot and a muted name (not a link without one), and a decade's dot
+ * a capsule down the spine from its first year to its last (--len), its
+ * label by its first year. */
+.vt-name.hist { font-weight: 500; color: var(--fugu-ink-muted); }
+.vt-name.hist .ln-dot { left: -24px; width: 10px; height: 10px; background: var(--fugu-ink-faint); box-shadow: none; }
+span.vt-name:hover { background: none; color: var(--fugu-ink-muted); }
+span.vt-name:hover .y { color: var(--fugu-ink-muted); }
+span.vt-name:hover .ln-dot { transform: translateY(-50%); background: var(--fugu-ink-faint); box-shadow: none; }
+.vt-name.vt-decade .ln-dot { height: calc(var(--len) + 12px); border-radius: 6px; transform: translateY(-6px); background: var(--fugu-accent-soft); z-index: 0; }
+.vt-name.vt-decade:hover .ln-dot, .vt-name.vt-decade:focus-visible .ln-dot { transform: translateY(-6px) scaleX(1.35); }
+.vt-name.hist.vt-decade .ln-dot { height: calc(var(--len) + 10px); border-radius: 5px; transform: translateY(-5px); background: var(--fugu-border-strong); }
+.vt-name.hist.vt-decade:hover .ln-dot, .vt-name.hist.vt-decade:focus-visible .ln-dot { transform: translateY(-5px) scaleX(1.35); }
+span.vt-name.vt-decade:hover .ln-dot { transform: translateY(-5px); }
+@media (prefers-reduced-motion: reduce) { .vt-name .ln-dot { transition: none; } }
 .tl-detail { display: none; font-family: var(--fugu-font-mono); font-size: .68rem; font-weight: 400; color: var(--fugu-ink-muted); }
 .tl-ticks { position: relative; height: 28px; margin: 0 6px; }
 .tl-tick { position: absolute; top: 8px; transform: translateX(-50%); font-family: var(--fugu-font-mono); font-size: .66rem; color: var(--fugu-ink-muted); }
@@ -1032,21 +1867,20 @@ a.tl-name:hover { color: var(--fugu-accent-strong); }
 .tl-mark.tl-end.hist { transform: translateX(calc(-100% + 5px)); }
 .tl-mark.tl-end .tl-name::after { margin-right: 5px; }
 .tl-mark.tl-decade { width: calc(var(--w) + 12px); transform: translateX(-6px); }
-.tl-mark.tl-decade .tl-dot { width: 100%; border-radius: 6px; }
+.tl-mark.tl-decade .tl-dot { width: 100%; border-radius: 6px; background: var(--fugu-accent-soft); }
 .tl-mark.hist.tl-decade { width: calc(var(--w) + 10px); transform: translateX(-5px); }
-.tl-mark.tl-decade .tl-dot { background: var(--fugu-accent-soft); }
 .tl-mark.hist.tl-decade .tl-dot { border-radius: 5px; background: var(--fugu-border-strong); }
-/* A zoomed run of crowded years (blueprint/lineage-zoom.html): a wider, tinted stretch of track, its years ticked '88. */
+/* A zoomed run of crowded years (Fugu's blueprint/lineage-zoom.html): a wider, tinted stretch of track, its years ticked '88. */
 .tl-zoom { position: absolute; top: -2px; height: 6px; border-radius: 3px; background: var(--fugu-accent-soft); box-shadow: 0 0 0 1px var(--fugu-border-strong); }
 .tl-tick.tl-yr { font-size: .6rem; }
-/* A long empty stretch cut to a break (blueprint/lineage-zoom.html): a gap in the track with an ellipsis, no ticks. */
+/* A long empty stretch cut to a break (Fugu's blueprint/lineage-zoom.html): a gap in the track with an ellipsis, no ticks. */
 .tl-break { position: absolute; top: -8px; height: 18px; display: flex; align-items: center; justify-content: center; background: var(--fugu-bg); font-size: .8rem; padding-bottom: 6px; line-height: 1; color: var(--fugu-ink-faint); }
 @media (max-width: 640px) {
   .timeline { padding: 0; }
   .tl-ticks, .tl-zoom, .tl-break { display: none; }
-  .tl-track { height: auto; margin: 0 0 30px; background: none; }
-  .tl-list { display: flex; flex-direction: column; margin-left: 6px; border-left: 2px solid var(--fugu-border-strong); }
-  .tl-mark { position: static; flex-direction: row; gap: 10px; margin-left: -7px; padding: 6px 0; transform: none; }
+  .tl-track { height: auto; background: none; margin: 0 0 30px; }
+  .tl-list { display: flex; flex-direction: column; border-left: 2px solid var(--fugu-border-strong); margin-left: 6px; }
+  .tl-mark { position: static; transform: none; flex-direction: row; gap: 10px; padding: 6px 0; margin-left: -7px; }
   .tl-mark .tl-dot { order: 0; flex: none; }
   .tl-mark.tl-end { align-items: center; }
   .tl-mark .tl-name, .tl-mark.alt .tl-name, .tl-mark.r2 .tl-name, .tl-mark.r3 .tl-name { margin: 0; white-space: normal; }
@@ -1058,57 +1892,145 @@ a.tl-name:hover { color: var(--fugu-accent-strong); }
   .tl-mark.hist .tl-dot { margin-left: 1px; }
 }
 
-/* At desktop widths the lineage is in the sidebar (below), so the body's
- * is hidden (.lg:hidden) and Parts, which follows it, needs no gap. */
-@media (min-width: 1024px) {
-  .blueprint-lineage + .subsection-gap { margin-top: 0; }
-}
-
-/* A blueprint's lineage in the sidebar: a vertical spine to scale, decade
- * labels on the left, each build's title and era on the right as a link
- * whose dot and leader sit inside it (placed by --off), so hovering the
- * row lights its dot. The leader runs from the dot's centre, under it, to
- * the text. Drafts are faint, as on the track. */
-.vt { position: relative; }
-.vt-spine { position: absolute; left: 52px; top: 0; bottom: 0; width: 2px; background: var(--fugu-border-strong); }
-.vt-dec { position: absolute; left: 0; width: 58px; display: flex; align-items: center; gap: 6px; transform: translateY(-50%); font-family: var(--fugu-font-mono); font-size: .64rem; color: var(--fugu-ink-muted); }
-.vt-dec::after { content: ""; width: 8px; height: 1px; margin-left: auto; margin-right: 1px; background: var(--fugu-border-strong); }
-.vt-zoom { position: absolute; left: 50px; width: 6px; border-radius: 3px; background: var(--fugu-accent-soft); box-shadow: 0 0 0 1px var(--fugu-border-strong); }
-.vt-dec.vt-yr { font-size: .6rem; }
-.vt-break { position: absolute; left: 44px; width: 18px; display: flex; align-items: center; justify-content: center; background: var(--fugu-bg); font-size: .8rem; line-height: 1; color: var(--fugu-ink-faint); }
-.vt-name { position: absolute; left: 72px; right: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 2px 8px; border-radius: 4px; transform: translateY(-50%); font-size: .86rem; font-weight: 600; line-height: 1.2; white-space: nowrap; color: var(--fugu-ink); text-decoration: none; }
-.vt-name > span:not(.ln-dot) { overflow: hidden; text-overflow: ellipsis; }
-.vt-name .y { flex: none; font-family: var(--fugu-font-mono); font-size: .7rem; font-weight: 400; color: var(--fugu-ink-muted); }
-.vt-name:hover, .vt-name:focus-visible { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); }
-.vt-name .ln-dot { position: absolute; z-index: 1; left: -25px; top: calc(50% + var(--off, 0px)); width: 12px; height: 12px; border-radius: 50%; background: var(--fugu-accent); border: 2px solid var(--fugu-bg); box-shadow: 0 0 0 1px var(--fugu-accent); transform: translateY(-50%); transition: transform .12s, background .12s; }
-.vt-name:hover .ln-dot, .vt-name:focus-visible .ln-dot { transform: translateY(-50%) scale(1.35); background: var(--fugu-accent-strong); box-shadow: 0 0 0 1px var(--fugu-accent-strong); }
-.vt-lead { position: absolute; left: -19px; top: calc(50% + var(--off, 0px)); width: 21px; overflow: visible; stroke: var(--fugu-border-strong); stroke-width: 1; }
-.vt-name.todo { font-weight: 500; color: var(--fugu-ink-muted); }
-.vt-name.todo .ln-dot { background: var(--fugu-bg); box-shadow: 0 0 0 1px var(--fugu-ink-faint); }
-/* History entries and decades in the sidebar, as on the track: a smaller
- * grey dot and a muted name (not a link without one), and a decade's dot
- * a capsule down the spine from its first year to its last (--len), its
- * label by its first year. */
-.vt-name.hist { font-weight: 500; color: var(--fugu-ink-muted); }
-.vt-name.hist .ln-dot { left: -24px; width: 10px; height: 10px; background: var(--fugu-ink-faint); box-shadow: none; }
-span.vt-name:hover { background: none; color: var(--fugu-ink-muted); }
-span.vt-name:hover .y { color: var(--fugu-ink-muted); }
-span.vt-name:hover .ln-dot { transform: translateY(-50%); background: var(--fugu-ink-faint); box-shadow: none; }
-.vt-name.vt-decade .ln-dot { height: calc(var(--len) + 12px); border-radius: 6px; transform: translateY(-6px); background: var(--fugu-accent-soft); z-index: 0; }
-.vt-name.vt-decade:hover .ln-dot, .vt-name.vt-decade:focus-visible .ln-dot { transform: translateY(-6px) scaleX(1.35); }
-.vt-name.hist.vt-decade .ln-dot { height: calc(var(--len) + 10px); border-radius: 5px; transform: translateY(-5px); background: var(--fugu-border-strong); }
-.vt-name.hist.vt-decade:hover .ln-dot, .vt-name.hist.vt-decade:focus-visible .ln-dot { transform: translateY(-5px) scaleX(1.35); }
-span.vt-name.vt-decade:hover .ln-dot { transform: translateY(-5px); }
-@media (prefers-reduced-motion: reduce) { .vt-name .ln-dot { transition: none; } }
-
-/* Tables in the body scroll sideways (render-table.html). */
+/* Tables that scroll sideways on phones (Fugu render-table.html). */
 .table-scroll { overflow-x: auto; }
 
-/* Focus rings: one visible ring for keyboard focus wherever a hover state
- * alone stood in for it (:focus-visible keeps it off mouse clicks). A
- * card's ring goes round the whole card, since its title link's ::after
- * covers the card. Small text uses --fugu-ink-muted; --fugu-ink-faint is
- * for icons, list markers, glyphs and control outlines (3:1 or more). */
+/* Flow diagram (STYLE.md "Flow diagram"): a ```flow block drawn by
+ * Fugu's render-codeblock-flow.html (spec: hugo-warped fences/flow.md).
+ * Copied from fugu.css's "Flow diagrams" block, since fugu.styles is off
+ * here, and set in the formula diagram's type: Franklin labels in
+ * --border-strong boxes, italic Lora notes, --accent arrows. The figure is
+ * a size container, so under 560px of its own width (a phone, the recipe
+ * sidebar) each row becomes a list down the page; keep those rules. */
+.flow { container-type: inline-size; contain-intrinsic-inline-size: 40rem; margin: 1.75rem 0; font-style: normal; }
+.article-content .flow + :is(h2, h3),
+.article-content .flow + .ing-heading > h2 { margin-top: 3rem; }
+.flow .flow-row { display: flex; justify-content: center; align-items: flex-start; gap: 10px; }
+.flow .flow-step { display: flex; flex-direction: column; align-items: center; min-width: 0; text-align: center; }
+.flow .flow-label {
+  padding: 5px 10px; border: 1px solid var(--fugu-border-strong); border-radius: 5px;
+  background: var(--fugu-surface); color: var(--fugu-ink);
+  font-family: var(--fugu-font-sans); font-size: .8rem; font-weight: 600; line-height: 20px; white-space: nowrap;
+}
+.flow .flow-note { margin-top: 5px; max-width: 10em; font-family: var(--fugu-font-serif); font-size: .74rem; font-style: italic; line-height: 1.3; color: var(--fugu-ink-muted); }
+.flow :is(.flow-label, .flow-note) code { margin: 0; padding: 1px 4px; font-size: .85em; }
+/* As tall as a label's box, so each arrow sits level with the boxes. */
+.flow .flow-arrow { flex: none; font-family: var(--fugu-font-mono); font-size: 1rem; line-height: 32px; color: var(--fugu-accent); }
+.flow .flow-cap { margin-top: 12px; font-family: var(--fugu-font-serif); font-size: .76rem; text-align: center; color: var(--fugu-ink-muted); }
+.flow .flow-grid { display: grid; grid-template-columns: repeat(var(--cols), auto); justify-content: center; gap: 16px 10px; }
+.flow.headed .flow-grid { grid-template-columns: auto repeat(var(--cols), auto); }
+.flow .flow-head {
+  grid-column: 1; margin: 0; text-align: right; white-space: nowrap;
+  font-family: var(--fugu-font-mono); font-size: .72rem; line-height: 32px; color: var(--fugu-ink-muted);
+}
+.flow .flow-grid ol.flow-row {
+  display: grid; grid-column: 1 / -1; grid-template-columns: subgrid;
+  margin: 0; padding: 0; list-style: none; column-gap: 10px;
+}
+.flow.headed .flow-grid ol.flow-row { grid-column: 2 / -1; }
+.flow .flow-item { display: flex; align-items: flex-start; gap: 10px; margin: 0; padding: 0; }
+.flow .flow-item::before { content: none; }
+.flow .flow-item .flow-step { flex: 1; }
+/* Narrow: every row is a list down the page, the labels in one column
+ * with ↓ between them and each note beside its label. */
+@container (max-width: 560px) {
+  .flow .flow-grid { display: block; }
+  .flow .flow-row,
+  .flow .flow-grid ol.flow-row {
+    display: grid; grid-template-columns: auto minmax(0, 16em); justify-content: center;
+    align-items: center; gap: 0 12px;
+  }
+  .flow .flow-item, .flow .flow-step { display: contents; }
+  .flow .flow-label { grid-column: 1; justify-self: stretch; text-align: center; }
+  .flow .flow-arrow { grid-column: 1; justify-self: center; line-height: 20px; transform: rotate(90deg); }
+  .flow .flow-note { grid-column: 2; max-width: none; margin: 0; text-align: left; }
+  .flow .flow-head { margin: 18px 0 8px; line-height: 1.3; text-align: center; }
+  .flow .flow-head:first-child { margin-top: 0; }
+  .flow .flow-grid ol.flow-row + ol.flow-row { margin-top: 18px; }
+}
+
+/* Stack diagram (STYLE.md "Exploded build diagram"): a ```stack block
+ * drawn by Fugu's partials/stack/draw.html. The layers carry their own
+ * ink and fills; this sets the labels, leaders and bracket in the site's
+ * type and tokens. Full size in a page,
+ * about 150px wide and unlabelled on a build card. */
+.stack { margin: 1.75rem auto; max-width: 420px; color: var(--fugu-ink); }
+.stack-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.stack-label { font-family: var(--fugu-font-sans); font-weight: 600; fill: var(--fugu-ink); }
+.stack-role { font-family: var(--fugu-font-serif); font-style: italic; fill: var(--fugu-ink-muted); fill-opacity: 1; }
+.stack-lead { stroke: var(--fugu-ink-faint); stroke-opacity: 1; }
+.stack-dot { fill: var(--fugu-ink-faint); fill-opacity: 1; }
+.stack-bracket { stroke: var(--fugu-accent); }
+.stack-times { font-family: var(--fugu-font-mono); fill: var(--fugu-accent-strong); }
+.stack-missing { stroke: var(--fugu-ink-faint); }
+.stack-cap { font-family: var(--fugu-font-sans); font-size: .74rem; color: var(--fugu-ink-muted); margin-top: 12px; text-align: center; }
+/* On the base: every stack sits on the stats rule, so bottom buns line up
+   across a row and a short burger looks short (mockups/even-cards.html,
+   approved 2026-11-07). Was margin: auto, which centred each one. */
+.build-card .stack { width: 150px; margin: auto auto 0; padding: 4px 0; }
+/* Centre the diagram in the space between the intro and the stats, since
+ * cards in a row stretch to the tallest stack. */
+.build-card .rcard-stats { margin-top: 0; }
+
+
+/* --- Approved 2026-11-07 (docs/REVIEW.md) ------------------------------- */
+
+/* Even cards (mockups/even-cards.html): the formula row sits just above
+   the stats rule, so formulas in a row share a line and the spare height
+   falls between the intro and the formula. A card with no times still ends
+   on its rule, drawn here since there's no stats line to carry it. */
+.rcard:not(.build-card) .rcard-formula { margin-top: auto; }
+.rcard:not(.build-card) .rcard-formula + .rcard-stats { margin-top: 0; }
+.rcard:not(.build-card):not(:has(.rcard-stats))::after {
+  content: ""; margin-top: auto; border-top: 1px solid var(--fugu-border); min-height: 26px;
+}
+.rcard:not(.build-card):has(.rcard-formula):not(:has(.rcard-stats))::after { margin-top: 0; }
+
+/* Recipe mechanic (mockups/recipe-mechanic.html): the Mechanic opens the
+   recipe as STYLE.md's Mechanic callout, above Ingredients. Fugu wraps the
+   section in .mechanic-callout when "mechanic" isn't a sidebar slot. */
+.article-content .mechanic-callout {
+  border-left: 3px solid var(--fugu-accent); background: var(--fugu-surface);
+  padding: 14px 18px 12px; margin: 0 0 28px; border-radius: 0 6px 6px 0;
+}
+.article-content .mechanic-callout > h2 {
+  font-family: var(--fugu-font-sans); font-size: .72rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--fugu-accent-strong);
+  margin: 0 0 6px; padding: 0; border: 0;
+}
+.article-content .mechanic-callout > h2 .anchor,
+.article-content .mechanic-callout > h2 a[href^="#"] { display: none; }
+.article-content .mechanic-callout p { font-size: 1rem; line-height: 1.6; color: var(--fugu-ink); margin: 0; }
+.article-content .mechanic-callout p + p { margin-top: .6em; }
+.article-content .mechanic-callout .formula { margin: 14px 0 2px; }
+
+/* Quieter sidebar: with the Mechanic out, what's left (To serve, Notes,
+   Variations) is reference beside the recipe, set back in muted text. */
+.recipe-sidebar-section > p,
+.recipe-sidebar-section > ul,
+.recipe-sidebar-section .notes-list li { color: var(--fugu-ink-muted); font-size: .82rem; line-height: 1.5; }
+
+/* Phones: Recipe notes opens on the facts; search goes last. */
+@media (max-width: 1023px) {
+  .recipe-sidebar > .not-prose { order: 99; }
+}
+
+/* Food Log months grouped by year, older years folded (Fugu's
+   reading-sidebar.html; mockups/food-log-sidebar.html, approved 2026-11-07). */
+.reading-sidebar .rs-year { font-family: var(--fugu-font-sans); font-size: .7rem; font-weight: 600; letter-spacing: .08em; color: var(--fugu-ink-muted); margin: 12px 8px 2px; }
+.reading-sidebar .rs-year:first-child { margin-top: 0; }
+.reading-sidebar .rs-year-fold > summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 14px; font-family: var(--fugu-font-sans); font-size: .7rem; font-weight: 600; letter-spacing: .08em; color: var(--fugu-ink-muted); padding: 7px 8px; border-radius: 4px; }
+.reading-sidebar .rs-year-fold > summary::-webkit-details-marker { display: none; }
+.reading-sidebar .rs-year-fold > summary:hover { background: var(--fugu-accent-soft); color: var(--fugu-accent-strong); }
+.reading-sidebar .rs-year-fold > summary .n { font-family: var(--fugu-font-mono); font-size: .72rem; font-weight: 500; letter-spacing: 0; color: var(--fugu-ink-muted); }
+.reading-sidebar .rs-year-fold > summary .n::after { content: " +"; }
+.reading-sidebar .rs-year-fold[open] > summary .n::after { content: " \2013"; }
+.reading-sidebar .rs-year-fold > a { padding-left: 16px; }
+
+/* Focus rings (code review, 2026-11-08): one visible ring for keyboard
+ * focus wherever a hover state alone used to stand in for it. :focus-visible
+ * keeps it off mouse clicks. A card's ring goes round the whole card, since
+ * its title link's ::after is what covers the card. */
 .rcard:has(.rcard-link:focus-visible),
 a.method-chip:focus-visible, a.cuisine-chip:focus-visible, a.principle-chip:focus-visible,
 a.dev-chip:focus-visible, a.blueprint-chip:focus-visible,
@@ -1116,3 +2038,11 @@ a.part-row:focus-visible, .vt-name:focus-visible,
 #search-results a:focus-visible {
   outline: 2px solid var(--fugu-accent-strong); outline-offset: 2px;
 }
+
+/* Mechanic in the recipe sidebar, for a site that lists "mechanic" in
+ * params.fugu.recipeSidebar. */
+.recipe-sidebar-section .mechanic { font-size: .86rem; line-height: 1.45; color: var(--fugu-ink-muted); }
+.recipe-sidebar-section .mechanic p { margin: 0; }
+.recipe-sidebar-section .mechanic p + p { margin-top: .6em; }
+.recipe-sidebar-section .mechanic ul { margin: .6em 0 0; padding-left: 1.1em; }
+.recipe-sidebar-section .mechanic strong { color: var(--fugu-ink); }

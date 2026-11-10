@@ -192,7 +192,7 @@
         with the top of the body (the title block is above this section),
         and below the article on mobile. Pinned on desktop like the recipe
         sidebar; reference pages can run it taller than a screen, so
-        custom.css caps its height and lets it scroll on its own. */}}
+        fugu.css caps its height and lets it scroll on its own. */}}
       {{ if $reading }}
         <aside class="reading-sidebar-wrap lg:ms-auto px-0 lg:ps-8 print:hidden" aria-label="{{ i18n "fugu.sidebar" }}">
           <div class="reading-sidebar-pin lg:sticky {{ $topClass }}">
@@ -210,7 +210,7 @@
           its DOM position (after the main content column) and therefore
           its desktop placement untouched. */}}
         {{/* lg:max-w-2xs's actual width (18rem) is overridden 15% wider in
-          custom.css (.recipe-sidebar-wrap @ min-width:1024px) — this
+          fugu.css (.recipe-sidebar-wrap @ min-width:1024px) — this
           sidebar carries more (meta rail, Mechanic callout, To serve,
           Notes) than a plain jump-to TOC, so it doesn't share the TOC's
           width. The utility class stays on the element (it's bundled with
@@ -221,7 +221,7 @@
           max-w-[20.7rem] silently no-ops here the same way bare
           "order-last" does elsewhere in this file — only classes already
           in that bundle take effect; anything new has to be a real
-          custom.css rule. */}}
+          fugu.css rule. */}}
         {{/* An <aside>, named, so a screen reader can find or skip it. */}}
         <aside class="recipe-sidebar-wrap order-first lg:order-last lg:ms-auto px-0 lg:ps-8 lg:max-w-2xs" aria-label="{{ i18n "fugu.recipe_notes" }}">
           {{/* Only automagic-sidebar.js opens the collapsed sidebar, so with
