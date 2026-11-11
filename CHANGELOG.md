@@ -15,6 +15,8 @@ After updating Fugu, restart a running `hugo server`: one started before the i18
 
 ### Changed
 
+- An ingredient group label (`#### Dry`) straight under its `##` heading renders as `<h3 class="ing-subhead">`, not `<h4>`, so a recipe's heading outline doesn't skip from h2 to h4; one inside a `###` component stays `<h4>`. It looks the same: `.prose :is(h3, h4).ing-subhead` keeps the h4 spacing. CSS written for `h4.ing-subhead` should use `.ing-subhead`.
+- `compare-styles.py --rename OLD=NEW` compares an element whose tag a change renames on purpose (`--rename h4=h3`), instead of stopping the page at it.
 - Fugu has a look of its own, and it's different from v0.2.0's basic styles: monochrome, with every colour a step of the scheme's neutral ramp (near-black links and quantities, told apart by weight and underline), and the system sans for body text as well as headings. `fugu.css` now carries every component's design (cards, ingredients, sidebars, glossary, diagrams, the page shells), moved from Not a Chef's `custom.css`. New tokens: `--fugu-font-sans`, `--fugu-font-body`, `--fugu-flag(-soft)`, `--fugu-principle-strong`, `--fugu-highlight`, and `--fugu-focus` (keyboard focus rings); the accent tokens default to greys now, not the scheme's primary. `--fugu-shadow` (popovers) and `--fugu-radius` (cards and panels) now do something. Removed, since nothing read them: `--fugu-accent-wash`, `--fugu-cuisine(-soft)`.
 - A `fugu` colour scheme (pure greys), for `colorScheme = "fugu"`; the example site and screenshots use it.
 - `compare-styles.py` gains `--open` (every `<details>` open and the first popover shown) and `--all` (every page).

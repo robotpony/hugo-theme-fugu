@@ -21,6 +21,7 @@ Usage:
     compare-styles.py --site-ref REV     the site's styling at REV
     compare-styles.py OLD NEW            two folders you've already built
     compare-styles.py --page /recipes/x/ ...   add pages to the automatic set
+    compare-styles.py --rename h4=h3     compare a renamed tag's looks too
 
 "Before" is a copy of the site whose styling files (assets/, layouts/,
 config/, i18n/, and a hugo.toml or config.toml) that differ from the
@@ -407,8 +408,10 @@ def same_value(a, b, tolerance):
     return all(abs(float(x) - float(y)) <= tolerance for x, y in zip(NUM_RE.findall(a), NUM_RE.findall(b)))
 
 
-def compare(before, after, tolerance, examples):
-    """Print the differences; returns True when there are none."""
+def compare(before, after, tolerance, examples, renames=()):
+    """Print the differences; returns True when there are none. `renames`
+    are (old, new) element labels, h4.ing-subhead to h3.ing-subhead, for
+    a change that renames an element on purpose."""
     groups = defaultdict(lambda: {"n": 0, "pages": set(), "ex": []})
     moved = defaultdict(list)
     missing = []
@@ -424,7 +427,10 @@ def compare(before, after, tolerance, examples):
         if len(a) != len(b):
             missing.append((key, f"{len(a)} elements", f"{len(b)} elements"))
         for ea, eb in zip(a, b):
-            if ea["k"] != eb["k"]:
+            ka = ea["k"]
+            for old, new in renames:
+                ka = re.sub(r"(?<= )" + re.escape(old) + r"(?=[.#]|$)", new, ka)
+            if ka != eb["k"]:
                 missing.append((key, ea["k"], eb["k"]))
                 break
             for prop in sorted(set(ea["s"]) | set(eb["s"])):
@@ -484,6 +490,9 @@ def main():
     parser.add_argument("--examples", type=int, default=4, metavar="N", help="examples per difference (default: 4)")
     parser.add_argument("--hugo-arg", action="append", default=[], metavar="ARG",
                         help="pass an argument to both hugo builds, e.g. --hugo-arg=-D; repeatable")
+    parser.add_argument("--rename", action="append", default=[], metavar="OLD=NEW",
+                        help="treat an element labelled OLD before as NEW after, e.g. h4=h3, for a change that "
+                             "renames a tag on purpose; repeatable")
     parser.add_argument("--keep", action="store_true", help="keep the work folder and print where it is")
     args = parser.parse_args()
     if args.pages_only and not args.page:
@@ -534,7 +543,8 @@ def main():
                 results.append(measure_pages(base, pages, widths, modes, work / f"profile-{side}", states))
             finally:
                 server.shutdown()
-        ok = compare(results[0], results[1], args.tolerance, args.examples)
+        ok = compare(results[0], results[1], args.tolerance, args.examples,
+                     [tuple(r.split("=", 1)) for r in args.rename])
     finally:
         if args.keep:
             print(f"\nWork folder kept in {work}")

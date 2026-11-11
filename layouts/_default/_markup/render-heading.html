@@ -32,8 +32,9 @@
   link, still behind article.showHeadingAnchors), with the link named
   for its section and shown on keyboard focus. Added: the data-ing-
   heading, data-method-heading, data-hide-heading and data-sidebar-heading
-  attributes, the .ing-subhead class, the "#" moved into CSS (see below),
-  and trailing vault tags left off the text (headings/without-tags.html).
+  attributes, the .ing-subhead class, an ingredient group label under an
+  h2 rendered as h3 (see below), the "#" moved into CSS (see below), and
+  trailing vault tags left off the text (headings/without-tags.html).
 */}}
 {{ $anchor := anchorize .Anchor }}
 {{ $isRecipe := eq (partialCached "section/role.html" .Page.Section .Page.Section) "recipe" }}
@@ -107,7 +108,17 @@
 {{ end }}
 {{ $inIngredientSection := and $isRecipe (in (slice 3 4) .Level) (.Page.Scratch.Get "ingSection") }}
 
-<h{{ .Level }} class="relative group{{ if $inIngredientSection }} ing-subhead{{ end }}"
+{{/* Group labels are written "#### Dry" (docs/recipe-format.md), straight
+     under "## Ingredients", which would skip a level in the page's outline
+     (h2 to h4). A label with no h3 since its h2 renders one level up, as an
+     h3 with the same .ing-subhead look; one inside a "###" component stays
+     h4. The source, and Hugo's table of contents, keep the "####". */}}
+{{ if eq .Level 2 }}{{ .Page.Scratch.Set "h3SinceH2" false }}{{ end }}
+{{ if eq .Level 3 }}{{ .Page.Scratch.Set "h3SinceH2" true }}{{ end }}
+{{ $level := .Level }}
+{{ if and $inIngredientSection (eq .Level 4) (not (.Page.Scratch.Get "h3SinceH2")) }}{{ $level = 3 }}{{ end }}
+
+<h{{ $level }} class="relative group{{ if $inIngredientSection }} ing-subhead{{ end }}"
   {{- if and $isRecipe (eq .Level 2) }} data-ing-heading="{{ $isIngredientHeading }}" data-method-heading="{{ $isMethodHeading }}"{{ if $isHiddenHeading }} data-hide-heading="true"{{ end }}{{ end -}}
   {{- with $sidebarHeading }} data-sidebar-heading="{{ . }}"{{ end -}}
 >{{ $text | safeHTML }}
@@ -125,4 +136,4 @@
         <a class="heading-anchor-link text-primary-300 dark:text-neutral-700 !no-underline" href="#{{ $anchor }}" aria-label="{{ i18n "fugu.heading_anchor" (dict "Heading" ($text | plainify | htmlUnescape | strings.TrimSpace)) }}"></a>
     </span>
     {{ end }}
-</h{{ .Level }}>
+</h{{ $level }}>

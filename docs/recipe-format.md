@@ -96,6 +96,8 @@ To split one list into groups (dry and wet, say) without making separate compone
 - 240 ml buttermilk
 ```
 
+Labels straight under the `##` render as `<h3>`, so the page's outline doesn't skip a level; inside a `###` component they stay `<h4>`. Both look the same.
+
 ## Multi-component recipes
 
 When a recipe has distinct parts (dal and tadka, dough and filling), give each its own `##` heading holding both its ingredients and its method:
