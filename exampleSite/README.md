@@ -2,7 +2,7 @@
 
 A small Fugu site with every optional part: recipes (simple, multi-component, with a Mechanic, with a formula diagram, a draft in the test kitchen, one with a photo), an essay, a reference essay behind a principle tag, reference pages with a glossary, a Food Log month, and methods in their own section with a burger blueprint (five parts, three builds with stack diagrams).
 
-It builds against Fugu and Blowfish side by side in `../..` (`themesDir`), as when Fugu is checked out at `themes/fugu` beside `themes/blowfish`. From this folder:
+It takes Fugu and Blowfish as Hugo modules, the way [getting-started.md](../docs/getting-started.md) recommends, so building it needs [Go](https://go.dev/dl/). Its `go.mod` points Fugu at this checkout (`../`), so it always shows the working tree; Blowfish and hugo-warped come at the versions Fugu's `go.mod` requires, fetched on the first build. From this folder:
 
 ```sh
 hugo server -D

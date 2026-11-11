@@ -4,7 +4,7 @@ The work list for taking Fugu to a theme other Blowfish users can install. Finis
 
 **Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §7 and §10's open items; the code review and Not a Chef's accessibility audit are done (CHANGELOG, Unreleased). Features come after 1.0.
 
-**Next:** §7's essay format (waiting on whether essays stay), then §9 and §8.
+**Next:** §8 (the tool tests and Claude commands), then §9's CI step for them; §7's essay format waits on whether essays stay.
 
 ## 4. Translation
 
@@ -32,7 +32,6 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
 ## 9. Example site and CI
 
 - [ ] Run the tool tests (§8) in `.github/workflows/build.yml`.
-- [ ] Move the example site to Hugo modules (it uses `themesDir = "../.."` today); `go.mod` is in.
 
 ## 10. Release
 

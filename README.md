@@ -104,7 +104,7 @@ python3 themes/fugu/tools/compare-styles.py    # the same pages rendered in Chro
 python3 themes/fugu/tests/check.py --compare   # that, plus every fixture site in tests/sites/
 ```
 
-[tests/sites/README.md](tests/sites/README.md) describes the fixtures. To see Fugu with no site of your own, run `hugo server -D` in [exampleSite/](exampleSite/README.md).
+[tests/sites/README.md](tests/sites/README.md) describes the fixtures. To see Fugu with no site of your own, run `hugo server -D` in [exampleSite/](exampleSite/README.md) (it takes Fugu and Blowfish as Hugo modules, so it needs Go).
 
 ## Licence
 

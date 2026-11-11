@@ -1,11 +1,10 @@
-# Fugu's example site: a few recipes and every optional part, built against
-# Fugu, hugo-warped and Blowfish side by side in ../.. (themes/ in a site,
-# or a folder holding fugu/, hugo-warped/ and blowfish/). Build from this folder: `hugo server -D`.
+# Fugu's example site: a few recipes and every optional part. It takes
+# Fugu and Blowfish as Hugo modules, as docs/getting-started.md
+# recommends; go.mod points Fugu at this checkout (../), so the site
+# always shows the working tree. Build from this folder: `hugo server -D`.
 # The content is from Not a Chef, under CC BY-SA 4.0 (LICENSE).
 baseURL = "https://example.org/"
 title = "Fugu example"
-theme = ["fugu", "blowfish"]
-themesDir = "../.."
 # Drafts publish as in-development pages ([params.fugu.development]).
 buildDrafts = true
 enableRobotsTXT = true
@@ -31,13 +30,16 @@ summaryLength = 30
     name = "cuisine"
     weight = 80
 
-# hugo-warped, which Fugu imports, is checked out beside the themes, not
-# fetched: its module path maps to that folder (relative to themesDir).
-# static/images is also mounted as assets/images so the image render hook
-# can resize photos into thumbnails. Declaring any assets mount replaces
-# Hugo's default one, so the plain assets/ mount is restated first.
+# Fugu first, then Blowfish, in place of a `theme` line. hugo-warped
+# comes with Fugu. static/images is also mounted as assets/images so the
+# image render hook can resize photos into thumbnails. Declaring any
+# assets mount replaces Hugo's default one, so the plain assets/ mount is
+# restated first.
 [module]
-  replacements = "github.com/robotpony/hugo-warped -> hugo-warped"
+  [[module.imports]]
+    path = "github.com/robotpony/hugo-theme-fugu"
+  [[module.imports]]
+    path = "github.com/nunocoracao/blowfish/v3"
   [[module.mounts]]
     source = "assets"
     target = "assets"
