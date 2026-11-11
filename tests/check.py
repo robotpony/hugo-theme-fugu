@@ -131,7 +131,13 @@ def main():
             if not (site / "hugo.toml").exists():
                 parser.error(f"no fixture site called {name}")
             out = work / name
-            problems = build(site, out, args.hugo)
+            # The example site takes Fugu and Blowfish as Hugo modules,
+            # which Hugo fetches with Go; without it Hugo's own error is a
+            # long way from the cause.
+            if (site / "go.mod").exists() and not shutil.which("go"):
+                problems = [f"{name} takes its themes as Hugo modules, which needs Go (https://go.dev/dl/) on PATH"]
+            else:
+                problems = build(site, out, args.hugo)
             if not problems:
                 problems = check_links(out) + check_expectations(site, out)
             xfail = site / "XFAIL"
