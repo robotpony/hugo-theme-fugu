@@ -364,6 +364,9 @@ def serialize_value_lines(key, value):
 
 
 def read_file(path):
+    # get, set and unset take a path as typed, relative to where they run.
+    if not path.is_file():
+        sys.exit(f"frontmatter.py: no such file: {path}")
     text = path.read_text(encoding="utf-8")
     fm_lines, body = split_frontmatter(text)
     return fm_lines, body

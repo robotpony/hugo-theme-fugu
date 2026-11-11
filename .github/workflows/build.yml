@@ -1,7 +1,7 @@
 # Builds the fixture sites (tests/sites/) against pinned Hugo and Blowfish
 # versions, failing on any warning, and checks their pages (tests/check.py). check.py also builds
 # exampleSite/ and checks every site's links; the install job installs Fugu on a new
-# site both ways. PLAN.md §9 adds the tool tests.
+# site both ways, and tests/test_tools.py tests the tools on the fixtures.
 #
 # Hugo is pinned inside Blowfish's declared range for that commit
 # (295dae3 allows 0.163.0–0.166.0); outside it, Hugo warns about the
@@ -57,6 +57,11 @@ jobs:
       # don't fail the job.
       - name: Build and check the fixtures and example site
         run: python3 themes/fugu/tests/check.py
+      # The content and theme-work tools, on the fixture sites. The
+      # add-image.sh tests need ImageMagick 7, which Ubuntu's packages
+      # don't have, so they skip here.
+      - name: Test the tools
+        run: python3 themes/fugu/tests/test_tools.py
 
   # Installs Fugu on a new site by each method, as docs/getting-started.md
   # says, fetching Blowfish for real (tests/install.py). Catches the
