@@ -880,8 +880,8 @@
   }
 
   // Scales a servings/portions frontmatter value for the yield line and
-  // the sidebar's Serves row: a bare number ("4"), a range ("3–4"), or
-  // either one leading some words ("8 individual pizzas", "about 1.5 L").
+  // the sidebar's Serves row: a bare number ("4", "⅓"), a range ("3–4"),
+  // or either one leading some words ("8 individual pizzas", "about 1.5 L").
   // A range widens outward (low end down, high end up), so 3–4 at 1.5×
   // reads 4–6 rather than claiming a precision the recipe doesn't have.
   // Anything else ("makes ~750 ml", "scales to bird size") returns null:
@@ -907,12 +907,27 @@
     FRACTIONS.forEach(function (pair) { if (pair[1] === ch) whole += pair[0]; });
     return whole;
   }
-  // A scaled amount: whole numbers stay whole (at least 1), one written
-  // with a fraction stays a mixed number ("2¼" at 2× is "4½",
-  // formatFraction), and a decimal keeps one place.
-  function yieldFormat(written, v) {
+  // A scaled amount, rounded by what it measures. Cups and the other
+  // imperial units take a mixed number ("1 cup" at 1.5× is "1½ cups",
+  // formatFraction), L and kg one decimal place, ml and g a whole number.
+  // A count (drinks, buns) stays whole if it was ("1 drink" at 1.5× is "2
+  // drinks"), unless it restates a measured amount (exact), as in "about ⅓
+  // cup (1 pizza)", whose pizza count follows the cups: "(1½ pizzas)".
+  var IMPERIAL_UNIT = /^(?:cups?|qts?|quarts?|pts?|pints?|oz|lbs?|tbsp|tsp|gal)$/i;
+  function yieldUnit(after) {
+    var m = /^\s*([a-z]+)\b/i.exec(after || '');
+    return m ? m[1] : '';
+  }
+  function isMeasured(after) {
+    return IMPERIAL_UNIT.test(yieldUnit(after)) || /^(?:l|kg|ml|g|mg)$/i.test(yieldUnit(after));
+  }
+  function yieldFormat(written, v, after, exact) {
+    var unit = yieldUnit(after);
+    if (IMPERIAL_UNIT.test(unit)) return formatFraction(v);
+    if (/^(?:l|kg)$/i.test(unit)) return String(Math.round(v * 10) / 10);
+    if (/^(?:ml|g|mg)$/i.test(unit)) return String(Math.max(1, Math.round(v)));
+    if (exact || /\D$/.test(written)) return formatFraction(v);
     if (/^\d+$/.test(written)) return String(Math.max(1, Math.round(v)));
-    if (/\D$/.test(written)) return formatFraction(v);
     return String(Math.round(v * 10) / 10);
   }
   function englishPage() {
@@ -957,7 +972,7 @@
     return String(Math.round(v / 100) / 10) + m[1] + (m[2].toLowerCase() === 'ml' ? 'L' : 'kg') + after.slice(m[0].length);
   }
   // One amount, or a range, followed by its words: "8 hot dog buns".
-  function scaleAmount(lo, hi, after, scale) {
+  function scaleAmount(lo, hi, after, scale, exact) {
     var out;
     if (hi !== undefined) {
       var low = Math.max(1, Math.floor(yieldValue(lo) * scale)), high = Math.ceil(yieldValue(hi) * scale);
@@ -966,13 +981,13 @@
       lo = hi;
       out = String(Math.max(1, high));
     } else {
-      out = yieldFormat(lo, yieldValue(lo) * scale);
+      out = yieldFormat(lo, yieldValue(lo) * scale, after, exact);
     }
     return biggerUnit(out, after) || out + agree(after, yieldValue(lo), yieldValue(out));
   }
 
   function scaleYield(raw, scale) {
-    var m = new RegExp('^((?:about|~)\\s*)?(\\d+(?:\\.\\d+)?)(?:\\s*[–-]\\s*(\\d+(?:\\.\\d+)?))?(\\s+\\S.*)?$').exec((raw || '').trim());
+    var m = new RegExp('^((?:about|~)\\s*)?(' + YIELD_NUM + ')(?:\\s*[–-]\\s*(' + YIELD_NUM + '))?(\\s+\\S.*)?$').exec((raw || '').trim());
     if (!m) return null;
     var prefix = m[1] || '', rest = m[4] || '';
     var paren = rest.indexOf('(');
@@ -980,12 +995,13 @@
     // The lead's own words run to the first alternative.
     var alt = /,\s*(?:(?:or|and)\s+)?(?=(?:about\s+|~)?\d)|\s+(?:or|and)\s+(?=(?:about\s+|~)?\d)/.exec(words);
     var own = alt ? words.slice(0, alt.index) : words, more = alt ? words.slice(alt.index) : '';
+    var measured = isMeasured(own);
     more = more.replace(new RegExp('(,\\s*(?:(?:or|and)\\s+)?|\\s+(?:or|and)\\s+)((?:about\\s+|~)?)(' + YIELD_NUM + ')(?:\\s*[–-]\\s*(' + YIELD_NUM + '))?([^,]*?)(?=,|\\s+(?:or|and)\\s+|$)', 'g'),
       function (all, sep, pre, lo, hi, after) { return sep + pre + scaleAmount(lo, hi, after, scale); });
     tail = tail.replace(/\(([^()]*)\)/g, function (all, inner) {
       if (/\beach\b|\bper\b|portion|serving|×|\d\s*x\s*\d|\//i.test(inner)) return all;
       return '(' + inner.replace(new RegExp('^((?:makes\\s+)?(?:about\\s+|~)?)(' + YIELD_NUM + ')(?:\\s*[–-]\\s*(' + YIELD_NUM + '))?(.*)$'),
-        function (a, pre, lo, hi, after) { return pre + scaleAmount(lo, hi, after, scale); }) + ')';
+        function (a, pre, lo, hi, after) { return pre + scaleAmount(lo, hi, after, scale, measured); }) + ')';
     });
     return prefix + scaleAmount(m[2], m[3], own, scale) + more + tail;
   }

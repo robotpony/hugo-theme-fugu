@@ -67,6 +67,17 @@ CASES = [
     ("~500 ml", 2, "~1 L"),
     ("~775 g (~5 cups)", 2, "~1.6 kg (~10 cups)"),
     ("about 750 ml (3 small grocery-store tubs)", 2, "about 1.5 L (6 small grocery-store tubs)"),
+    # Measured amounts round by their unit, counts to whole ones.
+    ("about 1 cup (250 ml)", 1.5, "about 1½ cups (375 ml)"),
+    ("~775 g (~5 cups)", 1.5, "~1.2 kg (~7½ cups)"),
+    ("~200 ml (¾ cup)", 1.5, "~300 ml (1⅛ cups)"),
+    ("about 1 L (4 cups)", 1.5, "about 1.5 L (6 cups)"),
+    ("about 1.7 kg (30–35 meatballs)", 1.5, "about 2.6 kg (45–53 meatballs)"),
+    ("1 drink", 1.5, "2 drinks"),
+    ("6 scones", 1.5, "9 scones"),
+    # A leading fraction, and a count restating a measure, which keeps one.
+    ("about ⅓ cup (1 pizza)", 1.5, "about ½ cup (1½ pizzas)"),
+    ("about ⅓ cup (1 pizza)", 3, "about 1 cup (3 pizzas)"),
     # What can't be scaled honestly isn't.
     ("makes ~750 ml", 2, None),
     ("enough for about 700 g chicken", 2, None),
