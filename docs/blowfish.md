@@ -41,6 +41,16 @@ And three more files:
 
 Fugu's other layouts (`recipes/`, `essays/`, `methods/` and the rest) are its own, for sections Blowfish doesn't know.
 
+### Why copies, not Blowfish's hooks
+
+Blowfish has two hooks for adding to every page, `partials/extend-head.html` (the end of `<head>`) and `partials/extend-footer.html` (the end of the footer). Fugu leaves both to your site, empty, and works through copies instead:
+
+- **They're one file each, and they're yours.** Hugo uses the site's file first, so if Fugu put its fonts call, stylesheet or scripts in `extend-head.html`, a site with its own would replace Fugu's, and lose them without an error.
+- **Order matters, and the hook comes last.** `fugu.css` has to sit between Blowfish's CSS and your `custom.css`, in the one bundle `head.html` builds, so your rules win. The meta description, social tags and feed link replace Blowfish's own lines in the middle of `<head>`. Neither can be done from the end of it.
+- **The rest change markup in the middle of a template** (the recipe page's two columns, the tags row, a term page's cards), where Blowfish has no hook at all.
+
+So a site can still use both hooks exactly as Blowfish's docs describe. When a Blowfish release adds a hook that would let a copy go, the upgrade (below) is the time to switch to it.
+
 ## Blowfish settings that work differently
 
 Most of Blowfish's settings work as its [docs](https://blowfish.page/docs/configuration/) say. These don't, because one of the files above replaces the code that read them:
