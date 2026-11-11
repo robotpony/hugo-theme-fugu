@@ -34,7 +34,7 @@ After any edit while `hugo server -D` is running, restart it before trusting pag
 
 ## Layout
 
-- `layouts/`: page templates, render hooks (`_default/_markup/`), partials. 14 of these are full copies of Blowfish files with changes (see "Blowfish overrides"); comments at the top of each explain why.
+- `layouts/`: page templates, render hooks (`_default/_markup/`), partials. 15 of these are full copies of Blowfish files with changes (see "Blowfish overrides"); comments at the top of each explain why.
 - `assets/js/`: plain, dependency-free, progressive JS. `ingredients.js` (check-off, scaling, unit conversion), `automagic-sidebar.js` (moves Mechanic/To serve/Notes/photos into the sidebar, photo viewer), `search.js` (Fuse.js search, pinned results first). Pages must still read and print with JS off.
 - `assets/icons/formula/`: the formula diagram icon kit, one SVG per key.
 - `archetypes/`: `recipes.md`, and a YAML default (in place of Hugo's TOML one; Blowfish's would Title Case the title).
@@ -42,7 +42,7 @@ After any edit while `hugo server -D` is running, restart it before trusting pag
 
 ## Blowfish overrides
 
-Fugu overrides 14 Blowfish files: `_default/single.html`, `_default/term.html`, `_default/terms.html`, `_default/index.json`, `_default/_markup/render-heading.html`, `render-image.html`, `render-link.html`, `partials/head.html`, `partials/article-meta/basic.html`, `partials/article-pagination.html`, `partials/breadcrumbs.html`, `partials/pagination.html`, `partials/related.html`, `partials/toc.html`. It also replaces one Blowfish asset, `assets/js/search.js`. Each is a full copy, so a Blowfish update can break it without any error.
+Fugu overrides 15 Blowfish files: `_default/single.html`, `_default/term.html`, `_default/terms.html`, `_default/index.json`, `_default/rss.xml`, `_default/_markup/render-heading.html`, `render-image.html`, `render-link.html`, `partials/head.html`, `partials/article-meta/basic.html`, `partials/article-pagination.html`, `partials/breadcrumbs.html`, `partials/pagination.html`, `partials/related.html`, `partials/toc.html`. It also replaces one Blowfish asset, `assets/js/search.js`. Each is a full copy, so a Blowfish update can break it without any error. `docs/blowfish.md` says what each changes, and has the upgrade checklist.
 
 Blowfish is pinned at `295dae3` (2026-09-13, declaring Hugo 0.163.0–0.166.0); `theme.toml`'s `min_version` is 0.163.0 and CI runs 0.166.0. Move Hugo and Blowfish together.
 

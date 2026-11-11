@@ -8,6 +8,7 @@ After updating Fugu, restart a running `hugo server`: one started before the i18
 
 ### Added
 
+- `docs/blowfish.md`: the Blowfish version Fugu is tested against, what each of the 15 Blowfish layouts Fugu replaces (and `search.js`, the default archetype) changes and why, the Blowfish settings Fugu ignores or reads differently, two Blowfish quirks, and the checklist for moving to a new Blowfish.
 - `docs/customizing.md`: the three layers, the `--fugu-*` properties with their defaults, the `fugu` scheme, fonts from a service or self-hosted, overriding a rule, and overriding a template with what a copy can break (the markup the scripts read, cached partials, Blowfish's copies). It and `features.md` give the drawing rules for formula icons and stack layers.
 - `tools/compare-styles.py`: renders a site's pages in headless Chrome before and after a change (Fugu at a ref and the site's styling files at a ref, against the working trees) at desktop and phone widths, light and dark, and lists every element whose box or computed look changed, grouped by change. The CSS counterpart of `compare-builds.py`, for §5's split of Not a Chef's styles. Needs Chrome (`$CHROME`).
 - `params.fugu.unitSpacing = "spaced"` writes rewritten metric quantities as `50 ml` instead of `50ml` (`docs/configuration.md`, "Units").

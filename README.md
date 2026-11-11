@@ -64,10 +64,11 @@ Fugu is tested against Blowfish `295dae3` and Hugo 0.166.0, and needs at least H
 - [Frontmatter](docs/frontmatter.md): every field Fugu reads
 - [Configuration](docs/configuration.md): every `[params.fugu]` setting, and the Blowfish settings that matter
 - [Customizing](docs/customizing.md): colours, type and fonts, overriding rules and templates
+- [Blowfish compatibility](docs/blowfish.md): the version, the files Fugu replaces, settings that work differently
 - [Features](docs/features.md): what Fugu adds, as a reader sees it
 - [CSS class inventory](docs/design/class-inventory.md): working notes for the default design (PLAN.md §5)
 
-The index is [docs/README.md](docs/README.md). Still to come: tools, and Blowfish compatibility.
+The index is [docs/README.md](docs/README.md). Still to come: tools.
 
 ## Customizing
 
@@ -89,7 +90,7 @@ python3 "$fugu/tools/drafts.py"
 - [x] Section names, sidebar order, heading names, glossary, principle tags, and drafts configurable in `[params.fugu]`
 - [x] Optional sections (essays, reference, log) and `cuisine` safe to leave out
 - [x] Fixture sites and CI against pinned Hugo and Blowfish versions (`tests/`)
-- [ ] Docs: six written; tools and Blowfish compatibility to come
+- [ ] Docs: seven written; tools to come
 - [x] English text moved into `i18n/` for translation
 - [x] Accessibility pass: named landmarks and controls, a heading outline without gaps, and read-out changes for scaling, units, search and the photo viewer
 - [x] Styles for every component, from `--fugu-*` tokens that follow the site's Blowfish colour scheme, light and dark (`params.fugu.styles`); Not a Chef runs on them
