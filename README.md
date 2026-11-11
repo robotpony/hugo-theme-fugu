@@ -65,22 +65,17 @@ Fugu is tested against Blowfish `295dae3` and Hugo 0.166.0, and needs at least H
 - [Configuration](docs/configuration.md): every `[params.fugu]` setting, and the Blowfish settings that matter
 - [Customizing](docs/customizing.md): colours, type and fonts, overriding rules and templates
 - [Blowfish compatibility](docs/blowfish.md): the version, the files Fugu replaces, settings that work differently
+- [Tools](docs/tools.md): the content tools, the theme-work tools and tests, and editing in Obsidian
 - [Features](docs/features.md): what Fugu adds, as a reader sees it
 - [CSS class inventory](docs/design/class-inventory.md): working notes for the default design (PLAN.md §5)
 
-The index is [docs/README.md](docs/README.md). Still to come: tools.
+The index is [docs/README.md](docs/README.md).
 
 ## Customizing
 
 Hugo uses your site's files before Fugu's, and Fugu's before Blowfish's, so any layout or partial can be replaced by a file of the same name in your site. Fugu's own settings go under `[params.fugu]`, all with defaults ([configuration.md](docs/configuration.md)). To load web fonts, override `layouts/partials/fonts.html` (empty by default). [customizing.md](docs/customizing.md) has the rest: the `--fugu-*` properties, fonts, and overriding rules and templates.
 
-Run the tools from your site's root (or anywhere inside it), or set `FUGU_SITE_ROOT` to point them at a site from elsewhere. With submodules they're in `themes/fugu/tools/`; with modules, in Go's module cache:
-
-```sh
-python3 themes/fugu/tools/frontmatter.py check
-fugu=$(go list -m -f '{{.Dir}}' github.com/robotpony/hugo-theme-fugu)  # modules
-python3 "$fugu/tools/drafts.py"
-```
+Fugu's command-line tools (checking frontmatter, listing drafts, preparing photos) and editing the content in Obsidian are in [docs/tools.md](docs/tools.md).
 
 ## Status
 
@@ -90,7 +85,7 @@ python3 "$fugu/tools/drafts.py"
 - [x] Section names, sidebar order, heading names, glossary, principle tags, and drafts configurable in `[params.fugu]`
 - [x] Optional sections (essays, reference, log) and `cuisine` safe to leave out
 - [x] Fixture sites and CI against pinned Hugo and Blowfish versions (`tests/`)
-- [ ] Docs: seven written; tools to come
+- [ ] Docs: eight written (getting started, the recipe format, frontmatter, configuration, customizing, Blowfish compatibility, features, tools); an essay format to come if essays stay supported
 - [x] English text moved into `i18n/` for translation
 - [x] Accessibility pass: named landmarks and controls, a heading outline without gaps, and read-out changes for scaling, units, search and the photo viewer
 - [x] Styles for every component, from `--fugu-*` tokens that follow the site's Blowfish colour scheme, light and dark (`params.fugu.styles`); Not a Chef runs on them

@@ -4,7 +4,7 @@ The work list for taking Fugu to a theme other Blowfish users can install. Finis
 
 **Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §7 and §10's open items; the code review and Not a Chef's accessibility audit are done (CHANGELOG, Unreleased). Features come after 1.0.
 
-**Next:** §7's `tools.md`, then §9 and §8.
+**Next:** §7's essay format (waiting on whether essays stay), then §9 and §8.
 
 ## 4. Translation
 
@@ -20,10 +20,9 @@ Done 2026-11-11: overrides, pinned versions, the settings that differ, why Fugu 
 
 ## 7. Docs
 
-Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configuration.md`, `customizing.md`, `blowfish.md`, `features.md`.
+Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configuration.md`, `customizing.md`, `blowfish.md`, `features.md`, `tools.md`.
 
 - [ ] `docs/essay-format.md` from Not a Chef's `FORMAT-ESSAYS.md`, if essays stay supported.
-- [ ] `docs/tools.md`, replacing the README's paragraph: a table (tool, purpose, example, needs) for `frontmatter.py`, `drafts.py`, `add-image.sh`, `compare-builds.py`, and `$FUGU_SITE_ROOT`; an "Editing" section on using `content/` as an Obsidian vault, and Warped Command.
 
 ## 8. Tooling
 
