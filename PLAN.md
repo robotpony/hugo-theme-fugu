@@ -4,7 +4,7 @@ The work list for taking Fugu to a theme other Blowfish users can install. Finis
 
 **Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §5–§7 and §10's open items; the code review and Not a Chef's accessibility audit are done (CHANGELOG, Unreleased). Features come after 1.0.
 
-**Next:** close §5 (the icon kit rules, the unused tokens, compare-styles' batches), then §6's `blowfish.md` and §7.
+**Next:** close §5 (the unused tokens), then §6's `blowfish.md` and §7.
 
 ## 4. Translation
 
@@ -14,9 +14,7 @@ Done: template and script English is in `i18n/en.yaml` (`docs/configuration.md`,
 
 Done 2026-11-10: `fugu.css` carries every component's design, moved from Not a Chef's `custom.css` (2,382 lines down to 529: its tokens, header, homepage, footer, 404 and paper grain), and Fugu's own look is direction A of three mocked (monochrome from the scheme's neutral ramp, system fonts, a pure-grey `fugu` scheme). Not a Chef sets every token and renders as before (`compare-styles.py`: no differences). Left:
 
-- [ ] Copy the icon kits' drawing rules from Not a Chef's `STYLE.md` ("Formula diagram", "Exploded build diagram") into Fugu's docs; proposed 2026-11-10, waiting on where they go and how much of the layer kit's detail to keep.
 - [ ] Nine tokens are declared and nothing reads them: `--fugu-focus`, `--fugu-cuisine(-soft)`, `--fugu-accent-wash`, `--fugu-shadow`, `--fugu-radius`, `--fugu-principle`, `--fugu-principle-soft`, `--fugu-highlight-soft`. Wire each into the rules that hard-code its value, or remove it (`customizing.md` lists only the working ones). Wiring `--fugu-focus` changes Not a Chef's focus rings, which use `--accent-strong` today though the site sets `--focus`.
-- [ ] `compare-styles.py --open` hangs on the full sample: no page stalls (each takes 0.5–2.7s, 2026-11-10), but one Chrome run that returns more than about 100MB of measurements never finishes (22 pages open: 99.7MB in 20s; 24: hung at 0% CPU). Run Chrome over batches of pages, sized by views (about 40 a run), with a timeout per batch that names its pages; `--all` needs the same.
 
 ## 6. Blowfish compatibility
 

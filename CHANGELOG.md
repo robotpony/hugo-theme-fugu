@@ -8,7 +8,7 @@ After updating Fugu, restart a running `hugo server`: one started before the i18
 
 ### Added
 
-- `docs/customizing.md`: the three layers, the `--fugu-*` properties with their defaults, the `fugu` scheme, fonts from a service or self-hosted, overriding a rule or a template, and replacing icons.
+- `docs/customizing.md`: the three layers, the `--fugu-*` properties with their defaults, the `fugu` scheme, fonts from a service or self-hosted, overriding a rule, and overriding a template with what a copy can break (the markup the scripts read, cached partials, Blowfish's copies). It and `features.md` give the drawing rules for formula icons and stack layers.
 - `tools/compare-styles.py`: renders a site's pages in headless Chrome before and after a change (Fugu at a ref and the site's styling files at a ref, against the working trees) at desktop and phone widths, light and dark, and lists every element whose box or computed look changed, grouped by change. The CSS counterpart of `compare-builds.py`, for §5's split of Not a Chef's styles. Needs Chrome (`$CHROME`).
 - `params.fugu.unitSpacing = "spaced"` writes rewritten metric quantities as `50 ml` instead of `50ml` (`docs/configuration.md`, "Units").
 - Fugu's English is in `i18n/en.yaml`, under `fugu`: every label, heading and count its templates write, with Hugo's plural forms for counts, and the words its scripts show (`fugu.js`), passed to them as a JSON block (`#fugu-strings`, `partials/js-strings.html`) with each script's English as the fallback. The block is built once per language. A site changes or translates any of them in its own `i18n/` (`docs/configuration.md`, "Words and translation").
@@ -24,6 +24,7 @@ After updating Fugu, restart a running `hugo server`: one started before the i18
 
 ### Fixed
 
+- `compare-styles.py --open` no longer hangs on the full sample: Chrome measures about 40 views a run (one run returning much over 100MB never finished), and a run that times out names its pages.
 - The formula icons fall back to `--fugu-accent-soft` and `--fugu-surface` when the site doesn't set `--accent-soft` and `--surface`, as the stack layers already did; on a site without them (the example site) they drew with no fill.
 - The Test kitchen strip (`.dev-strip`) measures its width in `--fugu-font-body`, not Lora, so its right edge meets the body text's in any font.
 - `fugu.css` no longer colours Not a Chef's `win-the-fridge` principle blue; that rule is the site's now. A site colours a principle through its `principle-<slug>` class (`docs/customizing.md`).

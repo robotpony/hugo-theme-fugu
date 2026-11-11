@@ -39,7 +39,8 @@ Not measured: hover and focus states, and anything a script draws more
 than a few seconds after load. --open adds a view of each page with every
 <details> open (the gear panel, contents toggles) and the first popover
 shown; --all measures every page instead of the sample (slow: about a
-second a view). The site is
+second a view). Chrome measures about 40 views a run, since one asked
+for much more never finishes. The site is
 $FUGU_SITE_ROOT or the nearest Hugo site, as for the other tools. Hugo is
 $HUGO, Chrome is $CHROME (default: Google Chrome's usual place on macOS,
 else `google-chrome` or `chromium` on the PATH). Python standard library
@@ -239,23 +240,41 @@ def chrome_bin():
     sys.exit(f"{TOOL}: no Chrome found; set CHROME to its path")
 
 
+# Views (a page at one width, mode and state) per Chrome run. Each view's
+# measurements are 1-3.5MB, and a run that has to return much over 100MB
+# never finishes (Chrome sits idle until the timeout), so pages go to
+# Chrome in batches of about this many views.
+BATCH_VIEWS = 40
+BATCH_TIMEOUT = 300
+
+
 def measure_pages(base, pages, widths, modes, profile, states=("closed",)):
-    """Run the harness in headless Chrome over `pages`; returns
-    {"<page> @<width> <mode>": [element records]}."""
+    """Run the harness in headless Chrome over `pages`, a batch at a time;
+    returns {"<page> @<width> <mode>": [element records]}."""
+    per_page = len(widths) * len(modes) * len(states)
+    size = max(1, BATCH_VIEWS // per_page)
+    out = {}
+    for i in range(0, len(pages), size):
+        out.update(measure_batch(base, pages[i:i + size], widths, modes, profile, states))
+    return out
+
+
+def measure_batch(base, pages, widths, modes, profile, states):
     query = urllib.parse.urlencode({"pages": json.dumps(pages), "widths": json.dumps(list(widths)),
                                     "modes": json.dumps(list(modes)), "states": json.dumps(list(states))})
     cmd = [chrome_bin(), "--headless=new", "--disable-gpu", "--no-first-run", "--no-default-browser-check",
            f"--user-data-dir={profile}", "--window-size=1400,1000", "--hide-scrollbars",
            "--virtual-time-budget=600000", "--dump-dom", f"{base}{HARNESS}?{query}"]
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=900)
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=BATCH_TIMEOUT)
     except OSError as e:
         sys.exit(f"{TOOL}: can't run Chrome ({cmd[0]}): {e.strerror}; set CHROME to its path")
     except subprocess.TimeoutExpired:
-        sys.exit(f"{TOOL}: Chrome took more than 15 minutes on {len(pages)} pages")
+        sys.exit(f"{TOOL}: Chrome took more than {BATCH_TIMEOUT // 60} minutes on {', '.join(pages)}")
     m = re.search(r'<pre id="out">(.*?)</pre>', result.stdout, re.S)
     if not m or not m.group(1).strip():
-        sys.exit(f"{TOOL}: Chrome returned no measurements from {base}:\n{result.stderr[-2000:]}")
+        sys.exit(f"{TOOL}: Chrome returned no measurements for {', '.join(pages)} from {base}:\n"
+                 f"{result.stderr[-2000:]}")
     import html
     return json.loads(html.unescape(m.group(1)))
 

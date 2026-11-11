@@ -153,7 +153,15 @@ Fugu then adds no CSS at all, for a site that styles every class itself. Pages s
 
 Any layout or partial can be replaced by copying it to the same path in your site's `layouts/` and editing the copy: `themes/fugu/layouts/partials/recipe-card.html` becomes your `layouts/partials/recipe-card.html`. Each file opens with a comment saying what it does and what calls it.
 
-A copy doesn't get Fugu's later fixes, so keep the change small, and check the original when you update Fugu (`git diff` between the two tags shows what moved). Prefer a property or a CSS rule when one will do.
+Change what you like. These are the limits, the things a copy can break without any error:
+
+- **A copy is frozen.** It keeps the version you copied, and misses Fugu's later fixes and features. When you update Fugu, read the CHANGELOG's "Changed" lines and diff the original between the two versions (`git diff v0.2.0 v0.3.0 -- layouts/partials/recipe-card.html`) for anything to carry over.
+- **The scripts read the markup.** `ingredients.js`, `automagic-sidebar.js` and `search.js` find their way by class names, `data-` attributes and a few ids that the templates write: the `data-ing-heading`, `data-method-heading` and `data-sidebar-heading` marks from `_markup/render-heading.html`, the `data-sidebar-slot`, `data-servings-base` and `data-page-key` ones and `#single_header` from `_default/single.html`, the search ids from Blowfish's search partial, and `#fugu-strings` from `partials/js-strings.html`. Keep them in a copy, or that part of the page stops working (check-off, scaling, the sidebar, search) while the rest looks fine.
+- **So do the styles.** `fugu.css` styles the classes the templates write; rename one and it's unstyled.
+- **Some partials return a value, and are cached.** Partials such as `section/role.html`, `principle/term.html` and `blueprint/info.html` return a value instead of HTML, and are called with `partialCached`, keyed by their argument. A copy has to return the same kind of value, and depend only on that argument: it's worked out once per key, not once per page.
+- **Some are Blowfish's.** 14 of Fugu's layouts are full copies of Blowfish files with Fugu's changes, and each says so in its opening comment, listing the changes. A copy of one of those takes over both: keep Fugu's changes, and Blowfish's later fixes won't reach it either.
+
+Prefer a property or a CSS rule when one will do: those carry over to new versions.
 
 Two hooks are empty on purpose, made for overriding:
 
@@ -164,4 +172,20 @@ The header, footer and home page are Blowfish's unless you override them; [Blowf
 
 ## Icons
 
-The formula diagrams' icons are SVGs in `assets/icons/formula/`, and the stack diagrams' layers are in `assets/icons/layers/`. Put a file of the same name in your site's `assets/icons/formula/` or `assets/icons/layers/` to replace one, or a new name to add one. They're drawn in `currentColor` with the theme's soft accent and surface fills, so they follow the properties above and dark mode. See [features.md](features.md#the-icon-kit) for the names.
+The formula diagrams' icons are SVGs in `assets/icons/formula/`, and the stack diagrams' layers are in `assets/icons/layers/`. Put a file of the same name in your site's `assets/icons/formula/` or `assets/icons/layers/` to replace one, or a new name to add one. [features.md](features.md#the-icon-kit) lists the names.
+
+**Drawing a formula icon.** Fugu's are drawn to these rules, so a new one sits beside them:
+
+- A `0 0 48 48` viewBox, with `fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"` on the `<svg>`, so every line is the text colour.
+- One fill, on the object's body: `style="fill:var(--accent-soft, var(--fugu-accent-soft))"`. A lid, cap or top face takes `style="fill:var(--surface, var(--fugu-surface))"`. No other colours, so dark mode and a site's accent reach it.
+- Simple, even shapes, not hand-drawn wobble; detail is a stroke or two.
+- It has to read at 24px (the card strip) and 34px (the sidebar) as well as 48px (the page).
+- The file name is the name a ```` ```formula ```` block uses: one lower-case word (`buttermilk`, not `butter-milk`). Fugu finds new files by name; there's nothing else to register.
+
+**Drawing a stack layer.** The layers are drawn to these rules, so they stack with each other:
+
+- A viewBox `0 0 210 <height>`: 210 wide, centred on x=105, as tall as the layer needs. On the `<svg>`, `fill="none" stroke-linecap="round" stroke-linejoin="round"`, and `data-edge`, how far the drawing reaches right of the centre, so the label's leader starts just past it.
+- Seen from a three-quarter angle: round things are ellipses 0.34 as tall as they are wide, square ones (lasagne, sandwiches) are slabs on the same footprint.
+- One ink line, `stroke="currentColor"`: about 1.8 for outlines, 0.6–1.2 for detail. Texture (crumb, seeds, sear, grill marks) is strokes and stipple, never a gradient or a photo.
+- Fills: a body or side takes `var(--accent-soft, var(--fugu-accent-soft))`, a top face `var(--surface, var(--fugu-surface))`. Food that needs its colour uses the kit's, always with Fugu's as the fallback: `var(--kit-red, var(--fugu-kit-red))`, the `-green`, `-yellow`, `-top` and `--sear*` ones, as listed under [Food colours](#food-colours).
+- The file name is the key: lower case, hyphenated (`patty-thick-grilled`). A spread drawn on its bun is its own file, named for the pair: `bun-base+mayo.svg` is the key `bun-base + mayo`.
