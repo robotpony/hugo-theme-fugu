@@ -886,24 +886,108 @@
   // reads 4–6 rather than claiming a precision the recipe doesn't have.
   // Anything else ("makes ~750 ml", "scales to bird size") returns null:
   // it can't be scaled honestly, so callers leave it out or as written.
+  //
+  // After the lead, a list of alternatives scales too ("6 burger buns, 8
+  // hot dog buns, or 9 dinner buns"), as does a parenthesis that restates
+  // the whole yield ("about 1 cup (250 ml)", "4 (makes ~300ml)", "(30–35
+  // meatballs)"). A parenthesis about one piece doesn't: one with "each",
+  // "per", "portion", "serving", "×" or "/" in it ("(200 g each)", "(23×33
+  // cm / 9×13 in)") is left as written. In English, the word after a count
+  // follows it: "1 drink" at 2× is "2 drinks", "1 pan of buns" "2 pans of
+  // buns", and back again when a typed amount scales below 1.
+  var YIELD_FRACTION_CHARS = FRACTIONS.map(function (pair) { return pair[1]; }).join('');
+  var YIELD_NUM = '(?:\\d+(?:\\.\\d+)?[' + YIELD_FRACTION_CHARS + ']?|[' + YIELD_FRACTION_CHARS + '])';
+  // Words a count doesn't change: units, and nouns the same in both forms.
+  var SAME_PLURAL = /^(?:g|kg|mg|ml|l|oz|lbs?|qt|pt|tbsp|tsp|cm|mm|in|ft|dozen|naan|sushi|fish|sheep|deer|bread|dough|rice)$/i;
+  var IRREGULAR = { loaf: 'loaves', half: 'halves', leaf: 'leaves', knife: 'knives', shelf: 'shelves', potato: 'potatoes', tomato: 'tomatoes', person: 'people' };
+
+  // "2¼" is 2.25; FRACTIONS has the characters.
+  function yieldValue(t) {
+    var whole = parseFloat(t) || 0, ch = t.charAt(t.length - 1);
+    FRACTIONS.forEach(function (pair) { if (pair[1] === ch) whole += pair[0]; });
+    return whole;
+  }
+  // A scaled amount: whole numbers stay whole (at least 1), one written
+  // with a fraction stays a mixed number ("2¼" at 2× is "4½",
+  // formatFraction), and a decimal keeps one place.
+  function yieldFormat(written, v) {
+    if (/^\d+$/.test(written)) return String(Math.max(1, Math.round(v)));
+    if (/\D$/.test(written)) return formatFraction(v);
+    return String(Math.round(v * 10) / 10);
+  }
+  function englishPage() {
+    var lang = (document.documentElement.lang || 'en').toLowerCase();
+    return lang === 'en' || lang.indexOf('en-') === 0;
+  }
+  function pluralWord(w) {
+    if (IRREGULAR[w]) return IRREGULAR[w];
+    if (/(?:s|x|z|ch|sh)$/.test(w)) return w + 'es';
+    if (/[^aeiou]y$/.test(w)) return w.slice(0, -1) + 'ies';
+    return w + 's';
+  }
+  function singularWord(w) {
+    for (var k in IRREGULAR) if (IRREGULAR[k] === w) return k;
+    if (/[^aeiou]ies$/.test(w)) return w.slice(0, -3) + 'y';
+    if (/(?:ss|x|z|ch|sh)es$/.test(w)) return w.slice(0, -2);
+    if (/[^s]s$/.test(w)) return w.slice(0, -1);
+    return w;
+  }
+  // The words after a count, made to agree with its new value: plural
+  // over 1, singular at 1 or under ("¾ cup", "1½ cups"). The noun is the
+  // last word before "of", "for" and the like ("1 cherry pie", "1 pan of
+  // buns"); a unit ("1 L", "1 kg potatoes") or "dozen" leaves it alone.
+  var NOUN_END = /^(?:of|for|to|with|per|each|depending|or|and)$/;
+  function agree(text, was, now) {
+    if (!englishPage() || (was > 1) === (now > 1)) return text;
+    var m = /^(\s+)([^(,]*)/.exec(text);
+    if (!m) return text;
+    var words = m[2].split(/(\s+)/), last = -1;
+    for (var i = 0; i < words.length; i += 2) {
+      if (NOUN_END.test(words[i])) break;
+      if (words[i]) last = i;
+    }
+    if (last < 0 || !/^[a-z]+$/.test(words[last]) || SAME_PLURAL.test(words[0]) || /\bdozen\b/.test(m[2])) return text;
+    words[last] = now > 1 ? pluralWord(words[last]) : singularWord(words[last]);
+    return m[1] + words.join('') + text.slice(m[0].length);
+  }
+  // Past 1000, millilitres and grams read as litres and kilograms.
+  function biggerUnit(out, after) {
+    var m = /^(\s*)(ml|g)\b/i.exec(after), v = parseFloat(out);
+    if (!m || !(v >= 1000) || !/^[\d.]+$/.test(out)) return null;
+    return String(Math.round(v / 100) / 10) + m[1] + (m[2].toLowerCase() === 'ml' ? 'L' : 'kg') + after.slice(m[0].length);
+  }
+  // One amount, or a range, followed by its words: "8 hot dog buns".
+  function scaleAmount(lo, hi, after, scale) {
+    var out;
+    if (hi !== undefined) {
+      var low = Math.max(1, Math.floor(yieldValue(lo) * scale)), high = Math.ceil(yieldValue(hi) * scale);
+      // A range that closes up at a small scale ("1–2" at ½×) is one number.
+      if (low < high) return low + '–' + high + after;
+      lo = hi;
+      out = String(Math.max(1, high));
+    } else {
+      out = yieldFormat(lo, yieldValue(lo) * scale);
+    }
+    return biggerUnit(out, after) || out + agree(after, yieldValue(lo), yieldValue(out));
+  }
+
   function scaleYield(raw, scale) {
-    var m = /^((?:about|~)\s*)?(\d+(?:\.\d+)?)(?:\s*[–-]\s*(\d+(?:\.\d+)?))?(\s+\S.*)?$/.exec((raw || '').trim());
+    var m = new RegExp('^((?:about|~)\\s*)?(\\d+(?:\\.\\d+)?)(?:\\s*[–-]\\s*(\\d+(?:\\.\\d+)?))?(\\s+\\S.*)?$').exec((raw || '').trim());
     if (!m) return null;
     var prefix = m[1] || '', rest = m[4] || '';
-    var lo = parseFloat(m[2]) * scale;
-    function num(n) { return Number.isInteger(n) ? String(n) : String(Math.round(n * 10) / 10); }
-    // A number leading a parenthesis is the same amount another way,
-    // "about 6 L (6 qt)", so it scales too.
-    rest = rest.replace(/\(\s*((?:about|~)\s*)?(\d+(?:\.\d+)?)/g, function (all, pre, n) {
-      var v = parseFloat(n) * scale;
-      return '(' + (pre || '') + num(parseFloat(n) % 1 === 0 ? Math.max(1, Math.round(v)) : v);
+    var paren = rest.indexOf('(');
+    var words = paren < 0 ? rest : rest.slice(0, paren), tail = paren < 0 ? '' : rest.slice(paren);
+    // The lead's own words run to the first alternative.
+    var alt = /,\s*(?:(?:or|and)\s+)?(?=(?:about\s+|~)?\d)|\s+(?:or|and)\s+(?=(?:about\s+|~)?\d)/.exec(words);
+    var own = alt ? words.slice(0, alt.index) : words, more = alt ? words.slice(alt.index) : '';
+    more = more.replace(new RegExp('(,\\s*(?:(?:or|and)\\s+)?|\\s+(?:or|and)\\s+)((?:about\\s+|~)?)(' + YIELD_NUM + ')(?:\\s*[–-]\\s*(' + YIELD_NUM + '))?([^,]*?)(?=,|\\s+(?:or|and)\\s+|$)', 'g'),
+      function (all, sep, pre, lo, hi, after) { return sep + pre + scaleAmount(lo, hi, after, scale); });
+    tail = tail.replace(/\(([^()]*)\)/g, function (all, inner) {
+      if (/\beach\b|\bper\b|portion|serving|×|\d\s*x\s*\d|\//i.test(inner)) return all;
+      return '(' + inner.replace(new RegExp('^((?:makes\\s+)?(?:about\\s+|~)?)(' + YIELD_NUM + ')(?:\\s*[–-]\\s*(' + YIELD_NUM + '))?(.*)$'),
+        function (a, pre, lo, hi, after) { return pre + scaleAmount(lo, hi, after, scale); }) + ')';
     });
-    if (m[3] === undefined) {
-      var one = parseFloat(m[2]) % 1 === 0 ? Math.max(1, Math.round(lo)) : lo;
-      return prefix + num(one) + rest;
-    }
-    var hi = parseFloat(m[3]) * scale;
-    return prefix + Math.max(1, Math.floor(lo)) + '–' + Math.ceil(hi) + rest;
+    return prefix + scaleAmount(m[2], m[3], own, scale) + more + tail;
   }
 
   // Scale and units both live with the ingredient list now (buildPopupMenu

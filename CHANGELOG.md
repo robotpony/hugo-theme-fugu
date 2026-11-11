@@ -24,6 +24,7 @@ After updating Fugu, restart a running `hugo server`: one started before the i18
 
 ### Fixed
 
+- Scaled yields read right (the scale menu's yield line, and the sidebar's Serves and Makes): the word after a count agrees with it in English ("1 drink" at 2× is "2 drinks", "1 pan of buns" "2 pans of buns", "2 loaves" at ½× "1 loaf"; units and "dozen" stay); a range inside parentheses scales at both ends ("(60–70 meatballs)", not "(60–35 meatballs)"); a parenthesis about one piece stays as written ("(200 g each)", "(125 g portions)", "(23×33 cm / 9×13 in)"); a fraction scales as a mixed number ("(4½ cups)", not "(4¼ cups)"); each of a list of alternatives scales ("12 burger buns, 16 hot dog buns, or 18 dinner buns"); a range that closes up is one number ("1–2 loaves" at ½× is "1 loaf"); and past 1000, ml and g read as L and kg. `tests/yield_scaling.py` checks 34 cases in headless Chrome.
 - `compare-styles.py --open` no longer hangs on the full sample: Chrome measures about 40 views a run (one run returning much over 100MB never finished), and a run that times out names its pages.
 - The formula icons fall back to `--fugu-accent-soft` and `--fugu-surface` when the site doesn't set `--accent-soft` and `--surface`, as the stack layers already did; on a site without them (the example site) they drew with no fill.
 - The Test kitchen strip (`.dev-strip`) measures its width in `--fugu-font-body`, not Lora, so its right edge meets the body text's in any font.

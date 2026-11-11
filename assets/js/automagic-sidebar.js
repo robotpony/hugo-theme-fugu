@@ -106,9 +106,9 @@
   // too (detail.servings and detail.portions, from ingredients.js's
   // scaleYield), so Serves, Makes and the scale callout's yield line
   // always agree. A number, a range
-  // ("3–4") or a number leading some words ("9 burgers") scales; anything
-  // else ("1 loaf", "makes ~750 ml") arrives as null and is left exactly
-  // as written.
+  // ("3–4") or a number leading some words ("9 burgers", "1 loaf", which
+  // becomes "2 loaves") scales; anything else ("makes ~750 ml") arrives as
+  // null and is left exactly as written.
   function initServings() {
     [['recipe-meta-servings', 'servings'], ['recipe-meta-portions', 'portions']].forEach(function (pair) {
       var el = document.getElementById(pair[0]);
