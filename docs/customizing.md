@@ -49,10 +49,13 @@ By default every colour is a grey from your Blowfish scheme's neutral ramp (`--c
 | `--fugu-surface`, `--fugu-surface-2` | panels, popovers, the sidebar; a second, deeper panel | `neutral-50`, `neutral-100` |
 | `--fugu-ink`, `--fugu-ink-muted`, `--fugu-ink-faint` | text: body, secondary, and the faintest (dates, counts) | `neutral-900`, `-600`, `-500` |
 | `--fugu-border`, `--fugu-border-strong` | rules and outlines; checkboxes and boxed diagrams | `neutral-200`, `-300` |
-| `--fugu-accent`, `-strong`, `-soft` | links, quantities, active controls and focus rings; their hover; tinted fills | near black, black, 7% black |
+| `--fugu-accent`, `-strong`, `-soft` | links, quantities, active controls; their hover; tinted fills | near black, black, 7% black |
 | `--fugu-flag`, `-soft` | drafts (the Test kitchen mark and strip) and notices | `neutral-700`, 6% black |
 | `--fugu-principle-strong` | principle tags' chips and pages | black |
 | `--fugu-highlight` | the cuisine chip | black |
+| `--fugu-focus` | keyboard focus rings | `--fugu-accent-strong` |
+| `--fugu-shadow` | popovers | a soft drop shadow |
+| `--fugu-radius` | corners of cards and panels | `6px` |
 | `--fugu-font-sans` | headings, labels, chips, controls | the system sans |
 | `--fugu-font-body` | reading text: prose, card intros, glossary definitions, captions | `--fugu-font-sans` |
 | `--fugu-font-mono` | quantities, ratios, times | the system mono |

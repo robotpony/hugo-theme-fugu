@@ -2,9 +2,9 @@
 
 The work list for taking Fugu to a theme other Blowfish users can install. Finished items are removed as they land; `CHANGELOG.md` and git history record them (the last before §5's split `fa04557`, the last full plan `75a3a89`, the last long one `183c807`, the last before `v0.1.0` `102abb1`, the last before `v0.2.0`'s squash `13b763a`, the last before the review and audit squash `5014763`). Section numbers are kept, since other files cite them.
 
-**Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §5–§7 and §10's open items; the code review and Not a Chef's accessibility audit are done (CHANGELOG, Unreleased). Features come after 1.0.
+**Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §6, §7 and §10's open items; the code review and Not a Chef's accessibility audit are done (CHANGELOG, Unreleased). Features come after 1.0.
 
-**Next:** close §5 (the unused tokens), then §6's `blowfish.md` and §7.
+**Next:** §6's `blowfish.md`, then §7.
 
 ## 4. Translation
 
@@ -12,9 +12,7 @@ Done: template and script English is in `i18n/en.yaml` (`docs/configuration.md`,
 
 ## 5. Default design
 
-Done 2026-11-10: `fugu.css` carries every component's design, moved from Not a Chef's `custom.css` (2,382 lines down to 529: its tokens, header, homepage, footer, 404 and paper grain), and Fugu's own look is direction A of three mocked (monochrome from the scheme's neutral ramp, system fonts, a pure-grey `fugu` scheme). Not a Chef sets every token and renders as before (`compare-styles.py`: no differences). Left:
-
-- [ ] Nine tokens are declared and nothing reads them: `--fugu-focus`, `--fugu-cuisine(-soft)`, `--fugu-accent-wash`, `--fugu-shadow`, `--fugu-radius`, `--fugu-principle`, `--fugu-principle-soft`, `--fugu-highlight-soft`. Wire each into the rules that hard-code its value, or remove it (`customizing.md` lists only the working ones). Wiring `--fugu-focus` changes Not a Chef's focus rings, which use `--accent-strong` today though the site sets `--focus`.
+Done 2026-11-10: `fugu.css` carries every component's design, moved from Not a Chef's `custom.css` (2,382 lines down to 529: its tokens, header, homepage, footer, 404 and paper grain), and Fugu's own look is direction A of three mocked (monochrome from the scheme's neutral ramp, system fonts, a pure-grey `fugu` scheme). Not a Chef sets every token and renders as before (`compare-styles.py`: no differences). Its comments, `customizing.md`, and the icon kits' drawing rules followed the same day.
 
 ## 6. Blowfish compatibility
 
@@ -50,7 +48,7 @@ Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configurat
   - `automagic-sidebar.js`'s note that its DOMContentLoaded handler runs first: script order does it, so say so.
 - [ ] Scaled yields keep the singular: "1 loaf" at 2× reads "2 loaf" (`scaleYield` in `ingredients.js`, also the sidebar's Serves row). Pluralize the word after a scaled count, or have the frontmatter give both forms; check a range ("1–2 loaves") and words that don't take an s.
 - [ ] Ingredient group labels skip a heading level: `recipe-format.md` puts `#### Dry` straight under `## Ingredients`, so 43 of Not a Chef's recipes go h2 → h4. In `render-heading.html`, render a group label that follows an h2 one level up (an `<h3 class="ing-subhead">`), keeping `####` in the source and the same look (`h3.ing-subhead`/`h4.ing-subhead` share their rules). A group inside a `###` component stays h4. The content skips (Food Log months, a reference page) went to the Not a Chef content agent, 2026-11-10.
-- [ ] Tag `v1.0.0` after §5–§7 and the items above.
+- [ ] Tag `v1.0.0` after §6, §7 and the items above.
 - [ ] Optional: list on themes.gohugo.io; check how they handle themes that need a parent theme.
 
 ## Features
