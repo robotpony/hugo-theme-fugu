@@ -921,12 +921,20 @@
   function isMeasured(after) {
     return IMPERIAL_UNIT.test(yieldUnit(after)) || /^(?:l|kg|ml|g|mg)$/i.test(yieldUnit(after));
   }
+  // Cups and spoons come in eighths and thirds, so a yield snaps to the
+  // nearest of those, never a sixth ("⅓ cup" at 2.5× is "⅞ cup").
+  var KITCHEN_STEPS = [0, 1 / 8, 1 / 4, 1 / 3, 3 / 8, 1 / 2, 5 / 8, 2 / 3, 3 / 4, 7 / 8, 1];
+  function kitchenFraction(v) {
+    var whole = Math.floor(v), frac = v - whole, best = 0;
+    KITCHEN_STEPS.forEach(function (step) { if (Math.abs(frac - step) < Math.abs(frac - best)) best = step; });
+    return formatFraction(whole + best);
+  }
   function yieldFormat(written, v, after, exact) {
     var unit = yieldUnit(after);
-    if (IMPERIAL_UNIT.test(unit)) return formatFraction(v);
+    if (IMPERIAL_UNIT.test(unit)) return kitchenFraction(v);
     if (/^(?:l|kg)$/i.test(unit)) return String(Math.round(v * 10) / 10);
     if (/^(?:ml|g|mg)$/i.test(unit)) return String(Math.max(1, Math.round(v)));
-    if (exact || /\D$/.test(written)) return formatFraction(v);
+    if (exact || /\D$/.test(written)) return kitchenFraction(v);
     if (/^\d+$/.test(written)) return String(Math.max(1, Math.round(v)));
     return String(Math.round(v * 10) / 10);
   }

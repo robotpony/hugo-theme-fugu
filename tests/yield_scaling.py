@@ -78,6 +78,7 @@ CASES = [
     # A leading fraction, and a count restating a measure, which keeps one.
     ("about ⅓ cup (1 pizza)", 1.5, "about ½ cup (1½ pizzas)"),
     ("about ⅓ cup (1 pizza)", 3, "about 1 cup (3 pizzas)"),
+    ("about ⅓ cup (1 pizza)", 2.5, "about ⅞ cup (2½ pizzas)"),
     # What can't be scaled honestly isn't.
     ("makes ~750 ml", 2, None),
     ("enough for about 700 g chicken", 2, None),
