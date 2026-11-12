@@ -1,6 +1,6 @@
 module github.com/robotpony/hugo-theme-fugu/exampleSite
 
-go 1.21
+go 1.22
 
 // Fugu from this checkout, not a release, so the example site shows the
 // working tree. Blowfish and hugo-warped come at the versions Fugu's own
