@@ -10,9 +10,9 @@ Each tool works on a Hugo site: `$FUGU_SITE_ROOT` if it's set, else the nearest 
 # Fugu as a submodule
 python3 themes/fugu/tools/frontmatter.py check
 
-# Fugu as a Hugo module: the tools are in Go's module cache
-fugu=$(go list -m -f '{{.Dir}}' github.com/robotpony/hugo-theme-fugu)
-python3 "$fugu/tools/drafts.py"
+# Fugu as a Hugo module: the tools are in Hugo's module cache
+fugu=$(hugo config mounts | awk -F'"' '/"path":/{p=$4} /"dir":/{if(p=="github.com/robotpony/hugo-theme-fugu")print $4}')
+python3 "${fugu}tools/drafts.py"
 
 # From anywhere
 FUGU_SITE_ROOT=~/sites/my-cookbook python3 themes/fugu/tools/drafts.py
@@ -65,5 +65,7 @@ A Fugu site's content is plain Markdown: YAML frontmatter, `##` headings, and `[
 - **Diagrams read as text.** `formula`, `stack` and `flow` blocks show as their source in Obsidian, which is written to be readable.
 - **Tags at the end of a heading stay yours.** `## Notes #todo` is a tag in Obsidian and plain "Notes" on the site.
 - **Frontmatter shows as Properties.** Obsidian's Properties view edits the same fields `frontmatter.py` checks; run `check` before you publish.
+
+[Claude Code](../claude/README.md) commands for a new recipe, a content check and adding photos are in `claude/commands/`, to copy into your site.
 
 Any other Markdown editor works too. Run `hugo server -D` beside it to see drafts as the site will show them.

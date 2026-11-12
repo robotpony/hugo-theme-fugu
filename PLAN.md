@@ -4,7 +4,7 @@ The work list for taking Fugu to a theme other Blowfish users can install. Finis
 
 **Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §7 and §10's open items; the code review and Not a Chef's accessibility audit are done (CHANGELOG, Unreleased). Features come after 1.0.
 
-**Next:** §8's Claude commands, then §10; §7's essay format waits on whether essays stay.
+**Next:** §7's `essay-format.md` (essays stay supported, Bruce 2026-11-11), then §10.
 
 ## 4. Translation
 
@@ -22,11 +22,11 @@ Done 2026-11-11: overrides, pinned versions, the settings that differ, why Fugu 
 
 Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configuration.md`, `customizing.md`, `blowfish.md`, `features.md`, `tools.md`.
 
-- [ ] `docs/essay-format.md` from Not a Chef's `FORMAT-ESSAYS.md`, if essays stay supported.
+- [ ] `docs/essay-format.md` from Not a Chef's `docs/FORMAT.md` §Essays (essays stay supported, Bruce 2026-11-11).
 
 ## 8. Tooling
 
-- [ ] Optional Claude Code commands in `claude/commands/` (not `.claude/`): `/recipe-new`, `/lint`, `/image-add` from Not a Chef, made site-neutral, with copy-in instructions.
+Done 2026-11-11: `tests/test_tools.py` tests the tools, and `claude/commands/` has the optional Claude Code commands.
 
 ## 9. Example site and CI
 

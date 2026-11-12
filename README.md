@@ -66,6 +66,7 @@ Fugu is tested against Blowfish `295dae3` and Hugo 0.166.0, and needs at least H
 - [Customizing](docs/customizing.md): colours, type and fonts, overriding rules and templates
 - [Blowfish compatibility](docs/blowfish.md): the version, the files Fugu replaces, settings that work differently
 - [Tools](docs/tools.md): the content tools, the theme-work tools and tests, and editing in Obsidian
+- [Claude Code commands](claude/README.md): optional `/recipe-new`, `/lint` and `/image-add` to copy into a site
 - [Features](docs/features.md): what Fugu adds, as a reader sees it
 - [CSS class inventory](docs/design/class-inventory.md): working notes for the default design (PLAN.md §5)
 

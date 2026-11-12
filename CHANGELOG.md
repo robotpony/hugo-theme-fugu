@@ -8,6 +8,7 @@ After updating Fugu, restart a running `hugo server`: one started before the i18
 
 ### Added
 
+- `claude/commands/`: optional Claude Code commands for a Fugu site, `/recipe-new`, `/lint` and `/image-add`, from Not a Chef's, reading the sections from `[params.fugu]` and finding Fugu and hugo-warped by `hugo config mounts`, so they work with either install method. `claude/README.md` says how to copy them in.
 - `tests/test_tools.py`: `unittest` tests for `frontmatter.py`, `drafts.py`, `compare-builds.py` and `add-image.sh` on the fixture sites, run in CI.
 - `docs/tools.md`: where the tools run (`$FUGU_SITE_ROOT`, submodules and modules), a table of the content tools and the theme-work tools and tests with what each needs, and editing `content/` as an Obsidian vault. The README links it in place of its tools paragraph.
 - `docs/blowfish.md`: the Blowfish version Fugu is tested against, what each of the 15 Blowfish layouts Fugu replaces (and `search.js`, the default archetype) changes and why, the Blowfish settings Fugu ignores or reads differently, two Blowfish quirks, and the checklist for moving to a new Blowfish.
@@ -31,6 +32,7 @@ After updating Fugu, restart a running `hugo server`: one started before the i18
 
 ### Fixed
 
+- `docs/tools.md`'s example for finding the tools in a Hugo module install uses `hugo config mounts`; `go list` looked in Go's module cache, which Hugo doesn't use.
 - `frontmatter.py get`, `set` and `unset` on a file that isn't there say so in one line, in place of a Python traceback.
 - Scaled yields read right (the scale menu's yield line, and the sidebar's Serves and Makes): the word after a count agrees with it in English ("1 drink" at 2× is "2 drinks", "1 pan of buns" "2 pans of buns", "2 loaves" at ½× "1 loaf"; units and "dozen" stay); a range inside parentheses scales at both ends ("(60–70 meatballs)", not "(60–35 meatballs)"); a parenthesis about one piece stays as written ("(200 g each)", "(125 g portions)", "(23×33 cm / 9×13 in)"); a fraction scales as a mixed number ("(4½ cups)", not "(4¼ cups)"); each of a list of alternatives scales ("12 burger buns, 16 hot dog buns, or 18 dinner buns"); a range that closes up is one number ("1–2 loaves" at ½× is "1 loaf"); past 1000, ml and g read as L and kg; an amount rounds by its unit (cups and other imperial units to a mixed number in eighths or thirds, never sixths, "about 1 cup" at 1.5× is "about 1½ cups"; L and kg to one place; ml, g and counts to whole numbers); and a yield can start with a fraction ("about ⅓ cup (1 pizza)" at 1.5× is "about ½ cup (1½ pizzas)"). `tests/yield_scaling.py` checks 44 cases in headless Chrome.
 - `compare-styles.py --open` no longer hangs on the full sample: Chrome measures about 40 views a run (one run returning much over 100MB never finished), and a run that times out names its pages.
