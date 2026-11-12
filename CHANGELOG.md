@@ -8,6 +8,7 @@ After updating Fugu, restart a running `hugo server`: one started before the i18
 
 ### Added
 
+- `docs/essay-format.md`: an essay's frontmatter, folders as formats, the reference-essay, methods and drafts folders, the reading sidebar, the sections that move to it and `{.article}`, links and diagrams, and a suggested house style from Not a Chef's.
 - `claude/commands/`: optional Claude Code commands for a Fugu site, `/recipe-new`, `/lint` and `/image-add`, from Not a Chef's, reading the sections from `[params.fugu]` and finding Fugu and hugo-warped by `hugo config mounts`, so they work with either install method. `claude/README.md` says how to copy them in.
 - `tests/test_tools.py`: `unittest` tests for `frontmatter.py`, `drafts.py`, `compare-builds.py` and `add-image.sh` on the fixture sites, run in CI.
 - `docs/tools.md`: where the tools run (`$FUGU_SITE_ROOT`, submodules and modules), a table of the content tools and the theme-work tools and tests with what each needs, and editing `content/` as an Obsidian vault. The README links it in place of its tools paragraph.

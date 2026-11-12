@@ -64,6 +64,7 @@ Fugu is tested against Blowfish `295dae3` and Hugo 0.166.0, and needs at least H
 - [Frontmatter](docs/frontmatter.md): every field Fugu reads
 - [Configuration](docs/configuration.md): every `[params.fugu]` setting, and the Blowfish settings that matter
 - [Customizing](docs/customizing.md): colours, type and fonts, overriding rules and templates
+- [Essay format](docs/essay-format.md): essays, their folders, and what the page does with them
 - [Blowfish compatibility](docs/blowfish.md): the version, the files Fugu replaces, settings that work differently
 - [Tools](docs/tools.md): the content tools, the theme-work tools and tests, and editing in Obsidian
 - [Claude Code commands](claude/README.md): optional `/recipe-new`, `/lint` and `/image-add` to copy into a site
@@ -86,7 +87,7 @@ Fugu's command-line tools (checking frontmatter, listing drafts, preparing photo
 - [x] Section names, sidebar order, heading names, glossary, principle tags, and drafts configurable in `[params.fugu]`
 - [x] Optional sections (essays, reference, log) and `cuisine` safe to leave out
 - [x] Fixture sites and CI against pinned Hugo and Blowfish versions (`tests/`)
-- [ ] Docs: eight written (getting started, the recipe format, frontmatter, configuration, customizing, Blowfish compatibility, features, tools); an essay format to come if essays stay supported
+- [x] Docs: getting started, the recipe and essay formats, frontmatter, configuration, customizing, Blowfish compatibility, features, and tools
 - [x] English text moved into `i18n/` for translation
 - [x] Accessibility pass: named landmarks and controls, a heading outline without gaps, and read-out changes for scaling, units, search and the photo viewer
 - [x] Styles for every component, from `--fugu-*` tokens that follow the site's Blowfish colour scheme, light and dark (`params.fugu.styles`); Not a Chef runs on them

@@ -63,7 +63,7 @@ outputs: [HTML, RSS, JSON]
 What each section is for:
 
 - **Recipes**: the cookbook. See [recipe-format.md](recipe-format.md).
-- **Essays**: longer writing about food, with the reading sidebar (search and an "On this page" list). Essays can sit in subfolders (`essays/cooking-reflections/why-ratios.md`); a card shows its subfolder's name as its tag.
+- **Essays**: longer writing about food, with the reading sidebar (search and an "On this page" list). Essays can sit in subfolders (`essays/cooking-reflections/why-ratios.md`); a card shows its subfolder's name as its tag ([essay-format.md](essay-format.md)).
 - **Reference**: technique guides, ratio tables, and the glossary page.
 - **Log**: a dated kitchen notebook, one page per month. Name each file by year and month, `2026-September.md`, title it in the frontmatter ("September 2026"), and give each day a `##` heading. The list sorts by file name, newest first. A year without dates can use season files instead (`2024-Fall.md`), and an `## Undated` heading holds entries without a day.
 

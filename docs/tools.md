@@ -52,7 +52,7 @@ And the tests in `tests/`. CI runs `check.py`, `test_tools.py` and `install.py` 
 | Test | What it checks |
 |---|---|
 | `check.py` | Builds every fixture site in `tests/sites/` and the example site, and checks their pages against each one's `expect.txt`. `--compare` also runs `compare-builds.py` on the site you run it from. Fails on any Hugo warning but Blowfish's version warning. |
-| `test_tools.py` | Runs each tool above on the fixture sites (and on copies of them, for the ones that change files) and checks its output and exit code: `check` passing the fixtures and failing bad frontmatter, sections read from `[params.fugu]`, `set` and `unset` leaving the rest of a file as it was, the drafts each fixture has, finding the site, and `compare-builds.py` on two folders. The `add-image.sh` tests need ImageMagick 7 and `exiftool`, and skip without them. |
+| `test_tools.py` | Runs each tool above on the fixture sites (and on copies of them, for the ones that change files) and checks its output and exit code: `check` passing the fixtures and failing bad frontmatter, sections read from `[params.fugu]`, `set` and `unset` leaving the rest of a file as it was, the drafts each fixture has, finding the site, and `compare-builds.py` on two folders. The `add-image.sh` tests need ImageMagick 7 and `exiftool`, and skip without them; Ubuntu's packages have ImageMagick 6, so they skip in CI. |
 | `install.py` | Installs Fugu on a new site the way `getting-started.md` says (`modules` or `submodules`), builds it, and checks the recipe page it promises. |
 | `percent_scaling.py` | Drives a percentage table's "Scale based on" row in headless Chrome. |
 | `yield_scaling.py` | Scales yields ("1 pan of buns", "about ⅓ cup (1 pizza)") at several scales in headless Chrome. |

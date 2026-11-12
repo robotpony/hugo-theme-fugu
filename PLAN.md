@@ -4,7 +4,7 @@ The work list for taking Fugu to a theme other Blowfish users can install. Finis
 
 **Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §7 and §10's open items; the code review and Not a Chef's accessibility audit are done (CHANGELOG, Unreleased). Features come after 1.0.
 
-**Next:** §7's `essay-format.md` (essays stay supported, Bruce 2026-11-11), then §10.
+**Next:** §10.
 
 ## 4. Translation
 
@@ -20,9 +20,8 @@ Done 2026-11-11: overrides, pinned versions, the settings that differ, why Fugu 
 
 ## 7. Docs
 
-Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configuration.md`, `customizing.md`, `blowfish.md`, `features.md`, `tools.md`.
+Written: `getting-started.md`, `recipe-format.md`, `frontmatter.md`, `configuration.md`, `customizing.md`, `blowfish.md`, `features.md`, `tools.md`, `essay-format.md`. Done 2026-11-11.
 
-- [ ] `docs/essay-format.md` from Not a Chef's `docs/FORMAT.md` §Essays (essays stay supported, Bruce 2026-11-11).
 
 ## 8. Tooling
 
@@ -39,7 +38,7 @@ Done 2026-11-11: the example site takes its themes as Hugo modules, and CI runs 
   - Wiki-link lookup cost: `render-link.html` and the reading sidebar scan every page per link. Measure build time before caching a title index.
   - Won't fix: the "Undated" and "Further reading" heading matches stay English; they read headings the author writes, so a translated site writes them in English or renames them in its content.
   - `automagic-sidebar.js`'s note that its DOMContentLoaded handler runs first: script order does it, so say so.
-- [ ] Tag `v1.0.0` after §7 and the items above.
+- [ ] Tag `v1.0.0` after the items above.
 - [ ] Optional: list on themes.gohugo.io; check how they handle themes that need a parent theme.
 
 ## Features
