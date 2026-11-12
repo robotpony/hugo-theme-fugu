@@ -4,6 +4,10 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ## Unreleased
 
+### Changed
+
+- The keep-screen-awake switch is a row in the ingredients gear's panel, after Scale and Units (`button.ing-switch`, `role="switch"`, `aria-checked`, in `.ing-config-group--awake`), not a sun button beside the gear, which looked too like it. The gear's label says so where the switch shows (`ingredient_options_awake`). A percentage page, which has no gear, keeps the sun button (`button.ing-awake`, now at the gear's place); `.ing-awake--alone` is gone. A site with `fugu.styles = false` styles `.ing-switch` itself.
+
 ## v1.0.0 (2026-11-11)
 
 The first stable release: a cookbook theme for any Blowfish site, with its own neutral look, `--fugu-*` tokens to restyle it, the full docs (`docs/`), an example site taken as Hugo modules, tests for the tools, and optional Claude Code commands. After updating Fugu, restart a running `hugo server`: one started before the i18n change showed blank labels until restarted.

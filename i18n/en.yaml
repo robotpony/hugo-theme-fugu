@@ -162,6 +162,7 @@ fugu:
     for_amount: "For {amount}"
     serves: "Serves {n}"
     ingredient_options: "Ingredient options: scale recipe or change units"
+    ingredient_options_awake: "Ingredient options: scale recipe, change units, or keep the screen awake"
     keep_awake: Keep screen awake
     open_photo: "Open photo {n} of {total}: {caption}"
     photo_viewer: Photo viewer

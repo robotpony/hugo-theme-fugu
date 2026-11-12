@@ -1471,7 +1471,10 @@
 
     var summary = document.createElement('summary');
     summary.className = 'ing-config-btn';
-    summary.setAttribute('aria-label', phrase('ingredient_options', 'Ingredient options: scale recipe or change units'));
+    var awake = canKeepAwake();
+    summary.setAttribute('aria-label', awake
+      ? phrase('ingredient_options_awake', 'Ingredient options: scale recipe, change units, or keep the screen awake')
+      : phrase('ingredient_options', 'Ingredient options: scale recipe or change units'));
     summary.innerHTML = GEAR_ICON;
     details.appendChild(summary);
 
@@ -1479,6 +1482,7 @@
     panel.className = 'ing-config-panel';
     var surface = buildControlSurface();
     panel.appendChild(surface.frag);
+    if (awake) panel.appendChild(buildAwakeRow());
     details.appendChild(panel);
 
     // Escape closes the callout and hands focus back to the gear.
@@ -1504,28 +1508,25 @@
 
   // --- Keep the screen awake -----------------------------------------------
   //
-  // A small switch beside the gear (.ing-awake, aria-pressed) that holds a
-  // screen Wake Lock while it's on, so the phone doesn't dim mid-recipe.
-  // The browser drops the lock whenever the page is hidden, so it's taken
-  // again when the page comes back, while the switch is still on. Not
-  // remembered: each visit starts off. Only where the API exists; without
-  // it (or without JS) there's no switch. Cook mode (PLAN.md, Features) is the large
-  // version of this.
+  // A switch that holds a screen Wake Lock while it's on, so the phone
+  // doesn't dim mid-recipe. It's a row in the gear's panel, after Scale and
+  // Units (.ing-switch, role=switch); a percentage page has no gear, so
+  // there it's a sun button of its own at the heading (.ing-awake,
+  // aria-pressed). The browser drops the lock whenever the page is hidden,
+  // so it's taken again when the page comes back, while the switch is
+  // still on. Not remembered: each visit starts off. Only where the API
+  // exists; without it (or without JS) there's no switch. Cook mode
+  // (PLAN.md, Features) is the large version of this.
   var AWAKE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
     'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
     '<circle cx="12" cy="12" r="4"></circle>' +
     '<path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>' +
     '</svg>';
 
-  function buildAwakeSwitch() {
-    if (!('wakeLock' in navigator)) return null;
-    var button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'ing-awake';
-    button.setAttribute('aria-pressed', 'false');
-    button.setAttribute('aria-label', phrase('keep_awake', 'Keep screen awake'));
-    button.title = button.getAttribute('aria-label');
-    button.innerHTML = AWAKE_ICON;
+  function canKeepAwake() { return 'wakeLock' in navigator; }
+
+  // Toggles the lock on each click of `control`; show(on) draws its state.
+  function bindWakeLock(control, show) {
     var lock = null;
     var on = false;
 
@@ -1538,19 +1539,56 @@
       }).catch(function () {
         // Refused (battery saver, or the page isn't visible): show it off.
         on = false;
-        button.setAttribute('aria-pressed', 'false');
+        show(false);
       });
     }
 
-    button.addEventListener('click', function () {
+    control.addEventListener('click', function () {
       on = !on;
-      button.setAttribute('aria-pressed', String(on));
+      show(on);
       if (on) acquire();
       else if (lock) { lock.release(); lock = null; }
     });
     document.addEventListener('visibilitychange', function () {
       if (on && !lock && document.visibilityState === 'visible') acquire();
     });
+  }
+
+  // The panel's row: the label, and a switch at the right. The label is a
+  // <label> for the switch, so tapping either one toggles it.
+  function buildAwakeRow() {
+    var group = document.createElement('div');
+    group.className = 'ing-config-group ing-config-group--awake';
+    var head = document.createElement('div');
+    head.className = 'ing-config-head';
+    var label = document.createElement('label');
+    label.className = 'ing-config-label';
+    label.textContent = phrase('keep_awake', 'Keep screen awake');
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'ing-switch';
+    toggle.id = 'ing-awake-switch';
+    label.htmlFor = toggle.id;
+    toggle.setAttribute('role', 'switch');
+    toggle.setAttribute('aria-checked', 'false');
+    toggle.innerHTML = '<span class="ing-switch-knob" aria-hidden="true"></span>';
+    head.appendChild(label);
+    head.appendChild(toggle);
+    group.appendChild(head);
+    bindWakeLock(toggle, function (on) { toggle.setAttribute('aria-checked', String(on)); });
+    return group;
+  }
+
+  // A percentage page's sun button, in the gear's place.
+  function buildAwakeButton() {
+    var button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'ing-awake';
+    button.setAttribute('aria-pressed', 'false');
+    button.setAttribute('aria-label', phrase('keep_awake', 'Keep screen awake'));
+    button.title = button.getAttribute('aria-label');
+    button.innerHTML = AWAKE_ICON;
+    bindWakeLock(button, function (on) { button.setAttribute('aria-pressed', String(on)); });
     return button;
   }
 
@@ -1652,9 +1690,9 @@
     // Ingredients heading to anchor the popup to); the popup itself only
     // mounts when there's a heading to attach it to.
     var controller = createScaleUnitsController(pageKey, percent);
-    // The gear and the awake switch sit beside the first ingredients
-    // heading, not in it: a heading can't hold a <details>, and their
-    // labels would be read as part of its name. The heading and its
+    // The gear (or a percentage page's awake button) sits beside the first
+    // ingredients heading, not in it: a heading can't hold a <details>, and
+    // its label would be read as part of its name. The heading and its
     // controls share a .ing-heading wrapper, made only now, after the walks
     // above (and automagic-sidebar.js's), which step from heading to
     // heading through its siblings. The CSS places the controls as before.
@@ -1676,12 +1714,10 @@
     } else if (headings.length) {
       headingTools().appendChild(buildPopupMenu(controller));
     }
-    // The awake switch sits beside the gear, or alone in its place on a
-    // percentage page, which has no gear.
-    var awake = headings.length && buildAwakeSwitch();
-    if (awake) {
-      if (controller.base) awake.classList.add('ing-awake--alone');
-      headingTools().appendChild(awake);
+    // The awake switch is in the gear's panel, or on a percentage page,
+    // which has no gear, a button in its place.
+    if (controller.base && headings.length && canKeepAwake()) {
+      headingTools().appendChild(buildAwakeButton());
     }
     controller.apply();
   }

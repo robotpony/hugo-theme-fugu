@@ -38,10 +38,9 @@ The quantity at the start of each line is picked out, and a menu beside the firs
 
 - **Scale**: from 1× to 5×, in half steps. Every quantity on the page changes, including those in the method, and so do the Serves and Makes figures when they're numbers (`4`, `3–4`, `about 1.5 L`). A range widens outward rather than claiming more precision than the recipe has: 3–4 at 1.5× reads 4–6. Words such as "a pinch" don't scale.
 - **Units**: As written, Metric, or Imperial. A line that gives both measures, `250 ml (1 cup)`, swaps which one leads. Temperatures in the method convert too, so `180°C` reads `350°F` in imperial.
+- **Keep screen awake**: a switch that stops the screen dimming while it's on, so a phone stays lit halfway through a recipe. It shows only in browsers with the Wake Lock API, and starts off on each visit. A percentage page, which has no menu, has it as a sun button beside the heading instead.
 
 The scale is saved per recipe; the unit choice is saved once for the whole site, since it's a reader's preference rather than a recipe's. A multi-component recipe has one menu that covers every component.
-
-Beside the gear, a sun switch keeps the screen awake while it's on, so a phone doesn't dim halfway through a recipe. It shows only in browsers with the Wake Lock API, and starts off on each visit.
 
 A [percentage table](recipe-format.md#percentage-tables) scales from what you have instead: a row under the table's headings reads "Scale based on AP flour", with the amount over the amounts column, and typing an amount sets the scale for the page, with no 1× floor or 5× cap. The field takes g, kg or lb for a weight and ml, L or cup for a volume, and switching unit keeps the amount. Empty, zero or unreadable input holds the last good amounts. The amount is saved per recipe, and a button beside the units takes you back to the written batch. These pages have no menu. A Units setting saved on another recipe still sets the field's starting unit and converts the method, but not the table, whose amounts stay in the units they're written in (1.3 g of white pepper isn't 0.05 oz). The row doesn't print; the table prints at the amount shown.
 
