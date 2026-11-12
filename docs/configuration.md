@@ -275,7 +275,7 @@ fugu:
     recipes: {one: "{{ .Count }} dish", other: "{{ .Count }} dishes"}
 ```
 
-Counts use Hugo's plural forms, with `{{ .Count }}`. The script strings are under `fugu.js`, with `{name}` for a value the script fills in; they reach the scripts as a JSON block in every page's `<head>` (`<script type="application/json" id="fugu-strings">`, from `partials/js-strings.html`), and each script keeps its English for a page without it. A script's plural (the glossary's "3 entries") has `_one` and `_other` keys, picked with the browser's plural rules for the site's language. Section names, heading names and the Test kitchen banner are params, not i18n: see above.
+Counts use Hugo's plural forms, with `{{ .Count }}`. The script strings are under `fugu.js`, with `{name}` for a value the script fills in; they reach the scripts as a JSON block in every page's `<head>` (`<script type="application/json" id="fugu-strings">`, from `partials/js-strings.html`), and each script keeps its English for a page without it. A script's plural (the glossary's "3 entries") has `_one` and `_other` keys, picked with the browser's plural rules for the site's language. Section names, heading names and the Test kitchen banner are params, not i18n: see above. Two headings Fugu reads in your content are matched in English only: a log month's `## Undated` and a blueprint's `## Further reading`. A site in another language writes those two in English.
 
 ## Fonts
 

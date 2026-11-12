@@ -111,9 +111,10 @@
           {{ $md = replaceRE `\[\[([^\]|]+?)\\?\|([^\]]+)\]\]` `[$2](<$1>)` $md }}
           {{ $md = replaceRE `\[\[([^\]]+)\]\]` `[$1](<$1>)` $md }}
           {{ .RenderString $md }}
-          {{/* Sidebar first: its DOMContentLoaded handler has to run
-            before ingredients.js's (see automagic-sidebar.js). Every page
-            with a sidebar gets it, recipe or reading. */}}
+          {{/* Sidebar first: both scripts are deferred, so they run in
+            this order, and the sidebar's has to run before
+            ingredients.js (see automagic-sidebar.js). Every page with a
+            sidebar gets it, recipe or reading. */}}
           {{ if partial "sidebar/kind.html" . }}
             {{ $sidebarJS := resources.Get "js/automagic-sidebar.js" | resources.Minify | resources.Fingerprint "sha256" }}
             <script src="{{ $sidebarJS.RelPermalink }}" integrity="{{ $sidebarJS.Data.Integrity }}" defer></script>

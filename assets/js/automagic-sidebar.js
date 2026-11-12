@@ -7,10 +7,13 @@
 // it runs wherever it finds slots ([data-sidebar-slot]) and marked
 // headings (h2[data-sidebar-heading], set by render-heading.html).
 //
-// Loaded before ingredients.js (single.html), so its DOMContentLoaded
-// handler runs first: sections are already in the sidebar when the
-// ingredient walks run, and the servings listener is attached before
-// ingredients.js fires its first scale event.
+// Loaded before ingredients.js (single.html), both deferred, so this
+// runs first: deferred scripts run in document order once the page is
+// parsed, when readyState is already "interactive", so each calls its
+// init straight away rather than waiting for DOMContentLoaded. Sections
+// are in the sidebar when the ingredient walks run, and the servings
+// listener is attached before ingredients.js fires its first scale event.
+// Keep the order of the two <script> tags.
 
 (function () {
   // The words this script shows, from the page's #fugu-strings block

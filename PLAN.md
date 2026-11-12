@@ -34,10 +34,6 @@ Done 2026-11-11: the example site takes its themes as Hugo modules, and CI runs 
 ## 10. Release
 
 - [ ] Check the README's images in GitHub's rendering, light and dark.
-- [ ] Left from the code review (2026-11-07) and the accessibility audit (2026-11-10), both otherwise done:
-  - Wiki-link lookup cost: `render-link.html` and the reading sidebar scan every page per link. Measure build time before caching a title index.
-  - Won't fix: the "Undated" and "Further reading" heading matches stay English; they read headings the author writes, so a translated site writes them in English or renames them in its content.
-  - `automagic-sidebar.js`'s note that its DOMContentLoaded handler runs first: script order does it, so say so.
 - [ ] Tag `v1.0.0` after the items above.
 - [ ] Optional: list on themes.gohugo.io; check how they handle themes that need a parent theme.
 
@@ -52,5 +48,6 @@ After 1.0 unless Not a Chef needs one sooner. Several cite `SPEC.md`, still in N
 - **Listings:** sort and filter on the recipes list; term pages as filters; TOC behaviour on long reference pages; extra taxonomies in the header's tags row (skip them by param, or chip them like cuisine); an option to leave hidden personal notes out of the build, since today they're only hidden visually.
 - **Build-time enrichment:** parsed ingredients in `recipes/index.json` (input for the rest); per-recipe cost from site `data/ingredient_prices.yaml`; grocery departments (`data/departments.yaml`, with a Fugu default); schema.org `Recipe` JSON-LD.
 - **Cooking-time JS:** optional-ingredient toggle; print view; cook mode with Wake Lock (the keep-awake switch beside the gear is the small version); interactive substitutions; shopping list in department order; pantry tool (win the fridge); method check-off in `localStorage`, reusing `ingredients.js`'s key scheme.
+- **Build time:** measured 2026-11-11 on Not a Chef (452 pages, 1.4 s on Hugo 0.169): `render-link.html` runs 2,596 times at about 1.1 ms each, so a cached title index isn't worth it yet. The biggest cost is `reading-sidebar/headings.html`, 7,372 calls for 131 sidebars; look there first if builds slow down.
 - **Later:** a separate test-site repo that installs tagged releases as an outsider would; possible now `v0.1.0` exists, though §9's install job covers most of it.
 - **Deferred on purpose** (`SPEC.md` §10): saved recipes, personal notes, ratings, reader-side change tracking (need a backend); nutrition (no model yet).
