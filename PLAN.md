@@ -4,7 +4,7 @@ The work list for taking Fugu to a theme other Blowfish users can install. Finis
 
 **Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §7 and §10's open items; the code review and Not a Chef's accessibility audit are done (CHANGELOG, Unreleased). Features come after 1.0.
 
-**Next:** §10.
+**Next:** tag `v1.0.0` (Bruce's call).
 
 ## 4. Translation
 
@@ -33,7 +33,6 @@ Done 2026-11-11: the example site takes its themes as Hugo modules, and CI runs 
 
 ## 10. Release
 
-- [ ] Check the README's images in GitHub's rendering, light and dark.
 - [ ] Tag `v1.0.0` after the items above.
 - [ ] Optional: list on themes.gohugo.io; check how they handle themes that need a parent theme.
 
@@ -49,5 +48,6 @@ After 1.0 unless Not a Chef needs one sooner. Several cite `SPEC.md`, still in N
 - **Build-time enrichment:** parsed ingredients in `recipes/index.json` (input for the rest); per-recipe cost from site `data/ingredient_prices.yaml`; grocery departments (`data/departments.yaml`, with a Fugu default); schema.org `Recipe` JSON-LD.
 - **Cooking-time JS:** optional-ingredient toggle; print view; cook mode with Wake Lock (the keep-awake switch beside the gear is the small version); interactive substitutions; shopping list in department order; pantry tool (win the fridge); method check-off in `localStorage`, reusing `ingredients.js`'s key scheme.
 - **Build time:** measured 2026-11-11 on Not a Chef (452 pages, 1.4 s on Hugo 0.169): `render-link.html` runs 2,596 times at about 1.1 ms each, so a cached title index isn't worth it yet. The biggest cost is `reading-sidebar/headings.html`, 7,372 calls for 131 sidebars; look there first if builds slow down.
+- **README images:** checked on GitHub 2026-11-11, light and dark: all load and read well on both. Optional polish: dark variants through `<picture>` (screenshots.py already takes `recipe-dark`), and the grid's whole-window shots are small at half width, so tighter crops would read better.
 - **Later:** a separate test-site repo that installs tagged releases as an outsider would; possible now `v0.1.0` exists, though §9's install job covers most of it.
 - **Deferred on purpose** (`SPEC.md` §10): saved recipes, personal notes, ratings, reader-side change tracking (need a backend); nutrition (no model yet).
