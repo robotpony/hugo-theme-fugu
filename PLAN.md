@@ -2,9 +2,9 @@
 
 The work list for taking Fugu to a theme other Blowfish users can install. Finished items are removed as they land; `CHANGELOG.md` and git history record them (the last before §5's split `fa04557`, the last full plan `75a3a89`, the last long one `183c807`, the last before `v0.1.0` `102abb1`, the last before `v0.2.0`'s squash `13b763a`, the last before the review and audit squash `5014763`). Section numbers are kept, since other files cite them.
 
-**Release path:** `v0.1.0` (2026-10-17) and `v0.2.0` (2026-11-07) are tagged: installs by Hugo modules or submodules, checked by CI's install job. `v1.0.0` needs §7 and §10's open items; the code review and Not a Chef's accessibility audit are done (CHANGELOG, Unreleased). Features come after 1.0.
+**Release path:** `v0.1.0` (2026-10-17), `v0.2.0` (2026-11-07) and `v1.0.0` (2026-11-11) are tagged: installs by Hugo modules or submodules, checked by CI's install job. Features come after 1.0.
 
-**Next:** tag `v1.0.0` (Bruce's call).
+**Next:** after 1.0, the Features list below; optionally the themes.gohugo.io listing (§10).
 
 ## 4. Translation
 
@@ -33,7 +33,8 @@ Done 2026-11-11: the example site takes its themes as Hugo modules, and CI runs 
 
 ## 10. Release
 
-- [ ] Tag `v1.0.0` after the items above.
+Done 2026-11-11: `v1.0.0` tagged.
+
 - [ ] Optional: list on themes.gohugo.io; check how they handle themes that need a parent theme.
 
 ## Features

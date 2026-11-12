@@ -1,10 +1,12 @@
 # Changelog
 
-Notable changes to Fugu, newest first. Versions follow [semantic versioning](https://semver.org); until `v1.0.0`, a minor version can change how a site renders or what it has to configure. Each release is a git tag (`v0.1.0`, …). The first was `v0.1.0`, on 2026-10-17.
+Notable changes to Fugu, newest first. Versions follow [semantic versioning](https://semver.org): from `v1.0.0`, a change that makes a site change its config or content, or renders it differently on purpose, is a major version; new features and options are minor; fixes are patches. Each release is a git tag (`v0.1.0`, …). The first was `v0.1.0`, on 2026-10-17.
 
 ## Unreleased
 
-After updating Fugu, restart a running `hugo server`: one started before the i18n change showed blank labels until restarted.
+## v1.0.0 (2026-11-11)
+
+The first stable release: a cookbook theme for any Blowfish site, with its own neutral look, `--fugu-*` tokens to restyle it, the full docs (`docs/`), an example site taken as Hugo modules, tests for the tools, and optional Claude Code commands. After updating Fugu, restart a running `hugo server`: one started before the i18n change showed blank labels until restarted.
 
 ### Added
 
