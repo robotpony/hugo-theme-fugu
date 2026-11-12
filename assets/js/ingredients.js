@@ -911,8 +911,10 @@
   // imperial units take a mixed number ("1 cup" at 1.5× is "1½ cups",
   // formatFraction), L and kg one decimal place, ml and g a whole number.
   // A count (drinks, buns) stays whole if it was ("1 drink" at 1.5× is "2
-  // drinks"), unless it restates a measured amount (exact), as in "about ⅓
-  // cup (1 pizza)", whose pizza count follows the cups: "(1½ pizzas)".
+  // drinks"). So does one that restates a measured amount (exact), as in
+  // "about ⅓ cup (1 pizza)": the cups take a fraction and the count rounds
+  // ("about ½ cup (2 pizzas)"), since nobody makes half a pizza or buys
+  // half a tub.
   var IMPERIAL_UNIT = /^(?:cups?|qts?|quarts?|pts?|pints?|oz|lbs?|tbsp|tsp|gal)$/i;
   function yieldUnit(after) {
     var m = /^\s*([a-z]+)\b/i.exec(after || '');
@@ -934,7 +936,8 @@
     if (IMPERIAL_UNIT.test(unit)) return kitchenFraction(v);
     if (/^(?:l|kg)$/i.test(unit)) return String(Math.round(v * 10) / 10);
     if (/^(?:ml|g|mg)$/i.test(unit)) return String(Math.max(1, Math.round(v)));
-    if (exact || /\D$/.test(written)) return kitchenFraction(v);
+    if (exact) return String(Math.max(1, Math.round(v)));
+    if (/\D$/.test(written)) return kitchenFraction(v);
     if (/^\d+$/.test(written)) return String(Math.max(1, Math.round(v)));
     return String(Math.round(v * 10) / 10);
   }

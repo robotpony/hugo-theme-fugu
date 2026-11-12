@@ -61,7 +61,7 @@ And the tests in `tests/`. CI runs `check.py`, `test_tools.py` and `install.py` 
 
 A Fugu site's content is plain Markdown: YAML frontmatter, `##` headings, and `[[Title]]` links, with no shortcodes. So the `content/` folder, or the whole site, opens as an [Obsidian](https://obsidian.md) vault:
 
-- **Wiki links work both ways.** `[[Beef stew]]` links in Obsidian as it does on the site, where Fugu resolves it by the page's title ([recipe-format.md](recipe-format.md#wiki-links)). Obsidian links by file name, so keep each file named for its title, or a link that works on the site shows as unresolved in Obsidian.
+- **Wiki links work both ways.** `[[Beef stew]]` links in Obsidian as it does on the site, where Fugu resolves it by the page's title ([recipe-format.md](recipe-format.md#wiki-links)). Obsidian links by file name, so keep each file named for its title, or a link that works on the site shows as unresolved in Obsidian. Or use [Space Command for Obsidian](https://space-command.ca/help/obsidian/), whose "Resolve wiki links by page title" setting (on by default in a Hugo vault) makes Obsidian resolve `[[Title]]` by frontmatter title, as Fugu does.
 - **Diagrams read as text.** `formula`, `stack` and `flow` blocks show as their source in Obsidian, which is written to be readable.
 - **Tags at the end of a heading stay yours.** `## Notes #todo` is a tag in Obsidian and plain "Notes" on the site.
 - **Frontmatter shows as Properties.** Obsidian's Properties view edits the same fields `frontmatter.py` checks; run `check` before you publish.

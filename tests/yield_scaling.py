@@ -75,10 +75,14 @@ CASES = [
     ("about 1.7 kg (30–35 meatballs)", 1.5, "about 2.6 kg (45–53 meatballs)"),
     ("1 drink", 1.5, "2 drinks"),
     ("6 scones", 1.5, "9 scones"),
-    # A leading fraction, and a count restating a measure, which keeps one.
-    ("about ⅓ cup (1 pizza)", 1.5, "about ½ cup (1½ pizzas)"),
+    # A leading fraction, and a count restating a measure, which rounds
+    # to a whole one while the measure keeps its fraction.
+    ("about ⅓ cup (1 pizza)", 1.5, "about ½ cup (2 pizzas)"),
     ("about ⅓ cup (1 pizza)", 3, "about 1 cup (3 pizzas)"),
-    ("about ⅓ cup (1 pizza)", 2.5, "about ⅞ cup (2½ pizzas)"),
+    ("about ⅓ cup (1 pizza)", 2.5, "about ⅞ cup (3 pizzas)"),
+    ("about ⅓ cup (1 pizza)", 0.5, "about ⅛ cup (1 pizza)"),
+    ("about 750 ml (3 small grocery-store tubs)", 1.5, "about 1.1 L (5 small grocery-store tubs)"),
+    ("about 750 ml (3 small grocery-store tubs)", 0.5, "about 375 ml (2 small grocery-store tubs)"),
     # What can't be scaled honestly isn't.
     ("makes ~750 ml", 2, None),
     ("enough for about 700 g chicken", 2, None),
