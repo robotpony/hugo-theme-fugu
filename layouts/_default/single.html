@@ -287,6 +287,15 @@
                 {{ end }}
               </div>
             {{ end }}
+            {{/* A drink's glass (partials/drink/glass.html, the same drawing
+              as its card), under the meta rail. Nothing without `glass`, or
+              for an unknown one (the partial warns). */}}
+            {{ if .Params.glass }}
+              {{ $glass := partial "drink/glass.html" . }}
+              {{ if strings.TrimSpace $glass }}
+                <div class="recipe-glass">{{ $glass }}</div>
+              {{ end }}
+            {{ end }}
             {{/* Photos (see partials/reading-sidebar.html): desktop only,
               a strip under the title on mobile. */}}
             {{/* The section boxes, in params.fugu.recipeSidebar's order

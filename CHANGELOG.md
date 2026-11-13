@@ -4,6 +4,10 @@ Notable changes to Fugu, newest first. Versions follow [semantic versioning](htt
 
 ## Unreleased
 
+### Added
+
+- A drink's glass (`glass`, `fill`, `ice`, `garnish`) is drawn on its own page too, in the recipe sidebar under the meta rail (`div.recipe-glass` around the card's `svg.rcard-glass`, at 70×90). Nothing changes for a page without `glass`.
+
 ### Changed
 
 - The keep-screen-awake switch is a row in the ingredients gear's panel, after Scale and Units (`button.ing-switch`, `role="switch"`, `aria-checked`, in `.ing-config-group--awake`), not a sun button beside the gear, which looked too like it. The gear's label says so where the switch shows (`ingredient_options_awake`). A percentage page, which has no gear, keeps the sun button (`button.ing-awake`, now at the gear's place); `.ing-awake--alone` is gone. A site with `fugu.styles = false` styles `.ing-switch` itself.

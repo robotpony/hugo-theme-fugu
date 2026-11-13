@@ -57,7 +57,7 @@ Without `buildDrafts`, drafts behave as Hugo normally treats them: they aren't b
 
 ## Drinks
 
-Drinks are recipes (in the drink section, `drinkSection`, or anywhere recipes live) and take the same fields. Four more draw a small glass on the drink's card, beside its title and intro:
+Drinks are recipes (in the drink section, `drinkSection`, or anywhere recipes live) and take the same fields. Four more draw a small glass on the drink's card, beside its title and intro, and on the drink's page, in the sidebar under its facts (servings, times, dates):
 
 ```yaml
 glass: mug                     # mug, wine, highball, rocks, bottle, pitcher
@@ -66,7 +66,7 @@ ice: true
 garnish: nutmeg                # lemon, fruit, nutmeg
 ```
 
-- `glass`: the glass's shape. Without it the card has no glass; an unknown one draws none and warns.
+- `glass`: the glass's shape. Without it there's no glass on the card or the page; an unknown one draws none and warns.
 - `fill`: what's in it, bottom to top: `liqueur`, `coffee`, `cream`, `latte`, `tea`, `wine`, `sparkling`, `cola`. An unknown key draws no band and warns; a fourth and on are dropped.
 - `ice`: `true` draws ice cubes in the drink.
 - `garnish`: `lemon` (a wheel on the rim), `fruit` (pieces in the drink), or `nutmeg` (grated on top).

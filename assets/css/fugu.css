@@ -894,6 +894,10 @@ h2.block-title { font-size: 1.35rem; font-weight: 700; letter-spacing: -.005em; 
 .rcard-drink { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
 .rcard-drink-text { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
 .rcard-glass { flex: none; width: 56px; height: 72px; color: var(--fugu-ink); }
+/* The same glass on the drink's own page, under the recipe sidebar's meta
+ * rail (single.html), at the drawing's full 70x90, ruled off like the rail. */
+.recipe-glass { display: flex; justify-content: center; padding-bottom: 14px; border-bottom: 1px solid var(--fugu-border); }
+.recipe-glass .rcard-glass { width: 70px; height: 90px; }
 .rcard-formula { display: flex; justify-content: safe center; height: 24px; min-width: 0; overflow: hidden; }
 /* The strip's own link sits above .rcard-link::after so its slots' title
  * tooltips show on hover; it points at the same page, so clicks still go
